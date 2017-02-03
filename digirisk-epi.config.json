@@ -3,10 +3,15 @@
 	"slug": "digirisk-epi",
 	"version": "0.0.0.1",
 	"description": "L'application Digirisk EPI",
-	"insert_scripts_pages": [
+	"insert_scripts_pages_js": [
+		"digirisk-epi"
 	],
+	"insert_scripts_pages_css": [],
 	"modules": [
-		"digirisk-epi-core/digirisk-epi-core.config.json"
+		"core/external/wpeo_log/wpeo_log.config.json",
+		"core/external/wpeo_model/wpeo_model.config.json",
+		"core/core.config.json",
+		"modules/epi/epi.config.json"
 	],
 	"debug": false
 }
