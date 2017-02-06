@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<?php wp_nonce_field( 'save_epi' ); ?>
 	<input type="hidden" name="id" value="<?php echo esc_attr( $epi->id ); ?>" />
 
-	<td class="w50"></td>
+	<td class="w50"><?php do_shortcode( '[eo_upload_button id="' . $epi->id . '" type="epi"]' ); ?></td>
 	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
 	<td class="padding"><input type="text" name="title" value="<?php echo esc_attr( $epi->title ); ?>" placeholder="Nom" /></td>
 	<td class="padding"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" placeholder="Numéro de série" /></td>

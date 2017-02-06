@@ -15,7 +15,7 @@ namespace evarisk_epi;
 if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
 <tr>
-	<td class="w50"></td>
+	<td class="w50"><?php do_shortcode( '[eo_upload_button id="' . $epi->id . '" namespace="evarisk_epi" type="epi"]' ); ?></td>
 	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>

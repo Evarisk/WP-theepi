@@ -77,6 +77,7 @@ class EPI_Core_Action {
 		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script( 'jquery-form' );
 		wp_enqueue_script( 'jquery-ui-datepicker' );
+		wp_enqueue_media();
 	}
 
 	/**
