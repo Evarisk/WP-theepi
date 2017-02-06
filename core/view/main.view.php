@@ -20,12 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		<thead>
 			<tr>
 				<th class="w50"></th>
-				<th><?php _e( 'ID', 'digirisk' ); ?></th>
-				<th><?php _e( 'Nom', 'digirisk' ); ?></th>
-				<th><?php _e('N° serie', 'digirisk' ); ?></th>
-				<th><?php _e('Périod. de contrôle', 'digirisk'); ?></th>
-				<th><?php _e('Date de dernier contrôle', 'digirisk'); ?></th>
-				<th><?php _e('Reste', 'digirisk'); ?></th>
+				<th class="w50"><span><?php esc_html_e( 'ID', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Nom', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'N° serie', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Périod. de contrôle', 'digirisk' ); ?></span></th>
+				<th class="w50"></th>
+				<th class="padding"><span><?php esc_html_e( 'Date de dernier contrôle', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Reste', 'digirisk' ); ?></span></th>
 				<th class="w50"></th>
 			</tr>
 		</thead>
@@ -34,8 +35,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 			<?php EPI_Class::g()->display_epi_list(); ?>
 		</tbody>
 
-		<tfooter>
+		<tfoot>
 			<?php View_Util::exec( 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
-		</tfooter>
+		</tfoot>
 	</table>
 </div>

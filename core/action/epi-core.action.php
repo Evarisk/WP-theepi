@@ -74,7 +74,9 @@ class EPI_Core_Action {
 	 * @return void nothing
 	 */
 	public function callback_before_admin_enqueue_scripts_js() {
-
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script( 'jquery-form' );
+		wp_enqueue_script( 'jquery-ui-datepicker' );
 	}
 
 	/**

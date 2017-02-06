@@ -14,30 +14,33 @@ namespace evarisk_epi;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
-<?php namespace evarisk_epi;
-
-if ( !defined( 'ABSPATH' ) ) exit; ?>
-
 <tr>
-	<td></td>
-	<td><?php echo $epi->unique_identifier; ?></td>
-	<td><?php echo $epi->title; ?></td>
-	<td><?php echo $epi->serial_number; ?></td>
-	<td><?php echo $epi->frequency_control; ?></td>
-	<td><?php echo $epi->control_date; ?></td>
-	<td><?php echo $epi->compiled_remaining_time; ?></td>
+	<td class="w50"></td>
+	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
+	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>
+	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>
+	<td class="w100 padding"><?php echo esc_html( $epi->frequency_control ); ?></td>
+	<td class="w50"></td>
+	<td class="padding"><?php echo esc_html( $epi->control_date ); ?></td>
+	<td class="padding"><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
 
 	<td>
-		<a href="#"
-			data-id="<?php echo $epi->id; ?>"
-			data-nonce="<?php echo wp_create_nonce( 'ajax_load_epi_' . $epi->id ); ?>"
-			data-action="load_epi"
-			class="wp-digi-action wp-digi-action-load action-attribute dashicons dashicons-edit" ></a>
+		<div class="action grid-layout w2">
+			<div 	class="button w50 edit light action-attribute"
+						data-id="<?php echo esc_attr( $epi->id ); ?>"
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
+						data-action="load_epi"
+						data-loader="table">
+				<i class="icon fa fa-pencil"></i>
+			</div>
 
-		<a href="#"
-			data-id="<?php echo $epi->id; ?>"
-			data-nonce="<?php echo wp_create_nonce( 'ajax_delete_epi_' . $epi->id ); ?>"
-			data-action="delete_epi"
-			class="wp-digi-action wp-digi-action-delete dashicons dashicons-no-alt" ></a>
+			<div 	class="button w50 delete light action-delete"
+						data-id="<?php echo esc_attr( $epi->id ); ?>"
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
+						data-action="delete_epi"
+						data-loader="table">
+				<i class="icon fa fa-times"></i>
+			</div>
+		</div>
 	</td>
 </tr>
