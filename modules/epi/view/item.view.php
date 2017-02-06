@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
 <tr>
 	<td class="w50"><?php do_shortcode( '[eo_upload_button id="' . $epi->id . '" namespace="evarisk_epi" type="epi"]' ); ?></td>
-	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
+	<td class="w50 padding"><?php echo esc_html( $epi->unique_identifier ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>
 	<td class="w100 padding"><?php echo esc_html( $epi->frequency_control ); ?></td>
