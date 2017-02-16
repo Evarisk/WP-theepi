@@ -37,7 +37,9 @@ class EPI_Action {
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
-		EPI_Class::g()->update( $_POST );
+		$epi = EPI_Class::g()->update( $_POST );
+
+		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
 
 		ob_start();
 		EPI_Class::g()->display_epi_list();

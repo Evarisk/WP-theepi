@@ -8,7 +8,7 @@
 
 namespace evarisk_epi;
 
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 /**
  * Les EPI
@@ -62,7 +62,7 @@ class EPI_Class extends Post_Class {
 	 *
 	 * @var array
 	 */
-	protected $after_get_function = array( '\digi\get_identifier', '\evarisk_epi\update_remaining_time' );
+ protected $after_get_function = array( '\digi\get_identifier', /*'\evarisk_epi\update_remaining_time'*/ );
 
 	/**
 	 * Le préfixe de l'objet dans DigiRisk

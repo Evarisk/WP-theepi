@@ -21,11 +21,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 			<tr>
 				<th class="w50"></th>
 				<th class="w50 padding"><span><?php esc_html_e( 'ID', 'digirisk' ); ?></span></th>
-				<th class="padding"><span><?php esc_html_e( 'Nom', 'digirisk' ); ?></span></th>
+				<th class="wm130 padding"><span><?php esc_html_e( 'Nom', 'digirisk' ); ?></span></th>
 				<th class="padding"><span><?php esc_html_e( 'N° serie', 'digirisk' ); ?></span></th>
 				<th class="padding"><span><?php esc_html_e( 'Périod. de contrôle', 'digirisk' ); ?></span></th>
 				<th class="w50"></th>
-				<th class="padding w100"><span><?php esc_html_e( 'Date de dernier contrôle', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Date de dernier contrôle', 'digirisk' ); ?></span></th>
+				<th class="padding"><span>État</span></th>
 				<th class="padding"><span><?php esc_html_e( 'Reste', 'digirisk' ); ?></span></th>
 				<th class="w50"></th>
 			</tr>

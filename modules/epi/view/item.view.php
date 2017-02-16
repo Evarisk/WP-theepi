@@ -20,8 +20,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>
 	<td class="w100 padding"><?php echo esc_html( $epi->frequency_control ); ?></td>
-	<td class="w50"></td>
-	<td class="padding"><?php echo esc_html( $epi->control_date ); ?></td>
+	<td class=""><?php do_shortcode( '[digi_comment id="' . $epi->id . '" namespace="evarisk_epi" type="epi_comment" display="view"]' ); ?></td>
+	<td></td>
 	<td class="padding"><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
 
 	<td>

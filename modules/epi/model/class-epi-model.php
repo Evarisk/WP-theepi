@@ -44,7 +44,6 @@ class EPI_Model extends post_model {
 			'control_date' => array(
 				'type'				=> 'string',
 				'meta_type'		=> 'multiple',
-				'required'		=> true
 			),
 			'compiled_remaining_time' => array(
 				'type'				=> 'string',
