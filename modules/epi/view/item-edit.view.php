@@ -25,11 +25,8 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<td class="padding w150"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" placeholder="Numéro de série" /></td>
 	<td class="padding tooltip red" aria-label="<?php esc_attr_e( 'Le champ doit être au format numérique', 'digirisk' ); ?>"><input type="text" name="frequency_control" value="<?php echo esc_attr( $epi->frequency_control ); ?>" placeholder="10" /></td>
 	<td>jours</td>
-	<td><?php do_shortcode( '[digi_comment id="' . $epi->id . '" namespace="evarisk_epi" type="epi_comment" display="edit"]' ); ?></td>
-	<td><select name="test">
-		<option>OK</option>
-		<option>KO</option>
-	</select></td>
+	<td><?php EPI_Comment_Class::g()->display_edit( $epi ); ?></td>
+	<td><?php echo esc_html( $epi->state ); ?></td>
 	<td><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
 	<td>
 		<div class="action grid-layout w2">

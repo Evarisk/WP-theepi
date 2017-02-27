@@ -49,7 +49,13 @@ class EPI_Model extends post_model {
 				'type'				=> 'string',
 				'meta_type'		=> 'field',
 				'field'				=> '_compiled_remaining_time',
-				'bydefault'		=> ''
+				'bydefault'		=> '',
+			),
+			'state' => array(
+				'type'			=> 'string',
+				'meta_type'	=> 'field',
+				'field'			=> '_state',
+				'bydefault'	=> '',
 			)
 		) );
 
