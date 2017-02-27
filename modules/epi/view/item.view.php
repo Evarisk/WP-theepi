@@ -3,8 +3,8 @@
  * La vue principale de la page "EPI"
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  * @copyright 2017 Evarisk
  * @package epi
  * @subpackage view
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>
 	<td class="w100 padding"><?php echo esc_html( $epi->frequency_control ); ?></td>
 	<td></td>
-	<td class="">spécial</td>
+	<td class=""><?php EPI_Comment_Class::g()->display( $epi ); ?></td>
 	<td><?php echo esc_html( $epi->state ); ?></td>
 	<td class="padding"><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
 

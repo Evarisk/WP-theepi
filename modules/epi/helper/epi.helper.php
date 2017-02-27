@@ -9,10 +9,10 @@
 * @subpackage helper
 */
 
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 function update_remaining_time( $data ) {
-	if ( ! empty( $data->id ) && !empty( $data->frequency_control ) && !empty( $data->control_date ) ) {
+	if ( ! empty( $data->id ) && ! empty( $data->frequency_control ) && ! empty( $data->control_date ) ) {
 		$control_date = \DateTime::createFromFormat( 'd/m/Y', $data->control_date );
 		$control_date->modify( '+' . $data->frequency_control . ' day' );
 
@@ -30,6 +30,8 @@ function update_remaining_time( $data ) {
 			$result = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
 			$result .= $interval->format( '%a jours' );
 			$result .= '</span>';
+
+			$data->state = "KO";
 		}
 
 

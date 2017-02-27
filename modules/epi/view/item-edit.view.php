@@ -3,8 +3,8 @@
  * Le formulaire pour éditer ou ajouter un EPI.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  * @copyright 2017 Evarisk
  * @package epi
  * @subpackage view

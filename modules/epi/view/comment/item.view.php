@@ -14,7 +14,9 @@ namespace evarisk_epi;
 
 if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 
-<select name="list_comment[<?php echo esc_attr( $comment->id ); ?>][state]">
-	<option>OK</option>
-	<option>KO</option>
-</select>
+<li class="comment">
+	<span class="user"><?php echo ! empty( $userdata->display_name ) ? $userdata->display_name : 'Indéfini'; ?>, </span>
+	<span class="date"><?php echo $comment->date; ?> : </span>
+	<span class="content"><?php echo $comment->content; ?></span>
+	<span></span>
+</li>

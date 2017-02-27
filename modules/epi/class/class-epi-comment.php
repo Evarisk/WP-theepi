@@ -3,8 +3,8 @@
  * Classe gérant les commentaires des EPI
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.1.0.0
- * @version 0.1.0.0
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  * @copyright 2015-2017 Evarisk
  * @package EPI
  * @subpackage class
@@ -73,16 +73,34 @@ class EPI_Comment_Class extends Comment_Class {
 	 *
 	 * @return void
 	 *
-	 * @since 0.1.0.0
-	 * @version 0.1.0.0
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	protected function construct() {}
 
+	/**
+	 * Récupères les commentaires puis appelle la vue list-view.view.php
+	 *
+	 * @param  EPI_Model $epi Les données de l'EPI.
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
 	public function display( $epi ) {
-		View_Util::exec( 'epi', 'comment/list', array(
+		$comments = EPI_Comment_Class::g()->get( array(
+			'post_id' => $epi->id,
+			'status' => -34070,
+			'orderby' => 'comment_ID',
+			'order' => 'ASC',
+		) );
+
+		$userdata = get_userdata( get_current_user_id() );
+
+		View_Util::exec( 'epi', 'comment/list-view', array(
 			'epi' => $epi,
 			'comments' => $comments,
-			'comment_schema' => $comment_schema,
 			'userdata' => $userdata,
 		) );
 	}
@@ -94,14 +112,20 @@ class EPI_Comment_Class extends Comment_Class {
 	 *
 	 * @return void
 	 *
-	 * @since 0.1.0.0
-	 * @version 0.1.0.0
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function display_edit( $epi ) {
-		$comments = EPI_Comment_Class::g()->get( array(
-			'post_id' => $epi->id,
-			'status' => -34070,
-		) );
+		$comments = array();
+
+		if ( 0 !== $epi->id ) {
+			$comments = EPI_Comment_Class::g()->get( array(
+				'post_id' => $epi->id,
+				'status' => -34070,
+				'orderby' => 'comment_ID',
+				'order' => 'ASC',
+			) );
+		}
 
 		$comment_schema = EPI_Comment_Class::g()->get( array(
 			'schema' => true,
@@ -111,7 +135,7 @@ class EPI_Comment_Class extends Comment_Class {
 
 		$userdata = get_userdata( get_current_user_id() );
 
-		View_Util::exec( 'epi', 'comment/list', array(
+		View_Util::exec( 'epi', 'comment/list-edit', array(
 			'epi' => $epi,
 			'comments' => $comments,
 			'comment_schema' => $comment_schema,
@@ -123,7 +147,7 @@ class EPI_Comment_Class extends Comment_Class {
 	 * Sauvegardes les commentaires de l'EPI.
 	 *
 	 * @param  integer $epi_id L'ID de l'EPI.
-	 * @param  arrya   $data   Les données des commentaires.
+	 * @param  array   $data   Les données des commentaires.
 	 *
 	 * @return boolean
 	 *
