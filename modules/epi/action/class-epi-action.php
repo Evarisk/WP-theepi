@@ -42,7 +42,7 @@ class EPI_Action {
 		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
 
 		ob_start();
-		EPI_Class::g()->display_epi_list();
+		EPI_Core_Class::g()->display();
 		wp_send_json_success( array(
 			'module' => 'epi',
 			'callback_success' => 'savedEpiSuccess',

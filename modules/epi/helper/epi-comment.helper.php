@@ -3,11 +3,16 @@
 namespace evarisk_epi;
 
 /**
- * [update_control_date description]
+ * Met à jour la date de contrôle et le status de l'EPI selon le dernier commentaire.
+ *
+ * @param array $data Les données du commentaire.
+ *
  * @return array $data
+ *
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  */
 function update_control_date( $data ) {
-
 	$epi = EPI_Class::g()->get( array(
 		'include' => array(
 			$data->post_id,
