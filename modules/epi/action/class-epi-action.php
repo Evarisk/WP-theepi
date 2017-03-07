@@ -4,8 +4,8 @@
  *
  * @package Evarisk\Plugin
  *
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  */
 
 namespace evarisk_epi;
@@ -31,8 +31,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
@@ -55,8 +55,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -87,8 +87,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function ajax_load_epi() {
 		check_ajax_referer( 'load_epi' );

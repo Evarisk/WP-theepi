@@ -4,8 +4,8 @@
  *
  * @package Evarisk\Plugin
  *
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  */
 
 namespace evarisk_epi;
@@ -20,8 +20,8 @@ class EPI_Core_Class extends Singleton_Util {
 	/**
 	 * Le constructeur
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	protected function construct() {}
 
@@ -30,8 +30,8 @@ class EPI_Core_Class extends Singleton_Util {
 	 *
 	 * @return void
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function display() {
 		$epi_schema = EPI_Class::g()->get( array(

@@ -151,8 +151,8 @@ class EPI_Comment_Class extends Comment_Class {
 	 *
 	 * @return boolean
 	 *
-	 * @since 0.1.0.0
-	 * @version 0.1.0.0
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function save_comments( $epi_id, $data ) {
 		if ( isset( $epi_id ) ) {

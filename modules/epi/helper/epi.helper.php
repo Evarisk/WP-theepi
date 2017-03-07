@@ -1,16 +1,28 @@
-<?php namespace evarisk_epi;
+<?php
 /**
-* @TODO : A Détailler
-*
-* @author Jimmy Latour <jimmy@evarisk.com>
-* @version 0.1
-* @copyright 2015-2016 Eoxia
-* @package epi
-* @subpackage helper
-*/
+ * Helper du modèle commentaire des EPI
+ *
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @version 1.0.0.0
+ * @copyright 2015-2017 Evarisk
+ * @package epi
+ * @subpackage helper
+ */
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+namespace evarisk_epi;
 
+if ( ! defined( 'ABSPATH' ) ) { exit; }
+
+/**
+ * Met à jour le temps restant avant la date de hors d'état.
+ *
+ * @param  Comment_Model $data Les données du commentaires.
+ *
+ * @return Comment_Model
+ *
+ * @since 1.0.0.0
+ * @version 1.0.0.0
+ */
 function update_remaining_time( $data ) {
 	if ( ! empty( $data->id ) && ! empty( $data->frequency_control ) && ! empty( $data->control_date ) ) {
 		$control_date = \DateTime::createFromFormat( 'd/m/Y', $data->control_date );
@@ -25,13 +37,12 @@ function update_remaining_time( $data ) {
 			$result = '<span class=\'time-ok\'><i class=\'fa fa-calendar-o\' aria-hidden=\'true\'></i> ';
 			$result .= $interval->format( '%a jours' );
 			$result .= '</span>';
-		}
-		else {
+		} else {
 			$result = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
 			$result .= $interval->format( '%a jours' );
 			$result .= '</span>';
 
-			$data->state = "KO";
+			$data->state = 'KO';
 		}
 
 

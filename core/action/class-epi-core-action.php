@@ -4,8 +4,8 @@
  *
  * @package Evarisk\Plugin
  *
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  */
 
 namespace evarisk_epi;
@@ -23,8 +23,8 @@ class EPI_Core_Action {
 	 * admin_print_scripts (Pour appeler les scripts JS en bas du footer)
 	 * plugins_loaded (Pour appeler le domaine de traduction)
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function __construct() {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
@@ -50,8 +50,8 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_before_admin_enqueue_scripts_css() {}
 
@@ -60,8 +60,8 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_admin_enqueue_scripts_css() {}
 
@@ -70,8 +70,8 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_before_admin_enqueue_scripts_js() {
 		wp_enqueue_script( 'jquery' );
@@ -85,8 +85,8 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_admin_enqueue_scripts_js() {
 		wp_enqueue_script( 'digi-epi-script', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/js/backend.min.js', array(), Config_Util::$init['digirisk-epi']->version, false );
@@ -97,16 +97,16 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_admin_print_scripts_js() {}
 
 	/**
 	 * Initialise le fichier MO du plugin
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_plugins_loaded() {
 	}
@@ -115,8 +115,8 @@ class EPI_Core_Action {
 	 * Initialise le sous menu "EPI" dans le menu Digirisk.
 	 *
 	 * @return void
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	public function callback_admin_menu() {
 		add_submenu_page( 'digirisk-simple-risk-evaluation', __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_options', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );

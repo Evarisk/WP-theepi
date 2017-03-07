@@ -2,8 +2,8 @@
 /**
  * Les EPI
  *
- * @since 0.0.0.1
- * @version 0.0.0.1
+ * @since 1.0.0.0
+ * @version 1.0.0.0
  */
 
 namespace evarisk_epi;
@@ -88,17 +88,27 @@ class EPI_Class extends Post_Class {
 	/**
 	 * Le constructeur
 	 *
-	 * @since 0.0.0.1
-	 * @version 0.0.0.1
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
 	 */
 	protected function construct() {
 		parent::construct();
 		add_filter( 'json_endpoints', array( $this, 'callback_register_route' ) );
 	}
 
+	/**
+	 * Charges et affiches la liste des EPI
+	 *
+	 * @return void
+	 *
+	 * @since 1.0.0.0
+	 * @version 1.0.0.0
+	 */
 	public function display_epi_list() {
 		$epi_list = EPI_Class::g()->get();
-		View_Util::exec( 'epi', 'list', array( 'epi_list' => $epi_list ) );
+		View_Util::exec( 'epi', 'list', array(
+			'epi_list' => $epi_list,
+		) );
 	}
 }
 
