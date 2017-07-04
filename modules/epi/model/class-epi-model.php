@@ -2,7 +2,7 @@
 
 if ( !defined( 'ABSPATH' ) ) exit;
 
-class EPI_Model extends post_model {
+class EPI_Model extends \eoxia\post_model {
 
 	public function __construct( $object ) {
 		$this->model = array_merge( $this->model, array(

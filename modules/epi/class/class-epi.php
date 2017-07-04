@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Les EPI
  */
-class EPI_Class extends Post_Class {
+class EPI_Class extends \eoxia\Post_Class {
 
 	/**
 	 * Le nom du modèle
@@ -106,7 +106,7 @@ class EPI_Class extends Post_Class {
 	 */
 	public function display_epi_list() {
 		$epi_list = EPI_Class::g()->get();
-		View_Util::exec( 'epi', 'list', array(
+		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'list', array(
 			'epi_list' => $epi_list,
 		) );
 	}

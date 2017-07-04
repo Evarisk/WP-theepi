@@ -5,7 +5,6 @@
 	"description": "Le module boot de Digirisk EPI",
 	"path": "core/",
 	"dependencies": {
-		"util": {},
 		"action": {},
 		"helper": {},
 		"class": {}

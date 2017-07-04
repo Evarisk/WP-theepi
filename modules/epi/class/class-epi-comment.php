@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Classe gérant les commentaires des EPI
  */
-class EPI_Comment_Class extends Comment_Class {
+class EPI_Comment_Class extends \eoxia\Comment_Class {
 
 	/**
 	 * Le nom du modèle
@@ -59,14 +59,14 @@ class EPI_Comment_Class extends Comment_Class {
 	 *
 	 * @var array
 	 */
-	protected $before_post_function = array( '\digi\convert_date', '\evarisk_epi\update_control_date' );
+	protected $before_post_function = array( '\eoxia\convert_date', '\evarisk_epi\update_control_date' );
 
 	/**
 	 * La fonction appelée automatiquement avant la sauvegarde de l'objet dans la base de donnée
 	 *
 	 * @var array
 	 */
-	protected $before_put_function = array( '\digi\convert_date', '\evarisk_epi\update_control_date' );
+	protected $before_put_function = array( '\eoxia\convert_date', '\evarisk_epi\update_control_date' );
 
 	/**
 	 * Le constructeur
@@ -98,7 +98,7 @@ class EPI_Comment_Class extends Comment_Class {
 
 		$userdata = get_userdata( get_current_user_id() );
 
-		View_Util::exec( 'epi', 'comment/list-view', array(
+		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/list-view', array(
 			'epi' => $epi,
 			'comments' => $comments,
 			'userdata' => $userdata,
@@ -135,7 +135,7 @@ class EPI_Comment_Class extends Comment_Class {
 
 		$userdata = get_userdata( get_current_user_id() );
 
-		View_Util::exec( 'epi', 'comment/list-edit', array(
+		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/list-edit', array(
 			'epi' => $epi,
 			'comments' => $comments,
 			'comment_schema' => $comment_schema,

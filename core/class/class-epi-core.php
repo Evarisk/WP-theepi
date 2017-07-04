@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Appelle la vue permettant d'afficher la navigation
  */
-class EPI_Core_Class extends Singleton_Util {
+class EPI_Core_Class extends \eoxia\Singleton_Util {
 
 	/**
 	 * Le constructeur

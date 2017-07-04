@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
 /**
  * Modèles des commentaires des EPI.
  */
-class EPI_Comment_Model extends comment_model {
+class EPI_Comment_Model extends \eoxia\comment_model {
 
 	/**
 	 * Le constructeur

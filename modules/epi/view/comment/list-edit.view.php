@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		endforeach;
 	endif;
 
-	View_Util::exec( 'epi', 'comment/item-edit', array(
+	\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/item-edit', array(
 		'comment' => $comment_schema,
 		'userdata' => $userdata,
 		'epi' => $epi,

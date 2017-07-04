@@ -37,7 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 		</tbody>
 
 		<tfoot>
-			<?php View_Util::exec( 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
+			<?php \eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
 		</tfoot>
 	</table>
 </div>

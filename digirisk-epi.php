@@ -23,9 +23,9 @@ DEFINE( 'PLUGIN_DIGIRISK_EPI_PATH', realpath( plugin_dir_path( __FILE__ ) ) . '/
 DEFINE( 'PLUGIN_DIGIRISK_EPI_URL', plugins_url( basename( __DIR__ ) ) . '/' );
 DEFINE( 'PLUGIN_DIGIRISK_EPI_DIR', basename( __DIR__ ) );
 
-require_once 'core/util/singleton.util.php';
-require_once 'core/util/init.util.php';
+require_once 'core/external/wpeo_util/singleton.util.php';
+require_once 'core/external/wpeo_util/init.util.php';
 require_once 'core/helper/model.helper.php';
 require_once 'core/external/wpeo_log/class/log.class.php';
 
-Init_util::g()->exec();
+\eoxia\Init_Util::g()->exec( PLUGIN_DIGIRISK_EPI_PATH, basename( __FILE__, '.php' ) );

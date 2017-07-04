@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 	<?php
 	if ( ! empty( $comments ) ) :
 		foreach ( $comments as $comment ) :
-			View_Util::exec( 'epi', 'comment/item', array(
+			\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/item', array(
 				'comment' => $comment,
 			) );
 		endforeach;

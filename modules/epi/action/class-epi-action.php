@@ -107,7 +107,7 @@ class EPI_Action {
 
 		ob_start();
 
-		View_Util::exec( 'epi', 'item-edit', array(
+		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array(
 			'epi' => $epi,
 		) );
 

@@ -17,6 +17,6 @@ if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
 <?php $i = 1; ?>
 <?php if ( !empty( $epi_list ) ) : ?>
 	<?php foreach ( $epi_list as $epi ) : ?>
-		<?php View_Util::exec( 'epi', 'item', array( 'epi' => $epi ) ); ?>
+		<?php \eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item', array( 'epi' => $epi ) ); ?>
 	<?php endforeach; ?>
 <?php endif; ?>
