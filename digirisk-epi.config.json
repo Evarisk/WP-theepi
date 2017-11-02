@@ -1,15 +1,13 @@
 {
 	"name": "Digirisk EPI",
 	"slug": "digirisk-epi",
-	"version": "1.0.0.0",
+	"version": "1.0.1",
 	"description": "L'application Digirisk EPI",
 	"insert_scripts_pages_js": [
 		"digirisk-epi"
 	],
 	"insert_scripts_pages_css": [],
-	"externals": [
-		"core/external/wpeo_model/wpeo_model.config.json"
-	],
+	"externals": [],
 	"modules": [
 		"core/core.config.json",
 		"modules/epi/epi.config.json"
