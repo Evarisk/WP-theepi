@@ -9,17 +9,13 @@ namespace evarisk_epi;
  *
  * @return array $data
  *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 function update_control_date( $data ) {
 	$epi = EPI_Class::g()->get( array(
-		'include' => array(
-			$data->post_id,
-		),
-	) );
-
-	$epi = $epi[0];
+		'id' => $data->post_id,
+	), true );
 
 	$last_comment = ! empty( $_POST['list_comment'] ) ? max ( $_POST['list_comment'] ) : array();
 

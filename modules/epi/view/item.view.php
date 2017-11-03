@@ -3,19 +3,22 @@
  * La vue principale de la page "EPI"
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  * @copyright 2017 Evarisk
- * @package epi
- * @subpackage view
+ * @package Digirisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} ?>
 
 <tr>
-	<td class="w50"><?php do_shortcode( '[eo_upload_button id="' . $epi->id . '" namespace="evarisk_epi" type="epi"]' ); ?></td>
+	<td class="w50">
+		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/evarisk_epi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
+	</td>
 	<td class="w50 padding"><?php echo esc_html( $epi->unique_identifier ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->serial_number ); ?></td>

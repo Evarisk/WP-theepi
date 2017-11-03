@@ -3,20 +3,25 @@
  * La vue principale de la page "EPI"
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  * @copyright 2017 Evarisk
- * @package epi
- * @subpackage view
+ * @package Digirisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} ?>
 
 <?php $i = 1; ?>
-<?php if ( !empty( $epi_list ) ) : ?>
+<?php if ( ! empty( $epi_list ) ) : ?>
 	<?php foreach ( $epi_list as $epi ) : ?>
-		<?php \eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item', array( 'epi' => $epi ) ); ?>
+		<?php
+		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item', array(
+			'epi' => $epi,
+		) );
+		?>
 	<?php endforeach; ?>
 <?php endif; ?>

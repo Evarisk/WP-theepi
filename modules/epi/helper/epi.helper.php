@@ -3,15 +3,17 @@
  * Helper du modèle commentaire des EPI
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  * @copyright 2015-2017 Evarisk
- * @package epi
- * @subpackage helper
+ * @package DigiRisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Met à jour le temps restant avant la date de hors d'état.
@@ -20,12 +22,12 @@ if ( ! defined( 'ABSPATH' ) ) { exit; }
  *
  * @return Comment_Model
  *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 function update_remaining_time( $data ) {
 	if ( ! empty( $data->id ) && ! empty( $data->frequency_control ) && ! empty( $data->control_date ) ) {
-		$control_date = \DateTime::createFromFormat( 'd/m/Y', $data->control_date );
+		$control_date = \DateTime::createFromFormat( 'd/m/Y', $data->control_date['date_input']['fr_FR']['date'] );
 		$control_date->modify( '+' . $data->frequency_control . ' day' );
 
 		$date_now = \DateTime::createFromFormat( 'd/m/Y', current_time( 'd/m/Y' ) );
