@@ -3,16 +3,17 @@
  * La liste des commentaires
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  * @copyright 2017 Evarisk
- * @package epi
- * @subpackage view
+ * @package DigiRisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} ?>
 
 <ul class="comment-container">
 	<?php

@@ -4,13 +4,15 @@
  *
  * @package Evarisk\Plugin
  *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) {	exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Initialise les actions princiaples de Digirisk EPI
@@ -103,23 +105,34 @@ class EPI_Core_Action {
 	public function callback_admin_print_scripts_js() {}
 
 	/**
-	 * Initialise le fichier MO du plugin
+	 * Initialise le fichier MO du plugin et les capacitées.
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
 	public function callback_plugins_loaded() {
+		/** Set capability to subscriber by default */
+		$subscriber_role = get_role( 'subscriber' );
+		if ( ! $subscriber_role->has_cap( 'manage_digirisk_epi' ) ) {
+			$subscriber_role->add_cap( 'manage_digirisk_epi', false );
+		}
+
+		/** Set capability to administrator by default */
+		$administrator_role = get_role( 'administrator' );
+		if ( ! $administrator_role->has_cap( 'manage_digirisk_epi' ) ) {
+			$administrator_role->add_cap( 'manage_digirisk_epi', false );
+		}
 	}
 
 	/**
 	 * Initialise le sous menu "EPI" dans le menu Digirisk.
 	 *
 	 * @return void
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
 	public function callback_admin_menu() {
-		add_submenu_page( 'digirisk-simple-risk-evaluation', __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_options', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );
+		add_submenu_page( 'digirisk-simple-risk-evaluation', __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_digirisk_epi', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );
 	}
 }
 

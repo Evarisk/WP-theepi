@@ -4,13 +4,15 @@
  *
  * @package Evarisk\Plugin
  *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.0.0
+ * @version 1.0.1
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) {	exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Gères toutes les actions des EPI.
@@ -31,8 +33,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
@@ -44,6 +46,7 @@ class EPI_Action {
 		ob_start();
 		EPI_Core_Class::g()->display();
 		wp_send_json_success( array(
+			'namespace' => 'digiriskEPI',
 			'module' => 'epi',
 			'callback_success' => 'savedEpiSuccess',
 			'template' => ob_get_clean(),
@@ -55,8 +58,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -69,14 +72,14 @@ class EPI_Action {
 
 		$epi = EPI_Class::g()->get( array(
 			'id' => $id,
-		) );
+		), true );
 
-		$epi = $epi[0];
 		$epi->status = 'trash';
 
 		EPI_Class::g()->update( $epi );
 
 		wp_send_json_success( array(
+			'namespace' => 'digiriskEPI',
 			'module' => 'epi',
 			'callback_success' => 'deletedEpiSuccess',
 		) );
@@ -87,8 +90,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.0.1
 	 */
 	public function ajax_load_epi() {
 		check_ajax_referer( 'load_epi' );
@@ -100,18 +103,16 @@ class EPI_Action {
 		}
 
 		$epi = EPI_Class::g()->get( array(
-			'include' => $id,
-		) );
-
-		$epi = $epi[0];
+			'id' => $id,
+		), true );
 
 		ob_start();
-
 		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array(
 			'epi' => $epi,
 		) );
 
 		wp_send_json_success( array(
+			'namespace' => 'digiriskEPI',
 			'module' => 'epi',
 			'callback_success' => 'loadedEpiSuccess',
 			'template' => ob_get_clean(),

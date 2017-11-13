@@ -1,6 +1,8 @@
 <?php namespace evarisk_epi;
 
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class EPI_Model extends \eoxia\post_model {
 
@@ -42,7 +44,7 @@ class EPI_Model extends \eoxia\post_model {
 				'required'		=> true
 			),
 			'control_date' => array(
-				'type'				=> 'string',
+				'type'				=> 'wpeo_date',
 				'meta_type'		=> 'multiple',
 			),
 			'compiled_remaining_time' => array(
