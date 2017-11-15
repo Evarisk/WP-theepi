@@ -26,7 +26,7 @@ $userdata = get_userdata( $author_id );
 
 	<span class="user"><?php echo esc_html( $userdata->display_name ); ?>, </span>
 	<div class="group-date">
-		<input type="text" class="mysql-date" style="width: 0px; padding: 0px; border: none;" name="list_comment[<?php echo esc_attr( $comment->id ); ?>][date]" value="<?php echo esc_html( $comment->date['date_input']['fr_FR']['date'] ); ?>">
+		<input type="text" class="mysql-date" style="width: 0px; padding: 0px; border: none;" name="list_comment[<?php echo esc_attr( $comment->id ); ?>][date]" value="<?php echo esc_html( $comment->date['date_input']['date'] ); ?>">
 		<input type="text" class="date" placeholder="04/01/2017" value="<?php echo esc_html( $comment->date['date_input']['fr_FR']['date'] ); ?>">
 	</div>
 
