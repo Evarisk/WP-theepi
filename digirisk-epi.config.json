@@ -4,13 +4,17 @@
 	"version": "1.0.1",
 	"description": "L'application Digirisk EPI",
 	"insert_scripts_pages_js": [
-		"digirisk-epi"
+		"digirisk-epi",
+		"digirisk-epi-setting"
 	],
-	"insert_scripts_pages_css": [],
+	"insert_scripts_pages_css": [
+		"digirisk-epi-setting"
+	],
 	"externals": [],
 	"modules": [
 		"core/core.config.json",
-		"modules/epi/epi.config.json"
+		"modules/epi/epi.config.json",
+		"modules/setting/setting.config.json"
 	],
 	"debug": false
 }
