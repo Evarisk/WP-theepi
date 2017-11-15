@@ -24,9 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/evarisk_epi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
 	</td>
 	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
-	<td class="padding w150"><input type="text" name="title" value="<?php echo esc_attr( $epi->title ); ?>" placeholder="Nom" /></td>
-	<td class="padding w150"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" placeholder="Numéro de série" /></td>
-	<td class="padding tooltip red" aria-label="<?php esc_attr_e( 'Le champ doit être au format numérique', 'digirisk' ); ?>"><input type="text" name="frequency_control" value="<?php echo esc_attr( $epi->frequency_control ); ?>" placeholder="10" /></td>
+	<td class="padding w150"><input type="text" name="title" value="<?php echo esc_attr( $epi->title ); ?>" /></td>
+	<td class="padding w150"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" /></td>
+	<td class="padding tooltip red" aria-label="<?php esc_attr_e( 'Le champ doit être au format numérique', 'digirisk' ); ?>"><input type="text" name="frequency_control" value="<?php echo esc_attr( $epi->frequency_control ); ?>" placeholder="" /></td>
 	<td><?php esc_html_e( 'jour(s)', 'digirisk' ); ?></td>
 	<td><?php EPI_Comment_Class::g()->display_edit( $epi ); ?></td>
 	<td><?php echo esc_html( $epi->state ); ?></td>
