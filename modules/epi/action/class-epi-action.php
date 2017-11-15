@@ -5,7 +5,7 @@
  * @package Evarisk\Plugin
  *
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.2.0
  */
 
 namespace evarisk_epi;
@@ -21,11 +21,16 @@ class EPI_Action {
 
 	/**
 	 * Le constructeur
+	 *
+	 * @since 1.0.0
+	 * @version 1.2.0
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_save_epi', array( $this, 'ajax_save_epi' ) );
 		add_action( 'wp_ajax_delete_epi', array( $this, 'ajax_delete_epi' ) );
 		add_action( 'wp_ajax_load_epi', array( $this, 'ajax_load_epi' ) );
+
+		add_action( 'wp_ajax_create_mass_epi', array( $this, 'ajax_create_mass_epi' ) );
 	}
 
 	/**
@@ -117,6 +122,34 @@ class EPI_Action {
 			'callback_success' => 'loadedEpiSuccess',
 			'template' => ob_get_clean(),
 		) );
+	}
+
+	/**
+	 * Pour chaque ID de fichier reçu, créer un EPI.
+	 *
+	 * @since 1.2.0
+	 * @version 1.2.0
+	 *
+	 * @return void
+	 */
+	public function ajax_create_mass_epi() {
+		$files_id = ! empty( $_POST['files_id'] ) ? (array) $_POST['files_id'] : array();
+
+		if ( empty( $files_id ) ) {
+			wp_send_json_error();
+		}
+
+		if ( ! empty( $files_id ) ) {
+			foreach ( $files_id as $file_id ) {
+				$epi = EPI_Class::g()->update( array() );
+
+				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $epi->id, $file_id, '\evarisk_epi\EPI_Class' );
+				\eoxia\WPEO_Upload_Class::g()->associate_file( $epi->id, $file_id, '\evarisk_epi\EPI_Class', 'image' );
+			}
+		}
+
+		EPI_Class::g()->display_epi_list();
+		wp_die();
 	}
 }
 
