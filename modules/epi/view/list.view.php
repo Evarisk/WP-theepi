@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.2.0
  * @copyright 2017 Evarisk
  * @package Digirisk_EPI
  */
@@ -24,4 +24,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 		) );
 		?>
 	<?php endforeach; ?>
-<?php endif; ?>
+<?php endif;
