@@ -3,18 +3,22 @@
  * La vue principale de la page "EPI"
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 1.2.0
+ * @version 1.2.0
  * @copyright 2017 Evarisk
- * @package epi
- * @subpackage view
+ * @package DigiRisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} ?>
 
-<div class="digirisk-wrap">
+<div class="digirisk-wrap digirisk-epi">
+
+	<h1><?php esc_html_e( 'DigiRisk EPI', 'digirisk-epi' ); ?></h1>
+	<a href="#" class="create-mass-epi"><?php esc_html_e( 'Créer en masse', 'digirisk' ); ?></a>
 
 	<table class="table epi">
 		<thead>
