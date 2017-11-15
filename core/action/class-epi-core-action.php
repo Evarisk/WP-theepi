@@ -44,6 +44,7 @@ class EPI_Core_Action {
 		}
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
+		add_action( 'admin_init', array( $this, 'callback_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'callback_admin_menu' ), 20 );
 	}
 
@@ -111,6 +112,17 @@ class EPI_Core_Action {
 	 * @version 1.0.1
 	 */
 	public function callback_plugins_loaded() {
+	}
+
+	/**
+	 * Initialise les capacitées
+	 *
+	 * @since 1.0.2
+	 * @version 1.0.2
+	 *
+	 * @return void
+	 */
+	public function callback_admin_init() {
 		/** Set capability to subscriber by default */
 		$subscriber_role = get_role( 'subscriber' );
 		if ( ! $subscriber_role->has_cap( 'manage_digirisk_epi' ) ) {
@@ -120,7 +132,7 @@ class EPI_Core_Action {
 		/** Set capability to administrator by default */
 		$administrator_role = get_role( 'administrator' );
 		if ( ! $administrator_role->has_cap( 'manage_digirisk_epi' ) ) {
-			$administrator_role->add_cap( 'manage_digirisk_epi', false );
+			$administrator_role->add_cap( 'manage_digirisk_epi', true );
 		}
 	}
 
