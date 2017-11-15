@@ -19,11 +19,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	if ( ! empty( $comments ) ) :
 		foreach ( $comments as $comment ) :
-			\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/item', array(
-				'comment' => $comment,
-				'userdata' => $userdata,
-				'epi' => $epi,
-			) );
+			if ( 0 !== $comment->id ) :
+				\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'comment/item', array(
+					'comment' => $comment,
+					'userdata' => $userdata,
+					'epi' => $epi,
+				) );
+			endif;
 		endforeach;
 	endif;
 
