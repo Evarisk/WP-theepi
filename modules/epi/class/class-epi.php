@@ -55,14 +55,14 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var array
 	 */
-	protected $before_post_function = array( '\digi\construct_identifier' );
+	protected $before_post_function = array( '\evarisk_epi\construct_identifier' );
 
 	/**
 	 * La fonction appelée automatiquement après la récupération de l'objet dans la base de donnée
 	 *
 	 * @var array
 	 */
-	protected $after_get_function = array( '\digi\get_identifier', '\evarisk_epi\update_remaining_time' );
+	protected $after_get_function = array( '\evarisk_epi\get_identifier', '\evarisk_epi\update_remaining_time' );
 
 	/**
 	 * Le préfixe de l'objet dans DigiRisk

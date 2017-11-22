@@ -5,7 +5,7 @@
  * @package Evarisk\Plugin
  *
  * @since 1.0.0
- * @version 1.0.1
+ * @version 1.1.0
  */
 
 namespace evarisk_epi;
@@ -63,10 +63,13 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 1.0.0
+	 * @version 1.1.0
 	 */
-	public function callback_admin_enqueue_scripts_css() {}
+	public function callback_admin_enqueue_scripts_css() {
+		wp_register_style( 'digi-epi-style', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/css/style.min.css', array(), \eoxia\Config_Util::$init['digirisk-epi']->version );
+		wp_enqueue_style( 'digi-epi-style' );
+	}
 
 	/**
 	 * Initialise les fichiers JS inclus dans WordPress (jQuery, wp.media et thickbox)
@@ -144,7 +147,7 @@ class EPI_Core_Action {
 	 * @version 1.0.1
 	 */
 	public function callback_admin_menu() {
-		add_submenu_page( 'digirisk-simple-risk-evaluation', __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_digirisk_epi', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );
+		add_menu_page( __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_digirisk_epi', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );
 	}
 }
 

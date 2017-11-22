@@ -3,8 +3,8 @@ Contributors: Evarisk
 Tags: Evaluation des risques, document unique, risques professionnels, audit risques, risques humains, digirisk, digi risk, evarisk, eva risk, risk, risks, risque, risques
 Donate link: http://www.evarisk.com/document-unique-logiciel
 Requires at least: 4.4
-Tested up to: 4.8.3
-Stable tag: 1.0.1
+Tested up to: 4.9.0
+Stable tag: 1.1.0
 
 Le plugin Digirisk EPI vous permet de gérer vos EPI
 

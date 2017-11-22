@@ -10,7 +10,7 @@ namespace evarisk_epi;
  * Plugin Name: Digirisk EPI
  * Plugin URI:  http://www.evarisk.com/document-unique-logiciel
  * Description: Gérer vos EPI en toute simplicité avec ce plugin complémentaire à Digirisk.
- * Version:     1.0.1
+ * Version:     1.1.0-beta
  * Author:      Evarisk
  * Author URI:  http://www.evarisk.com
  * License:     GPL2
@@ -23,6 +23,6 @@ DEFINE( 'PLUGIN_DIGIRISK_EPI_PATH', realpath( plugin_dir_path( __FILE__ ) ) . '/
 DEFINE( 'PLUGIN_DIGIRISK_EPI_URL', plugins_url( basename( __DIR__ ) ) . '/' );
 DEFINE( 'PLUGIN_DIGIRISK_EPI_DIR', basename( __DIR__ ) );
 
-if ( class_exists( '\eoxia\Init_Util' ) ) {
-	\eoxia\Init_Util::g()->exec( PLUGIN_DIGIRISK_EPI_PATH, basename( __FILE__, '.php' ) );
-}
+require_once( 'core/external/eo-framework/eo-framework.php' );
+
+\eoxia\Init_Util::g()->exec( PLUGIN_DIGIRISK_EPI_PATH, basename( __FILE__, '.php' ) );

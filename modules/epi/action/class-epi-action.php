@@ -143,8 +143,17 @@ class EPI_Action {
 			foreach ( $files_id as $file_id ) {
 				$epi = EPI_Class::g()->update( array() );
 
-				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $epi->id, $file_id, '\evarisk_epi\EPI_Class' );
-				\eoxia\WPEO_Upload_Class::g()->associate_file( $epi->id, $file_id, '\evarisk_epi\EPI_Class', 'image' );
+				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
+					'id' => $epi->id,
+					'file_id' => $file_id,
+					'model_name' => '\evarisk_epi\EPI_Class',
+				) );
+				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
+					'id' => $epi->id,
+					'file_id' => $file_id,
+					'model_name' => '\evarisk_epi\EPI_Class',
+					'field_name' => 'image',
+				) );
 			}
 		}
 

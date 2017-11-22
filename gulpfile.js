@@ -54,8 +54,8 @@ gulp.task('js_frontend', function() {
 })
 
 gulp.task('default', function() {
-	// gulp.watch(paths.scss_backend[0], ["build_scss_backend"]);
-	// gulp.watch(paths.scss_backend[0], ["build_scss_backend_min"]);
+	gulp.watch(paths.scss_backend[0], ["build_scss_backend"]);
+	gulp.watch(paths.scss_backend[0], ["build_scss_backend_min"]);
 	gulp.watch(paths.all_js, ["js"]);
-	gulp.watch(paths.frontend_js, ["js_frontend"]);
+	// gulp.watch(paths.frontend_js, ["js_frontend"]);
 });

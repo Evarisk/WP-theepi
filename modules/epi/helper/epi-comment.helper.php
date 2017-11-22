@@ -18,7 +18,6 @@ function update_control_date( $data ) {
 	), true );
 
 	$last_comment = ! empty( $_POST['list_comment'] ) ? max ( $_POST['list_comment'] ) : array();
-
 	if ( ! empty( $last_comment ) ) {
 		$epi->control_date = $last_comment['date'];
 		$epi->state = $last_comment['state'];
