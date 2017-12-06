@@ -1,50 +1,62 @@
-=== Digirisk EPI ===
+﻿=== TheEPI ===
 Contributors: Evarisk
-Tags: Evaluation des risques, document unique, risques professionnels, audit risques, risques humains, digirisk, digi risk, evarisk, eva risk, risk, risks, risque, risques
-Donate link: http://www.evarisk.com/document-unique-logiciel
-Requires at least: 4.4
-Tested up to: 4.9.0
-Stable tag: 1.1.0
+Tags: TRacking, PPE, Safety
+Donate link: https://www.evarisk.com
+Requires at least: 4.5
+Tested up to: 4.9.1
+Requires PHP: 5.6.3
+Stable tag: 0.2.0
+License: GPLv3 or later
 
-Le plugin Digirisk EPI vous permet de gérer vos EPI
+TheEPI is the open source software for the daily management of your PPE. Ensure the traceability of the PPE, the monitoring of the maintenance operations and the state of the PPE
 
 == Description ==
 
-Le plugin Digirisk EPI vous permet de gérer vos EPI.
+TheEPI is the open source software for the daily management of your PPE.
+1) Take the PPE in photo
+2) Enter the serial number
+3) Put all the maintenance operation
+4) Follow all the information for all your PPE on one very easy dashboard
+5) Export everyting in a "libreoffice.org" file for quality controls
 
 == Installation ==
 
-L'installation du plugin peut se faire de 3 façons :
+The installation of the plugin can be done in two ways:
 
-* Méthode 1 : Vous WordPress (sans acces internet)
+* Method 1
+1. Download the zip file from the WordPress website
+2. Send the "fresh" folder to the `/ wp-content / plugins /` directory
+3. Activate the plugin in the "Extensions" menu of WordPress
 
-1. Téléchargez `digirisk_VX.X.X.zip`
-2. Uploader le dossier `digirisk` dans le répertoire `/wp-content/plugins/`
-3. Activer le plugin dans le menu `Extensions` de Wordpress
-
-* Méthode 2 : Vous WordPress (avec un acces internet)
-
-1. Rechercher l'extension Digirisk à partir du menu "Extension" de Wordpress
-2. Lancer l'installation du plugin
+* Method 2
+1. Search the plugin "theEPI" from the menu "Extensions" of WordPress
+2. Start the installation of the plugin
 
 == Frequently Asked Questions ==
 
+
 == Screenshots ==
+
+1. Dashboard
+2. X
+
 
 == Changelog ==
 
-* Veillez à bien sauvegarder vos données avant d'effectuer une mise à jour du plugin
+= Version 0.2.0 =
 
-= Version 1.0.1 =
+Initial WordPress Release.
 
-Corrections
+== Upgrade Notice ==
 
-Mise à jour vers EO-Framework.
-
-= Version 1.0.0 =
-
-Initialisation du plugin sur le dépôt de WordPress.
+1) Save your data
+2) Test your backups!
+3) Check the tests of the backups !!
+4) Make sure of yours Backups !!!
+Our plugins are made with Love but sometimes Love is badly done ;)
+5) Click update
 
 == Contactez l'auteur ==
 
+https://github.com/Evarisk/theepi
 dev@evarisk.com
