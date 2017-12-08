@@ -3,8 +3,8 @@
  * Les actions relatives aux réglages de DigiRisk.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.2.0
- * @version 1.2.0
+ * @since 0.2.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk
  */
@@ -23,8 +23,8 @@ class Setting_Action {
 	/**
 	 * Le constructeur
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
@@ -39,8 +39,8 @@ class Setting_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 */
 	public function admin_menu() {
 		add_options_page( 'DigiRisk EPI', 'DigiRisk EPI', 'manage_digirisk_epi', 'digirisk-epi-setting', array( $this, 'add_option_page' ) );
@@ -50,8 +50,8 @@ class Setting_Action {
 	 * Appelle la vue main du module setting avec la liste des accronymes
 	 * et la liste des catégories de risque prédéfinies.
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 */
 	public function add_option_page() {
 		$default_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'digi-capability';
@@ -64,8 +64,8 @@ class Setting_Action {
 	/**
 	 * Rajoutes la capacité "manager_digirisk_epi" à tous les utilisateurs ou $have_capability est à true.
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 *
 	 * @return void
 	 */

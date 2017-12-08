@@ -9,8 +9,8 @@ namespace evarisk_epi;
  *
  * @return array $data
  *
- * @since 1.0.0
- * @version 1.0.1
+ * @since 0.1.0
+ * @version 0.1.0
  */
 function update_control_date( $data ) {
 	$epi = EPI_Class::g()->get( array(

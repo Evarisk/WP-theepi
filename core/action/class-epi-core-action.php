@@ -1,11 +1,12 @@
 <?php
 /**
- * Initialise les actions princiaples de Digirisk EPI
+ * Les actions principales du plugin.
  *
- * @package Evarisk\Plugin
- *
- * @since 1.0.0
- * @version 1.1.0
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @since 0.1.0
+ * @version 0.2.0
+ * @copyright 2017 Evarisk
+ * @package Digirisk_EPI
  */
 
 namespace evarisk_epi;
@@ -20,27 +21,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 class EPI_Core_Action {
 
 	/**
-	 * Le constructeur ajoutes les actions WordPress suivantes:
-	 * admin_enqueue_scripts (Pour appeller les scripts JS et CSS dans l'admin)
-	 * admin_print_scripts (Pour appeler les scripts JS en bas du footer)
-	 * plugins_loaded (Pour appeler le domaine de traduction)
+	 * Le constructeur
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function __construct() {
 		// Initialises ses actions que si nous sommes sur une des pages réglés dans le fichier digirisk.config.json dans la clé "insert_scripts_pages".
 		$page = ( ! empty( $_REQUEST['page'] ) ) ? sanitize_text_field( $_REQUEST['page'] ) : ''; // WPCS: CSRF ok.
 
 		if ( in_array( $page, \eoxia\Config_Util::$init['digirisk-epi']->insert_scripts_pages_css, true ) ) {
-			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_css' ), 10 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_css' ), 11 );
 		}
 
 		if ( in_array( $page, \eoxia\Config_Util::$init['digirisk-epi']->insert_scripts_pages_js, true ) ) {
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_before_admin_enqueue_scripts_js' ), 10 );
 			add_action( 'admin_enqueue_scripts', array( $this, 'callback_admin_enqueue_scripts_js' ), 11 );
-			add_action( 'admin_print_scripts', array( $this, 'callback_admin_print_scripts_js' ) );
 		}
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
@@ -49,26 +45,17 @@ class EPI_Core_Action {
 	}
 
 	/**
-	 * Initialise les fichiers CSS inclus dans WordPress (jQuery, wp.media et thickbox)
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_before_admin_enqueue_scripts_css() {}
-
-	/**
 	 * Initialise le fichier style.min.css du plugin Digirisk-EPI.
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0
-	 * @version 1.1.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function callback_admin_enqueue_scripts_css() {
 		wp_register_style( 'digi-epi-style', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/css/style.min.css', array(), \eoxia\Config_Util::$init['digirisk-epi']->version );
 		wp_enqueue_style( 'digi-epi-style' );
+		wp_enqueue_style( 'digi-datepicker', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/css/jquery.datetimepicker.css', array(), \eoxia\Config_Util::$init['digirisk-epi']->version );
 	}
 
 	/**
@@ -76,8 +63,8 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function callback_before_admin_enqueue_scripts_js() {
 		wp_enqueue_script( 'jquery' );
@@ -91,28 +78,19 @@ class EPI_Core_Action {
 	 *
 	 * @return void nothing
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function callback_admin_enqueue_scripts_js() {
+		wp_enqueue_script( 'digi-epi-datetimepicker-script', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/js/jquery.datetimepicker.full.js', array(), \eoxia\Config_Util::$init['digirisk-epi']->version );
 		wp_enqueue_script( 'digi-epi-script', PLUGIN_DIGIRISK_EPI_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['digirisk-epi']->version, false );
 	}
 
 	/**
-	 * Initialise en php le fichier permettant la traduction des variables string JavaScript.
-	 *
-	 * @return void nothing
-	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
-	 */
-	public function callback_admin_print_scripts_js() {}
-
-	/**
 	 * Initialise le fichier MO du plugin et les capacitées.
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @since 0.1.0
+	 * @version 0.2.0
 	 */
 	public function callback_plugins_loaded() {
 	}
@@ -120,8 +98,8 @@ class EPI_Core_Action {
 	/**
 	 * Initialise les capacitées
 	 *
-	 * @since 1.0.2
-	 * @version 1.0.2
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 *
 	 * @return void
 	 */
@@ -142,12 +120,13 @@ class EPI_Core_Action {
 	/**
 	 * Initialise le sous menu "EPI" dans le menu Digirisk.
 	 *
+	 * @since 0.1.0
+	 * @version 0.2.0
+	 *
 	 * @return void
-	 * @since 1.0.0
-	 * @version 1.0.1
 	 */
 	public function callback_admin_menu() {
-		add_menu_page( __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_digirisk_epi', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ) );
+		add_menu_page( __( 'EPI', 'digirisk' ), __( 'EPI', 'digirisk' ), 'manage_digirisk_epi', 'digirisk-epi', array( EPI_Core_Class::g(), 'display' ), 'dashicons-admin-tools' );
 	}
 }
 

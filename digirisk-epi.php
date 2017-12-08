@@ -10,7 +10,7 @@ namespace evarisk_epi;
  * Plugin Name: Digirisk EPI
  * Plugin URI:  http://www.evarisk.com/document-unique-logiciel
  * Description: Gérer vos EPI en toute simplicité avec ce plugin complémentaire à Digirisk.
- * Version:     1.1.0-beta
+ * Version:     0.2.0-beta
  * Author:      Evarisk
  * Author URI:  http://www.evarisk.com
  * License:     GPL2

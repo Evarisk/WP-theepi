@@ -1,8 +1,8 @@
 /**
  * Initialise l'objet "setting" ainsi que la méthode "init" obligatoire pour la bibliothèque EoxiaJS.
  *
- * @since 6.0.0
- * @version 6.4.0
+ * @since 0.2.0
+ * @version 0.2.0
  */
 window.eoxiaJS.digiriskEPI.setting = {};
 
@@ -20,8 +20,8 @@ window.eoxiaJS.digiriskEPI.setting.event = function() {
  * @param  {ClickEvent} event [description]
  * @return {void}
  *
- * @since 6.4.0
- * @version 6.4.0
+ * @since 0.2.0
+ * @version 0.2.0
  */
 window.eoxiaJS.digiriskEPI.setting.pagination = function( event ) {
 	var href = jQuery( this ).attr( 'href' ).split( '&' );
@@ -50,8 +50,8 @@ window.eoxiaJS.digiriskEPI.setting.pagination = function( event ) {
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
  * @return {void}
  *
- * @since 6.4.0
- * @version 6.4.0
+ * @since 0.2.0
+ * @version 0.2.0
  */
 window.eoxiaJS.digiriskEPI.setting.savedCapability = function( triggeredElement, response ) {
 };

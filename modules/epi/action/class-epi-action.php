@@ -1,11 +1,12 @@
 <?php
 /**
- * Gères toutes les actions des EPI.
+ * Gères les actions des EPI.
  *
- * @package Evarisk\Plugin
- *
- * @since 1.0.0
- * @version 1.2.0
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @since 0.1.0
+ * @version 0.2.0
+ * @copyright 2017 Evarisk
+ * @package DigiRisk_EPI
  */
 
 namespace evarisk_epi;
@@ -22,8 +23,8 @@ class EPI_Action {
 	/**
 	 * Le constructeur
 	 *
-	 * @since 1.0.0
-	 * @version 1.2.0
+	 * @since 0.1.0
+	 * @version 0.2.0
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_save_epi', array( $this, 'ajax_save_epi' ) );
@@ -36,25 +37,37 @@ class EPI_Action {
 	/**
 	 * Sauvegardes un EPI
 	 *
-	 * @return void
+	 * @since 0.1.0
+	 * @version 0.2.0
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @return void
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
 		$epi = EPI_Class::g()->update( $_POST );
 
+		if ( ! empty( $_POST['image'] ) ) {
+			$args_media = array(
+				'id'         => $epi->id,
+				'file_id'    => (int) $_POST['image'],
+				'model_name' => '\evarisk_epi\EPI_Class',
+			);
+
+			\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $args_media );
+			$args_media['field_name'] = 'image';
+			\eoxia\WPEO_Upload_Class::g()->associate_file( $args_media );
+		}
+
 		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
 
 		ob_start();
 		EPI_Core_Class::g()->display();
 		wp_send_json_success( array(
-			'namespace' => 'digiriskEPI',
-			'module' => 'epi',
+			'namespace'        => 'digiriskEPI',
+			'module'           => 'epi',
 			'callback_success' => 'savedEpiSuccess',
-			'template' => ob_get_clean(),
+			'template'         => ob_get_clean(),
 		) );
 	}
 
@@ -63,8 +76,8 @@ class EPI_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -93,10 +106,10 @@ class EPI_Action {
 	/**
 	 * Charges les données d'un EPI
 	 *
-	 * @return void
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @return void
 	 */
 	public function ajax_load_epi() {
 		check_ajax_referer( 'load_epi' );
@@ -127,8 +140,8 @@ class EPI_Action {
 	/**
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.1.0
+	 * @version 0.2.0
 	 *
 	 * @return void
 	 */
@@ -144,13 +157,13 @@ class EPI_Action {
 				$epi = EPI_Class::g()->update( array() );
 
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
-					'id' => $epi->id,
-					'file_id' => $file_id,
+					'id'         => $epi->id,
+					'file_id'    => $file_id,
 					'model_name' => '\evarisk_epi\EPI_Class',
 				) );
 				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
-					'id' => $epi->id,
-					'file_id' => $file_id,
+					'id'         => $epi->id,
+					'file_id'    => $file_id,
 					'model_name' => '\evarisk_epi\EPI_Class',
 					'field_name' => 'image',
 				) );

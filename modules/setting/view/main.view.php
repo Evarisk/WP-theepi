@@ -3,8 +3,8 @@
  * Gestion des onglets dans la page "digirisk-epi-setting".
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.2.0
- * @version 1.2.0
+ * @since 0.2.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk
  */

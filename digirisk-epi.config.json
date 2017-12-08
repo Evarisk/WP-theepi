@@ -1,7 +1,7 @@
 {
 	"name": "Digirisk EPI",
 	"slug": "digirisk-epi",
-	"version": "1.1.0",
+	"version": "0.1.0",
 	"description": "L'application Digirisk EPI",
 	"insert_scripts_pages_js": [
 		"digirisk-epi",

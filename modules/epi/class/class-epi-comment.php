@@ -3,8 +3,8 @@
  * Classe gérant les commentaires des EPI
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0
- * @version 1.0.1
+ * @since 0.1.0
+ * @version 0.1.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk_EPI
  */
@@ -76,8 +76,8 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function display( $epi ) {
 		$comments = self::g()->get( array(
@@ -103,8 +103,8 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function display_edit( $epi ) {
 		$comments = array();
@@ -142,14 +142,14 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 *
 	 * @return boolean
 	 *
-	 * @since 1.0.0
-	 * @version 1.0.1
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function save_comments( $epi_id, $data ) {
 		if ( isset( $epi_id ) ) {
 			if ( ! empty( $data ) ) {
 				foreach ( $data as $comment ) {
-					if ( ! empty( $comment['content'] ) ) {
+					if ( isset( $comment['content'] ) ) {
 						$comment['post_id'] = $epi_id;
 						self::g()->update( $comment );
 					}

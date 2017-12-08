@@ -3,8 +3,8 @@
  * Le formulaire pour éditer ou ajouter un EPI.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0
- * @version 1.0.1
+ * @since 0.1.0
+ * @version 0.1.0
  * @copyright 2017 Evarisk
  * @package DigiRisk_EPI
  */
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php if ( 0 !== $epi->id ) : ?>
 				<div data-parent="epi-row" data-namespace="digiriskEPI" data-module="epi" data-before-method="checkData" data-loader="table" class="button w50 green save action-input"><i class="icon fa fa-floppy-o"></i></div>
 			<?php else : ?>
-				<div data-module="epi" data-namespace="digiriskEPI" data-before-method="checkData" data-loader="table" data-parent="epi-row" class="button w50 blue add action-input progress"><i class="icon fa fa-plus"></i></div>
+				<div data-module="epi" data-namespace="digiriskEPI" data-before-method="checkData" data-loader="table" data-parent="epi-row" class="button w50 disable add action-input progress"><i class="icon fa fa-plus"></i></div>
 			<?php endif; ?>
 		</div>
 	</td>

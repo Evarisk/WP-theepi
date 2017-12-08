@@ -3,8 +3,8 @@
  * Affichage pour gérer les capacités des utilisateurs.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 6.4.0
- * @version 6.4.0
+ * @since 0.2.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk
  */

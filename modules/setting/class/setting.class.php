@@ -3,8 +3,8 @@
  * Classe gérant les configurations de DigiRisk.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.2.0
- * @version 1.2.0
+ * @since 0.2.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk_EPI
  */
@@ -34,16 +34,16 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 *
 	 * @return void
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 */
 	protected function construct() {}
 
 	/**
 	 * Récupère le role "subscriber" et appel la vue "capability/has-cap".
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 *
 	 * @return void
 	 */
@@ -58,8 +58,8 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	/**
 	 * Récupères la liste des utilisateurs pour les afficher dans la vue "capability/list".
 	 *
-	 * @since 1.2.0
-	 * @version 1.2.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 *
 	 * @param array $list_user_id La liste des utilisateurs à afficher. Peut être vide pour récupérer tous les utilisateurs.
 	 *

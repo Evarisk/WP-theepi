@@ -1,14 +1,19 @@
 <?php
 /**
- * Les EPI
+ * Classe des EPI.
  *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @copyright 2017 Evarisk
+ * @package DigiRisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Les EPI
@@ -20,21 +25,21 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var string
 	 */
-	protected $model_name   = '\evarisk_epi\epi_model';
+	protected $model_name = '\evarisk_epi\epi_model';
 
 	/**
 	 * Le post type
 	 *
 	 * @var string
 	 */
-	protected $post_type    = 'digi-epi';
+	protected $post_type = 'digi-epi';
 
 	/**
 	 * La clé principale du modèle
 	 *
 	 * @var string
 	 */
-	protected $meta_key    	= '_wpdigi_epi';
+	protected $meta_key = '_wpdigi_epi';
 
 	/**
 	 * La route pour accéder à l'objet dans la rest API
@@ -88,8 +93,8 @@ class EPI_Class extends \eoxia\Post_Class {
 	/**
 	 * Le constructeur
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	protected function construct() {
 		parent::construct();
@@ -101,11 +106,11 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	public function display_epi_list() {
-		$epi_list = EPI_Class::g()->get();
+		$epi_list = self::g()->get();
 		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'list', array(
 			'epi_list' => $epi_list,
 		) );

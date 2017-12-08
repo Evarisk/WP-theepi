@@ -1,27 +1,30 @@
 <?php
 /**
- * La classe principale de l'application.
+ * Classe principale du plugin.
  *
- * @package Evarisk\Plugin
- *
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @author Jimmy Latour <jimmy@evarisk.com>
+ * @since 0.1.0
+ * @version 0.2.0
+ * @copyright 2017 Evarisk
+ * @package Digirisk_EPI
  */
 
 namespace evarisk_epi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
- * Appelle la vue permettant d'afficher la navigation
+ * Classe principale du plugin.
  */
 class EPI_Core_Class extends \eoxia\Singleton_Util {
 
 	/**
 	 * Le constructeur
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.1.0
 	 */
 	protected function construct() {}
 
@@ -30,8 +33,8 @@ class EPI_Core_Class extends \eoxia\Singleton_Util {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0.0
-	 * @version 1.0.0.0
+	 * @since 0.1.0
+	 * @version 0.2.0
 	 */
 	public function display() {
 		$epi_schema = EPI_Class::g()->get( array(
@@ -40,7 +43,7 @@ class EPI_Core_Class extends \eoxia\Singleton_Util {
 
 		$epi_schema = $epi_schema[0];
 
-		require( PLUGIN_DIGIRISK_EPI_PATH . '/core/view/main.view.php' );
+		require PLUGIN_DIGIRISK_EPI_PATH . '/core/view/main.view.php';
 	}
 }
 

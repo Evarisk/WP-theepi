@@ -3,8 +3,8 @@
  * Affichage de la liste des utilisateurs pour affecter les capacités
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.2.0
- * @version 1.2.0
+ * @since 0.2.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
  * @package DigiRisk-EPI
  */
