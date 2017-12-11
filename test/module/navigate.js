@@ -5,7 +5,7 @@ module.exports.goToLogin = function(nightmare, cb) {
 	describe('Login', function() {
 		it('It shoud login', function(done) {
 			nightmare
-				.goto('http://127.0.0.1/wordpress-mi/wp-admin')
+				.goto('http://127.0.0.1/wordpress-mu/wp-admin')
 				.wait('#login')
 				.type('input[name="log"]', 'a')
 				.type('input[name="pwd"]', 'a')
