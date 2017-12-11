@@ -1,15 +1,15 @@
 <?php
 /**
- * Helper du modèle commentaire des EPI
+ * Helper du modèle des EPI
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return Comment_Model
  *
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  */
 function update_remaining_time( $data ) {
 	if ( ! empty( $data->id ) && ! empty( $data->frequency_control ) && ! empty( $data->control_date ) ) {
@@ -36,17 +36,16 @@ function update_remaining_time( $data ) {
 		$result = '';
 
 		if ( $interval->format( '%R' ) === '+' ) {
-			$result = '<span class=\'time-ok\'><i class=\'fa fa-calendar-o\' aria-hidden=\'true\'></i> ';
-			$result .= $interval->format( '%a jours' );
+			$result  = '<span class=\'time-ok\'><i class=\'fa fa-calendar-o\' aria-hidden=\'true\'></i> ';
+			$result .= $interval->format( '%a days' );
 			$result .= '</span>';
 		} else {
-			$result = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
-			$result .= $interval->format( '%a jours' );
+			$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
+			$result .= $interval->format( '%a days' );
 			$result .= '</span>';
 
 			$data->state = 'KO';
 		}
-
 
 		$data->compiled_remaining_time = $result;
 	}

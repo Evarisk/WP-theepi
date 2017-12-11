@@ -6,10 +6,10 @@
  * @since 0.2.0
  * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,11 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="section-capability">
 	<input type="hidden" name="action" value="save_capability_epi" />
-	<?php wp_nonce_field( 'save_capabilitye_pi' ); ?>
+	<?php wp_nonce_field( 'save_capability_epi' ); ?>
 
-	<h3><?php esc_html_e( 'Gestion des droits de DigiRisk EPI', 'digirisk-epi' ); ?></h3>
+	<h3><?php esc_html_e( 'Gestion des droits de DigiRisk EPI', 'theepi' ); ?></h3>
 
-	<p><?php esc_html_e( 'Définissez les droits d\'accés à l\'application DigiRisk EPI', 'digirisk-epi' ); ?></p>
+	<p><?php esc_html_e( 'Définissez les droits d\'accés à l\'application DigiRisk EPI', 'theepi' ); ?></p>
 
 	<?php Setting_Class::g()->display_role_has_cap(); ?>
 
@@ -29,5 +29,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php Setting_Class::g()->display_user_list_capacity(); ?>
 
-	<a href="#" class="margin action-input button blue right" data-parent="section-capability"><?php esc_html_e( 'Enregistrer', 'digirisk-epi' ); ?></a>
+	<a href="#" class="margin action-input button blue right" data-parent="section-capability"><?php esc_html_e( 'Enregistrer', 'theepi' ); ?></a>
 </div>

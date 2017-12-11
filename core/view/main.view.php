@@ -4,12 +4,12 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,21 +17,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="digirisk-wrap digirisk-epi">
 
-	<h1><?php esc_html_e( 'DigiRisk EPI', 'digirisk-epi' ); ?></h1>
-	<a href="#" class="create-mass-epi"><?php esc_html_e( 'Créer en masse', 'digirisk' ); ?></a>
+	<h1><?php esc_html_e( 'TheEPI', 'theepi' ); ?></h1>
+	<a href="#" class="create-mass-epi"><?php esc_html_e( 'Create mass from image', 'theepi' ); ?></a>
 
 	<table class="table epi">
 		<thead>
 			<tr>
 				<th class="w50"></th>
-				<th class="w50 padding"><span><?php esc_html_e( 'ID', 'digirisk' ); ?></span></th>
-				<th class="wm130 padding"><span><?php esc_html_e( 'Nom', 'digirisk' ); ?></span></th>
-				<th class="padding"><span><?php esc_html_e( 'N° serie', 'digirisk' ); ?></span></th>
-				<th class="padding"><span><?php esc_html_e( 'Périod. de contrôle', 'digirisk' ); ?></span></th>
+				<th class="w50 padding"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></th>
+				<th class="wm130 padding"><span><?php esc_html_e( 'Name', 'theepi' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Serial number', 'theepi' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
 				<th class="w50"></th>
-				<th class="padding"><span><?php esc_html_e( 'Date de dernier contrôle', 'digirisk' ); ?></span></th>
-				<th class="padding"><span>État</span></th>
-				<th class="padding"><span><?php esc_html_e( 'Reste', 'digirisk' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Date of last check', 'theepi' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'State', 'theepi' ); ?></span></th>
+				<th class="padding"><span><?php esc_html_e( 'Remaining time', 'theepi' ); ?></span></th>
 				<th class="w50"></th>
 			</tr>
 		</thead>
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</tbody>
 
 		<tfoot>
-			<?php \eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
+			<?php \eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
 		</tfoot>
 	</table>
 </div>

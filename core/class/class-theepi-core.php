@@ -6,10 +6,10 @@
  * @since 0.1.0
  * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package Digirisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Classe principale du plugin.
  */
-class EPI_Core_Class extends \eoxia\Singleton_Util {
+class Class_TheEPI_Core extends \eoxia\Singleton_Util {
 
 	/**
 	 * Le constructeur
@@ -39,12 +39,10 @@ class EPI_Core_Class extends \eoxia\Singleton_Util {
 	public function display() {
 		$epi_schema = EPI_Class::g()->get( array(
 			'schema' => true,
-		) );
+		), true );
 
-		$epi_schema = $epi_schema[0];
-
-		require PLUGIN_DIGIRISK_EPI_PATH . '/core/view/main.view.php';
+		require PLUGIN_THEEPI_PATH . '/core/view/main.view.php';
 	}
 }
 
-new EPI_Core_Class();
+new Class_TheEPI_Core();

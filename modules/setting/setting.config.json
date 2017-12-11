@@ -2,7 +2,7 @@
 	"name": "Setting",
 	"slug": "setting",
 	"version": "0.2.0",
-	"description": "Le module gérant les configuration de Digirisk EPI",
+	"description": "Handle TheEPI settings",
 	"path": "modules/setting/",
 	"state": true,
 	"dependencies": {

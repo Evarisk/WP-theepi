@@ -1,15 +1,15 @@
 {
-	"name": "Digirisk EPI",
-	"slug": "digirisk-epi",
-	"version": "0.1.0",
-	"description": "L'application Digirisk EPI",
+	"name": "TheEPI",
+	"slug": "theepi",
+	"version": "0.2.0",
+	"description": "L'application TheEPI",
 	"insert_scripts_pages_js": [
-		"digirisk-epi",
-		"digirisk-epi-setting"
+		"theepi",
+		"theepi-setting"
 	],
 	"insert_scripts_pages_css": [
-		"digirisk-epi",
-		"digirisk-epi-setting"
+		"theepi",
+		"theepi-setting"
 	],
 	"externals": [],
 	"modules": [

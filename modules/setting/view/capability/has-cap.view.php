@@ -6,10 +6,10 @@
  * @since 0.2.0
  * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

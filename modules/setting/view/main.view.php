@@ -6,21 +6,21 @@
  * @since 0.2.0
  * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
 <div class="wrap">
-	<h1><?php esc_html_e( 'Digirisk EPI settings', 'digirisk' ); ?></h1>
+	<h1><?php esc_html_e( 'Digirisk EPI settings', 'theepi' ); ?></h1>
 
 	<div class="digirisk-wrap">
 		<div id="digi-capability" class="tab-content <?php echo ( 'digi-capability' === $default_tab ) ? '' : 'hidden'; ?>">
-			<?php \eoxia\View_Util::exec( 'digirisk-epi', 'setting', 'capability/main' ); ?>
+			<?php \eoxia\View_Util::exec( 'theepi', 'setting', 'capability/main' ); ?>
 		</div>
 	</div>
 </div>

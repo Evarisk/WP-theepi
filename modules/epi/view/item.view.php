@@ -4,12 +4,12 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package Digirisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr>
 	<td class="w50">
-		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/evarisk_epi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
+		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/theepi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
 	</td>
 	<td class="w50 padding"><?php echo esc_html( $epi->unique_identifier ); ?></td>
 	<td class="padding"><?php echo esc_html( $epi->title ); ?></td>

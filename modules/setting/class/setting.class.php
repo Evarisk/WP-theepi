@@ -6,10 +6,10 @@
  * @since 0.2.0
  * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -50,7 +50,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	public function display_role_has_cap() {
 		$role_subscriber = get_role( 'subscriber' );
 
-		\eoxia\View_Util::exec( 'digirisk-epi', 'setting', 'capability/has-cap', array(
+		\eoxia\View_Util::exec( 'theepi', 'setting', 'capability/has-cap', array(
 			'role_subscriber' => $role_subscriber,
 		) );
 	}
@@ -96,7 +96,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 			}
 		}
 
-		\eoxia\View_Util::exec( 'digirisk-epi', 'setting', 'capability/list', array(
+		\eoxia\View_Util::exec( 'theepi', 'setting', 'capability/list', array(
 			'users' => $users,
 			'has_capacity_in_role' => $has_capacity_in_role,
 			'number_page' => $number_page,

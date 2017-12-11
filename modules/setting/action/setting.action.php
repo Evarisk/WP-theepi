@@ -1,22 +1,22 @@
 <?php
 /**
- * Les actions relatives aux réglages de DigiRisk.
+ * Les actions relatives aux réglages de TheEPI.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
  * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Les actions relatives aux réglages de DigiRisk.
+ * Les actions relatives aux réglages de TheEPI.
  */
 class Setting_Action {
 
@@ -43,7 +43,7 @@ class Setting_Action {
 	 * @version 0.2.0
 	 */
 	public function admin_menu() {
-		add_options_page( 'DigiRisk EPI', 'DigiRisk EPI', 'manage_digirisk_epi', 'digirisk-epi-setting', array( $this, 'add_option_page' ) );
+		add_options_page( __( 'TheEPI', 'theepi' ), 'theepi', 'manage_theepi', 'theepi-setting', array( $this, 'add_option_page' ) );
 	}
 
 	/**
@@ -56,7 +56,7 @@ class Setting_Action {
 	public function add_option_page() {
 		$default_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'digi-capability';
 
-		\eoxia\View_Util::exec( 'digirisk-epi', 'setting', 'main', array(
+		\eoxia\View_Util::exec( 'theepi', 'setting', 'main', array(
 			'default_tab' => $default_tab,
 		) );
 	}
@@ -85,8 +85,8 @@ class Setting_Action {
 		}
 
 		wp_send_json_success( array(
-			'namespace' => 'digirisk',
-			'module' => 'setting',
+			'namespace'        => 'theEPI',
+			'module'           => 'setting',
 			'callback_success' => 'savedCapability',
 		) );
 	}
@@ -98,8 +98,8 @@ class Setting_Action {
 	 * @param  array   $list_user_id Le tableau des ID des évaluateurs trouvés par la recherche.
 	 * @return void
 	 *
-	 * @since 6.4.0
-	 * @version 6.4.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 */
 	public function callback_display_setting_user_epi( $id, $list_user_id ) {
 		ob_start();
@@ -113,8 +113,8 @@ class Setting_Action {
 	/**
 	 * Gestion de la pagination
 	 *
-	 * @since 6.4.0
-	 * @version 6.4.0
+	 * @since 0.2.0
+	 * @version 0.2.0
 	 *
 	 * @return void
 	 */

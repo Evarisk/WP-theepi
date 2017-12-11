@@ -4,12 +4,12 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2015-2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -23,10 +23,10 @@ class EPI_Comment_Model extends \eoxia\comment_model {
 	/**
 	 * Le constructeur
 	 *
-	 * @param EPI_Comment_Class $object les données du commentaire de l'epi.
-	 *
 	 * @since 0.1.0
-	 * @version 0.1.0
+	 * @version 0.2.0
+	 *
+	 * @param EPI_Comment_Class $object les données du commentaire de l'epi.
 	 */
 	public function __construct( $object ) {
 		$this->model['state'] = array(

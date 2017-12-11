@@ -4,14 +4,14 @@
  * @since 0.2.0
  * @version 0.2.0
  */
-window.eoxiaJS.digiriskEPI.setting = {};
+window.eoxiaJS.theEPI.setting = {};
 
-window.eoxiaJS.digiriskEPI.setting.init = function() {
-	window.eoxiaJS.digiriskEPI.setting.event();
+window.eoxiaJS.theEPI.setting.init = function() {
+	window.eoxiaJS.theEPI.setting.event();
 };
 
-window.eoxiaJS.digiriskEPI.setting.event = function() {
-	jQuery( document ).on( 'click', '.settings_page_digirisk-epi-setting .list-users .wp-digi-pagination a', window.eoxiaJS.digiriskEPI.setting.pagination );
+window.eoxiaJS.theEPI.setting.event = function() {
+	jQuery( document ).on( 'click', '.settings_page_digirisk-epi-setting .list-users .wp-digi-pagination a', window.eoxiaJS.theEPI.setting.pagination );
 };
 
 /**
@@ -23,7 +23,7 @@ window.eoxiaJS.digiriskEPI.setting.event = function() {
  * @since 0.2.0
  * @version 0.2.0
  */
-window.eoxiaJS.digiriskEPI.setting.pagination = function( event ) {
+window.eoxiaJS.theEPI.setting.pagination = function( event ) {
 	var href = jQuery( this ).attr( 'href' ).split( '&' );
 	var nextPage = href[1].replace( 'current_page=', '' );
 
@@ -53,5 +53,5 @@ window.eoxiaJS.digiriskEPI.setting.pagination = function( event ) {
  * @since 0.2.0
  * @version 0.2.0
  */
-window.eoxiaJS.digiriskEPI.setting.savedCapability = function( triggeredElement, response ) {
+window.eoxiaJS.theEPI.setting.savedCapability = function( triggeredElement, response ) {
 };

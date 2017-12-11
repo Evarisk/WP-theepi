@@ -1,22 +1,22 @@
 <?php
 /**
- * Classe des EPI.
+ * Handle EPI.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
 /**
- * Les EPI
+ * Handle EPI
  */
 class EPI_Class extends \eoxia\Post_Class {
 
@@ -25,28 +25,28 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var string
 	 */
-	protected $model_name = '\evarisk_epi\epi_model';
+	protected $model_name = '\theepi\EPI_Model';
 
 	/**
 	 * Le post type
 	 *
 	 * @var string
 	 */
-	protected $post_type = 'digi-epi';
+	protected $post_type = 'theepi-epi';
 
 	/**
 	 * La clé principale du modèle
 	 *
 	 * @var string
 	 */
-	protected $meta_key = '_wpdigi_epi';
+	protected $meta_key = '_theepi_epi';
 
 	/**
 	 * La route pour accéder à l'objet dans la rest API
 	 *
 	 * @var string
 	 */
-	protected $base = 'digirisk/epi';
+	protected $base = 'theepi/epi';
 
 	/**
 	 * La version de l'objet
@@ -60,17 +60,17 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var array
 	 */
-	protected $before_post_function = array( '\evarisk_epi\construct_identifier' );
+	protected $before_post_function = array( '\theepi\construct_identifier' );
 
 	/**
 	 * La fonction appelée automatiquement après la récupération de l'objet dans la base de donnée
 	 *
 	 * @var array
 	 */
-	protected $after_get_function = array( '\evarisk_epi\get_identifier', '\evarisk_epi\update_remaining_time' );
+	protected $after_get_function = array( '\theepi\get_identifier', '\theepi\update_remaining_time' );
 
 	/**
-	 * Le préfixe de l'objet dans DigiRisk
+	 * Le préfixe de l'objet dans TheEPI.
 	 *
 	 * @var string
 	 */
@@ -88,18 +88,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var string
 	 */
-	protected $post_type_name = 'Équipements de protection individuelle';
-
-	/**
-	 * Le constructeur
-	 *
-	 * @since 0.1.0
-	 * @version 0.1.0
-	 */
-	protected function construct() {
-		parent::construct();
-		add_filter( 'json_endpoints', array( $this, 'callback_register_route' ) );
-	}
+	protected $post_type_name = 'Personal protective equipment';
 
 	/**
 	 * Charges et affiches la liste des EPI
@@ -111,7 +100,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function display_epi_list() {
 		$epi_list = self::g()->get();
-		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'list', array(
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'list', array(
 			'epi_list' => $epi_list,
 		) );
 	}

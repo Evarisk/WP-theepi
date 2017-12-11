@@ -5,7 +5,7 @@
  * @package Evarisk\digirisk-epi
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;

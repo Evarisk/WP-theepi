@@ -1,11 +1,17 @@
-window.eoxiaJS.digiriskEPI.epi = {};
+/**
+ * Initialise l'objet "EPI" ainsi que la méthode "init" obligatoire pour la bibliothèque EoxiaJS.
+ *
+ * @since 0.1.0
+ * @version 0.2.0
+ */
+window.eoxiaJS.theEPI.EPI = {};
 
-window.eoxiaJS.digiriskEPI.epi.init = function() {
-	window.eoxiaJS.digiriskEPI.epi.event();
+window.eoxiaJS.theEPI.EPI.init = function() {
+	window.eoxiaJS.theEPI.EPI.event();
 };
 
-window.eoxiaJS.digiriskEPI.epi.event = function() {
-	jQuery( document ).on( 'keyup', '.table.epi .epi-row input[name="frequency_control"]', window.eoxiaJS.digiriskEPI.epi.activeSaveButton );
+window.eoxiaJS.theEPI.EPI.event = function() {
+	jQuery( document ).on( 'keyup', '.table.epi .epi-row input[name="frequency_control"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
 };
 
 /**
@@ -18,7 +24,7 @@ window.eoxiaJS.digiriskEPI.epi.event = function() {
  * @param  {KeyboardEvent} event L'état du clavier.
  * @return {void}
  */
-window.eoxiaJS.digiriskEPI.epi.activeSaveButton = function( event ) {
+window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
 	jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).removeClass( 'blue' ).addClass( 'disable' );
 
 	if ( Number.isInteger( parseInt( jQuery( this ).val() ) ) ) {
@@ -37,7 +43,7 @@ window.eoxiaJS.digiriskEPI.epi.activeSaveButton = function( event ) {
  * @since 0.1.0
  * @version 0.1.0
  */
-window.eoxiaJS.digiriskEPI.epi.savedEpiSuccess = function( element, response ) {
+window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( element, response ) {
   jQuery( '.digirisk-wrap' ).replaceWith( response.data.template );
 };
 
@@ -52,7 +58,7 @@ window.eoxiaJS.digiriskEPI.epi.savedEpiSuccess = function( element, response ) {
  * @since 0.1.0
  * @version 0.1.0
  */
-window.eoxiaJS.digiriskEPI.epi.loadedEpiSuccess = function( element, response ) {
+window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( element, response ) {
   jQuery( element ).closest( 'tr' ).replaceWith( response.data.template );
 };
 
@@ -67,7 +73,7 @@ window.eoxiaJS.digiriskEPI.epi.loadedEpiSuccess = function( element, response ) 
  * @since 0.1.0
  * @version 0.1.0
  */
-window.eoxiaJS.digiriskEPI.epi.deletedEpiSuccess = function( element, response ) {
+window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( element, response ) {
   jQuery( element ).closest( 'tr' ).fadeOut();
 };
 
@@ -80,7 +86,7 @@ window.eoxiaJS.digiriskEPI.epi.deletedEpiSuccess = function( element, response )
  * @since 0.1.0
  * @version 0.1.0
  */
-window.eoxiaJS.digiriskEPI.epi.checkData = function( element ) {
+window.eoxiaJS.theEPI.EPI.checkData = function( element ) {
 	if ( isNaN( jQuery( element ).closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() ) || '' == jQuery( element ).closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() ) {
 		jQuery( element ).closest( '.epi-row' ).find( 'td.tooltip' ).addClass( 'active' );
 		return false;

@@ -1,15 +1,15 @@
 <?php
 /**
- * Gères les actions des EPI.
+ * Handle EPI Actions like save, delete, create_mass_epi.
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
  * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package DigiRisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -51,7 +51,7 @@ class EPI_Action {
 			$args_media = array(
 				'id'         => $epi->id,
 				'file_id'    => (int) $_POST['image'],
-				'model_name' => '\evarisk_epi\EPI_Class',
+				'model_name' => '\theepi\EPI_Class',
 			);
 
 			\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $args_media );
@@ -62,10 +62,10 @@ class EPI_Action {
 		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
 
 		ob_start();
-		EPI_Core_Class::g()->display();
+		Class_TheEPI_Core::g()->display();
 		wp_send_json_success( array(
-			'namespace'        => 'digiriskEPI',
-			'module'           => 'epi',
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
 			'callback_success' => 'savedEpiSuccess',
 			'template'         => ob_get_clean(),
 		) );
@@ -77,7 +77,7 @@ class EPI_Action {
 	 * @return void
 	 *
 	 * @since 0.1.0
-	 * @version 0.1.0
+	 * @version 0.2.0
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -97,8 +97,8 @@ class EPI_Action {
 		EPI_Class::g()->update( $epi );
 
 		wp_send_json_success( array(
-			'namespace' => 'digiriskEPI',
-			'module' => 'epi',
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
 			'callback_success' => 'deletedEpiSuccess',
 		) );
 	}
@@ -107,7 +107,7 @@ class EPI_Action {
 	 * Charges les données d'un EPI
 	 *
 	 * @since 0.1.0
-	 * @version 0.1.0
+	 * @version 0.2.0
 	 *
 	 * @return void
 	 */
@@ -125,15 +125,15 @@ class EPI_Action {
 		), true );
 
 		ob_start();
-		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array(
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array(
 			'epi' => $epi,
 		) );
 
 		wp_send_json_success( array(
-			'namespace' => 'digiriskEPI',
-			'module' => 'epi',
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
 			'callback_success' => 'loadedEpiSuccess',
-			'template' => ob_get_clean(),
+			'template'         => ob_get_clean(),
 		) );
 	}
 
@@ -144,6 +144,7 @@ class EPI_Action {
 	 * @version 0.2.0
 	 *
 	 * @return void
+	 * @todo: Nonce
 	 */
 	public function ajax_create_mass_epi() {
 		$files_id = ! empty( $_POST['files_id'] ) ? (array) $_POST['files_id'] : array();
@@ -159,12 +160,12 @@ class EPI_Action {
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
 					'id'         => $epi->id,
 					'file_id'    => $file_id,
-					'model_name' => '\evarisk_epi\EPI_Class',
+					'model_name' => '\theepi\EPI_Class',
 				) );
 				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
 					'id'         => $epi->id,
 					'file_id'    => $file_id,
-					'model_name' => '\evarisk_epi\EPI_Class',
+					'model_name' => '\theepi\EPI_Class',
 					'field_name' => 'image',
 				) );
 			}

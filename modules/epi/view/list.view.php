@@ -4,24 +4,22 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package Digirisk_EPI
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<?php $i = 1; ?>
-<?php if ( ! empty( $epi_list ) ) : ?>
-	<?php foreach ( $epi_list as $epi ) : ?>
-		<?php
-		\eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item', array(
+<?php
+if ( ! empty( $epi_list ) ) :
+	foreach ( $epi_list as $epi ) :
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
 			'epi' => $epi,
 		) );
-		?>
-	<?php endforeach; ?>
-<?php endif;
+	endforeach;
+endif;
