@@ -15,10 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<div class="wrap digirisk-wrap digirisk-epi">
+<div class="wrap digirisk-wrap wpeo-wrap digirisk-epi">
 
 	<h1><?php esc_html_e( 'TheEPI', 'theepi' ); ?></h1>
-	<a href="#" class="create-mass-epi"><?php esc_html_e( 'Create mass from image', 'theepi' ); ?></a>
+	<a href="#" class="wpeo-button button-main create-mass-epi">
+		<span><?php esc_html_e( 'Create mass from image', 'theepi' ); ?></span>
+	</a>
 
 	<div class="container-content">
 		<?php EPI_Class::g()->display(); ?>

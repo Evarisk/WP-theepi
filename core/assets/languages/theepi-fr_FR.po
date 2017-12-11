@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2017-12-11 16:16+0100\n"
-"PO-Revision-Date: 2017-12-11 16:16+0100\n"
+"POT-Creation-Date: 2017-12-11 16:43+0100\n"
+"PO-Revision-Date: 2017-12-11 16:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -19,12 +19,12 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: test\n"
 "X-Poedit-SearchPathExcluded-2: core/external\n"
 
-#: core/action/class-theepi-core-action.php:131 core/view/main.view.php:20
+#: core/action/class-theepi-core-action.php:132 core/view/main.view.php:20
 #: modules/setting/action/setting.action.php:46
 msgid "TheEPI"
 msgstr "TheEPI"
 
-#: core/view/main.view.php:21
+#: core/view/main.view.php:22
 msgid "Create mass from image"
 msgstr "Créer en masse à partir d'image"
 

@@ -3,56 +3,6 @@
  * Import des fichiers less
  */
 /**
- * http://meyerweb.com/eric/tools/css/reset/
- * v2.0 | 20110126
- * License: none (public domain)
- */
-.digirisk-wrap {
-  /* HTML5 display-role reset for older browsers */ }
-
-.digirisk-wrap html, .digirisk-wrap body, .digirisk-wrap div, .digirisk-wrap applet, .digirisk-wrap object, .digirisk-wrap iframe,
-.digirisk-wrap h1, .digirisk-wrap h2, .digirisk-wrap h3, .digirisk-wrap h4, .digirisk-wrap h5, .digirisk-wrap h6, .digirisk-wrap p, .digirisk-wrap blockquote, .digirisk-wrap pre,
-.digirisk-wrap a, .digirisk-wrap abbr, .digirisk-wrap acronym, .digirisk-wrap address, .digirisk-wrap big, .digirisk-wrap cite, .digirisk-wrap code,
-.digirisk-wrap del, .digirisk-wrap dfn, .digirisk-wrap em, .digirisk-wrap img, .digirisk-wrap ins, .digirisk-wrap kbd, .digirisk-wrap q, .digirisk-wrap s, .digirisk-wrap samp,
-.digirisk-wrap small, .digirisk-wrap strike, .digirisk-wrap strong, .digirisk-wrap sub, .digirisk-wrap sup, .digirisk-wrap tt, .digirisk-wrap var,
-.digirisk-wrap b, .digirisk-wrap u, .digirisk-wrap center,
-.digirisk-wrap dl, .digirisk-wrap dt, .digirisk-wrap dd, .digirisk-wrap ol, .digirisk-wrap ul, .digirisk-wrap li,
-.digirisk-wrap fieldset, .digirisk-wrap form, .digirisk-wrap label, .digirisk-wrap legend,
-.digirisk-wrap table, .digirisk-wrap caption, .digirisk-wrap tbody, .digirisk-wrap tfoot, .digirisk-wrap thead, .digirisk-wrap tr, .digirisk-wrap th, .digirisk-wrap td,
-.digirisk-wrap article, .digirisk-wrap aside, .digirisk-wrap canvas, .digirisk-wrap details, .digirisk-wrap embed,
-.digirisk-wrap figure, .digirisk-wrap figcaption, .digirisk-wrap footer, .digirisk-wrap header, .digirisk-wrap hgroup,
-.digirisk-wrap menu, .digirisk-wrap nav, .digirisk-wrap output, .digirisk-wrap ruby, .digirisk-wrap section, .digirisk-wrap summary,
-.digirisk-wrap time, .digirisk-wrap mark, .digirisk-wrap audio, .digirisk-wrap video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font-size: 100%;
-  font: inherit;
-  vertical-align: baseline; }
-
-.digirisk-wrap article, .digirisk-wrap aside, .digirisk-wrap details, .digirisk-wrap figcaption, .digirisk-wrap figure,
-.digirisk-wrap footer, .digirisk-wrap header, .digirisk-wrap hgroup, .digirisk-wrap menu, .digirisk-wrap nav, .digirisk-wrap section {
-  display: block; }
-
-.digirisk-wrap body {
-  line-height: 1; }
-
-.digirisk-wrap ol, .digirisk-wrap ul {
-  list-style: none; }
-
-.digirisk-wrap blockquote, .digirisk-wrap q {
-  quotes: none; }
-
-.digirisk-wrap blockquote:before, .digirisk-wrap blockquote:after,
-.digirisk-wrap q:before, .digirisk-wrap q:after {
-  content: '';
-  content: none; }
-
-.digirisk-wrap table {
-  border-collapse: collapse;
-  border-spacing: 0; }
-
-/**
  * Variables de l'application
  */
 /* Bleu ciel, couleur principale */
