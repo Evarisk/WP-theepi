@@ -67,6 +67,7 @@ class EPI_Action {
 			'namespace'        => 'theEPI',
 			'module'           => 'EPI',
 			'callback_success' => 'savedEpiSuccess',
+			'object'           => $epi,
 			'template'         => ob_get_clean(),
 		) );
 	}
