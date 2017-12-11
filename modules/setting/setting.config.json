@@ -6,6 +6,7 @@
 	"path": "modules/setting/",
 	"state": true,
 	"dependencies": {
+		"filter": {},
 		"action": {},
 		"class": {}
 	}

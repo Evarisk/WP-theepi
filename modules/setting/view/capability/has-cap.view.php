@@ -1,6 +1,6 @@
 <?php
 /**
- * Affiches les rôles qui ont les capacités "manage_digirisk_epi".
+ * Affiches les rôles qui ont les capacités "manage_theepi".
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
@@ -15,8 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! empty( $role_subscriber->capabilities['manage_digirisk_epi'] ) ) :
+if ( ! empty( $role_subscriber->capabilities['manage_theepi'] ) ) :
 	?>
-	<p class="red"><?php esc_html_e( 'La capacité "manage_digirisk_epi" est appliqué sur tous les utilisateurs dont le rôle est abonnés. Vous devez supprimer la capacité "manage_digirisk_epi" sur celui-ci pour pouvoir gérer manuellement ce droit par utilisateur', 'digirisk-epi' ); ?></p>
+	<p class="red"><?php esc_html_e( 'The "manage_theepi" capability is applied to all users whose role is subscribed. You must delete the "manage_theepi" ability on this one to manually manage this right per user', 'theepi' ); ?></p>
 	<?php
 endif;

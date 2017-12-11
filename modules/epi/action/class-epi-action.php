@@ -31,6 +31,8 @@ class EPI_Action {
 		add_action( 'wp_ajax_delete_epi', array( $this, 'ajax_delete_epi' ) );
 		add_action( 'wp_ajax_load_epi', array( $this, 'ajax_load_epi' ) );
 
+		add_action( 'wp_ajax_paginate_epi', array( $this, 'ajax_paginate_epi' ) );
+
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'ajax_create_mass_epi' ) );
 	}
 
@@ -139,13 +141,29 @@ class EPI_Action {
 	}
 
 	/**
+	 * Gestion de la pagination des EPI.
+	 *
+	 * @since 0.2.0
+	 * @version 0.2.0
+	 *
+	 * @return void
+	 * @todo: nonce
+	 */
+	public function ajax_paginate_epi() {
+		$current_page = ! empty( $_POST['current_page'] ) ? (int) $_POST['current_page'] : 1;
+
+		EPI_Class::g()->display( $current_page );
+		wp_die();
+	}
+
+	/**
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
 	 * @since 0.1.0
 	 * @version 0.2.0
 	 *
 	 * @return void
-	 * @todo: Nonce
+	 * @todo: nonce
 	 */
 	public function ajax_create_mass_epi() {
 		$files_id = ! empty( $_POST['files_id'] ) ? (array) $_POST['files_id'] : array();

@@ -11,7 +11,7 @@ window.eoxiaJS.theEPI.setting.init = function() {
 };
 
 window.eoxiaJS.theEPI.setting.event = function() {
-	jQuery( document ).on( 'click', '.settings_page_digirisk-epi-setting .list-users .wp-digi-pagination a', window.eoxiaJS.theEPI.setting.pagination );
+	jQuery( document ).on( 'click', '.settings_page_theepi-setting .list-users .wp-digi-pagination a', window.eoxiaJS.theEPI.setting.pagination );
 };
 
 /**
@@ -30,7 +30,7 @@ window.eoxiaJS.theEPI.setting.pagination = function( event ) {
 	jQuery( '.list-users' ).addClass( 'loading' );
 
 	var data = {
-		action: 'paginate_setting_epi_page_user',
+		action: 'paginate_setting_theepi_page_user',
 		next_page: nextPage
 	};
 

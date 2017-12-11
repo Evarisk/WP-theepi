@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="wrap">
-	<h1><?php esc_html_e( 'Digirisk EPI settings', 'theepi' ); ?></h1>
+	<h1><?php esc_html_e( 'TheEPI settings', 'theepi' ); ?></h1>
 
 	<div class="digirisk-wrap">
 		<div id="digi-capability" class="tab-content <?php echo ( 'digi-capability' === $default_tab ) ? '' : 'hidden'; ?>">

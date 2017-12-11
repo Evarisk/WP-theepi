@@ -21,6 +21,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<td class="padding"><span><?php echo esc_html( $user->email ); ?></span></td>
 	<td class="padding"><span><?php echo esc_html( implode( ', ', $user->wordpress_user->roles ) ); ?></span></td>
 	<td>
-		<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?> <?php echo ( $user->wordpress_user->has_cap( 'manage_theepi' ) ) ? 'checked' : ''; ?> name="users[<?php echo esc_attr( $user->id ); ?>][capability]" id="have_capability_<?php echo esc_attr( $user->id ); ?>" type="checkbox" /><label for="have_capability_<?php echo esc_attr( $user->id ); ?>"><?php esc_html_e( 'Droit à DigiRisk EPI', 'digirisk-epi' ); ?></label>
+		<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?>
+			<?php echo ( $user->wordpress_user->has_cap( 'manage_theepi' ) ) ? 'checked' : ''; ?>
+			name="users[<?php echo esc_attr( $user->id ); ?>][capability]"
+			id="have_capability_<?php echo esc_attr( $user->id ); ?>"
+			type="checkbox" />
+			<label for="have_capability_<?php echo esc_attr( $user->id ); ?>"><?php esc_html_e( 'Right to TheEPI', 'theepi' ); ?></label>
 	</td>
 </tr>

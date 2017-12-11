@@ -16,18 +16,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="section-capability">
-	<input type="hidden" name="action" value="save_capability_epi" />
-	<?php wp_nonce_field( 'save_capability_epi' ); ?>
+	<input type="hidden" name="action" value="save_capability_theepi" />
+	<?php wp_nonce_field( 'save_capability_theepi' ); ?>
 
-	<h3><?php esc_html_e( 'Gestion des droits de DigiRisk EPI', 'theepi' ); ?></h3>
+	<h3><?php esc_html_e( 'Handle role TheEPI', 'theepi' ); ?></h3>
 
-	<p><?php esc_html_e( 'Définissez les droits d\'accés à l\'application DigiRisk EPI', 'theepi' ); ?></p>
+	<p><?php esc_html_e( 'Set access rights to the TheEPI app', 'theepi' ); ?></p>
 
 	<?php Setting_Class::g()->display_role_has_cap(); ?>
 
-	<?php do_shortcode( '[digi-search icon="dashicons dashicons-search" next-action="display_setting_user_epi" type="user" target="list-users"]' ); ?>
+	<?php do_shortcode( '[digi-search icon="dashicons dashicons-search" next-action="display_setting_user_theepi" type="user" target="list-users"]' ); ?>
 
 	<?php Setting_Class::g()->display_user_list_capacity(); ?>
 
-	<a href="#" class="margin action-input button blue right" data-parent="section-capability"><?php esc_html_e( 'Enregistrer', 'theepi' ); ?></a>
+	<a href="#" class="margin action-input button blue right" data-parent="section-capability"><?php esc_html_e( 'Save', 'theepi' ); ?></a>
 </div>

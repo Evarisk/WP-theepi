@@ -81,27 +81,103 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var integer
 	 */
-	protected $limit_epi = -1;
+	protected $limit_epi = 10;
 
 	/**
-	 * Le nom pour le resgister post type
+	 * Le nombre d'EPI par page.
+	 *
+	 * @var integer
+	 */
+	public $option_name = 'epi_per_page';
+
+	/**
+	 * Le nom pour le register post type
 	 *
 	 * @var string
 	 */
 	protected $post_type_name = 'Personal protective equipment';
 
 	/**
-	 * Charges et affiches la liste des EPI
+	 * Appel la vue principale pour afficher le tableau HTML contenant les EPI.
+	 *
+	 * @since 0.2.0
+	 * @version 0.2.0
+	 *
+	 * @param integer $current_page The current page.
 	 *
 	 * @return void
+	 */
+	public function display( $current_page = 1 ) {
+		$epi_schema = self::g()->get( array(
+			'schema' => true,
+		), true );
+
+		$count_epi = count( self::g()->get( array(
+			'fields' => array( 'ID' ),
+		) ) );
+
+		$per_page = get_user_meta( get_current_user_id(), $this->option_name, true );
+
+		if ( empty( $per_page ) || $per_page < 1 ) {
+			$per_page = $this->limit_epi;
+		}
+
+		$number_page = ceil( $count_epi / $per_page );
+
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'main', array(
+			'count_epi'    => $count_epi,
+			'number_page'  => $number_page,
+			'current_page' => $current_page,
+			'epi_schema'   => $epi_schema,
+		) );
+	}
+
+	/**
+	 * Initialise les options d'écrans.
+	 *
+	 * @since 0.2.0
+	 * @version 0.2.0
+	 *
+	 * @return void
+	 */
+	public function callback_add_screen_option() {
+		add_screen_option(
+			'per_page',
+			array(
+				'label'   => __( 'EPI per page', 'theepi' ),
+				'default' => self::g()->limit_epi,
+				'option'  => self::g()->option_name,
+			)
+		);
+	}
+
+	/**
+	 * Charges et affiches la liste des EPI
 	 *
 	 * @since 0.1.0
 	 * @version 0.1.0
+	 *
+	 * @param integer $current_page The current page.
+	 *
+	 * @return void
 	 */
-	public function display_epi_list() {
-		$epi_list = self::g()->get();
+	public function display_epi_list( $current_page = 1 ) {
+		$per_page = get_user_meta( get_current_user_id(), $this->option_name, true );
+
+		if ( empty( $per_page ) || $per_page < 1 ) {
+			$per_page = $this->limit_epi;
+		}
+
+		$args = array(
+			'offset'         => ( $current_page - 1 ) * $per_page,
+			'posts_per_page' => $per_page,
+		);
+
+		$epi_list = self::g()->get( $args );
+
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'list', array(
 			'epi_list' => $epi_list,
+
 		) );
 	}
 }

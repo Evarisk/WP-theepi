@@ -95,6 +95,7 @@ class TheEPI_Core_Action {
 	 * @return void
 	 */
 	public function callback_plugins_loaded() {
+		load_plugin_textdomain( 'theepi', false, PLUGIN_THEEPI_DIR . '/core/assets/languages/' );
 	}
 
 	/**
@@ -128,7 +129,8 @@ class TheEPI_Core_Action {
 	 * @return void
 	 */
 	public function callback_admin_menu() {
-		add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'dashicons-admin-tools' );
+		$hook = add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'dashicons-admin-tools' );
+		add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );
 	}
 }
 

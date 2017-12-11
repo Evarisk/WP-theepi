@@ -28,10 +28,10 @@ class Setting_Action {
 	 */
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-		add_action( 'wp_ajax_save_capability_epi', array( $this, 'callback_save_capability_epi' ) );
+		add_action( 'wp_ajax_save_capability_theepi', array( $this, 'callback_save_capability_theepi' ) );
 
-		add_action( 'display_setting_user_epi', array( $this, 'callback_display_setting_user_epi' ), 10, 2 );
-		add_action( 'wp_ajax_paginate_setting_epi_page_user', array( $this, 'callback_paginate_setting_epi_page_user' ) );
+		add_action( 'display_setting_user_theepi', array( $this, 'callback_display_setting_user_theepi' ), 10, 2 );
+		add_action( 'wp_ajax_paginate_setting_theepi_page_user', array( $this, 'callback_paginate_setting_theepi_page_user' ) );
 	}
 
 	/**
@@ -43,7 +43,8 @@ class Setting_Action {
 	 * @version 0.2.0
 	 */
 	public function admin_menu() {
-		add_options_page( __( 'TheEPI', 'theepi' ), 'theepi', 'manage_theepi', 'theepi-setting', array( $this, 'add_option_page' ) );
+		$hook = add_options_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi-setting', array( $this, 'add_option_page' ) );
+		add_action( 'load-' . $hook, array( Setting_Class::g(), 'callback_add_screen_option' ) );
 	}
 
 	/**
@@ -62,24 +63,24 @@ class Setting_Action {
 	}
 
 	/**
-	 * Rajoutes la capacité "manager_digirisk_epi" à tous les utilisateurs ou $have_capability est à true.
+	 * Rajoutes la capacité "manage_theepi" à tous les utilisateurs ou $have_capability est à true.
 	 *
 	 * @since 0.2.0
 	 * @version 0.2.0
 	 *
 	 * @return void
 	 */
-	public function callback_save_capability_epi() {
-		check_ajax_referer( 'save_capability_epi' );
+	public function callback_save_capability_theepi() {
+		check_ajax_referer( 'save_capability_theepi' );
 
 		if ( ! empty( $_POST['users'] ) ) {
 			foreach ( $_POST['users'] as $user_id => $data ) {
 				$user = new \WP_User( $user_id );
 
 				if ( 'true' == $data['capability'] ) {
-					$user->add_cap( 'manage_digirisk_epi' );
+					$user->add_cap( 'manage_theepi' );
 				} else {
-					$user->remove_cap( 'manage_digirisk_epi' );
+					$user->remove_cap( 'manage_theepi' );
 				}
 			}
 		}
@@ -101,7 +102,7 @@ class Setting_Action {
 	 * @since 0.2.0
 	 * @version 0.2.0
 	 */
-	public function callback_display_setting_user_epi( $id, $list_user_id ) {
+	public function callback_display_setting_user_theepi( $id, $list_user_id ) {
 		ob_start();
 		Setting_Class::g()->display_user_list_capacity( $list_user_id );
 
@@ -118,7 +119,7 @@ class Setting_Action {
 	 *
 	 * @return void
 	 */
-	public function callback_paginate_setting_epi_page_user() {
+	public function callback_paginate_setting_theepi_page_user() {
 		Setting_Class::g()->display_user_list_capacity();
 		wp_die();
 	}

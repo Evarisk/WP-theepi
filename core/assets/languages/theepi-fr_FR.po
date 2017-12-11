@@ -1,0 +1,129 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TheEPI v0.x\n"
+"POT-Creation-Date: 2017-12-11 16:16+0100\n"
+"PO-Revision-Date: 2017-12-11 16:16+0100\n"
+"Last-Translator: \n"
+"Language-Team: Evarisk\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.5\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_attr_e\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+"X-Poedit-SearchPathExcluded-1: test\n"
+"X-Poedit-SearchPathExcluded-2: core/external\n"
+
+#: core/action/class-theepi-core-action.php:131 core/view/main.view.php:20
+#: modules/setting/action/setting.action.php:46
+msgid "TheEPI"
+msgstr "TheEPI"
+
+#: core/view/main.view.php:21
+msgid "Create mass from image"
+msgstr "Créer en masse à partir d'image"
+
+#: modules/epi/class/class-epi.php:147
+msgid "EPI per page"
+msgstr "EPI par page"
+
+#: modules/epi/view/comment/item.view.php:24
+msgid "No user"
+msgstr "Pas d'utilisateur"
+
+#: modules/epi/view/comment/item.view.php:26
+msgid "No comment"
+msgstr "Pas de commentaire"
+
+#: modules/epi/view/item-edit.view.php:30
+msgid "This field must be in numeric format"
+msgstr "Ce champs doit être au format numérique"
+
+#: modules/epi/view/item-edit.view.php:32
+msgid "days"
+msgstr "jours"
+
+#: modules/epi/view/list.view.php:37 modules/epi/view/main.view.php:52
+#: modules/setting/view/capability/list.view.php:50
+msgid "Page"
+msgstr "Page"
+
+#: modules/epi/view/main.view.php:22
+#: modules/setting/view/capability/list.view.php:23
+msgid "ID"
+msgstr "ID"
+
+#: modules/epi/view/main.view.php:23
+msgid "Name"
+msgstr "Nom"
+
+#: modules/epi/view/main.view.php:24
+msgid "Serial number"
+msgstr "Numéro de série"
+
+#: modules/epi/view/main.view.php:25
+msgid "Period of control"
+msgstr "Période de contrôle"
+
+#: modules/epi/view/main.view.php:27
+msgid "Date of last check"
+msgstr "Date de dernier contrôle"
+
+#: modules/epi/view/main.view.php:28
+msgid "State"
+msgstr "Status"
+
+#: modules/epi/view/main.view.php:29
+msgid "Remaining time"
+msgstr "Reste"
+
+#: modules/setting/class/setting.class.php:135
+msgid "User per page"
+msgstr "Utilisateur par page"
+
+#: modules/setting/view/capability/has-cap.view.php:20
+msgid ""
+"The \"manage_theepi\" capability is applied to all users whose role is "
+"subscribed. You must delete the \"manage_theepi\" ability on this one to "
+"manually manage this right per user"
+msgstr ""
+"La capacité \"manage_theepi\" est appliqué sur tous les utilisateurs dont le "
+"rôle est abonnés. Vous devez supprimer la capacité \"manage_theepi\" sur "
+"celui-ci pour pouvoir gérer manuellement ce droit par utilisateur"
+
+#: modules/setting/view/capability/list-item.view.php:29
+msgid "Right to TheEPI"
+msgstr "Droit à TheEPI"
+
+#: modules/setting/view/capability/list.view.php:24
+msgid "Email"
+msgstr "Email"
+
+#: modules/setting/view/capability/list.view.php:25
+msgid "Role"
+msgstr "Rôle"
+
+#: modules/setting/view/capability/list.view.php:26
+msgid "Has the right on TheEPI"
+msgstr "A les droits sur TheEPI"
+
+#: modules/setting/view/capability/main.view.php:22
+msgid "Handle role TheEPI"
+msgstr "Gestion des droits de TheEPI"
+
+#: modules/setting/view/capability/main.view.php:24
+msgid "Set access rights to the TheEPI app"
+msgstr "Définir les droits d'accès à l'application TheEPI"
+
+#: modules/setting/view/capability/main.view.php:32
+msgid "Save"
+msgstr "Enregistrer"
+
+#: modules/setting/view/main.view.php:19
+msgid "TheEPI settings"
+msgstr "TheEPI réglages"
