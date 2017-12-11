@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<tr>
+<tr data-id="<?php echo esc_attr( $epi->id ); ?>">
 	<td class="w50">
 		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/theepi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
 	</td>
