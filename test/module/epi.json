@@ -29,5 +29,10 @@
 			"content": "A vérifier dans 2 ans",
 			"state": "OK"
 		}
-	]
+	],
+	"edit": {
+		"title": "Super casque",
+		"serial_number": "45678",
+		"frequency_control": 20
+	}
 }

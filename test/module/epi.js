@@ -7,8 +7,16 @@ module.exports.init = function(nightmare, cb) {
 	describe('EPI', () => {
 		it('Create', (done) => {
 			this.create(nightmare, done);
-			cb();
 		});
+
+		it('Load', (done) => {
+			this.load(nightmare, done);
+		});
+
+		it('Edit', (done) => {
+			this.edit(nightmare, done);
+			cb();
+		})
 	});
 }
 
@@ -75,4 +83,92 @@ module.exports.create = function(nightmare, done) {
 
 	})
 	.then(done, done);
-}
+};
+
+/**
+ * Load EPI.
+ *
+ * @since 0.2.0
+ * @version 0.2.0
+ *
+ * @param  {Object}   nightmare NightmareJS object.
+ * @param  {Function} done      Result func.
+ *
+ * @return {void}
+ */
+module.exports.load = function (nightmare, done) {
+	nightmare
+		.click( '.table.epi tr .action-attribute.edit' )
+		.wait(function() {
+			if (window.currentResponse['loadedEpiSuccess']) {
+				return true;
+			}
+		})
+		.evaluate(function() {
+			var response = window.currentResponse['loadedEpiSuccess'];
+			delete window.currentResponse['loadedEpiSuccess'];
+
+			var success = true;
+			var errors = [];
+
+			response.data.errors = errors;
+
+			if ( response.data.errors.length ) {
+				response.success = false;
+			}
+
+			return response;
+		})
+		.then(function(response) {
+			expect(response.success).to.equal(true);
+			expect(response.data.callback_success).to.equal('loadedEpiSuccess');
+		})
+		.then(done, done)
+};
+
+/**
+ * Edit EPI.
+ *
+ * @since 0.2.0
+ * @version 0.2.0
+ *
+ * @param  {Object}   nightmare NightmareJS object.
+ * @param  {Function} done      Result func.
+ *
+ * @return {void}
+ */
+module.exports.edit = function (nightmare, done) {
+	nightmare
+		.type( ".epi-row input[name='title']", '' )
+		.type( ".epi-row input[name='serial_number']", '' )
+		.type( ".epi-row input[name='frequency_control']", '' )
+		.type( ".epi-row input[name='title']", epiData.edit.title )
+		.type( ".epi-row input[name='serial_number']", epiData.edit.serial_number )
+		.type( ".epi-row input[name='frequency_control']", epiData.edit.frequency_control )
+		.click( '.table.epi tr .action-attribute.edit' )
+		.wait(function() {
+			if (window.currentResponse['savedEpiSuccess']) {
+				return true;
+			}
+		})
+		.evaluate(function() {
+			var response = window.currentResponse['savedEpiSuccess'];
+			delete window.currentResponse['savedEpiSuccess'];
+
+			var success = true;
+			var errors = [];
+
+			response.data.errors = errors;
+
+			if ( response.data.errors.length ) {
+				response.success = false;
+			}
+
+			return response;
+		})
+		.then(function(response) {
+			expect(response.success).to.equal(true);
+			expect(response.data.callback_success).to.equal('savedEpiSuccess');
+		})
+		.then(done, done)
+};
