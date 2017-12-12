@@ -1,0 +1,21 @@
+{
+	"name": "TheEPI",
+	"slug": "theepi",
+	"version": "0.2.0",
+	"description": "L'application TheEPI",
+	"insert_scripts_pages_js": [
+		"theepi",
+		"theepi-setting"
+	],
+	"insert_scripts_pages_css": [
+		"theepi",
+		"theepi-setting"
+	],
+	"externals": [],
+	"modules": [
+		"core/core.config.json",
+		"modules/epi/epi.config.json",
+		"modules/setting/setting.config.json"
+	],
+	"debug": false
+}

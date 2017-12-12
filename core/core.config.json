@@ -1,8 +1,8 @@
 {
-	"name": "Digirisk EPI Core",
+	"name": "TheEPI Core",
 	"slug": "core",
-	"version": "1.0.0.0",
-	"description": "Le module boot de Digirisk EPI",
+	"version": "0.2.0",
+	"description": "Le module principale de TheEPI",
 	"path": "core/",
 	"dependencies": {
 		"action": {},

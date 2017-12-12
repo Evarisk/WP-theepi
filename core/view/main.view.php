@@ -3,41 +3,26 @@
  * La vue principale de la page "EPI"
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 1.0.0.0
- * @version 1.0.0.0
+ * @since 0.1.0
+ * @version 0.2.0
  * @copyright 2017 Evarisk
- * @package epi
- * @subpackage view
+ * @package TheEPI
  */
 
-namespace evarisk_epi;
+namespace theepi;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; } ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+} ?>
 
-<div class="digirisk-wrap">
+<div class="wrap digirisk-wrap wpeo-wrap digirisk-epi">
 
-	<table class="table epi">
-		<thead>
-			<tr>
-				<th class="w50"></th>
-				<th class="w50 padding"><span><?php esc_html_e( 'ID', 'digirisk' ); ?></span></th>
-				<th class="wm130 padding"><span><?php esc_html_e( 'Nom', 'digirisk' ); ?></span></th>
-				<th class="padding"><span><?php esc_html_e( 'N° serie', 'digirisk' ); ?></span></th>
-				<th class="padding"><span><?php esc_html_e( 'Périod. de contrôle', 'digirisk' ); ?></span></th>
-				<th class="w50"></th>
-				<th class="padding"><span><?php esc_html_e( 'Date de dernier contrôle', 'digirisk' ); ?></span></th>
-				<th class="padding"><span>État</span></th>
-				<th class="padding"><span><?php esc_html_e( 'Reste', 'digirisk' ); ?></span></th>
-				<th class="w50"></th>
-			</tr>
-		</thead>
+	<h1><?php esc_html_e( 'TheEPI', 'theepi' ); ?></h1>
+	<a href="#" class="wpeo-button button-main create-mass-epi">
+		<span><?php esc_html_e( 'Create mass from image', 'theepi' ); ?></span>
+	</a>
 
-		<tbody>
-			<?php EPI_Class::g()->display_epi_list(); ?>
-		</tbody>
-
-		<tfoot>
-			<?php \eoxia\View_Util::exec( 'digirisk-epi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
-		</tfoot>
-	</table>
+	<div class="container-content">
+		<?php EPI_Class::g()->display(); ?>
+	</div>
 </div>

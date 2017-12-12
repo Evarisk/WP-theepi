@@ -1,12 +1,11 @@
 {
 	"name": "EPI",
 	"slug": "epi",
-	"state": true,
-	"version": "0.0.0.1",
-	"description": "Le module gérant les EPI de Digirisk",
+	"version": "0.2.0",
+	"description": "Handle EPI",
 	"path": "modules/epi/",
 	"dependencies": {
-		"shortcode": {},
+		"filter": {},
 		"model": {},
 		"helper": {},
 		"class": {},

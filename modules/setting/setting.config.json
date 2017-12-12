@@ -1,0 +1,13 @@
+{
+	"name": "Setting",
+	"slug": "setting",
+	"version": "0.2.0",
+	"description": "Handle TheEPI settings",
+	"path": "modules/setting/",
+	"state": true,
+	"dependencies": {
+		"filter": {},
+		"action": {},
+		"class": {}
+	}
+}

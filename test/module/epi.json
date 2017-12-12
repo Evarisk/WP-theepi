@@ -1,0 +1,38 @@
+{
+	"create": [
+		{
+			"title": "Casque2",
+			"serial_number": "123",
+			"frequency_control": 60,
+			"content": "Acheté en 2015",
+			"mysql_date": "2015-12-12 00:00:00",
+			"state": "KO"
+		},
+		{
+			"title": "Casque",
+			"serial_number": "123",
+			"frequency_control": 60,
+			"content": "A vérifier dans 60 jours",
+			"state": "OK"
+		},
+		{
+			"title": "Lunette de protection",
+			"serial_number": "124",
+			"frequency_control": 325,
+			"content": "A vérifier dans 1 ans",
+			"state": "OK"
+		},
+		{
+			"title": "Gants",
+			"serial_number": "125",
+			"frequency_control": 650,
+			"content": "A vérifier dans 2 ans",
+			"state": "OK"
+		}
+	],
+	"edit": {
+		"title": "Super casque",
+		"serial_number": "45678",
+		"frequency_control": 20
+	}
+}
