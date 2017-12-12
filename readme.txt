@@ -38,12 +38,12 @@ The installation of the plugin can be done in two ways:
 == Screenshots ==
 
 1. Dashboard
-2. X
-
 
 == Changelog ==
 
 = Version 0.2.0 =
+
+* Initial version.
 
 Initial WordPress Release.
 
