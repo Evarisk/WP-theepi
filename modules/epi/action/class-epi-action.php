@@ -40,28 +40,20 @@ class EPI_Action {
 	 * Sauvegardes un EPI
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.3.0
 	 *
 	 * @return void
+	 * @todo: 13/12/2017: Faire que les données de l'EPI soit dans $_POST['epi'].
+	 *        13/12/2017: Sanitize toutes les entrées.
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
-		$epi = EPI_Class::g()->update( $_POST );
+		$data     = ! empty( $_POST ) ? (array) $_POST : array();
+		$image_id = ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
+		$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();
 
-		if ( ! empty( $_POST['image'] ) ) {
-			$args_media = array(
-				'id'         => $epi->id,
-				'file_id'    => (int) $_POST['image'],
-				'model_name' => '\theepi\EPI_Class',
-			);
-
-			\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $args_media );
-			$args_media['field_name'] = 'image';
-			\eoxia\WPEO_Upload_Class::g()->associate_file( $args_media );
-		}
-
-		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
+		$epi = EPI_Class::g()->save( $data, $image_id, $comments );
 
 		ob_start();
 		Class_TheEPI_Core::g()->display();
@@ -91,13 +83,7 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		$epi = EPI_Class::g()->get( array(
-			'id' => $id,
-		), true );
-
-		$epi->status = 'trash';
-
-		EPI_Class::g()->update( $epi );
+		EPI_Class::g()->delete( 'id' );
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',
@@ -160,7 +146,7 @@ class EPI_Action {
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.3.0
 	 *
 	 * @return void
 	 * @todo: nonce
@@ -172,23 +158,7 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		if ( ! empty( $files_id ) ) {
-			foreach ( $files_id as $file_id ) {
-				$epi = EPI_Class::g()->update( array() );
-
-				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
-					'id'         => $epi->id,
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-				) );
-				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
-					'id'         => $epi->id,
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-					'field_name' => 'image',
-				) );
-			}
-		}
+		EPI_Class::g()->create_mass_epi( $files_id );
 
 		EPI_Class::g()->display_epi_list();
 		wp_die();

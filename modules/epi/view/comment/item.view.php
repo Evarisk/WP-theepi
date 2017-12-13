@@ -21,8 +21,9 @@ $userdata  = get_userdata( $author_id );
 ?>
 
 <li class="comment">
-	<span class="user"><?php echo esc_html( ! empty( $userdata->display_name ) ? $userdata->display_name : __( 'No user', 'theepi' ) ); ?>, </span>
-	<span class="date"><?php echo esc_html( $comment->date['date_input']['fr_FR']['date'] ); ?> : </span>
+	<span class="date"><?php echo esc_html( $comment->date['date_input']['fr_FR']['date'] ); ?>,</span>
+	<span class="user"><?php echo esc_html( ! empty( $userdata->display_name ) ? $userdata->display_name : __( 'No user', 'theepi' ) ); ?>: </span>
 	<span class="content"><?php echo esc_html( empty( $comment->content ) ? __( 'No comment', 'theepi' ) : $comment->content ); ?></span>
+	<span class="right state"><?php echo esc_html( $comment->state ); ?></span>
 	<span></span>
 </li>

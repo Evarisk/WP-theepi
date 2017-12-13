@@ -1,0 +1,12 @@
+{
+	"name": "State",
+	"slug": "state",
+	"version": "0.3.0",
+	"description": "Handle TheEPI state",
+	"path": "modules/state/",
+	"state": true,
+	"dependencies": {
+		"action": {},
+		"class": {}
+	}
+}

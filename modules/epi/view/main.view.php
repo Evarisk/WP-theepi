@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<th class="padding"><span><?php esc_html_e( 'Serial number', 'theepi' ); ?></span></th>
 			<th class="padding"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
 			<th class="w50"></th>
-			<th class="padding"><span><?php esc_html_e( 'Date of last check', 'theepi' ); ?></span></th>
+			<th class="padding"><span><?php esc_html_e( 'Date of last check and comment', 'theepi' ); ?></span></th>
 			<th class="padding"><span><?php esc_html_e( 'State', 'theepi' ); ?></span></th>
 			<th class="padding"><span><?php esc_html_e( 'Remaining time', 'theepi' ); ?></span></th>
 			<th class="w50"></th>

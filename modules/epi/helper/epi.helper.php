@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.3.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return Comment_Model
  *
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.3.0
  */
 function update_remaining_time( $data ) {
 	if ( ! empty( $data->id ) && ! empty( $data->frequency_control ) && ! empty( $data->control_date ) ) {
@@ -40,11 +40,17 @@ function update_remaining_time( $data ) {
 			$result .= $interval->format( '%a days' );
 			$result .= '</span>';
 		} else {
-			$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
-			$result .= $interval->format( '%a days' );
-			$result .= '</span>';
+			if ( 'KO' === $data->state ) {
+				$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
+				$result .= $interval->format( '%a days' );
+				$result .= '</span>';
+			} else {
+				$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
+				$result .= $interval->format( '%a days' );
+				$result .= '</span>';
 
-			$data->state = 'KO';
+				$data->state = 'NA';
+			}
 		}
 
 		$data->compiled_remaining_time = $result;

@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.3.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -56,6 +56,21 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	protected $version = '0.1';
 
 	/**
+	 * L'option pour enregistrer le commentaire par défault.
+	 *
+	 * @var string
+	 */
+	public $option_name_default_comment = 'theepi_default_comment';
+
+	/**
+	 * La donnée par défaut du commentaire.
+	 * Initialisé dans le constructeur.
+	 *
+	 * @var string
+	 */
+	public $default_data_comment;
+
+	/**
 	 * La fonction appelée automatiquement avant la création de l'objet dans la base de donnée
 	 *
 	 * @var array
@@ -68,6 +83,18 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 * @var array
 	 */
 	protected $before_put_function = array( '\theepi\update_control_date' );
+
+	/**
+	 * Constructeur
+	 *
+	 * @since 0.3.0
+	 * @version 0.3.0
+	 *
+	 * @return void
+	 */
+	protected function construct() {
+		$this->default_data_comment = __( 'Create new EPI', 'theepi' );
+	}
 
 	/**
 	 * Récupères les commentaires puis appelle la vue list-view.view.php
@@ -100,7 +127,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 * Affiches la vue pour éditer un commentaires
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.3.0
 	 *
 	 * @param  EPI_Model $epi Les données de l'EPI.
 	 *
@@ -124,6 +151,10 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 
 		$comment_schema = $comment_schema[0];
 
+		if ( 0 === $epi->id ) {
+			$comment_schema->content = get_option( EPI_Comment_Class::g()->option_name_default_comment, EPI_Comment_Class::g()->default_data_comment );
+		}
+
 		$userdata = get_userdata( get_current_user_id() );
 
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/list-edit', array(
@@ -137,21 +168,23 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	/**
 	 * Sauvegardes les commentaires de l'EPI.
 	 *
+	 * @since 0.1.0
+	 * @version 0.3.0
+	 *
 	 * @param  integer $epi_id L'ID de l'EPI.
 	 * @param  array   $data   Les données des commentaires.
 	 *
 	 * @return boolean
-	 *
-	 * @since 0.1.0
-	 * @version 0.1.0
 	 */
 	public function save_comments( $epi_id, $data ) {
 		if ( isset( $epi_id ) ) {
 			if ( ! empty( $data ) ) {
-				foreach ( $data as $comment ) {
-					if ( isset( $comment['content'] ) ) {
-						$comment['post_id'] = $epi_id;
-						self::g()->update( $comment );
+				foreach ( $data as $comment_data ) {
+					if ( ! empty( $comment_data['content'] ) ) {
+						$comment_data['post_id'] = $epi_id;
+						$comment                 = self::g()->update( $comment_data );
+
+						\eoxia\LOG_Util::g()->log( sprintf( 'Add comments on EPI "%d" with data %s, saved comment %s', $epi_id, wp_json_encode( $comment_data ), wp_json_encode( $comment ) ), 'theepi' );
 					}
 				}
 			}

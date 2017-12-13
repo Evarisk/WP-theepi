@@ -32,7 +32,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	/**
 	 * L'option pour enregistrer les nombre d'utilisateur par page.
 	 *
-	 * @var integer
+	 * @var string
 	 */
 	public $option_name = 'user_per_page';
 
@@ -45,7 +45,6 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * @version 0.2.0
 	 */
 	protected function construct() {}
-
 
 	/**
 	 * Récupère le role "subscriber" et appel la vue "capability/has-cap".
@@ -72,6 +71,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * @param array $list_user_id La liste des utilisateurs à afficher. Peut être vide pour récupérer tous les utilisateurs.
 	 *
 	 * @return void
+	 * @todo: 13/12/2017: nonce
 	 */
 	public function display_user_list_capacity( $list_user_id = array() ) {
 		$current_page = ! empty( $_POST['next_page'] ) ? (int) $_POST['next_page'] : 1;
@@ -137,6 +137,27 @@ class Setting_Class extends \eoxia\Singleton_Util {
 				'option'  => self::g()->option_name,
 			)
 		);
+	}
+
+	/**
+	 * Enregistres les données par défaut.
+	 *
+	 * @since 0.3.0
+	 * @version 0.3.0
+	 *
+	 * @param  string $defaut_comment Le commentaire par défaut.
+	 * @return bool                   True si tout s'est bien passé.
+	 */
+	public function save_default_data( $defaut_comment ) {
+
+		// Seulement pour garder une trace dans les LOG.
+		$old_data = get_option( EPI_Comment_Class::g()->option_name_default_comment, EPI_Comment_Class::g()->default_data_comment );
+
+		update_option( EPI_Comment_Class::g()->option_name_default_comment, $default_comment );
+
+		\eoxia\LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data %s', EPI_Comment_Class::g()->option_name_default_comment, $default_comment, $old_data ), 'theepi' );
+
+		return true;
 	}
 }
 
