@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.4.0
  * @copyright 2017 Evarisk
  * @package TheEPI
  */
@@ -23,22 +23,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<td class="w50">
 		<?php do_shortcode( '[wpeo_upload id="' . $epi->id . '" model_name="/theepi/' . $epi->get_class() . '" single="false" field_name="image" ]' ); ?>
 	</td>
-	<td class="w50"><?php echo esc_html( $epi->unique_identifier ); ?></td>
-	<td class="padding w150"><input type="text" name="title" value="<?php echo esc_attr( $epi->title ); ?>" /></td>
-	<td class="padding w150"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" /></td>
-	<td class="padding tooltip red"
-		aria-label="<?php esc_attr_e( 'This field must be in numeric format', 'theepi' ); ?>">
-		<input type="text" name="frequency_control" value="<?php echo esc_attr( $epi->frequency_control ); ?>" placeholder="" /></td>
+	<td class="w50" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>"><?php echo esc_html( $epi->unique_identifier ); ?></td>
+	<td class="padding w150" data-title="<?php echo esc_attr_e( 'Name', 'theepi' ); ?>"><input type="text" name="title" value="<?php echo esc_attr( $epi->title ); ?>" /></td>
+	<td class="padding w150" data-title="<?php echo esc_attr_e( 'Serial number', 'theepi' ); ?>"><input type="text" name="serial_number" value="<?php echo esc_attr( $epi->serial_number ); ?>" /></td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Period of control', 'theepi' ); ?>">
+		<input 	class="wpeo-popover-event"
+						aria-label="<?php esc_attr_e( 'This field must be in numeric format', 'theepi' ); ?>"
+						data-color="red"
+						type="text"
+						name="frequency_control"
+						value="<?php echo esc_attr( $epi->frequency_control ); ?>" /></td>
 	<td><?php esc_html_e( 'days', 'theepi' ); ?></td>
-	<td><?php EPI_Comment_Class::g()->display_edit( $epi ); ?></td>
-	<td><?php echo esc_html( $epi->state ); ?></td>
-	<td><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
+	<td data-title="<?php echo esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><?php EPI_Comment_Class::g()->display_edit( $epi ); ?></td>
+	<td data-title="<?php echo esc_attr_e( 'State', 'theepi' ); ?>"><?php echo esc_html( $epi->state ); ?></td>
+	<td data-title="<?php echo esc_attr_e( 'Remaining time', 'theepi' ); ?>"><?php echo $epi->compiled_remaining_time; // WPCS: XSS is ok. ?></td>
 	<td>
-		<div class="action grid-layout w2">
+		<div class="wpeo-grid grid-2">
 			<?php if ( 0 !== $epi->id ) : ?>
-				<div data-parent="epi-row" data-namespace="theEPI" data-module="EPI" data-before-method="checkData" data-loader="table" class="button w50 green save action-input"><i class="icon fa fa-floppy-o"></i></div>
+				<div	data-parent="epi-row"
+							data-namespace="theEPI"
+							data-module="EPI"
+							data-before-method="checkData"
+							class="wpeo-button button-green button-progress button-square-50 action-input edit"><span class="icon fa fa-floppy-o"></span></div>
 			<?php else : ?>
-				<div data-namespace="theEPI" data-module="EPI" data-before-method="checkData" data-loader="table" data-parent="epi-row" class="button w50 disable add action-input progress"><i class="icon fa fa-plus"></i></div>
+				<div 	<?php echo esc_attr( \eoxia\the_before_callback( 'theEPI', 'EPI', 'checkData' ) ); ?>
+							data-parent="epi-row"
+							class="wpeo-button button-progress button-square-50 button-disable button-blue button-event action-input add"><span class="icon fa fa-plus"></span></div>
 			<?php endif; ?>
 		</div>
 	</td>

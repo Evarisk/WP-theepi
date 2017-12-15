@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
- * @version 0.2.0
+ * @version 0.4.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -29,5 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<?php Setting_Class::g()->display_user_list_capacity(); ?>
 
-	<a href="#" class="margin action-input button blue right" data-parent="section-capability"><?php esc_html_e( 'Save', 'theepi' ); ?></a>
+	<div class="wpeo-button button-green button-progress action-input" data-parent="section-capability">
+		<span><?php esc_html_e( 'Save', 'theepi' ); ?></span>
+	</div>
 </div>

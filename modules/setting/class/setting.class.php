@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
- * @version 0.2.0
+ * @version 0.4.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -145,10 +145,10 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * @since 0.3.0
 	 * @version 0.3.0
 	 *
-	 * @param  string $defaut_comment Le commentaire par défaut.
-	 * @return bool                   True si tout s'est bien passé.
+	 * @param  string $default_comment Le commentaire par défaut.
+	 * @return bool                    True si tout s'est bien passé.
 	 */
-	public function save_default_data( $defaut_comment ) {
+	public function save_default_data( $default_comment ) {
 
 		// Seulement pour garder une trace dans les LOG.
 		$old_data = get_option( EPI_Comment_Class::g()->option_name_default_comment, EPI_Comment_Class::g()->default_data_comment );

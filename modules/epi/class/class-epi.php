@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.3.0
+ * @version 0.4.0
  * @copyright 2017 Evarisk
  * @package TheEPI
  */
@@ -108,19 +108,85 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Appel la vue principale pour afficher le tableau HTML contenant les EPI.
 	 *
 	 * @since 0.2.0
-	 * @version 0.3.0
+	 * @version 0.4.0
 	 *
-	 * @param integer $current_page The current page.
+	 * @param string $term Terme de la recherche. Défault ''.
 	 *
 	 * @return void
 	 */
-	public function display( $current_page = 1 ) {
+	public function display( $term = '' ) {
 		$epi_schema = self::g()->get( array(
 			'schema' => true,
 		), true );
 
+		$pagination_data = $this->get_pagination_data( 0, $term );
+
+		$epis = $this->get_epis( $pagination_data, $term );
+
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'main', array(
+			'offset'     => $pagination_data['offset'],
+			'count_epi'  => $pagination_data['count_epi'],
+			'per_page'   => $pagination_data['per_page'],
+			'epis'       => $epis,
+			'epi_schema' => $epi_schema,
+			'term'       => $term,
+		) );
+	}
+
+	/**
+	 * Récupères la liste des EPI.
+	 *
+	 * @since 0.4.0
+	 * @version 0.4.0
+	 *
+	 * @param array  $data (Voir au dessus.).
+	 * @param string $term Terme de la recherche. Défault ''.
+	 *
+	 * @return array      Les EPI.
+	 */
+	public function get_epis( $data, $term = '' ) {
+		$args = array(
+			'offset'         => $data['offset'],
+			'posts_per_page' => $data['per_page'],
+			's'              => $term,
+		);
+
+		$epis = self::g()->get( $args );
+		return $epis;
+	}
+
+	/**
+	 * Appel la vue pour afficher le formulaire de recherche.
+	 *
+	 * @since 0.4.0
+	 * @version 0.4.0
+	 *
+	 * @return void
+	 */
+	public function display_search() {
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'search' );
+	}
+
+	/**
+	 * Récupères les données liée à la pagination des EPI.
+	 *
+	 * @since 0.4.0
+	 * @version 0.4.0
+	 *
+	 * @param integer $offset       Le nombre de post à sauté. Défault 0.
+	 * @param string  $term         Terme de la recherche. Défault ''.
+	 *
+	 * ['count_epi']    integer Le nombre d'EPI en base de donnée.
+	 * ['per_page']     integer Le nombre d'EPI par page.
+	 * ['offset']       integer Le nombre d'EPI à sauter.
+	 *
+	 * @return array (Voir au dessus.)
+	 */
+	public function get_pagination_data( $offset = 0, $term = '' ) {
+
 		$count_epi = count( self::g()->get( array(
 			'fields' => array( 'ID' ),
+			's'      => $term,
 		) ) );
 
 		$per_page = get_user_meta( get_current_user_id(), $this->option_name_per_page, true );
@@ -129,14 +195,15 @@ class EPI_Class extends \eoxia\Post_Class {
 			$per_page = $this->limit_epi;
 		}
 
-		$number_page = ceil( $count_epi / $per_page );
+		if ( $count_epi < $per_page ) {
+			$per_page = $count_epi;
+		}
 
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'main', array(
-			'count_epi'    => $count_epi,
-			'number_page'  => $number_page,
-			'current_page' => $current_page,
-			'epi_schema'   => $epi_schema,
-		) );
+		return array(
+			'offset'    => $offset,
+			'count_epi' => $count_epi,
+			'per_page'  => $per_page,
+		);
 	}
 
 	/**
@@ -159,32 +226,18 @@ class EPI_Class extends \eoxia\Post_Class {
 	}
 
 	/**
-	 * Charges et affiches la liste des EPI
+	 * Affiches la liste des EPI
 	 *
 	 * @since 0.1.0
-	 * @version 0.3.0
+	 * @version 0.4.0
 	 *
-	 * @param integer $current_page The current page.
+	 * @param array $epis La liste des EPI.
 	 *
 	 * @return void
 	 */
-	public function display_epi_list( $current_page = 1 ) {
-		$per_page = get_user_meta( get_current_user_id(), $this->option_name_per_page, true );
-
-		if ( empty( $per_page ) || $per_page < 1 ) {
-			$per_page = $this->limit_epi;
-		}
-
-		$args = array(
-			'offset'         => ( $current_page - 1 ) * $per_page,
-			'posts_per_page' => $per_page,
-		);
-
-		$epi_list = self::g()->get( $args );
-
+	public function display_epi_list( $epis ) {
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'list', array(
-			'epi_list' => $epi_list,
-
+			'epis' => $epis,
 		) );
 	}
 

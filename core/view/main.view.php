@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.3.0
+ * @version 0.4.0
  * @copyright 2017 Evarisk
  * @package TheEPI
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<div class="wrap digirisk-wrap wpeo-wrap digirisk-epi">
+<div class="wrap wpeo-wrap wrap-theepi">
 
 	<h1>
 		<?php esc_html_e( 'TheEPI', 'theepi' ); ?>
@@ -23,6 +23,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span><?php esc_html_e( 'Create mass from image', 'theepi' ); ?></span>
 		</a>
 	</h1>
+
+	<?php EPI_Class::g()->display_search(); ?>
+
 	<div class="container-content">
 		<?php EPI_Class::g()->display(); ?>
 	</div>

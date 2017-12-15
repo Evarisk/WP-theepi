@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
- * @version 0.3.0
+ * @version 0.4.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<div class="wrap">
+<div class="wrap wpeo-wrap">
 	<h1><?php esc_html_e( 'TheEPI settings', 'theepi' ); ?></h1>
 
 	<div class="digi-tools-main-container">

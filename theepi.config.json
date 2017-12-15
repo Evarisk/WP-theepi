@@ -15,7 +15,6 @@
 	"modules": [
 		"core/core.config.json",
 		"modules/epi/epi.config.json",
-		"modules/state/state.config.json",
 		"modules/setting/setting.config.json"
 	],
 	"debug": false,
