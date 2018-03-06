@@ -46,7 +46,6 @@ class EPI_Action {
 	 *
 	 * @return void
 	 * @todo: 13/12/2017: Faire que les données de l'EPI soit dans $_POST['epi'].
-	 *        13/12/2017: Sanitize toutes les entrées.
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
@@ -56,8 +55,17 @@ class EPI_Action {
 		$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();
 		$new_epi  = empty( $data['id'] ) ? true : false;
 
-		$epi = EPI_Class::g()->save( $data, $image_id, $comments );
+		$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
 
+		if ( empty( $epi ) ) {
+			$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
+		}
+
+		$epi->data['title']             = sanitize_text_field( $data['title'] );
+		$epi->data['serial_number']     = sanitize_text_field( $data['serial_number'] );
+		$epi->data['frequency_control'] = (int) $data['frequency_control'];
+
+		$epi = EPI_Class::g()->save( $epi, $image_id, $comments );
 		ob_start();
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
 			'epi' => $epi,
@@ -81,7 +89,7 @@ class EPI_Action {
 	 * @return void
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -92,7 +100,7 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		EPI_Class::g()->delete( 'id' );
+		EPI_Class::g()->delete( $id );
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',

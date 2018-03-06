@@ -19,23 +19,23 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Construit l'identifiant unique d'un modèle
  *
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.4.0
  *
- * @param  object $data Les données du modèle.
+ * @param  array  $data Les données du modèle.
  * @return object       Les données du modèle avec l'identifiant
  */
-function construct_identifier( $data ) {
-	$model_name      = get_class( $data );
+function construct_identifier( $data, $args ) {
+	$model_name      = $args['model_name'];
 	$controller_name = str_replace( 'model', 'class', $model_name );
 	$controller_name = str_replace( 'Model', 'Class', $controller_name );
 	$next_identifier = get_last_unique_key( $controller_name );
 
-	if ( empty( $data->unique_key ) ) {
-		$data->unique_key = (int) ( $next_identifier + 1 );
+	$next_identifier++;
+	if ( ! isset( $data['unique_key'] ) || empty( $data['unique_key'] ) ) {
+		$data['unique_key'] = $next_identifier;
 	}
-
-	if ( empty( $data->unique_identifier ) ) {
-		$data->unique_identifier = $controller_name::g()->element_prefix . ( $next_identifier + 1 );
+	if ( ! isset( $data['unique_identifier'] ) || empty( $data['unique_identifier'] ) ) {
+		$data['unique_identifier'] = $controller_name::g()->element_prefix . $next_identifier;
 	}
 
 	return $data;
@@ -45,13 +45,14 @@ function construct_identifier( $data ) {
  * Remplaces l'identifiant du modèle par l'identifiant personnalisé qui se trouve dans la BDD
  *
  * @since 0.1.0
- * @version 0.1.0
+ * @version 0.4.0
  *
  * @param  object $data Les données du modèle.
  * @return object       Les données du modèle avec l'identifiant personnalisé
  */
-function get_identifier( $data ) {
-	return $data;
+function get_identifier( $object, $args ) {
+	$object->data = construct_identifier( $object->data, $args );
+	return $object;
 }
 
 /**
@@ -65,7 +66,7 @@ function get_identifier( $data ) {
  * @return integer             L'identifiant unique
  */
 function get_last_unique_key( $controller ) {
-	$element_type = $controller::g()->get_post_type();
+	$element_type = $controller::g()->get_type();
 	$wp_type      = $controller::g()->get_identifier_helper();
 
 	if ( empty( $wp_type ) || empty( $element_type ) || ! is_string( $wp_type ) || ! is_string( $element_type ) ) {

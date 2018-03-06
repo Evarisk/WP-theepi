@@ -5,10 +5,9 @@
 	"description": "Handle EPI",
 	"path": "modules/epi/",
 	"dependencies": {
-		"filter": {},
 		"model": {},
-		"helper": {},
 		"class": {},
+		"filter": {},
 		"action": {}
 	}
 }

@@ -5,7 +5,7 @@
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
  * @version 0.4.0
- * @copyright 2017 Evarisk
+ * @copyright 2018 Evarisk
  * @package TheEPI
  */
 
@@ -32,7 +32,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @var string
 	 */
-	protected $post_type = 'theepi-epi';
+	protected $type = 'theepi-epi';
 
 	/**
 	 * La clé principale du modèle
@@ -54,20 +54,6 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @var string
 	 */
 	protected $version = '0.1';
-
-	/**
-	 * La fonction appelée automatiquement avant la création de l'objet dans la base de donnée
-	 *
-	 * @var array
-	 */
-	protected $before_post_function = array( '\theepi\construct_identifier' );
-
-	/**
-	 * La fonction appelée automatiquement après la récupération de l'objet dans la base de donnée
-	 *
-	 * @var array
-	 */
-	protected $after_get_function = array( '\theepi\get_identifier', '\theepi\update_remaining_time' );
 
 	/**
 	 * Le préfixe de l'objet dans TheEPI.
@@ -142,7 +128,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @param array  $data (Voir au dessus.).
 	 * @param string $term Terme de la recherche. Défault ''.
 	 *
-	 * @return array      Les EPI.
+	 * @return array       Les EPI.
 	 */
 	public function get_epis( $data, $term = '' ) {
 		$args = array(
@@ -247,30 +233,26 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since 0.3.0
 	 * @version 0.3.0
 	 *
-	 * ['id']                integer L'ID de l'EPI.
-	 * ['image']             integer L'ID de l'image téléversé. #doublon avec $image_id.
-	 * ['title']             string  Le titre de l'EPI
-	 * ['serial_number']     string  Le numéro de série de l'EPI.
-	 * ['frequency_control'] integer Le nombre de jour avant le prochain contrôle.
-	 * @param  array   $data     (See above).
-	 * @param  integer $image_id L'ID de l'image téléversé.
+	 * @param  EPI_Model $epi      Les données de l'EPI.
+	 * @param  integer   $image_id L'ID de l'image téléversé.
 	 *
 	 * ['post_id'] integer L'ID de l'EPI. (Ce n'est pas un doublon avec $data['id']).
 	 * ['id']      integer L'ID du commentaire.
 	 * ['date']    string  La date du commentaire au format MySQL.
 	 * ['content'] string  Le contenu du commentaire.
 	 * ['state']   string  Le status de l'EPI. Peut être OK ou KO.
-	 * @param  array   $comments (See above).
+	 * @param  array     $comments (See above).
 	 *
-	 * @return EPI_Model Retourne l'objet EPI créé.
+	 * @return EPI_Model Retourne l'objet EPI créé ou mise à jour.
 	 */
-	public function save( array $data, $image_id, array $comments ) {
-		$epi = self::g()->update( $data );
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update EPI "%d" with the data %s', $epi->id, wp_json_encode( $data ) ), 'theepi' );
+	public function save( $epi, $image_id, $comments ) {
+		$epi = self::g()->update( $epi->data );
+
+		\eoxia\LOG_Util::g()->log( sprintf( 'Update EPI "%d" with the data %s', $epi->data['id'], wp_json_encode( $epi->data ) ), 'theepi' );
 
 		if ( ! empty( $image_id ) ) {
 			$args_media = array(
-				'id'         => $epi->id,
+				'id'         => $epi->data['id'],
 				'file_id'    => $image_id,
 				'model_name' => '\theepi\EPI_Class',
 			);
@@ -279,10 +261,13 @@ class EPI_Class extends \eoxia\Post_Class {
 			$args_media['field_name'] = 'image';
 			\eoxia\WPEO_Upload_Class::g()->associate_file( $args_media );
 
-			\eoxia\LOG_Util::g()->log( sprintf( 'Add media on EPI "%d", media ID "%d"', $epi->id, $image_id ), 'theepi' );
+			\eoxia\LOG_Util::g()->log( sprintf( 'Add media on EPI "%d", media ID "%d"', $epi->data['id'], $image_id ), 'theepi' );
 		}
 
-		EPI_Comment_Class::g()->save_comments( $epi->id, $comments );
+		EPI_Comment_Class::g()->save_comments( $epi->data['id'], $comments );
+
+		// Obliger de get à nouveau pour récupérer control_date, et state.
+		$epi = self::get( array( 'id' => $epi->data['id'] ), true );
 
 		return $epi;
 	}
@@ -291,7 +276,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Supprimes un EPI.
 	 *
 	 * @since 0.3.0
-	 * @version 0.3.0
+	 * @version 0.4.0
 	 *
 	 * @param  integer $id L'ID de l'EPI.
 	 *
@@ -302,10 +287,10 @@ class EPI_Class extends \eoxia\Post_Class {
 			'id' => $id,
 		), true );
 
-		$epi->status = 'trash';
+		$epi->data['status'] = 'trash';
 
-		self::g()->update( $epi );
-		\eoxia\LOG_Util::g()->log( sprintf( ' EPI "%d" is now trashed, EPI data %s', $epi->id, wp_json_encode( $epi ) ), 'theepi' );
+		self::g()->update( $epi->data );
+		\eoxia\LOG_Util::g()->log( sprintf( ' EPI "%d" is now trashed, EPI data %s', $epi->data['id'], wp_json_encode( $epi ) ), 'theepi' );
 
 		return true;
 	}

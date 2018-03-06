@@ -2,10 +2,10 @@
 /**
  * Handle EPI Comments
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
+ * @author Evarisk <dev@evarisk.com>
  * @since 0.1.0
- * @version 0.3.0
- * @copyright 2015-2017 Evarisk
+ * @version 0.4.0
+ * @copyright 2015-2018 Evarisk
  * @package TheEPI
  */
 
@@ -39,7 +39,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 *
 	 * @var string
 	 */
-	protected $comment_type = 'theepi-epi-comment';
+	protected $type = 'theepi-epi-comment';
 
 	/**
 	 * La route pour accéder à l'objet dans la rest API
@@ -71,20 +71,6 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	public $default_data_comment;
 
 	/**
-	 * La fonction appelée automatiquement avant la création de l'objet dans la base de donnée
-	 *
-	 * @var array
-	 */
-	protected $before_post_function = array( '\theepi\update_control_date' );
-
-	/**
-	 * La fonction appelée automatiquement avant la sauvegarde de l'objet dans la base de donnée
-	 *
-	 * @var array
-	 */
-	protected $before_put_function = array( '\theepi\update_control_date' );
-
-	/**
 	 * Constructeur
 	 *
 	 * @since 0.3.0
@@ -100,7 +86,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 * Récupères les commentaires puis appelle la vue list-view.view.php
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 *
 	 * @param  EPI_Model $epi Les données de l'EPI.
 	 *
@@ -108,8 +94,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 */
 	public function display( $epi ) {
 		$comments = self::g()->get( array(
-			'post_id' => $epi->id,
-			'status'  => -34070,
+			'post_id' => $epi->data['id'],
 			'orderby' => 'comment_ID',
 			'order'   => 'ASC',
 		) );
@@ -136,10 +121,9 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	public function display_edit( $epi ) {
 		$comments = array();
 
-		if ( 0 !== $epi->id ) {
+		if ( 0 !== $epi->data['id'] ) {
 			$comments = self::g()->get( array(
-				'post_id' => $epi->id,
-				'status'  => -34070,
+				'post_id' => $epi->data['id'],
 				'orderby' => 'comment_ID',
 				'order'   => 'ASC',
 			) );
@@ -147,12 +131,10 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 
 		$comment_schema = self::g()->get( array(
 			'schema' => true,
-		) );
+		), true );
 
-		$comment_schema = $comment_schema[0];
-
-		if ( 0 === $epi->id ) {
-			$comment_schema->content = get_option( EPI_Comment_Class::g()->option_name_default_comment, EPI_Comment_Class::g()->default_data_comment );
+		if ( 0 === $epi->data['id'] ) {
+			$comment_schema->data['content'] = get_option( $this->option_name_default_comment, $this->default_data_comment );
 		}
 
 		$userdata = get_userdata( get_current_user_id() );
@@ -182,6 +164,9 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 				foreach ( $data as $comment_data ) {
 					if ( ! empty( $comment_data['content'] ) ) {
 						$comment_data['post_id'] = $epi_id;
+						$comment_data['id']      = (int) $comment_data['id'];
+						$comment_data['content'] = sanitize_text_field( $comment_data['content'] );
+						$comment_data['state']   = sanitize_text_field( $comment_data['state'] );
 						$comment                 = self::g()->update( $comment_data );
 
 						\eoxia\LOG_Util::g()->log( sprintf( 'Add comments on EPI "%d" with data %s, saved comment %s', $epi_id, wp_json_encode( $comment_data ), wp_json_encode( $comment ) ), 'theepi' );

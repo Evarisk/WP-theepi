@@ -19,11 +19,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	if ( ! empty( $comments ) ) :
 		foreach ( $comments as $comment ) :
-			if ( 0 !== $comment->id ) :
-				\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/item', array(
-					'comment' => $comment,
-				) );
-			endif;
+			\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/item', array(
+				'comment' => $comment,
+			) );
 		endforeach;
 	endif;
 	?>
