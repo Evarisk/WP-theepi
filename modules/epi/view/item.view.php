@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<span class="icon fa fa-pencil"></span>
 			</div>
 
-			<div 	class="wpeo-button button-red button-square-50 button-progress action-delete"
+			<div 	class="wpeo-button button-red button-square-50a button-progress action-delete"
 						data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 						data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
 						data-action="delete_epi"
