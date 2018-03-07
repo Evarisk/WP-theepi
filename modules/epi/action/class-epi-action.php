@@ -233,9 +233,9 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		EPI_Class::g()->create_mass_epi( $files_id );
+		$epis = EPI_Class::g()->create_mass_epi( $files_id );
 
-		EPI_Class::g()->display_epi_list();
+		EPI_Class::g()->display_epi_list( $epis );
 		wp_die();
 	}
 }

@@ -26,7 +26,7 @@ window.eoxiaJS.theEPI.core.init = function() {
 };
 
 window.eoxiaJS.theEPI.core.event = function() {
-	jQuery( document ).on( 'click', '.digirisk-epi .create-mass-epi', window.eoxiaJS.theEPI.core.openMedia );
+	jQuery( document ).on( 'click', '.wrap-theepi .create-mass-epi', window.eoxiaJS.theEPI.core.openMedia );
 };
 
 window.eoxiaJS.theEPI.core.openMedia = function( event ) {

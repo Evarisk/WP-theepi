@@ -299,35 +299,40 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
 	 * @since 0.3.0
-	 * @version 0.3.0
+	 * @version 0.4.0
 	 *
 	 * @param array $files_id Un tableau d'ID.
 	 *
 	 * @return bool           True si tout s'est bien passé.
 	 */
 	public function create_mass_epi( array $files_id ) {
+		$epis = array();
+
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
-				$epi = self::g()->update( array() );
+				$file_id = (int) $file_id;
+				$epi     = self::g()->create( array( 'frequency_control' => 0 ) );
 
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
-					'id'         => $epi->id,
+					'id'         => $epi->data['id'],
 					'file_id'    => $file_id,
 					'model_name' => '\theepi\EPI_Class',
 				) );
 
 				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
-					'id'         => $epi->id,
+					'id'         => $epi->data['id'],
 					'file_id'    => $file_id,
 					'model_name' => '\theepi\EPI_Class',
 					'field_name' => 'image',
 				) );
 
-				\eoxia\LOG_Util::g()->log( sprintf( 'Create EPI "%d" from media id "%d", saved EPI %s', $epi->id, $file_id, wp_json_encode( $epi ) ), 'theepi' );
+				$epis[] = $epi;
+
+				\eoxia\LOG_Util::g()->log( sprintf( 'Create EPI "%d" from media id "%d", saved EPI %s', $epi->data['id'], $file_id, wp_json_encode( $epi->data ) ), 'theepi' );
 			}
 		}
 
-		return true;
+		return $epis;
 	}
 }
 
