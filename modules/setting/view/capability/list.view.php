@@ -4,9 +4,9 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
- * @version 0.2.0
+ * @version 0.4.0
  * @copyright 2015-2017 Evarisk
- * @package TheEPI-EPI
+ * @package TheEPI
  */
 
 namespace theepi;
@@ -16,16 +16,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="list-users">
-	<table class="table users">
+	<table class="wpeo-table users">
 		<thead>
 			<tr>
-				<td class="w50"></td>
-				<td class="w50 padding"><?php esc_html_e( 'ID', 'theepi' ); ?></td>
-				<td class="padding"><?php esc_html_e( 'Email', 'theepi' ); ?></td>
-				<td class="padding"><?php esc_html_e( 'Role', 'theepi' ); ?></td>
-				<td class="padding"><?php esc_html_e( 'Has the right on TheEPI', 'theepi' ); ?></td>
+				<th class="w50 padding" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><?php esc_html_e( 'ID', 'theepi' ); ?></th>
+				<th class="padding" data-title="<?php esc_attr_e( 'Email', 'theepi' ); ?>"><?php esc_html_e( 'Email', 'theepi' ); ?></th>
+				<th class="padding" data-title="<?php esc_attr_e( 'Role', 'theepi' ); ?>"><?php esc_html_e( 'Role', 'theepi' ); ?></th>
+				<th class="padding" data-title="<?php esc_attr_e( 'Has the right on TheEPI', 'theepi' ); ?>"><?php esc_html_e( 'Has the right on TheEPI', 'theepi' ); ?></th>
 			</tr>
 		</thead>
+
 		<?php
 		if ( ! empty( $users ) ) :
 			foreach ( $users as $user ) :

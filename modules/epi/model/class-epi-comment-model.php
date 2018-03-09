@@ -4,8 +4,8 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
- * @copyright 2015-2017 Evarisk
+ * @version 0.4.0
+ * @copyright 2015-2018 Evarisk
  * @package TheEPI
  */
 
@@ -18,24 +18,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Modèles des commentaires des EPI.
  */
-class EPI_Comment_Model extends \eoxia\comment_model {
+class EPI_Comment_Model extends \eoxia\Comment_Model {
 
 	/**
 	 * Le constructeur
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 *
-	 * @param EPI_Comment_Class $object les données du commentaire de l'epi.
+	 * @param EPI_Comment_Class $object     Les données du commentaire de l'epi.
+	 * @param string            $req_method La méthode de la requête.
 	 */
-	public function __construct( $object ) {
-		$this->model['state'] = array(
+	public function __construct( $object, $req_method = null ) {
+		$this->schema['state'] = array(
 			'type'      => 'string',
 			'meta_type' => 'field',
 			'field'     => '_state',
 		);
 
-		parent::__construct( $object );
+		parent::__construct( $object, $req_method );
 	}
 
 }

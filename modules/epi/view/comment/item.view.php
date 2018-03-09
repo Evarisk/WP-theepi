@@ -2,10 +2,10 @@
 /**
  * Ajout le champ status "OK/KO".
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
+ * @author Evarisk <dev@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
- * @copyright 2017 Evarisk
+ * @version 0.4.0
+ * @copyright 2018 Evarisk
  * @package TheEPI
  */
 
@@ -16,13 +16,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <?php
-$author_id = ! empty( $comment->author_id ) ? $comment->author_id : get_current_user_id();
+$author_id = ! empty( $comment->data['author_id'] ) ? $comment->data['author_id'] : get_current_user_id();
 $userdata  = get_userdata( $author_id );
 ?>
 
 <li class="comment">
-	<span class="user"><?php echo esc_html( ! empty( $userdata->display_name ) ? $userdata->display_name : __( 'No user', 'theepi' ) ); ?>, </span>
-	<span class="date"><?php echo esc_html( $comment->date['date_input']['fr_FR']['date'] ); ?> : </span>
-	<span class="content"><?php echo esc_html( empty( $comment->content ) ? __( 'No comment', 'theepi' ) : $comment->content ); ?></span>
+	<span class="date"><?php echo esc_html( $comment->data['date']['rendered']['date'] ); ?>,</span>
+	<span class="user"><?php echo esc_html( ! empty( $userdata->display_name ) ? $userdata->display_name : __( 'No user', 'theepi' ) ); ?>: </span>
+	<span class="content"><?php echo esc_html( empty( $comment->data['content'] ) ? __( 'No comment', 'theepi' ) : $comment->data['content'] ); ?></span>
+	<span class="right state"><?php echo esc_html( $comment->data['state'] ); ?></span>
 	<span></span>
 </li>

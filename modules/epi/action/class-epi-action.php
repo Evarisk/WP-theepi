@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.1.0
- * @version 0.2.0
+ * @version 0.4.0
  * @copyright 2017 Evarisk
  * @package TheEPI
  */
@@ -30,8 +30,10 @@ class EPI_Action {
 		add_action( 'wp_ajax_save_epi', array( $this, 'ajax_save_epi' ) );
 		add_action( 'wp_ajax_delete_epi', array( $this, 'ajax_delete_epi' ) );
 		add_action( 'wp_ajax_load_epi', array( $this, 'ajax_load_epi' ) );
+		add_action( 'wp_ajax_load_more_epi', array( $this, 'ajax_load_more_epi' ) );
 
-		add_action( 'wp_ajax_paginate_epi', array( $this, 'ajax_paginate_epi' ) );
+		add_action( 'wp_ajax_search_epi', array( $this, 'ajax_search_epi' ) );
+		add_action( 'wp_ajax_clear_search_epi', array( $this, 'ajax_clear_search_epi' ) );
 
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'ajax_create_mass_epi' ) );
 	}
@@ -40,37 +42,44 @@ class EPI_Action {
 	 * Sauvegardes un EPI
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 *
 	 * @return void
+	 * @todo: 13/12/2017: Faire que les données de l'EPI soit dans $_POST['epi'].
 	 */
 	public function ajax_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
-		$epi = EPI_Class::g()->update( $_POST );
+		$data     = ! empty( $_POST ) ? (array) $_POST : array();
+		$image_id = ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
+		$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();
+		$new_epi  = empty( $data['id'] ) ? true : false;
 
-		if ( ! empty( $_POST['image'] ) ) {
-			$args_media = array(
-				'id'         => $epi->id,
-				'file_id'    => (int) $_POST['image'],
-				'model_name' => '\theepi\EPI_Class',
-			);
+		$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
 
-			\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $args_media );
-			$args_media['field_name'] = 'image';
-			\eoxia\WPEO_Upload_Class::g()->associate_file( $args_media );
+		if ( empty( $epi ) ) {
+			$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
 		}
 
-		EPI_Comment_Class::g()->save_comments( $epi->id, $_POST['list_comment'] );
+		$epi->data['title']             = sanitize_text_field( $data['title'] );
+		$epi->data['serial_number']     = sanitize_text_field( $data['serial_number'] );
+		$epi->data['frequency_control'] = (int) $data['frequency_control'];
 
+		$epi = EPI_Class::g()->save( $epi, $image_id, $comments );
 		ob_start();
-		Class_TheEPI_Core::g()->display();
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
+			'epi' => $epi,
+			'new' => $new_epi,
+		) );
+		$epi_view = ob_get_clean();
+
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',
 			'module'           => 'EPI',
 			'callback_success' => 'savedEpiSuccess',
 			'object'           => $epi,
-			'template'         => ob_get_clean(),
+			'epi_view'         => $epi_view,
+			'new_epi'          => $new_epi,
 		) );
 	}
 
@@ -80,7 +89,7 @@ class EPI_Action {
 	 * @return void
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 */
 	public function ajax_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -91,13 +100,7 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		$epi = EPI_Class::g()->get( array(
-			'id' => $id,
-		), true );
-
-		$epi->status = 'trash';
-
-		EPI_Class::g()->update( $epi );
+		EPI_Class::g()->delete( $id );
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',
@@ -141,26 +144,84 @@ class EPI_Action {
 	}
 
 	/**
-	 * Gestion de la pagination des EPI.
+	 * Gestion du chargement supplémentaire des EPI.
 	 *
 	 * @since 0.2.0
-	 * @version 0.2.0
+	 * @version 0.4.0
 	 *
 	 * @return void
-	 * @todo: nonce
 	 */
-	public function ajax_paginate_epi() {
-		$current_page = ! empty( $_POST['current_page'] ) ? (int) $_POST['current_page'] : 1;
+	public function ajax_load_more_epi() {
+		check_ajax_referer( 'load_more_epi' );
 
-		EPI_Class::g()->display( $current_page );
-		wp_die();
+		$offset = ! empty( $_POST['offset'] ) ? (int) $_POST['offset'] : 1;
+		$term   = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
+
+		$pagination_data = EPI_Class::g()->get_pagination_data( $offset, $term );
+
+		$epis = EPI_Class::g()->get_epis( $pagination_data, $term );
+
+		ob_start();
+		EPI_Class::g()->display_epi_list( $epis );
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'loadedMoreEPISuccess',
+			'view'             => ob_get_clean(),
+		) );
+	}
+
+	/**
+	 * Recherches tous les EPI
+	 *
+	 * @since 0.4.0
+	 * @version 0.4.0
+	 *
+	 * @return void
+	 */
+	public function ajax_search_epi() {
+		check_ajax_referer( 'search_epi' );
+
+		$term = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
+
+		ob_start();
+		EPI_Class::g()->display( $term );
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'searchedEPISuccess',
+			'clear'            => false,
+			'view'             => ob_get_clean(),
+		) );
+	}
+
+	/**
+	 * Met la recherche à 0
+	 *
+	 * @since 0.4.0
+	 * @version 0.4.0
+	 *
+	 * @return void
+	 */
+	public function ajax_clear_search_epi() {
+		check_ajax_referer( 'clear_search_epi' );
+
+		ob_start();
+		EPI_Class::g()->display();
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'searchedEPISuccess',
+			'clear'            => true,
+			'view'             => ob_get_clean(),
+		) );
 	}
 
 	/**
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.3.0
 	 *
 	 * @return void
 	 * @todo: nonce
@@ -172,25 +233,9 @@ class EPI_Action {
 			wp_send_json_error();
 		}
 
-		if ( ! empty( $files_id ) ) {
-			foreach ( $files_id as $file_id ) {
-				$epi = EPI_Class::g()->update( array() );
+		$epis = EPI_Class::g()->create_mass_epi( $files_id );
 
-				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
-					'id'         => $epi->id,
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-				) );
-				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
-					'id'         => $epi->id,
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-					'field_name' => 'image',
-				) );
-			}
-		}
-
-		EPI_Class::g()->display_epi_list();
+		EPI_Class::g()->display_epi_list( $epis );
 		wp_die();
 	}
 }

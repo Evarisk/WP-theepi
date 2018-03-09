@@ -3,9 +3,9 @@ Contributors: Evarisk
 Tags: TRacking, PPE, Safety
 Donate link: https://www.evarisk.com
 Requires at least: 4.5
-Tested up to: 4.9.1
+Tested up to: 4.9.7
 Requires PHP: 5.6.3
-Stable tag: 0.2.0
+Stable tag: 0.4.0
 License: GPLv3 or later
 
 TheEPI is the open source software for the daily management of your PPE. Ensure the traceability of the PPE, the monitoring of the maintenance operations and the state of the PPE
@@ -40,6 +40,17 @@ The installation of the plugin can be done in two ways:
 1. Dashboard
 
 == Changelog ==
+
+= Version 0.4.0 =
+
+* 13908 - Ajout de la recherche
+
+= Version 0.3.0 =
+
+* 13751 - Si date échéance dépassé, le status de l'EPI est en "Délai dépassé".
+* 13822 - Enlèves les commentaires vides qui s'ajoutés parfois.
+* 13835 - Ajout du status sur l'EPI: OK/KO/NA.
+* 13749 - Ajout d'un commentaire prédéfini (configurable) par défaut lors de la création d'un EPI.
 
 = Version 0.2.0 =
 

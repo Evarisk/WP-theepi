@@ -4,7 +4,7 @@
  *
  * @author Jimmy Latour <jimmy@evarisk.com>
  * @since 0.2.0
- * @version 0.2.0
+ * @version 0.3.0
  * @copyright 2015-2017 Evarisk
  * @package TheEPI
  */
@@ -29,6 +29,7 @@ class Setting_Action {
 	public function __construct() {
 		add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		add_action( 'wp_ajax_save_capability_theepi', array( $this, 'callback_save_capability_theepi' ) );
+		add_action( 'wp_ajax_save_default_data', array( $this, 'callback_save_default_data' ) );
 
 		add_action( 'display_setting_user_theepi', array( $this, 'callback_display_setting_user_theepi' ), 10, 2 );
 		add_action( 'wp_ajax_paginate_setting_theepi_page_user', array( $this, 'callback_paginate_setting_theepi_page_user' ) );
@@ -48,17 +49,22 @@ class Setting_Action {
 	}
 
 	/**
-	 * Appelle la vue main du module setting avec la liste des accronymes
-	 * et la liste des catégories de risque prédéfinies.
+	 * Appelle la vue main du module setting
 	 *
 	 * @since 0.2.0
-	 * @version 0.2.0
+	 * @version 0.3.0
+	 *
+	 * @return void
+	 * @todo: nonce
 	 */
 	public function add_option_page() {
-		$default_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'digi-capability';
+		$default_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'theepi-capability';
+
+		$default_comment = get_option( EPI_Comment_Class::g()->option_name_default_comment, EPI_Comment_Class::g()->default_data_comment );
 
 		\eoxia\View_Util::exec( 'theepi', 'setting', 'main', array(
-			'default_tab' => $default_tab,
+			'default_tab'     => $default_tab,
+			'default_comment' => $default_comment,
 		) );
 	}
 
@@ -93,7 +99,29 @@ class Setting_Action {
 	}
 
 	/**
-	 * Méthode appelé par le champs de recherche dans la page "digirisk-epi"
+	 * Enregistres les données par défaut.
+	 *
+	 * @since 0.2.0
+	 * @version 0.2.0
+	 *
+	 * @return void
+	 */
+	public function callback_save_default_data() {
+		check_ajax_referer( 'save_default_data' );
+
+		$default_comment = ! empty( $_POST['default_comment'] ) ? sanitize_text_field( $_POST['default_comment'] ) : '';
+
+		Setting_Class::g()->save_default_data( $default_comment );
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'setting',
+			'callback_success' => 'savedDefaultData',
+		) );
+	}
+
+	/**
+	 * Méthode appelé par le champs de recherche dans la page "theepi"
 	 *
 	 * @param  integer $id           L'ID de la société.
 	 * @param  array   $list_user_id Le tableau des ID des évaluateurs trouvés par la recherche.
@@ -104,6 +132,7 @@ class Setting_Action {
 	 */
 	public function callback_display_setting_user_theepi( $id, $list_user_id ) {
 		ob_start();
+
 		Setting_Class::g()->display_user_list_capacity( $list_user_id );
 
 		wp_send_json_success( array(
