@@ -42,6 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 						data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
 						data-action="delete_epi"
+						data-message-delete="<?php echo esc_attr_e( 'Delete this EPI', 'theepi' ); ?>"
 						data-loader="table">
 				<span class="icon fa fa-times"></span>
 			</div>
