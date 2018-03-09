@@ -29,22 +29,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Remaining time', 'theepi' ); ?>"><?php echo $epi->data['compiled_remaining_time']; // WPCS: XSS is ok. ?></td>
 
 	<td>
-		<div class="wpeo-grid grid-2">
-			<div 	class="wpeo-button button-square-50 button-progress action-attribute"
-						data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
-						data-action="load_epi"
-						data-loader="table">
-				<span class="icon fa fa-pencil"></span>
+		<div class="wpeo-grid grid-2 grid-padding-0">
+			<div>
+				<div 	class="wpeo-button button-square-50 button-progress action-attribute"
+							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
+							data-action="load_epi"
+							data-loader="table">
+					<span class="button-icon fa fa-pencil"></span>
+				</div>
 			</div>
 
-			<div 	class="wpeo-button button-red button-square-50 button-progress action-delete"
-						data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
-						data-action="delete_epi"
-						data-message-delete="<?php echo esc_attr_e( 'Delete this EPI', 'theepi' ); ?>"
-						data-loader="table">
-				<span class="icon fa fa-times"></span>
+			<div>
+				<div 	class="wpeo-button button-red button-square-50 button-progress action-delete"
+							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
+							data-action="delete_epi"
+							data-message-delete="<?php echo esc_attr_e( 'Delete this EPI', 'theepi' ); ?>"
+							data-loader="table">
+					<span class="button-icon fa fa-times"></span>
+				</div>
 			</div>
 		</div>
 	</td>
