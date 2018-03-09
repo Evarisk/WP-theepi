@@ -78,16 +78,16 @@ class EPI_Filter {
 			$result = '';
 
 			if ( $interval->format( '%R' ) === '+' ) {
-				$result  = '<span class=\'time-ok\'><i class=\'fa fa-calendar-o\' aria-hidden=\'true\'></i> ';
+				$result  = '<span class=\'time-ok\'><i class=\'far fa-calendar-plus\' aria-hidden=\'true\'></i> ';
 				$result .= $interval->format( '%a days' );
 				$result .= '</span>';
 			} else {
 				if ( 'KO' === $object->data['state'] ) {
-					$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
+					$result  = '<span class=\'time-past\'><i class=\'far fa-calendar-times\' aria-hidden=\'true\'></i> ';
 					$result .= $interval->format( '%a days' );
 					$result .= '</span>';
 				} else {
-					$result  = '<span class=\'time-past\'><i class=\'fa fa-calendar-times-o\' aria-hidden=\'true\'></i> ';
+					$result  = '<span class=\'time-past\'><i class=\'far fa-calendar-times\' aria-hidden=\'true\'></i> ';
 					$result .= $interval->format( '%a days' );
 					$result .= '</span>';
 

@@ -44,7 +44,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							data-namespace="theEPI"
 							data-module="EPI"
 							data-before-method="checkData"
-							class="wpeo-button button-green button-progress button-square-50 action-input edit"><span class="button-icon fal fa-floppy-o"></span></div>
+							class="wpeo-button button-green button-progress button-square-50 action-input edit"><span class="button-icon fal fa-save"></span></div>
 			<?php else : ?>
 				<div 	wpeo-before-cb="theEPI/EPI/checkData"
 							data-parent="epi-row"

@@ -164,6 +164,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 				foreach ( $data as $comment_data ) {
 					if ( ! empty( $comment_data['content'] ) ) {
 						$comment_data['post_id'] = $epi_id;
+						$comment_data['date']    = $comment_data['date'];
 						$comment_data['id']      = (int) $comment_data['id'];
 						$comment_data['content'] = sanitize_text_field( $comment_data['content'] );
 						$comment_data['state']   = sanitize_text_field( $comment_data['state'] );
