@@ -20,14 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span class="form-label"><?php esc_html_e( 'Search', 'theepi' ); ?></span>
 		<label class="form-field-container">
 			<input type="text" name="term" class="form-field" placeholder="<?php esc_attr_e( 'Search term', 'theepi' ); ?>" />
-			<span class="wpeo-button button-main action-input"
+			<div><span class="wpeo-button button-main action-input button-square-50"
 						data-parent="wpeo-form"
 						data-action="search_epi"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'search_epi' ) ); ?>"><i class="fal fa-search"></i></span>
-			<span class="wpeo-button button-disable action-attribute"
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'search_epi' ) ); ?>"><i class="fal fa-search"></i></span></div>
+			<div><span class="wpeo-button button-disable action-attribute button-square-50"
 						data-parent="wpeo-form"
 						data-action="clear_search_epi"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'clear_search_epi' ) ); ?>"><i class="fal fa-times"></i></span>
+						data-nonce="<?php echo esc_attr( wp_create_nonce( 'clear_search_epi' ) ); ?>"><i class="fal fa-times"></i></span></div>
 		</label>
 	</div>
 </div>
