@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<td>
 		<div class="wpeo-grid grid-2 grid-padding-0">
 			<div>
-				<div 	class="wpeo-button button-square-50 button-progress action-attribute"
+				<div 	class="wpeo-button button-square-50 action-attribute"
 							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 							data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
 							data-action="load_epi"
@@ -41,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 
 			<div>
-				<div 	class="wpeo-button button-red button-square-50 button-progress action-delete"
+				<div 	class="wpeo-button button-red button-square-50 action-delete"
 							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 							data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
 							data-action="delete_epi"
