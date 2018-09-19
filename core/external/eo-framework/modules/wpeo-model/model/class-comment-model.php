@@ -6,7 +6,7 @@
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -96,8 +96,9 @@ if ( ! class_exists( '\eoxia\Comment_Model' ) ) {
 			);
 
 			$this->schema['status'] = array(
-				'type'  => 'string',
-				'field' => 'comment_approved',
+				'type'    => 'string',
+				'field'   => 'comment_approved',
+				'default' => '1',
 			);
 
 			$this->schema['agent'] = array(

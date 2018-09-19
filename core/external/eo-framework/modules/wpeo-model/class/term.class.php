@@ -2,11 +2,11 @@
 /**
  * Gestion des termes (POST, PUT, GET, DELETE)
  *
- * @author Jimmy Latour <dev@eoxia.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -131,13 +131,19 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 
 			// Si le paramètre "id" est passé on le transforme en "include" qui est la paramètre attendu par WP_Term_Query.
 			// Dans un soucis d'homogénéité du code, le paramètre "id" remplace le paramètre "include" dans les appels de la fonction.
-			if ( isset( $args['id'] ) ) {
+			$args['id'] = ! empty( $args['term_id'] ) ? $args['term_id'] : ( isset( $args['id'] ) ? $args['id'] : null );
+			if ( ! empty( $args['id'] ) ) {
+				if ( isset( $args['term_id'] ) ) {
+					unset( $args['term_id'] );
+				}
 				if ( ! isset( $args['include'] ) ) {
 					$args['include'] = array();
 				}
 				$args['include'] = array_merge( $args['include'], (array) $args['id'] );
-				unset( $args['id'] );
+			} elseif ( isset( $args['id'] ) ) {
+				$args['schema'] = true;
 			}
+			unset( $args['id'] );
 
 			// @Todo: a voir pourquoi wp_get_post_terms et pas wp_get_object_terms et si pas d'autre moyen que ici.
 			// elseif ( isset( $args['post_id'] ) ) {
@@ -222,10 +228,12 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 				return $term;
 			}
 
-			$object->data['id']               = $term['term_id'];
-			$object->data['term_taxonomy_id'] = $term['term_taxonomy_id'];
+			// Lors de la création, $object->data['id'] est vide là, du coup le get ne marchait pas.
+			$object->data['id'] = $term['term_id'];
 
 			$object = apply_filters( 'eo_model_term_after_' . $req_method, $object, $args_cb );
+			$object = $this->get( array( 'id' => $object->data['id'] ), true );
+
 			// Il ne faut pas lancer plusieurs fois pour category.
 			if ( 'category' !== $this->get_type() ) {
 				$object = apply_filters( 'eo_model_' . $this->get_type() . '_after_' . $req_method, $object, $args_cb );

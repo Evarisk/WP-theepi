@@ -2,11 +2,11 @@
 /**
  * Définition des données des utilisateurs
  *
- * @author Jimmy Latour <dev@eoxia.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Model
+ * @package EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -97,7 +97,7 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 				'type'      => 'string',
 				'meta_type' => 'single',
 				'field'     => 'avatar_color',
-				'default'   => '',
+				'default'   => '50a1ed',
 			);
 
 			$this->schema['initial'] = array(
