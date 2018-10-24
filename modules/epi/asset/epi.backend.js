@@ -29,10 +29,10 @@ window.eoxiaJS.theEPI.EPI.event = function() {
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
-	jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).addClass( 'button-disable' );
+	jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).addClass( 'button-disabled' );
 
 	if ( Number.isInteger( parseInt( jQuery( this ).val() ) ) ) {
-		jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).removeClass( 'button-disable' );
+		jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).removeClass( 'button-disabled' );
 		window.eoxiaJS.popover.remove( jQuery( this ).closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
 	}
 };
@@ -68,9 +68,11 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
 
 	if ( response.data.new_epi ) {
 		window.eoxiaJS.theEPI.EPI.refreshTextLoadMore( 1, 1 );
-		triggeredElement.closest( '.epi-row' ).find( '.action-input.add' ).addClass( 'button-disable' );
+		triggeredElement.closest( '.epi-row' ).find( '.action-input.add' ).addClass( 'button-disabled' );
+		triggeredElement.closest( '.epi-row' ).find( '.media' ).replaceWith( response.data.epi_upload_view );
 
 		window.eoxiaJS.form.reset( triggeredElement.closest( '.epi-row' ) );
+		
 		jQuery( '.wrap-theepi .wpeo-table.epi tbody .epi-row' ).after( epiView );
 		setTimeout( function() {
 			epiView.addClass( 'animate' );

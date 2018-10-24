@@ -6,7 +6,7 @@
  * @since 1.0.0
  * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Filter
  */
 
 namespace eoxia;
@@ -43,8 +43,7 @@ class Comment_Filter {
 	 */
 	function exclude_custom_comments_in_dashboard( $clauses, $query ) {
 		global $pagenow;
-
-		if ( 'index.php' == $pagenow ) {
+		if ( 'index.php' == $pagenow && is_admin() ) {
 			$clauses['where'] .= ' AND comment_type IN("' . implode( \eoxia\Config_Util::$init['eo-framework']->not__in_display_comment, '","' ) . '")';
 		}
 

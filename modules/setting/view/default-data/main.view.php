@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span class="form-bar"></span>
 	</div>
 
-	<p><?php esc_html_e( '*This data is used for the first comment created on a new EPI', 'theepi' ); ?></p>
+	<p><?php esc_html_e( '*This data is used for the first comment created on a new PPE', 'theepi' ); ?></p>
 
 	<div class="wpeo-button button-green button-progress action-input" data-parent="wpeo-form">
 		<span><?php echo esc_html_e( 'Save', 'theepi' ); ?></span>

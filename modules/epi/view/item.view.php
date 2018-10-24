@@ -17,12 +17,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <tr class="wpeo-animate <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<td class="w50">
-		<?php do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
+		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
 	</td>
 	<td class="w50 padding" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>"><?php echo esc_html( $epi->data['unique_identifier'] ); ?></td>
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Name', 'theepi' ); ?>"><?php echo esc_html( $epi->data['title'] ); ?></td>
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Serial number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></td>
-	<td class="w100 padding" data-title="<?php echo esc_attr_e( 'Period of control', 'theepi' ); ?>"><?php echo esc_html( $epi->data['frequency_control'] ); ?></td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Period of control', 'theepi' ); ?>"><?php echo esc_html( $epi->data['frequency_control'] ); ?></td>
 	<td></td>
 	<td data-title="<?php echo esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><?php EPI_Comment_Class::g()->display( $epi ); ?></td>
 	<td data-title="<?php echo esc_attr_e( 'State', 'theepi' ); ?>"><?php echo esc_html( $epi->data['state'] ); ?></td>
@@ -35,7 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 							data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
 							data-action="load_epi"
-							data-loader="table">
+							data-loader="wpeo-table">
 					<span class="button-icon fa fa-pencil"></span>
 				</div>
 			</div>
@@ -45,8 +45,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 							data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
 							data-action="delete_epi"
-							data-message-delete="<?php echo esc_attr_e( 'Delete this EPI', 'theepi' ); ?>"
-							data-loader="table">
+							data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this PPE ?', 'theepi' ); ?>"
+							data-loader="wpeo-table">
 					<span class="button-icon fa fa-times"></span>
 				</div>
 			</div>

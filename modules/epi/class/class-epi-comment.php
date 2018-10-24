@@ -79,7 +79,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	 * @return void
 	 */
 	protected function construct() {
-		$this->default_data_comment = __( 'Create new EPI', 'theepi' );
+		$this->default_data_comment = __( 'Create new PPE', 'theepi' );
 	}
 
 	/**

@@ -6,7 +6,7 @@
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -71,6 +71,9 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 
 			// On construit les types autorisés à partir des listes séparées. Permet de ne pas mettre de type en dur dans le code.
 			self::$accepted_types = wp_parse_args( self::$custom_types, self::$built_in_types );
+
+			// Filtre du schéma.
+			$this->schema = apply_filters( 'eo_model_handle_schema', $this->schema, $this->req_method );
 
 			if ( null !== $data && null !== $this->req_method ) {
 				$this->data = $this->handle_data( $data );
@@ -190,6 +193,18 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 								$rendered_value = is_object( $value ) ? 'Object item' : $value;
 
 								$this->wp_errors->add( 'eo_model_invalid_type', get_class( $this ) . ' => ' . $field_name . ': ' . $rendered_value . '(' . gettype( $value ) . ') is not a ' . $field_def['type'] );
+							} elseif ( isset( $field_def['array_type'] ) ) {
+								if ( ! empty( $value ) ) {
+									foreach ( $value as $key => $sub_value ) {
+										$field_def['type'] = $field_def['array_type'];
+										$this->check_value_type( $sub_value, $field_name, $field_def );
+
+										if ( isset( $field_def['key_type'] ) ) {
+											$field_def['type'] = $field_def['key_type'];
+											$this->check_value_type( $key, $field_name, $field_def );
+										}
+									}
+								}
 							}
 							break;
 						default:

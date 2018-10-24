@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<input type="hidden" name="id" value="<?php echo esc_attr( $epi->data['id'] ); ?>" />
 
 	<td class="w50">
-		<?php do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
+		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
 	</td>
 	<td class="w50" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>"><?php echo esc_html( $epi->data['unique_identifier'] ); ?></td>
 	<td class="padding w150" data-title="<?php echo esc_attr_e( 'Name', 'theepi' ); ?>"><input type="text" name="title" value="<?php echo esc_attr( $epi->data['title'] ); ?>" /></td>
@@ -48,7 +48,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php else : ?>
 				<div 	wpeo-before-cb="theEPI/EPI/checkData"
 							data-parent="epi-row"
-							class="wpeo-button button-progress button-square-50 button-disable button-blue button-event action-input add"><span class="button-icon fal fa-plus"></span></div>
+							class="wpeo-button button-progress button-square-50 button-disabled button-blue button-event action-input add"><span class="button-icon fal fa-plus"></span></div>
 			<?php endif; ?>
 		</div>
 	</td>

@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<th class="w50 padding" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></th>
 			<th class="wm130 padding" data-title="<?php esc_attr_e( 'Name', 'theepi' ); ?>"><span><?php esc_html_e( 'Name', 'theepi' ); ?></span></th>
 			<th class="padding" data-title="<?php esc_attr_e( 'Serial number', 'theepi' ); ?>"><span><?php esc_html_e( 'Serial number', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Period of control', 'theepi' ); ?>"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
+			<th class="padding w50" data-title="<?php esc_attr_e( 'Period of control', 'theepi' ); ?>"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
 			<th class="w50"></th>
 			<th class="padding" data-title="<?php esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><span><?php esc_html_e( 'Date of last check and comment', 'theepi' ); ?></span></th>
 			<th class="padding" data-title="<?php esc_attr_e( 'State', 'theepi' ); ?>"><span><?php esc_html_e( 'State', 'theepi' ); ?></span></th>
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<tbody>
 		<?php \eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
-		<?php EPI_Class::g()->display_epi_list( $epis ); ?>
+		<?php EPI_Class::g()->display_epi_list( $epis, false ); ?>
 	</tbody>
 </table>
 

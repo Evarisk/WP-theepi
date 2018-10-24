@@ -221,9 +221,10 @@ class EPI_Class extends \eoxia\Post_Class {
 	 *
 	 * @return void
 	 */
-	public function display_epi_list( $epis ) {
+	public function display_epi_list( $epis, $new = false ) {
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'list', array(
 			'epis' => $epis,
+			'new'  => $new,
 		) );
 	}
 

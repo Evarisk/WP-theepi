@@ -6,7 +6,7 @@
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -135,13 +135,19 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 
 			// Si le paramètre "id" est passé on le transforme en "post__in" pour eviter les problèmes de statuts.
 			// Dans un soucis d'homogénéité du code, le paramètre "id" remplace le paramètre "p" qui est de base dans WP_Query.
-			if ( isset( $args['id'] ) ) {
+			$args['id'] = ! empty( $args['ID'] ) ? $args['ID'] : ( isset( $args['id'] ) ? $args['id'] : null );
+			if ( ! empty( $args['id'] ) ) {
+				if ( isset( $args['ID'] ) ) {
+					unset( $args['ID'] );
+				}
 				if ( ! isset( $args['post__in'] ) ) {
 					$args['post__in'] = array();
 				}
 				$args['post__in'] = array_merge( (array) $args['id'], $args['post__in'] );
-				unset( $args['id'] );
+			} elseif ( isset( $args['id'] ) ) {
+				$args['schema'] = true;
 			}
+			unset( $args['id'] );
 
 			$args_cb    = array(
 				'args'         => $args,
@@ -219,6 +225,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 			$args_cb['append_taxonomies'] = $append;
 
 			$data = apply_filters( 'eo_model_post_before_' . $req_method, $data, $args_cb );
+
 			// Il ne faut pas lancer plusieurs fois pour post.
 			if ( 'post' !== $this->get_type() ) {
 				$data = apply_filters( 'eo_model_' . $this->get_type() . '_before_' . $req_method, $data, $args_cb );
@@ -240,7 +247,13 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 				return $post_save_result;
 			}
 
+
 			$object = apply_filters( 'eo_model_post_after_' . $req_method, $object, $args_cb );
+			$object = $this->get( array(
+				'id'          => $object->data['id'],
+				'post_status' => array( 'any', 'trash' ),
+			), true );
+
 			// Il ne faut pas lancer plusieurs fois pour post.
 			if ( 'post' !== $this->get_type() ) {
 				$object = apply_filters( 'eo_model_' . $this->get_type() . '_after_' . $req_method, $object, $args_cb );
@@ -268,6 +281,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 			}
 
 			$where = ' AND ( ';
+
 			if ( ! empty( $array ) ) {
 				foreach ( $array as $key => $element ) {
 					if ( is_array( $element ) ) {
@@ -284,7 +298,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 
 			$where .= ' ) ';
 
-			$list_group = $wpdb->get_results( "SELECT DISTINCT P.ID FROM {$wpdb->posts} as P JOIN {$wpdb->postmeta} AS PM ON PM.post_id=P.ID WHERE P.post_type='" . $this->get_post_type() . "'" . $where );
+			$list_group = $wpdb->get_results( "SELECT DISTINCT P.ID FROM {$wpdb->posts} as P JOIN {$wpdb->postmeta} AS PM ON PM.post_id=P.ID WHERE P.post_type='" . $this->get_type() . "'" . $where );
 			$list_model = array();
 			if ( ! empty( $list_group ) ) {
 				foreach ( $list_group as $element ) {
@@ -307,6 +321,18 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		 */
 		public function get_attached_taxonomy() {
 			return $this->attached_taxonomy_type;
+		}
+		
+		/**
+		 * Retournes le nom du post type.
+		 *
+		 * @since 1.0.0
+		 * @version 1.0.0
+		 *
+		 * @return string Le nom du post type.
+		 */
+		public function get_post_type_name() {
+			return $this->post_type_name;
 		}
 
 	}

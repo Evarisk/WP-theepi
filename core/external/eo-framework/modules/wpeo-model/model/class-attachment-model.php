@@ -6,7 +6,7 @@
  * @since 1.0.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -49,17 +49,6 @@ if ( ! class_exists( '\eoxia\Attachment_Model' ) ) {
 				'type'      => 'string',
 				'meta_type' => 'single',
 				'field'     => '_wp_attached_file',
-			);
-
-			$this->schema['model_path'] = array(
-				'type'      => 'string',
-				'meta_type' => 'single',
-				'field'     => 'fp_model_path',
-			);
-
-			$this->schema['document_meta'] = array(
-				'type'      => 'array',
-				'meta_type' => 'multiple',
 			);
 
 			$this->schema['taxonomy'] = array(

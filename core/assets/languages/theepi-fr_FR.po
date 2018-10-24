@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2017-12-11 16:43+0100\n"
-"PO-Revision-Date: 2017-12-11 16:43+0100\n"
+"POT-Creation-Date: 2018-10-24 11:09+0200\n"
+"PO-Revision-Date: 2018-10-24 11:09+0200\n"
 "Last-Translator: \n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -19,20 +19,24 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: test\n"
 "X-Poedit-SearchPathExcluded-2: core/external\n"
 
-#: core/action/class-theepi-core-action.php:132 core/view/main.view.php:20
-#: modules/setting/action/setting.action.php:46
+#: core/action/class-theepi-core-action.php:132 core/view/main.view.php:21
+#: modules/setting/action/setting.action.php:47
 msgid "TheEPI"
 msgstr "TheEPI"
 
-#: core/view/main.view.php:22
+#: core/view/main.view.php:23
 msgid "Create mass from image"
 msgstr "Créer en masse à partir d'image"
 
-#: modules/epi/class/class-epi.php:147
+#: modules/epi/class/class-epi-comment.php:82
+msgid "Create new PPE"
+msgstr "Créer un nouveau EPI"
+
+#: modules/epi/class/class-epi.php:207
 msgid "EPI per page"
 msgstr "EPI par page"
 
-#: modules/epi/view/comment/item.view.php:24
+#: modules/epi/view/comment/item.view.php:25
 msgid "No user"
 msgstr "Pas d'utilisateur"
 
@@ -40,47 +44,71 @@ msgstr "Pas d'utilisateur"
 msgid "No comment"
 msgstr "Pas de commentaire"
 
-#: modules/epi/view/item-edit.view.php:30
-msgid "This field must be in numeric format"
-msgstr "Ce champs doit être au format numérique"
-
-#: modules/epi/view/item-edit.view.php:32
-msgid "days"
-msgstr "jours"
-
-#: modules/epi/view/list.view.php:37 modules/epi/view/main.view.php:52
-#: modules/setting/view/capability/list.view.php:50
-msgid "Page"
-msgstr "Page"
-
+#: modules/epi/view/item-edit.view.php:26 modules/epi/view/item.view.php:22
 #: modules/epi/view/main.view.php:22
-#: modules/setting/view/capability/list.view.php:23
+#: modules/setting/view/capability/list-item.view.php:19
+#: modules/setting/view/capability/list.view.php:22
 msgid "ID"
 msgstr "ID"
 
+#: modules/epi/view/item-edit.view.php:27 modules/epi/view/item.view.php:23
 #: modules/epi/view/main.view.php:23
 msgid "Name"
 msgstr "Nom"
 
+#: modules/epi/view/item-edit.view.php:28 modules/epi/view/item.view.php:24
 #: modules/epi/view/main.view.php:24
 msgid "Serial number"
 msgstr "Numéro de série"
 
+#: modules/epi/view/item-edit.view.php:29 modules/epi/view/item.view.php:25
 #: modules/epi/view/main.view.php:25
 msgid "Period of control"
 msgstr "Période de contrôle"
 
-#: modules/epi/view/main.view.php:27
-msgid "Date of last check"
-msgstr "Date de dernier contrôle"
+#: modules/epi/view/item-edit.view.php:31
+msgid "This field must be in numeric format and better than 0"
+msgstr "Ce champ doit être une valeur numérique supérieure à 0"
 
+#: modules/epi/view/item-edit.view.php:36
+msgid "days"
+msgstr "jours"
+
+#: modules/epi/view/item-edit.view.php:37 modules/epi/view/item.view.php:27
+#: modules/epi/view/main.view.php:27
+msgid "Date of last check and comment"
+msgstr "Date de la dernière vérification et commentaire"
+
+#: modules/epi/view/item-edit.view.php:38 modules/epi/view/item.view.php:28
 #: modules/epi/view/main.view.php:28
 msgid "State"
 msgstr "Status"
 
+#: modules/epi/view/item-edit.view.php:39 modules/epi/view/item.view.php:29
 #: modules/epi/view/main.view.php:29
 msgid "Remaining time"
 msgstr "Reste"
+
+#: modules/epi/view/item.view.php:48
+msgid "Are you sure you want to remove this PPE ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
+
+#: modules/epi/view/main.view.php:46
+msgid "Load more"
+msgstr "Charger plus"
+
+#: modules/epi/view/pagination.view.php:26
+#: modules/setting/view/capability/list.view.php:50
+msgid "Page"
+msgstr "Page"
+
+#: modules/epi/view/search.view.php:20
+msgid "Search"
+msgstr "Rechercher"
+
+#: modules/epi/view/search.view.php:22
+msgid "Search term"
+msgstr "Critère de recherche"
 
 #: modules/setting/class/setting.class.php:135
 msgid "User per page"
@@ -96,21 +124,24 @@ msgstr ""
 "rôle est abonnés. Vous devez supprimer la capacité \"manage_theepi\" sur "
 "celui-ci pour pouvoir gérer manuellement ce droit par utilisateur"
 
-#: modules/setting/view/capability/list-item.view.php:29
-msgid "Right to TheEPI"
-msgstr "Droit à TheEPI"
-
-#: modules/setting/view/capability/list.view.php:24
+#: modules/setting/view/capability/list-item.view.php:20
+#: modules/setting/view/capability/list.view.php:23
 msgid "Email"
 msgstr "Email"
 
-#: modules/setting/view/capability/list.view.php:25
+#: modules/setting/view/capability/list-item.view.php:21
+#: modules/setting/view/capability/list.view.php:24
 msgid "Role"
 msgstr "Rôle"
 
-#: modules/setting/view/capability/list.view.php:26
+#: modules/setting/view/capability/list-item.view.php:22
+#: modules/setting/view/capability/list.view.php:25
 msgid "Has the right on TheEPI"
 msgstr "A les droits sur TheEPI"
+
+#: modules/setting/view/capability/list-item.view.php:29
+msgid "Right to TheEPI"
+msgstr "Droit à TheEPI"
 
 #: modules/setting/view/capability/main.view.php:22
 msgid "Handle role TheEPI"
@@ -120,10 +151,42 @@ msgstr "Gestion des droits de TheEPI"
 msgid "Set access rights to the TheEPI app"
 msgstr "Définir les droits d'accès à l'application TheEPI"
 
-#: modules/setting/view/capability/main.view.php:32
+#: modules/setting/view/capability/main.view.php:33
+#: modules/setting/view/default-data/main.view.php:33
 msgid "Save"
 msgstr "Enregistrer"
+
+#: modules/setting/view/default-data/main.view.php:22
+msgid "Handle default data"
+msgstr "Gestion des données par défaut"
+
+#: modules/setting/view/default-data/main.view.php:26
+msgid "Default comment*"
+msgstr "Commentaire par défaut*"
+
+#: modules/setting/view/default-data/main.view.php:30
+msgid "*This data is used for the first comment created on a new PPE"
+msgstr ""
+"*Cette donnée est le commentaire par défaut lors de la création d'un nouveau "
+"EPI"
 
 #: modules/setting/view/main.view.php:19
 msgid "TheEPI settings"
 msgstr "TheEPI réglages"
+
+#: modules/setting/view/main.view.php:23
+msgid "Capacités"
+msgstr "Capacité"
+
+#: modules/setting/view/main.view.php:24
+msgid "Default data"
+msgstr "Donnée par défaut"
+
+#~ msgid "Are you sure you want to remove this PPE"
+#~ msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
+
+#~ msgid "This field must be in numeric format"
+#~ msgstr "Ce champs doit être au format numérique"
+
+#~ msgid "Date of last check"
+#~ msgstr "Date de dernier contrôle"

@@ -1,31 +1,63 @@
 /**
+ * @namespace EO_Framework_Auto_Complete
+ *
+ * @author Eoxia <dev@eoxia.com>
+ * @copyright 2015-2018 Eoxia
+ */
+
+/**
  * Gestion du dropdown.
  *
  * @since 1.0.0
  * @version 1.0.0
  */
 if ( ! window.eoxiaJS.autoComplete  ) {
+
+	/**
+	 * [autoComplete description]
+	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
+	 * @type {Object}
+	 */
 	window.eoxiaJS.autoComplete = {};
 
+	/**
+	 * [description]
+	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
+	 * @returns {void} [description]
+	 */
 	window.eoxiaJS.autoComplete.init = function() {
 		window.eoxiaJS.autoComplete.event();
 	};
 
+	/**
+	 * [description]
+	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
+	 * @returns {void} [description]
+	 */
 	window.eoxiaJS.autoComplete.event = function() {
 		jQuery( document ).on( 'keyup', '.wpeo-autocomplete input', window.eoxiaJS.autoComplete.keyUp );
 		jQuery( document ).on( 'click', '.wpeo-autocomplete .autocomplete-icon-after', window.eoxiaJS.autoComplete.deleteContent );
+		jQuery( document ).on( 'click', 'body .wpeo-autocomplete input', window.eoxiaJS.autoComplete.preventClic );
 		jQuery( document ).on( 'click', 'body', window.eoxiaJS.autoComplete.close );
 	};
 
 	/**
 	 * Make request when keyUp.
 	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param  {KeyboardEvent} event Status of keyboard when keyUp event.
 	 *
-	 * @return {void}
+	 * @returns {void}
 	 */
 	window.eoxiaJS.autoComplete.keyUp = function(event) {
 		var element = jQuery( this );
@@ -37,7 +69,7 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 			return;
 		}
 
-		parent.find( 'input[type="hidden"]' ).val( '' );
+		parent.find( 'input.eo-search-value' ).val( '' );
 
 		// If empty searched value, stop func.
 		if ( element.val().length === 0 ) {
@@ -59,32 +91,46 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 		var data = {
 			action: parent.attr( 'data-action' ),
 			_wpnonce: parent.attr( 'data-nonce' ),
-			s: element.val(),
+			term: element.val(),
+			slug: parent.find( 'input[name="slug"]' ).val(),
+			args: parent.find( 'textarea' ).val()
 		};
 
 		window.eoxiaJS.autoComplete.initProgressBar( parent, label );
 		window.eoxiaJS.autoComplete.handleProgressBar( parent, label );
 
-		parent[0].xhr = window.eoxiaJS.request.send( jQuery( this ), data, function( triggeredElement, response ) {
-			window.eoxiaJS.autoComplete.clear( parent, label );
-
-			parent.addClass( 'autocomplete-active' );
-			parent.find( '.autocomplete-search-list' ).addClass( 'autocomplete-active' );
-
-			if ( response.data && response.data.view ) {
-				parent.find( '.autocomplete-search-list' ).html( response.data.view );
+		parent.get_data( function( attribute_data ) {
+			for (var key in attribute_data) {
+					if ( ! data[key] ) {
+						data[key] = attribute_data[key];
+					}
 			}
-		});
+
+			parent[0].xhr = window.eoxiaJS.request.send( jQuery( this ), data, function( triggeredElement, response ) {
+				window.eoxiaJS.autoComplete.clear( parent, label );
+
+				parent.addClass( 'autocomplete-active' );
+				parent.find( '.autocomplete-search-list' ).addClass( 'autocomplete-active' );
+
+				if ( response.data && response.data.view && ! response.data.output ) {
+					parent.find( '.autocomplete-search-list' ).html( response.data.view );
+				} else if (response.data && response.data.view && response.data.output ) {
+					jQuery( response.data.output ).replaceWith( response.data.view );
+				}
+			} );
+		} );
 	};
 
 	/**
 	 * Delete the content and result list.
 	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param  {[type]} event [description]
-	 * @return {[type]}       [description]
+	 * @param  {void} event [description]
+	 * @returns {void}       [description]
 	 */
 	window.eoxiaJS.autoComplete.deleteContent = function( event ) {
 		var element = jQuery( this );
@@ -106,13 +152,30 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 	};
 
 	/**
-	 * Close result list
+	 * Permet de ne pas fermer la liste des résultats si on clic sur le champ de recherche.
+	 *
+	 * @memberof EO_Framework_Auto_Complete
 	 *
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param  {[type]} event [description]
-	 * @return {[type]}       [description]
+	 * @param  {MouseEvent} event [description]
+	 * @return {void}       [description]
+	 */
+	window.eoxiaJS.autoComplete.preventClic = function( event ) {
+		event.stopPropagation();
+	}
+
+	/**
+	 * Close result list
+	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
+	 * @since 1.0.0
+	 * @version 1.0.0
+	 *
+	 * @param  {void} event [description]
+	 * @returns {void}       [description]
 	 */
 	window.eoxiaJS.autoComplete.close = function( event ) {
 		jQuery( '.wpeo-autocomplete.autocomplete-active' ).each ( function() {
@@ -124,13 +187,15 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 	/**
 	 * Handle progress bar.
 	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param {} parent
 	 * @param {} label
 	 *
-	 * @return {void}
+	 * @returns {void}
 	 */
 	window.eoxiaJS.autoComplete.initProgressBar = function( parent, label ) {
 		// Init two elements for loading bar.
@@ -151,10 +216,12 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
 	 * @param {} parent
 	 * @param {} label
 	 *
-	 * @return {void}
+	 * @returns {void}
 	 */
 	window.eoxiaJS.autoComplete.handleProgressBar = function( parent, label ) {
 		parent.find( '.autocomplete-loading' ).css({
@@ -190,10 +257,12 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
+	 * @memberof EO_Framework_Auto_Complete
+	 *
 	 * @param {} parent
 	 * @param {} label
 	 *
-	 * @return {void}
+	 * @returns {void}
 	 */
 	window.eoxiaJS.autoComplete.clear = function( parent, label ) {
 		if ( label[0] ) {
@@ -205,6 +274,7 @@ if ( ! window.eoxiaJS.autoComplete  ) {
 			parent[0].xhr = undefined;
 		}
 
+		parent.find( '.autocomplete-search-list' ).html( '' );
 		parent.find( '.autocomplete-loading' ).css({
 			width: '100%',
 		});

@@ -2,12 +2,11 @@
 /**
  * Classe helper pour les modèles.
  *
- * @author Jimmy Latour <dev@eoxia.com>
+ * @author Eoxia <dev@eoxia.com>
  * @since 1.0.0
  * @version 1.0.0
- * @copyright 2015-2017
- * @package wpeo_model
- * @subpackage class
+ * @copyright 2015-2018
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -32,6 +31,23 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 		public function get_model() {
 			return $this->schema;
 		}
+
+		/**
+		 * Récupères le nom de la classe selon le model.
+		 *
+		 * @since 1.0.0
+		 * @version 1.0.0
+		 *
+		 * @return string Le nom de la classe avec le namespace si existant.
+		 */
+		 public function get_class() {
+			 $class_name = get_class( $this );
+			 $class_name = str_replace( 'Model', 'Class', $class_name );
+			 $class_name = str_replace( 'model', 'Class', $class_name );
+			 $class_name = str_replace( '\\', '/', $class_name );
+
+			 return $class_name;
+		 }
 
 		/**
 		 * Permet de faire echo sur un objet et supprimes la définition du modèle avant l'affichage.

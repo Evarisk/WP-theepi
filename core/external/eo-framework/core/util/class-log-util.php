@@ -2,11 +2,11 @@
 /**
  * Méthodes utiles pour les logs
  *
- * @author Jimmy Latour <dev@eoxia.com>
- * @since 1.3.0
- * @version 1.3.0
- * @copyright 2015-2017 Eoxia
- * @package WPEO_Util
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
+ * @copyright 2015-2018 Eoxia
+ * @package EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,18 +21,17 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 	define( 'EO_RESPONSE_SUCCESS', 'EO_RESPONSE_SUCCESS' );
 
 	/**
-	 * Méthodes utiles pour les fichiers JSON.
+	 * Méthodes utiles pour les logs.
 	 */
 	class LOG_Util extends \eoxia\Singleton_Util {
+
 		/**
-		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
-		 *
-		 * @return void nothing
+		 * Le constructeur est obligatoire pour utiliser la classe \eoxia\Singleton_Util
 		 */
 		protected function construct() {}
 
 		/**
-		 * Méthode pour loggué.
+		 * Méthode pour logguer.
 		 *
 		 * @since 1.3.0
 		 * @version 1.3.0
@@ -44,24 +43,19 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		 *                          EO_RESPONSE_ERROR = Si la réponse de la requête est une erreur.
 		 *                          EO_RESPONSE_SUCCESS = Si la réponse de la requête est correcte.
 		 * }.
-		 *
-		 * @return void
 		 */
 		public static function log( $text, $file_name, $level = EO_NOTICE ) {
 			$bt = debug_backtrace();
 
 			if ( empty( $file_name ) ) {
-				error_log( 'Les logs sont enregistrés dans wp-content/uploads/logs/__PLUGIN_NAME__.' );
 				self::log_wp_content( $text, $file_name, $level, $bt );
 			} else {
 				if ( false === ini_get( 'error_log' ) || '' == ini_get( 'error_log' ) ) {
-					error_log( 'Les logs sont enregistrés dans wp-content/uploads/logs/__PLUGIN_NAME__.' );
 					self::log_wp_content( $text, $file_name, $level, $bt );
 				} else {
 					$path = dirname( ini_get( 'error_log' ) );
 
 					if ( ! is_dir( $path ) ) {
-						error_log( 'Les logs sont enregistrés dans wp-content/uploads/logs/__PLUGIN_NAME__.' );
 						self::log_wp_content( $text, $file_name, $level, $bt );
 					} else {
 						error_log( current_time( '[d-M-Y H:i:s e]' ) . " PHP {$level}: {$text} in " . str_replace( '\\', '/', $bt[0]['file'] ) . " line  {$bt[0]['line']}\n", 3, $path . '/' . $file_name . '.log' );
@@ -84,8 +78,6 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		 *                          EO_RESPONSE_SUCCESS = Si la réponse de la requête est correcte.
 		 * }.
 		 * @param array  $bt         Le contexte de débogage.
-		 *
-		 * @return void          [description]
 		 */
 		public static function log_wp_content( $text, $file_name, $level = EO_NOTICE, $bt = array() ) {
 			if ( empty( $bt ) ) {

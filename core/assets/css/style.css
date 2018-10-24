@@ -528,7 +528,7 @@
   color: rgba(0, 0, 0, 0.4);
   pointer-events: none; }
 
-.digirisk-wrap .popup.no-close .button:hover, .digirisk-wrap .popup.no-close .flex-table form input[type="submit"]:hover, .digirisk-wrap .flex-table form .popup.no-close input[type="submit"]:hover, .digirisk-wrap .popup.no-close .flex-table .form input[type="submit"]:hover, .digirisk-wrap .flex-table .form .popup.no-close input[type="submit"]:hover {
+.digirisk-wrap .popup.no-close .button:hover, .digirisk-wrap .popup.no-close .flex-table form input:hover[type="submit"], .digirisk-wrap .flex-table form .popup.no-close input:hover[type="submit"], .digirisk-wrap .popup.no-close .flex-table .form input:hover[type="submit"], .digirisk-wrap .flex-table .form .popup.no-close input:hover[type="submit"] {
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.4);
   cursor: not-allowed; }
@@ -578,22 +578,22 @@
   transition: all 0.2s ease-out;
   position: relative; }
 
-.digirisk-wrap .button:hover, .digirisk-wrap .flex-table form input[type="submit"]:hover, .digirisk-wrap .flex-table .form input[type="submit"]:hover {
+.digirisk-wrap .button:hover, .digirisk-wrap .flex-table form input:hover[type="submit"], .digirisk-wrap .flex-table .form input:hover[type="submit"] {
   background: none;
   color: #fff; }
 
-.digirisk-wrap .button:hover .float-icon, .digirisk-wrap .flex-table form input[type="submit"]:hover .float-icon, .digirisk-wrap .flex-table .form input[type="submit"]:hover .float-icon {
+.digirisk-wrap .button:hover .float-icon, .digirisk-wrap .flex-table form input:hover[type="submit"] .float-icon, .digirisk-wrap .flex-table .form input:hover[type="submit"] .float-icon {
   -webkit-animation-name: bounceInLight;
        -o-animation-name: bounceInLight;
           animation-name: bounceInLight; }
 
-.digirisk-wrap .button:active, .digirisk-wrap .flex-table form input[type="submit"]:active, .digirisk-wrap .flex-table .form input[type="submit"]:active {
+.digirisk-wrap .button:active, .digirisk-wrap .flex-table form input:active[type="submit"], .digirisk-wrap .flex-table .form input:active[type="submit"] {
   -webkit-transform: none;
       -ms-transform: none;
        -o-transform: none;
           transform: none; }
 
-.digirisk-wrap .button.active, .digirisk-wrap .flex-table form input.active[type="submit"], .digirisk-wrap .flex-table .form input.active[type="submit"], .digirisk-wrap .button.active:hover, .digirisk-wrap .flex-table form input.active[type="submit"]:hover, .digirisk-wrap .flex-table .form input.active[type="submit"]:hover {
+.digirisk-wrap .button.active, .digirisk-wrap .flex-table form input.active[type="submit"], .digirisk-wrap .flex-table .form input.active[type="submit"], .digirisk-wrap .button.active:hover, .digirisk-wrap .flex-table form input.active:hover[type="submit"], .digirisk-wrap .flex-table .form input.active:hover[type="submit"] {
   -webkit-box-shadow: none;
           box-shadow: none;
   -webkit-transform: translateY(0);
@@ -602,7 +602,7 @@
           transform: translateY(0);
   border: 0; }
 
-.digirisk-wrap .button:focus, .digirisk-wrap .flex-table form input[type="submit"]:focus, .digirisk-wrap .flex-table .form input[type="submit"]:focus {
+.digirisk-wrap .button:focus, .digirisk-wrap .flex-table form input:focus[type="submit"], .digirisk-wrap .flex-table .form input:focus[type="submit"] {
   -webkit-box-shadow: none;
           box-shadow: none;
   color: #fff; }
@@ -642,25 +642,25 @@
 .digirisk-wrap .button.blue, .digirisk-wrap .flex-table form input.blue[type="submit"], .digirisk-wrap .flex-table .form input.blue[type="submit"] {
   background: #3495f0; }
 
-.digirisk-wrap .button.blue:hover, .digirisk-wrap .flex-table form input.blue[type="submit"]:hover, .digirisk-wrap .flex-table .form input.blue[type="submit"]:hover {
+.digirisk-wrap .button.blue:hover, .digirisk-wrap .flex-table form input.blue:hover[type="submit"], .digirisk-wrap .flex-table .form input.blue:hover[type="submit"] {
   background: #1360c8; }
 
 .digirisk-wrap .button.red, .digirisk-wrap .flex-table form input.red[type="submit"], .digirisk-wrap .flex-table .form input.red[type="submit"] {
   background: #e05353; }
 
-.digirisk-wrap .button.red:hover, .digirisk-wrap .flex-table form input.red[type="submit"]:hover, .digirisk-wrap .flex-table .form input.red[type="submit"]:hover {
+.digirisk-wrap .button.red:hover, .digirisk-wrap .flex-table form input.red:hover[type="submit"], .digirisk-wrap .flex-table .form input.red:hover[type="submit"] {
   background: #c82424; }
 
 .digirisk-wrap .button.green, .digirisk-wrap .flex-table form input[type="submit"], .digirisk-wrap .flex-table .form input[type="submit"] {
   background: #47e58e; }
 
-.digirisk-wrap .button.green:hover, .digirisk-wrap .flex-table form input[type="submit"]:hover, .digirisk-wrap .flex-table .form input[type="submit"]:hover {
+.digirisk-wrap .button.green:hover, .digirisk-wrap .flex-table form input:hover[type="submit"], .digirisk-wrap .flex-table .form input:hover[type="submit"] {
   background: #1cc86a; }
 
 .digirisk-wrap .button.dark, .digirisk-wrap .flex-table form input.dark[type="submit"], .digirisk-wrap .flex-table .form input.dark[type="submit"] {
   background: #272a35; }
 
-.digirisk-wrap .button.dark:hover, .digirisk-wrap .flex-table form input.dark[type="submit"]:hover, .digirisk-wrap .flex-table .form input.dark[type="submit"]:hover {
+.digirisk-wrap .button.dark:hover, .digirisk-wrap .flex-table form input.dark:hover[type="submit"], .digirisk-wrap .flex-table .form input.dark:hover[type="submit"] {
   background: black; }
 
 .digirisk-wrap .button.light, .digirisk-wrap .flex-table form input.light[type="submit"], .digirisk-wrap .flex-table .form input.light[type="submit"] {
@@ -671,7 +671,7 @@
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.8); }
 
-.digirisk-wrap .button.grey:hover, .digirisk-wrap .flex-table form input.grey[type="submit"]:hover, .digirisk-wrap .flex-table .form input.grey[type="submit"]:hover {
+.digirisk-wrap .button.grey:hover, .digirisk-wrap .flex-table form input.grey:hover[type="submit"], .digirisk-wrap .flex-table .form input.grey:hover[type="submit"] {
   background: rgba(0, 0, 0, 0.1); }
 
 .digirisk-wrap .button.w30, .digirisk-wrap .flex-table form input.w30[type="submit"], .digirisk-wrap .flex-table .form input.w30[type="submit"], .digirisk-wrap .button.w40, .digirisk-wrap .flex-table form input.w40[type="submit"], .digirisk-wrap .flex-table .form input.w40[type="submit"], .digirisk-wrap .button.w50, .digirisk-wrap .flex-table form input.w50[type="submit"], .digirisk-wrap .flex-table .form input.w50[type="submit"], .digirisk-wrap .button.w60, .digirisk-wrap .flex-table form input.w60[type="submit"], .digirisk-wrap .flex-table .form input.w60[type="submit"], .digirisk-wrap .button.w80, .digirisk-wrap .flex-table form input.w80[type="submit"], .digirisk-wrap .flex-table .form input.w80[type="submit"], .digirisk-wrap .button.h50, .digirisk-wrap .flex-table form input.h50[type="submit"], .digirisk-wrap .flex-table .form input.h50[type="submit"] {
@@ -837,7 +837,7 @@
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.3); }
 
-.digirisk-wrap .button.disable:hover, .digirisk-wrap .flex-table form input.disable[type="submit"]:hover, .digirisk-wrap .flex-table .form input.disable[type="submit"]:hover {
+.digirisk-wrap .button.disable:hover, .digirisk-wrap .flex-table form input.disable:hover[type="submit"], .digirisk-wrap .flex-table .form input.disable:hover[type="submit"] {
   background: rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.3);
   cursor: not-allowed; }

@@ -57,8 +57,12 @@ class EPI_Action {
 
 		$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
 
-		if ( empty( $epi ) ) {
+		if ( empty( $data['id'] ) ) {
 			$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
+		
+			ob_start();
+			echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' );
+			$epi_upload_view = ob_get_clean();
 		}
 
 		$epi->data['title']             = sanitize_text_field( $data['title'] );
@@ -80,6 +84,7 @@ class EPI_Action {
 			'object'           => $epi,
 			'epi_view'         => $epi_view,
 			'new_epi'          => $new_epi,
+			'epi_upload_view'  => $epi_upload_view,
 		) );
 	}
 
@@ -235,7 +240,7 @@ class EPI_Action {
 
 		$epis = EPI_Class::g()->create_mass_epi( $files_id );
 
-		EPI_Class::g()->display_epi_list( $epis );
+		EPI_Class::g()->display_epi_list( $epis, true );
 		wp_die();
 	}
 }

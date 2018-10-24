@@ -6,7 +6,7 @@
  * @since 0.1.0
  * @version 1.0.0
  * @copyright 2015-2018
- * @package EO_Framework
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -121,13 +121,19 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 
 			// Si le paramètre "id" est passé on le transforme en "ID" qui est le paramètre attendu par get_comments.
 			// Dans un souci d'homogénéité du code, le paramètre "id" remplace "ID".
-			if ( isset( $args['id'] ) ) {
+			$args['id'] = ! empty( $args['comment_ID'] ) ? $args['comment_ID'] : ( isset( $args['id'] ) ? $args['id'] : null );
+			if ( ! empty( $args['id'] ) ) {
+				if ( isset( $args['comment_ID'] ) ) {
+					unset( $args['comment_ID'] );
+				}
 				if ( ! isset( $args['comment__in'] ) ) {
 					$args['comment__in'] = array();
 				}
 				$args['comment__in'] = array_merge( (array) $args['id'], $args['comment__in'] );
-				unset( $args['id'] );
+			} elseif ( isset( $args['id'] ) ) {
+				$args['schema'] = true;
 			}
+			unset( $args['id'] );
 
 			$args_cb    = array(
 				'args'         => $args,
@@ -181,7 +187,13 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 			}
 
 			if ( empty( $data['id'] ) ) {
-				$user = wp_get_current_user();
+
+				if ( ! empty( $data['author_id'] ) ) {
+					$user = get_userdata( $data['author_id'] );
+				} else {
+					$user = wp_get_current_user();
+				}
+
 				if ( $user->exists() ) {
 					if ( empty( $data['author_id'] ) ) {
 						$data['author_id'] = $user->ID;
@@ -226,6 +238,12 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 			}
 
 			$object = apply_filters( 'eo_model_comment_after_' . $req_method, $object, $args_cb );
+
+			$object = $this->get( array(
+				'id'     => $object->data['id'],
+				'status' => array( '1', 'trash' ),
+			), true );
+
 			// Il ne faut pas lancer plusieurs fois pour ping.
 			if ( 'ping' !== $this->get_type() ) {
 				$object = apply_filters( 'eo_model_' . $this->get_type() . '_after_' . $req_method, $object, $args_cb );
