@@ -1,7 +1,7 @@
 {
 	"name": "TheEPI",
 	"slug": "theepi",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"description": "L'application TheEPI",
 	"insert_scripts_pages_js": [
 		"theepi",

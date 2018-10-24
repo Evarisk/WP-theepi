@@ -8,6 +8,7 @@ window.eoxiaJS.theEPI.EPI = {};
 
 window.eoxiaJS.theEPI.EPI.init = function() {
 	window.eoxiaJS.theEPI.EPI.event();
+	alert('ok');
 };
 
 window.eoxiaJS.theEPI.EPI.event = function() {
