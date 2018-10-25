@@ -69,10 +69,10 @@ class EPI_Filter {
 	 */
 	public function update_remaining_time( $object, $args ) {
 		if ( ! empty( $object->data['id'] ) && ! empty( $object->data['frequency_control'] ) && ! empty( $object->data['control_date'] ) ) {
-			$control_date = \DateTime::createFromFormat( 'd/m/y', $object->data['control_date']['rendered']['date'] );
+			$control_date = \DateTime::createFromFormat( 'd/m/Y', $object->data['control_date']['rendered']['date'] );
 			$control_date->modify( '+' . $object->data['frequency_control'] . ' day' );
 			
-			$date_now = \DateTime::createFromFormat( 'd/m/y', current_time( 'd/m/y' ) );
+			$date_now = \DateTime::createFromFormat( 'd/m/Y', current_time( 'd/m/Y' ) );
 			$interval = $date_now->diff( $control_date );
 
 			$result = '';
