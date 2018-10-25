@@ -237,9 +237,7 @@ if ( ! window.eoxiaJS.action ) {
 			doAction = false;
 			doAction = window.eoxiaJS[element.attr( 'data-namespace' )][element.attr( 'data-module' )][element.attr( 'data-before-method' )]( element );
 		} else {
-			if ( ! doAction ) {
-				doAction = window.eoxiaJS.action.checkBeforeCB(element);
-			}
+			doAction = window.eoxiaJS.action.checkBeforeCB(element);
 		}
 
 		if ( doAction ) {
@@ -1963,7 +1961,7 @@ if ( ! window.eoxiaJS.tab ) {
 	 * @returns {void} [description]
 	 */
 	window.eoxiaJS.tab.event = function() {
-	  jQuery( document ).on( 'click', '.wpeo-tab .tab-element', window.eoxiaJS.tab.load );
+	  jQuery( document ).on( 'click', '.wpeo-tab .tab-element:not(.wpeo-dropdown)', window.eoxiaJS.tab.load );
 	};
 
 	/**
@@ -2005,6 +2003,7 @@ if ( ! window.eoxiaJS.tab ) {
 				}
 
 				window.eoxiaJS.loader.display( tabTriggered );
+				window.eoxiaJS.loader.display( tabTriggered.closest( '.wpeo-tab' ).find( '.tab-content' ) );
 
 				jQuery.post( window.ajaxurl, data, function( response ) {
 					window.eoxiaJS.loader.remove( tabTriggered );
@@ -2162,6 +2161,8 @@ if ( ! window.eoxiaJS.tooltip ) {
 	 * @returns {void}       [description]
 	 */
 	window.eoxiaJS.tooltip.remove = function( element ) {
-		jQuery( jQuery( element )[0].tooltipElement ).remove();
+		if ( jQuery( element )[0] && jQuery( element )[0].tooltipElement ) {
+			jQuery( jQuery( element )[0].tooltipElement ).remove();
+		}
 	};
 }

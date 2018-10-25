@@ -47,14 +47,18 @@ window.eoxiaJS.theEPI.core.selectedFile = function() {
 		files_id: window.eoxiaJS.theEPI.core.selectedInfos
 	};
 
-	window.eoxiaJS.theEPI.core.currentButton.addClass( 'loading' );
+	window.eoxiaJS.loader.display( window.eoxiaJS.theEPI.core.currentButton );
 	jQuery.post( window.ajaxurl, data, function( response ) {
-		window.eoxiaJS.theEPI.core.currentButton.removeClass( 'loading' );
+		var epiView = jQuery( response );
+		window.eoxiaJS.loader.remove( window.eoxiaJS.theEPI.core.currentButton );
 
 		window.eoxiaJS.theEPI.core.currentButton = undefined;
 		window.eoxiaJS.theEPI.core.selectedInfos = [];
 		window.eoxiaJS.theEPI.core.mediaFrame = undefined;
-
-		jQuery( '.digirisk-epi table tbody' ).html( response );
+	
+		jQuery( '.wrap-theepi .wpeo-table tbody tr:first' ).after( epiView );
+		setTimeout( function() {
+			epiView.addClass( 'animate' );
+		}, 100 );
 	} );
 };

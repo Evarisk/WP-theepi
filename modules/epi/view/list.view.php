@@ -20,6 +20,7 @@ if ( ! empty( $epis ) ) :
 	foreach ( $epis as $epi ) :
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
 			'epi' => $epi,
+			'new' => $new,
 		) );
 	endforeach;
 endif;
