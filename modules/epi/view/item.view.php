@@ -15,41 +15,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<tr class="wpeo-animate <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
+<tr class="epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<td class="w50">
 		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
 	</td>
-	<td class="w50 padding" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>"><?php echo esc_html( $epi->data['unique_identifier'] ); ?></td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Name', 'theepi' ); ?>"><?php echo esc_html( $epi->data['title'] ); ?></td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Serial number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Period of control', 'theepi' ); ?>"><?php echo esc_html( $epi->data['frequency_control'] ); ?></td>
-	<td></td>
-	<td data-title="<?php echo esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><?php EPI_Comment_Class::g()->display( $epi ); ?></td>
-	<td data-title="<?php echo esc_attr_e( 'State', 'theepi' ); ?>"><?php echo esc_html( $epi->data['state'] ); ?></td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Remaining time', 'theepi' ); ?>"><?php echo $epi->data['compiled_remaining_time']; // WPCS: XSS is ok. ?></td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
+		<?php
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-control', array(
+			'epi'            => $epi,
+			'number_days' => EPI_Class::g()->get_days( $epi )
+		) );
+		 ?>
 
-	<td>
-		<div class="wpeo-grid grid-2 grid-padding-0">
-			<div>
-				<div 	class="wpeo-button button-square-50 action-attribute"
-							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-							data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_epi' ) ); ?>"
-							data-action="load_epi"
-							data-loader="wpeo-table">
-					<span class="button-icon fa fa-pencil"></span>
-				</div>
-			</div>
+	</td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>"><?php echo esc_html( $epi->data['title'] ); ?>
+		<?php
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-link', array(
+			'epi'            => $epi
+		) );
+		 ?>
 
-			<div>
-				<div 	class="wpeo-button button-red button-square-50 action-delete"
-							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-							data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
-							data-action="delete_epi"
-							data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this PPE ?', 'theepi' ); ?>"
-							data-loader="wpeo-table">
-					<span class="button-icon fa fa-times"></span>
-				</div>
-			</div>
-		</div>
+	</td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Reference', 'theepi' ); ?>"><?php echo esc_html( $epi->data['reference'] ); ?></td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Periodicity', 'theepi' ); ?>"><?php echo esc_html( $epi->data['periodicity'] ); echo esc_html( ' days', 'theepi' ); ?></td>
+	<td data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>"></td>
+	<td data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
+		<?php if (EPI_Class::g()->get_days( $epi ) >= 0) : ?>
+		<i class="fas fa-check-circle fa-3x" style="color: mediumspringgreen;"></i>
+	<?php else : ?>
+		<i class="fas fa-exclamation-circle fa-3x" style="color: red;"></i>
+	<?php endif; ?>
 	</td>
 </tr>

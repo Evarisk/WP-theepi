@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2018-10-24 11:09+0200\n"
-"PO-Revision-Date: 2018-10-24 11:09+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2019-07-08 17:33+0200\n"
+"PO-Revision-Date: 2019-07-08 17:33+0200\n"
+"Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -19,14 +19,22 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: test\n"
 "X-Poedit-SearchPathExcluded-2: core/external\n"
 
-#: core/action/class-theepi-core-action.php:132 core/view/main.view.php:21
+#: core/action/class-theepi-core-action.php:132
 #: modules/setting/action/setting.action.php:47
 msgid "TheEPI"
 msgstr "TheEPI"
 
-#: core/view/main.view.php:23
-msgid "Create mass from image"
-msgstr "Créer en masse à partir d'image"
+#: core/view/main.view.php:21
+msgid "List of PPE"
+msgstr "Liste des EPI"
+
+#: core/view/main.view.php:25
+msgid "New"
+msgstr "Nouveau"
+
+#: core/view/main.view.php:28
+msgid "New from images"
+msgstr "Nouveau à partir d'images"
 
 #: modules/epi/class/class-epi-comment.php:82
 msgid "Create new PPE"
@@ -44,54 +52,113 @@ msgstr "Pas d'utilisateur"
 msgid "No comment"
 msgstr "Pas de commentaire"
 
-#: modules/epi/view/item-edit.view.php:26 modules/epi/view/item.view.php:22
-#: modules/epi/view/main.view.php:22
+#: modules/epi/view/item-control.view.php:21
+msgid "EXCEEDED"
+msgstr "DEPASSE"
+
+#: modules/epi/view/item-control.view.php:23
+#: modules/epi/view/item-control.view.php:31
+#: modules/epi/view/item-control.view.php:39
+#: modules/epi/view/item-control.view.php:47
+msgid "DAYS"
+msgstr "JOURS"
+
+#: modules/epi/view/item-control.view.php:29
+#: modules/epi/view/item-control.view.php:37
+#: modules/epi/view/item-control.view.php:45
+msgid "STAYS"
+msgstr "RESTE"
+
+#: modules/epi/view/item-create.view.php:22
 #: modules/setting/view/capability/list-item.view.php:19
 #: modules/setting/view/capability/list.view.php:22
 msgid "ID"
 msgstr "ID"
 
-#: modules/epi/view/item-edit.view.php:27 modules/epi/view/item.view.php:23
+#: modules/epi/view/item-create.view.php:23
+#: modules/epi/view/item-edit.view.php:23 modules/epi/view/item.view.php:31
 #: modules/epi/view/main.view.php:23
-msgid "Name"
-msgstr "Nom"
+msgid "Title"
+msgstr "Titre"
 
-#: modules/epi/view/item-edit.view.php:28 modules/epi/view/item.view.php:24
-#: modules/epi/view/main.view.php:24
-msgid "Serial number"
-msgstr "Numéro de série"
+#: modules/epi/view/item-create.view.php:24
+msgid "reference"
+msgstr " référence"
 
-#: modules/epi/view/item-edit.view.php:29 modules/epi/view/item.view.php:25
-#: modules/epi/view/main.view.php:25
-msgid "Period of control"
-msgstr "Période de contrôle"
+#: modules/epi/view/item-create.view.php:25 modules/epi/view/item.view.php:40
+#: modules/epi/view/main.view.php:26
+msgid "Periodicity"
+msgstr "Périodicité"
 
-#: modules/epi/view/item-edit.view.php:31
+#: modules/epi/view/item-create.view.php:27
+#: modules/epi/view/item-edit.view.php:33
 msgid "This field must be in numeric format and better than 0"
 msgstr "Ce champ doit être une valeur numérique supérieure à 0"
 
-#: modules/epi/view/item-edit.view.php:36
+#: modules/epi/view/item-create.view.php:33
+#: modules/epi/view/item-edit.view.php:38
 msgid "days"
 msgstr "jours"
 
-#: modules/epi/view/item-edit.view.php:37 modules/epi/view/item.view.php:27
-#: modules/epi/view/main.view.php:27
+#: modules/epi/view/item-create.view.php:34
 msgid "Date of last check and comment"
 msgstr "Date de la dernière vérification et commentaire"
 
-#: modules/epi/view/item-edit.view.php:38 modules/epi/view/item.view.php:28
+#: modules/epi/view/item-create.view.php:35 modules/epi/view/item.view.php:43
 #: modules/epi/view/main.view.php:28
-msgid "State"
-msgstr "Status"
+msgid "Status"
+msgstr "Statut"
 
-#: modules/epi/view/item-edit.view.php:39 modules/epi/view/item.view.php:29
-#: modules/epi/view/main.view.php:29
+#: modules/epi/view/item-create.view.php:36 modules/epi/view/item.view.php:47
 msgid "Remaining time"
 msgstr "Reste"
 
-#: modules/epi/view/item.view.php:48
+#: modules/epi/view/item-edit.view.php:30 modules/epi/view/item.view.php:39
+#: modules/epi/view/main.view.php:24
+msgid "Reference"
+msgstr "Référence"
+
+#: modules/epi/view/item-edit.view.php:31
+msgid "periodicity"
+msgstr "périodicité"
+
+#: modules/epi/view/item-link-edit.view.php:23
+msgid "Cancel"
+msgstr "Annuler"
+
+#: modules/epi/view/item-link-edit.view.php:33
+#: modules/setting/view/capability/main.view.php:33
+#: modules/setting/view/default-data/main.view.php:33
+msgid "Save"
+msgstr "Enregistrer"
+
+#: modules/epi/view/item-link.view.php:23
+msgid "Edit"
+msgstr "Modifier"
+
+#: modules/epi/view/item-link.view.php:32
+msgid "Perform a control"
+msgstr "Effectuer un contrôle"
+
+#: modules/epi/view/item-link.view.php:41
 msgid "Are you sure you want to remove this PPE ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
+
+#: modules/epi/view/item-link.view.php:43
+msgid "Delete"
+msgstr "Supprimer"
+
+#: modules/epi/view/item.view.php:22 modules/epi/view/main.view.php:22
+msgid "Control"
+msgstr "Contrôle"
+
+#: modules/epi/view/item.view.php:42 modules/epi/view/main.view.php:27
+msgid "Last Control"
+msgstr "Dernier Contrôle"
+
+#: modules/epi/view/main.view.php:21
+msgid "Image"
+msgstr "Image"
 
 #: modules/epi/view/main.view.php:46
 msgid "Load more"
@@ -102,13 +169,13 @@ msgstr "Charger plus"
 msgid "Page"
 msgstr "Page"
 
-#: modules/epi/view/search.view.php:20
-msgid "Search"
-msgstr "Rechercher"
-
 #: modules/epi/view/search.view.php:22
 msgid "Search term"
 msgstr "Critère de recherche"
+
+#: modules/epi/view/search.view.php:27
+msgid "Search"
+msgstr "Rechercher"
 
 #: modules/setting/class/setting.class.php:135
 msgid "User per page"
@@ -151,11 +218,6 @@ msgstr "Gestion des droits de TheEPI"
 msgid "Set access rights to the TheEPI app"
 msgstr "Définir les droits d'accès à l'application TheEPI"
 
-#: modules/setting/view/capability/main.view.php:33
-#: modules/setting/view/default-data/main.view.php:33
-msgid "Save"
-msgstr "Enregistrer"
-
 #: modules/setting/view/default-data/main.view.php:22
 msgid "Handle default data"
 msgstr "Gestion des données par défaut"
@@ -181,6 +243,24 @@ msgstr "Capacité"
 #: modules/setting/view/main.view.php:24
 msgid "Default data"
 msgstr "Donnée par défaut"
+
+#~ msgid "Modified"
+#~ msgstr "Modifier"
+
+#~ msgid "Create mass from image"
+#~ msgstr "Créer en masse à partir d'image"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Serial number"
+#~ msgstr "Numéro de série"
+
+#~ msgid "Period of control"
+#~ msgstr "Période de contrôle"
+
+#~ msgid "State"
+#~ msgstr "Status"
 
 #~ msgid "Are you sure you want to remove this PPE"
 #~ msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"

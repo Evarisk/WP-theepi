@@ -178,7 +178,9 @@ if ( ! window.eoxiaJS.modal  ) {
 							el[0].innerHTML = el[0].innerHTML.replace( '{{buttons}}', window.eoxiaJS.modal.defaultButtons );
 						}
 
-						if ( ! triggeredElement.attr( 'data-title' ) ) {
+						if ( typeof response.data.header_view !== 'undefined' ) {
+							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', response.data.header_view );
+						} else {
 							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', window.eoxiaJS.modal.defaultTitle );
 						}
 

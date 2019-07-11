@@ -18,21 +18,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 <table class="wpeo-table epi">
 	<thead>
 		<tr>
-			<th class="w50"></th>
-			<th class="w50 padding" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></th>
-			<th class="wm130 padding" data-title="<?php esc_attr_e( 'Name', 'theepi' ); ?>"><span><?php esc_html_e( 'Name', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Serial number', 'theepi' ); ?>"><span><?php esc_html_e( 'Serial number', 'theepi' ); ?></span></th>
-			<th class="padding w50" data-title="<?php esc_attr_e( 'Period of control', 'theepi' ); ?>"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
-			<th class="w50"></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><span><?php esc_html_e( 'Date of last check and comment', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'State', 'theepi' ); ?>"><span><?php esc_html_e( 'State', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Remaining time', 'theepi' ); ?>"><span><?php esc_html_e( 'Remaining time', 'theepi' ); ?></span></th>
-			<th class="wpeo-grid grid-2"></th>
+			<th class="w50 padding" data-title="<?php esc_attr_e( 'Image', 'theepi' ); ?>"><span><?php esc_html_e( 'Image', 'theepi' ); ?></span></th>
+			<th class="wm130 padding" data-title="<?php esc_attr_e( 'Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Control', 'theepi' ); ?></span></th>
+			<th class="padding" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></th>
+			<th class="padding w50" data-title="<?php esc_attr_e( 'Reference', 'theepi' ); ?>"><i class="fas fa-barcode"></i> <?php esc_html_e( 'Reference', 'theepi' ); ?></span></th>
+			<th class="padding" data-title="<?php esc_attr_e( 'Periodicity', 'theepi' ); ?>"><span><?php esc_html_e( 'Periodicity', 'theepi' ); ?></span></th>
+			<th class="padding" data-title="<?php esc_attr_e( 'Last Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Last Control', 'theepi' ); ?></span></th>
+			<th class="padding" data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></th>
 		</tr>
 	</thead>
 
 	<tbody>
-		<?php \eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
+		<?php //\eoxia\View_Util::exec( 'theepi', 'epi', 'item-create', array( 'epi' => $epi_schema ) ); ?>
 		<?php EPI_Class::g()->display_epi_list( $epis, false ); ?>
 	</tbody>
 </table>

@@ -96,7 +96,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 		$comments = self::g()->get( array(
 			'post_id' => $epi->data['id'],
 			'orderby' => 'comment_ID',
-			'order'   => 'ASC',
+			'order'   => 'ASC'
 		) );
 
 		$userdata = get_userdata( get_current_user_id() );
@@ -121,13 +121,13 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	public function display_edit( $epi ) {
 		$comments = array();
 
-		if ( 0 !== $epi->data['id'] ) {
-			$comments = self::g()->get( array(
-				'post_id' => $epi->data['id'],
-				'orderby' => 'comment_ID',
-				'order'   => 'ASC',
-			) );
-		}
+		// if ( 0 !== $epi->data['id'] ) { // 1/07/2019 -> Commentaire parce que bug affichage (formulaire de saisie)
+		// 	$comments = self::g()->get( array(
+		// 		'post_id' => $epi->data['id'],
+		// 		'orderby' => 'comment_ID',
+		// 		'order'   => 'ASC',
+		// 	) );
+		// }
 
 		$comment_schema = self::g()->get( array(
 			'schema' => true,

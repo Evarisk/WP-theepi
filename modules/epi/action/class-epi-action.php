@@ -2,9 +2,9 @@
 /**
  * Handle EPI Actions like save, delete, create_mass_epi.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
+ * @author Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @since 0.1.0
- * @version 0.4.0
+ * @version 0.5.0
  * @copyright 2017 Evarisk
  * @package TheEPI
  */
@@ -24,67 +24,116 @@ class EPI_Action {
 	 * Le constructeur
 	 *
 	 * @since 0.1.0
-	 * @version 0.2.0
+	 * @version 0.5.0
 	 */
 	public function __construct() {
-		add_action( 'wp_ajax_save_epi', array( $this, 'ajax_save_epi' ) );
-		add_action( 'wp_ajax_delete_epi', array( $this, 'ajax_delete_epi' ) );
-		add_action( 'wp_ajax_load_epi', array( $this, 'ajax_load_epi' ) );
-		add_action( 'wp_ajax_load_more_epi', array( $this, 'ajax_load_more_epi' ) );
+		add_action( 'wp_ajax_display_view_epi', array( $this, 'callback_display_view_epi' ) );
+		add_action( 'wp_ajax_save_epi', array( $this, 'callback_save_epi' ) );
+		add_action( 'wp_ajax_delete_epi', array( $this, 'callback_delete_epi' ) );
+		add_action( 'wp_ajax_edit_epi', array( $this, 'callback_edit_epi' ) );
+		add_action( 'wp_ajax_cancel_edit_epi', array( $this, 'callback_cancel_edit_epi' ) );
+		add_action( 'wp_ajax_load_epi', array( $this, 'callback_load_epi' ) );
+		add_action( 'wp_ajax_load_more_epi', array( $this, 'callback_load_more_epi' ) );
 
-		add_action( 'wp_ajax_search_epi', array( $this, 'ajax_search_epi' ) );
-		add_action( 'wp_ajax_clear_search_epi', array( $this, 'ajax_clear_search_epi' ) );
+		add_action( 'wp_ajax_search_epi', array( $this, 'callback_search_epi' ) );
+		add_action( 'wp_ajax_clear_search_epi', array( $this, 'callback_clear_search_epi' ) );
 
-		add_action( 'wp_ajax_create_mass_epi', array( $this, 'ajax_create_mass_epi' ) );
+		add_action( 'wp_ajax_create_mass_epi', array( $this, 'callback_create_mass_epi' ) );
+	}
+
+
+	/**
+	 * Cree un EPI
+	 *
+	 * @since 0.1.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 * @todo: 13/12/2017: Faire que les données de l'EPI soit dans $_POST['epi'].
+	 */
+	public function callback_display_view_epi() {
+
+		$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
+
+		ob_start();
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array(
+			'epi' => $epi,
+		) );
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'displayViewEpiSuccess',
+			'view'             => ob_get_clean(),
+
+		) );
 	}
 
 	/**
 	 * Sauvegardes un EPI
 	 *
 	 * @since 0.1.0
-	 * @version 0.4.0
+	 * @version 0.5.0
 	 *
 	 * @return void
 	 * @todo: 13/12/2017: Faire que les données de l'EPI soit dans $_POST['epi'].
 	 */
-	public function ajax_save_epi() {
+	public function callback_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
-		$data     = ! empty( $_POST ) ? (array) $_POST : array();
-		$image_id = ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
-		$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();
-		$new_epi  = empty( $data['id'] ) ? true : false;
+		$data     		= ! empty( $_POST ) ? (array) $_POST : array();
+		$image_id 		= ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
+		/*$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();*/
+		$title     		= ! empty( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : 'New PPE';
+		$reference    = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : '';
+		$periodicity  = ! empty( $_POST['periodicity'] ) ? (int) $_POST['periodicity'] : 365;
+		$last_control = ! empty( $_POST['last_control'] ) ? sanitize_text_field( $_POST['last_control'] ) : ''; //a voir pour relier avec task manager
+		$status    		= ! empty( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : '';
+		$new_epi  		= empty( $data['id'] ) ? true : false;
+		//$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
 
-		$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
+		/*if ( empty( $data['id'] ) ) {
+			$epi = EPI_Class::g()->get( array( 'schema' => true ), true );*/
+			$update_epi = array (
+				'image_id' 		 => $image_id,
+				'title'     	 => $title,
+				'reference' 	 => $reference,
+				'periodicity'  => $periodicity,
+				'last_control' => $last_control,
+				'status' 			 => $status
+			);
 
-		if ( empty( $data['id'] ) ) {
-			$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
-		
-			ob_start();
+			if( $new_epi ){
+				$epi = EPI_Class::g()->create( $update_epi );
+			}else {
+				$epi = EPI_Class::g()->get( array( 'id' => $data[ 'id' ] ), true );
+
+				$epi->data['image_id'] = $update_epi['image_id'];
+				$epi->data['title'] = $update_epi['title'];
+				$epi->data['reference'] = $update_epi['reference'];
+				$epi->data['periodicity'] = $update_epi['periodicity'];
+				$epi->data['last_control'] = $update_epi['last_control'];
+				$epi->data['status'] = $update_epi['status'];
+				$epi = EPI_Class::g()->update( $epi->data );
+
+			}
+
+			/*ob_start();
 			echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' );
-			$epi_upload_view = ob_get_clean();
-		}
+			$epi_upload_view = ob_get_clean();*/
 
-		$epi->data['title']             = sanitize_text_field( $data['title'] );
+		/*$epi->data['title']             = sanitize_text_field( $data['title'] );
 		$epi->data['serial_number']     = sanitize_text_field( $data['serial_number'] );
-		$epi->data['frequency_control'] = (int) $data['frequency_control'];
+		$epi->data['frequency_control'] = (int) $data['frequency_control'];*/
 
-		$epi = EPI_Class::g()->save( $epi, $image_id, $comments );
-		ob_start();
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
-			'epi' => $epi,
-			'new' => $new_epi,
-		) );
-		$epi_view = ob_get_clean();
+		$view = $this->reload_epis();
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',
 			'module'           => 'EPI',
 			'callback_success' => 'savedEpiSuccess',
-			'object'           => $epi,
-			'epi_view'         => $epi_view,
-			'new_epi'          => $new_epi,
-			'epi_upload_view'  => $epi_upload_view,
+			'view'             => $view,
+
 		) );
 	}
 
@@ -96,7 +145,7 @@ class EPI_Action {
 	 * @since 0.1.0
 	 * @version 0.4.0
 	 */
-	public function ajax_delete_epi() {
+	public function callback_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
 
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
@@ -115,6 +164,71 @@ class EPI_Action {
 	}
 
 	/**
+	 * Editer un EPI (mode édition)
+	 *
+	 * @return void
+	 *
+	 * @since 0.1.0
+	 * @version 0.5.0
+	 */
+	public function callback_edit_epi() {
+		check_ajax_referer( 'edit_epi' );
+
+		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
+
+		if ( empty( $id ) ) {
+			wp_send_json_error();
+		}
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+
+		ob_start();
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array(
+			'epi' => $epi,
+		) );
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'editedEpiSuccess',
+			'view'             => ob_get_clean(),
+		) );
+	}
+
+	/**
+	 * Annule le mode édition d'un EPI
+	 *
+	 * @return void
+	 *
+	 * @since 0.1.0
+	 * @version 0.5.0
+	 */
+	public function callback_cancel_edit_epi() {
+		check_ajax_referer( 'cancel_edit_epi' );
+
+		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+
+		if ( empty( $id ) ) {
+			$epi = array();
+		}else{
+			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+
+			ob_start();
+			\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
+				'epi' => $epi,
+			) );
+		}
+
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'canceledEditEpiSuccess',
+			'view'             => ob_get_clean(),
+		) );
+	}
+
+	/**
 	 * Charges les données d'un EPI
 	 *
 	 * @since 0.1.0
@@ -122,7 +236,7 @@ class EPI_Action {
 	 *
 	 * @return void
 	 */
-	public function ajax_load_epi() {
+	public function callback_load_epi() {
 		check_ajax_referer( 'load_epi' );
 
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
@@ -156,7 +270,7 @@ class EPI_Action {
 	 *
 	 * @return void
 	 */
-	public function ajax_load_more_epi() {
+	public function callback_load_more_epi() {
 		check_ajax_referer( 'load_more_epi' );
 
 		$offset = ! empty( $_POST['offset'] ) ? (int) $_POST['offset'] : 1;
@@ -176,6 +290,17 @@ class EPI_Action {
 		) );
 	}
 
+	public function reload_epis() {
+
+		$pagination_data = EPI_Class::g()->get_pagination_data( 0, '' );
+
+		$epis = EPI_Class::g()->get_epis( $pagination_data, '' );
+		ob_start();
+		EPI_Class::g()->display_epi_list( $epis );
+		return ob_get_clean();
+	}
+
+
 	/**
 	 * Recherches tous les EPI
 	 *
@@ -184,7 +309,7 @@ class EPI_Action {
 	 *
 	 * @return void
 	 */
-	public function ajax_search_epi() {
+	public function callback_search_epi() {
 		check_ajax_referer( 'search_epi' );
 
 		$term = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
@@ -208,7 +333,7 @@ class EPI_Action {
 	 *
 	 * @return void
 	 */
-	public function ajax_clear_search_epi() {
+	public function callback_clear_search_epi() {
 		check_ajax_referer( 'clear_search_epi' );
 
 		ob_start();
@@ -231,7 +356,7 @@ class EPI_Action {
 	 * @return void
 	 * @todo: nonce
 	 */
-	public function ajax_create_mass_epi() {
+	public function callback_create_mass_epi() {
 		$files_id = ! empty( $_POST['files_id'] ) ? (array) $_POST['files_id'] : array();
 
 		if ( empty( $files_id ) ) {
@@ -244,5 +369,8 @@ class EPI_Action {
 		wp_die();
 	}
 }
+
+
+
 
 new EPI_Action();

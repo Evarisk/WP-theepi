@@ -8,12 +8,13 @@ window.eoxiaJS.theEPI.EPI = {};
 
 window.eoxiaJS.theEPI.EPI.init = function() {
 	window.eoxiaJS.theEPI.EPI.event();
-	alert('ok');
 };
 
 window.eoxiaJS.theEPI.EPI.event = function() {
-	jQuery( document ).on( 'keyup', '.wrap-theepi .wpeo-table.epi .epi-row input[name="frequency_control"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
+	jQuery( document ).on( 'keyup', '.wrap-theepi .wpeo-table.epi .epi-row input[name="periodicity"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
 	jQuery( document ).on( 'click', '.wrap-theepi .scroll-top', window.eoxiaJS.theEPI.EPI.scrollTop );
+
+//	jQuery( document ).on( 'click', '.wrap-theepi .epi-create-display-input', window.eoxiaJS.theEPI.EPI.epiCreateDisplayInput );
 
 };
 
@@ -54,7 +55,7 @@ window.eoxiaJS.theEPI.EPI.scrollTop = function( event ) {
 };
 
 /**
- * Le callback en cas de réussite à la requête Ajax "save_epi".
+ * Le callback en cas de réussite à la requête Ajax "create_epi".
  * Remplaces le contenu de <tbody> du tableau "epi".
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
@@ -62,10 +63,10 @@ window.eoxiaJS.theEPI.EPI.scrollTop = function( event ) {
  * @return {void}
  *
  * @since 0.1.0
- * @version 0.4.0
+ * @version 0.5.0
  */
-window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response ) {
-	var epiView = jQuery( response.data.epi_view );
+window.eoxiaJS.theEPI.EPI.displayViewEpiSuccess = function( triggeredElement, response ) {
+	/*var epiView = jQuery( response.data.epi_view );
 
 	if ( response.data.new_epi ) {
 		window.eoxiaJS.theEPI.EPI.refreshTextLoadMore( 1, 1 );
@@ -73,14 +74,24 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
 		triggeredElement.closest( '.epi-row' ).find( '.media' ).replaceWith( response.data.epi_upload_view );
 
 		window.eoxiaJS.form.reset( triggeredElement.closest( '.epi-row' ) );
-		
+
 		jQuery( '.wrap-theepi .wpeo-table.epi tbody .epi-row' ).after( epiView );
 		setTimeout( function() {
 			epiView.addClass( 'animate' );
 		}, 10 );
 	} else {
 		triggeredElement.closest( 'tr' ).replaceWith( epiView );
+	}*/
+	// console.log('ok-1');
+	// console.log( response.data.view  );
+	if( jQuery( '.wpeo-table.epi tbody tr' ).length ){
+		console.log( '1' );
+		jQuery( '.wpeo-table.epi tbody tr:first' ).before( response.data.view );
+	}else{
+		console.log( '2' );
+		jQuery( '.wpeo-table.epi tbody' ).html( response.data.view );
 	}
+
 };
 
 /**
@@ -98,8 +109,27 @@ window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, respons
 	triggeredElement.closest( 'tr' ).replaceWith( response.data.template );
 };
 
+
+/**
+ * Le callback en cas de réussite à la requête Ajax "load_epi".
+ * Remplaces la ligne courante du tableau "epi"
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ * @return {void}
+ *
+ * @since 0.1.0
+ * @version 0.4.0
+ */
+window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response ) {
+	jQuery( '.wrap-theepi .wpeo-table.epi tbody' ).html( response.data.view );
+	console.log( response.data.view  );
+
+};
+
 /**
  * Le callback en cas de réussite à la requête Ajax "delete_epi".
+ * Supprimes la ligne courante du tableau "epi"
  * Supprimes la ligne courante du tableau "epi"
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
@@ -111,6 +141,38 @@ window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, respons
  */
 window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( 'tr' ).fadeOut();
+};
+
+/**
+ * Le callback en cas de réussite à la requête Ajax "edit_epi".
+ * Edition d'un "epi"
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ * @return {void}
+ *
+ * @since 0.1.0
+ * @version 0.5.0
+ */
+window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, response ) {
+	console.log('ok');
+	console.log( response.data.view  );
+	triggeredElement.closest( '.epi-row' ).replaceWith( response.data.view );
+};
+
+/**
+ * Le callback en cas de réussite à la requête Ajax "cancel_edit_epi".
+ * Annule le mode édition d'un "epi"
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ * @return {void}
+ *
+ * @since 0.1.0
+ * @version 0.5.0
+ */
+window.eoxiaJS.theEPI.EPI.canceledEditEpiSuccess = function( triggeredElement, response ) {
+	triggeredElement.closest( '.epi-row' ).replaceWith( response.data.view );
 };
 
 /**
@@ -177,8 +239,8 @@ window.eoxiaJS.theEPI.EPI.searchedEPISuccess = function( triggeredElement, respo
 window.eoxiaJS.theEPI.EPI.checkData = function( element ) {
 	window.eoxiaJS.popover.remove( element.closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
 
-	if ( isNaN( element.closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() ) || '' == element.closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() ||
-		( element.closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() && '0' == element.closest( '.epi-row' ).find( 'input[name="frequency_control"]' ).val() ) ) {
+	if ( isNaN( element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ) || '' == element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ||
+		( element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() && '0' == element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ) ) {
 		window.eoxiaJS.popover.toggle( element.closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
 		return false;
 	}

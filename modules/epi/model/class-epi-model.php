@@ -2,9 +2,9 @@
 /**
  * Define EPI Model.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
+ * @author Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @since 0.1.0
- * @version 0.4.0
+ * @version 0.5.0
  * @copyright 2015-2018 Evarisk
  * @package TheEPI
  */
@@ -24,9 +24,9 @@ class EPI_Model extends \eoxia\Post_Model {
 	 * Construct
 	 *
 	 * @since 0.1.0
-	 * @version 0.4.0
+	 * @version 0.5.0
 	 *
-	 * @param EPI_Class $object     Les données du commentaire de l'epi.
+	 * @param EPI_Class $object     Les données  de l'epi.
 	 * @param string    $req_method La méthode de la requête.
 	 */
 	public function __construct( $object, $req_method = null ) {
@@ -62,11 +62,11 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
-		$this->schema['serial_number'] = array(
+		$this->schema['reference'] = array(
 			'type'        => 'string',
 			'meta_type'   => 'single',
-			'field'       => '_serial_number',
-			'description' => 'Is the serial number of the EPI.',
+			'field'       => '_reference',
+			'description' => 'Is the reference of the EPI.',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
 		);
@@ -80,13 +80,13 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
-		$this->schema['frequency_control'] = array(
+		$this->schema['periodicity'] = array(
 			'type'        => 'integer',
 			'meta_type'   => 'multiple',
-			'required'    => true,
-			'description' => 'Is the frequency control of the EPI.',
+			'description' => 'Is the periodicity of the EPI.',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
+			'default'     => 365
 		);
 
 		$this->schema['control_date'] = array(
@@ -108,12 +108,12 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
-		$this->schema['state'] = array(
+		$this->schema['status'] = array(
 			'type'        => 'string',
 			'meta_type'   => 'field',
-			'field'       => '_state',
+			'field'       => '_transition_post_status()',
 			'default'     => '',
-			'description' => 'Is the state of the EPI. Broken or not. Value can be "OK" or "KO".',
+			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
 		);
