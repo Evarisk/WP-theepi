@@ -213,7 +213,6 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 					),
 				),
 			);
-
 			$document_revision = new \WP_Query( $args );
 			return ( $document_revision->post_count + 1 );
 		}

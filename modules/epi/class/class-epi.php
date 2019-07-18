@@ -286,7 +286,6 @@ class EPI_Class extends \eoxia\Post_Class {
 		$epi = self::g()->get( array(
 			'id' => $id,
 		), true );
-
 		$epi->data['status'] = 'trash';
 
 		self::g()->update( $epi->data );
@@ -311,7 +310,7 @@ class EPI_Class extends \eoxia\Post_Class {
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				$epi     = self::g()->create( array( 'Periodicity' => 365 ) );
+				$epi     = self::g()->create( array( 'periodicity' => 365 , 'status_epi' => 'OK' ) );
 
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
 					'id'         => $epi->data['id'],

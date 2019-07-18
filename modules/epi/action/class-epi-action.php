@@ -156,7 +156,15 @@ class EPI_Action {
 		}
 
 		EPI_Class::g()->delete( $id );
-		task_manager\Audit_Class::g()->delete( $id );
+		//$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+
+		/*foreach( $audits as $audit ) {
+			Audit_Class::g()->update(
+				array(
+					'id'     => $audit->data['id'],
+					'status' => 'trash',
+				)  );
+		}*/
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',

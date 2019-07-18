@@ -287,3 +287,17 @@ window.eoxiaJS.theEPI.EPI.refreshTextLoadMore = function( addNumberEPI, addTotal
 	jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-offset', currentOffset );
 
 }
+
+window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, response ) {
+	var element = document.createElement('a');
+	console.log( response.data );
+  element.setAttribute('href', response.data.link );
+  element.setAttribute('download', response.data.filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}

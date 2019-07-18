@@ -118,6 +118,8 @@ class TheEPI_Core_Action {
 		if ( ! $administrator_role->has_cap( 'manage_theepi' ) ) {
 			$administrator_role->add_cap( 'manage_theepi', true );
 		}
+
+		\eoxia\Config_Util::$init['task-manager']->insert_scripts_pages[] = 'theepi';
 	}
 
 	/**

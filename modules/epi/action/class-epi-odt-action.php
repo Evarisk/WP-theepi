@@ -45,12 +45,16 @@ class EPI_ODT_Action {
 		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
 
 		$picture = array();
+		$title  = current_time( 'Ymd' ) . '_';
+		$title .= sanitize_title( $epi->data['title'] ) . '_';
+		$title .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
+		$title  = str_replace( '-', '_', $title );
 
 		$document_data = array(
-			'title'             => 'test.odt',
-			'guid'              => str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt',
-			'path'              => str_replace( '\\', '/', $upload_dir['basedir'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt',
-			'_wp_attached_file' => '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt'
+			'title'             => $title,
+			'guid'              => str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . sanitize_title( $epi->data['title'] )  . '.odt',
+			'path'              => str_replace( '\\', '/', $upload_dir['basedir'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . sanitize_title( $epi->data['title'] )  . '.odt',
+			'_wp_attached_file' => '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . sanitize_title( $epi->data['title'] )  . '.odt'
 		);
 
 		$picture_definition = wp_get_attachment_image_src( $epi->data['thumbnail_id'], 'medium' );
@@ -85,15 +89,29 @@ class EPI_ODT_Action {
 
 		$response = EPI_ODT_Class::g()->save_document_data( $id , $document_meta, $args );
 
-		$response['document']->data['title'] = 'test.odt';
-		$response['document']->data['guid']  = str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt';
-		$response['document']->data['path'] = str_replace( '\\', '/', $upload_dir['basedir'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt';
-		$response['document']->data['_wp_attached_file'] = '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . 'test' . '.odt';
+		$response['document']->data['title']  = current_time( 'Ymd' ) . '_';
+		$response['document']->data['title'] .= sanitize_title( $epi->data['title'] ) . '_';
+		$response['document']->data['title'] .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
+		$response['document']->data['title']  = str_replace( '-', '_', $response['document']->data['title'] );
+		$response['document']->data['guid']  = str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';
+		$response['document']->data['path'] = str_replace( '\\', '/', $upload_dir['basedir'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';
+		$response['document']->data['_wp_attached_file'] = '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';
 
+		$link = $response['document']->data['guid'];
 
 		EPI_ODT_Class::g()->update( $response['document']->data );
-
 		$response = EPI_ODT_Class::g()->create_document( $response['document']->data['id'] );
+
+		$filename = $response['document']->data['title'] . '.odt';
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'exportedEPISuccess',
+			'filename'         => $filename,
+			'link' => $link
+		) );
+
 	}
 
 }
