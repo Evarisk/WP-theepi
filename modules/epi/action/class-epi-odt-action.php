@@ -41,6 +41,9 @@ class EPI_ODT_Action {
 		$status_epi = Audit_Class::g()->get_status( $epi ) ? "OK" : "KO";
 		$control = EPI_Class::g()->get_days( $epi );
 		$args = array( 'parent' => $epi );
+
+		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+
 		$picture = array();
 
 		$document_data = array(
@@ -73,9 +76,12 @@ class EPI_ODT_Action {
 			'audits' => array( 'type' => 'segment', 'value' => array() )
 		);
 
-
-		$document_meta['audits']['value'][] = array( 'date_control' => 'salut', 'status' => 'aurevoir' );
-		$document_meta['audits']['value'][] = array( 'date_control' => 'bonjour', 'status' => 'ok' );
+		foreach ($audits as $key => $audit) {
+			$document_meta['audits']['value'][] = array(
+				'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
+				'status' => 'a finir'
+			);
+		}
 
 		$response = EPI_ODT_Class::g()->save_document_data( $id , $document_meta, $args );
 

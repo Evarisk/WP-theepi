@@ -29,6 +29,7 @@ class Audit_Action {
 	public function __construct() {
 		add_action( 'wp_ajax_control_epi', array( $this, 'callback_control_epi' ) );
 		add_action( 'wp_ajax_display_control_epi', array( $this, 'callback_display_control_epi' ) );
+		add_action( 'wp_ajax_display_all_audits', array( $this, 'callback_display_all_audits' ) );
 		add_action( 'wp_ajax_create_task_audit', array( $this, 'callback_create_task_audit' ) );
 		add_action( 'wp_ajax_import_task_audit', array( $this, 'callback_import_task_audit' ) );
 		add_action( 'wp_ajax_valid_audit', array( $this, 'callback_valid_audit' ) );
@@ -150,6 +151,56 @@ class Audit_Action {
 		) );
 	}
 
+	public function callback_display_all_audits() {
+		check_ajax_referer( 'display_all_audits');
+
+		$id = ! empty ( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true);
+		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+
+		$single_audit = EPI_Class::g()->last_control_audit( $audits );
+
+		ob_start();
+	 	foreach ($audits as $key => $audit) {
+		 if (!empty($audit)) {
+			 $user = get_user_by( 'id', $audit->data['author_id'] );
+			 \eoxia\View_Util::exec(
+				 'theepi',
+				 'audit',
+				 'audit-epi',
+				 array(
+					 'epi'	=> $epi,
+					 'audit' => $audit,
+					 'user' => $user
+				 ) );
+			 }
+	 	}
+		$view = ob_get_clean();
+
+		ob_start();
+		$user = get_user_by( 'id', $single_audit->data['author_id'] );
+		\eoxia\View_Util::exec(
+			'theepi',
+			'audit',
+			'audit-epi',
+			array(
+				'epi'	=> $epi,
+				'audit' => $single_audit,
+				'user' => $user
+			) );
+		$single_view_audit = ob_get_clean();
+
+		wp_send_json_success( array(
+			'namespace'         => 'theEPI',
+			'module'            => 'Audit',
+			'callback_success'  => 'DisplayAllAuditSuccess',
+			'id'                => $id,
+			'view'              => $view,
+			'single_view_audit' => $single_view_audit
+		) );
+	}
+
 	public function callback_create_task_audit() {
 		check_ajax_referer( 'create_task_audit' );
 
@@ -263,6 +314,9 @@ class Audit_Action {
 			'link'             => $link
 		) );
 	}
+
+
+
 
 }
 

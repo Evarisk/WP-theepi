@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</td>
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Reference', 'theepi' ); ?>"><?php echo esc_html( $epi->data['reference'] ); ?></td>
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Periodicity', 'theepi' ); ?>"><?php echo esc_html( $epi->data['periodicity'] ); echo esc_html( ' jours', 'theepi' ); ?></td>
-	<td data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+	<td  class="control_audit" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php  EPI_Class::g()->display_audit_epi( $epi->data['id'] ); ?>
 	</td>
 	<td data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">

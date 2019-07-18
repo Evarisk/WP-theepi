@@ -28,6 +28,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="audit-container">
 		<div class="audit-header">
 			<ul class="audit-summary" style="display: flex">
+				<li>
+				<span class="button-display-audit action-attribute"
+					data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+					data-action="display_all_audits"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_all_audits' ) ); ?>">
+					<i class="fas fa-chevron-right"></i>
+				</span>
+				</li>
 				<li class="audit-summary-id" style="color: grey; margin-right: 15px"><i class="fas fa-hashtag"></i> <?= $audit->data[ 'id' ] ?></li>
 				<li class="audit-summary-author-id" style="color: grey"><i class="fas fa-user"></i> <?php echo esc_attr( $user->data->display_name ); ?>
 				</li>
