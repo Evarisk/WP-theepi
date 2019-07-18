@@ -27,9 +27,12 @@ class Audit_Action {
 	 * @version 0.5.0
 	 */
 	public function __construct() {
-		//\task_manager\Audit_Class::g(
 		add_action( 'wp_ajax_control_epi', array( $this, 'callback_control_epi' ) );
+		add_action( 'wp_ajax_display_control_epi', array( $this, 'callback_display_control_epi' ) );
 		add_action( 'wp_ajax_create_task_audit', array( $this, 'callback_create_task_audit' ) );
+		add_action( 'wp_ajax_import_task_audit', array( $this, 'callback_import_task_audit' ) );
+		add_action( 'wp_ajax_valid_audit', array( $this, 'callback_valid_audit' ) );
+		add_action( 'wp_ajax_get_text_from_url_audit', array( $this, 'callback_get_text_from_url_audit' ) );
 
 	}
 
@@ -43,24 +46,76 @@ class Audit_Action {
 		}
 
 		if ( class_exists( '\task_manager\Audit_Class' ) ) {
-			$audit = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ), true);
+			$audit = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ), true );
 		} else {
 			wp_send_json_error( "TASK MANAGER NOT ACTIVATE" );
 		}
 
-		if ( empty( $audit ) ) {
-			$audit = \task_manager\Audit_Class::g()->create( array ( 'post_parent' => $id ));
-			$task_args = array(
-				'title'     => __( 'New task', 'task-manager' ),
-				'post_parent' => $audit->data['id'],
-				'status'    => 'publish',
-			);
-			$task = \task_manager\Task_Class::g()->create( $task_args, true );
-			$tasks = (array) $task;
-		}else {
-			$tasks = \task_manager\Task_Class::g()->get( array ( 'post_parent' => $audit->data['id'] ) );
+		$audit_args = array(
+			'title'     => sprintf( 'Contrôle du %s', date( 'd/m/Y', strtotime('now') ), 'theepi' ),
+			'post_parent' => $id,
+		);
+
+		$audit = \task_manager\Audit_Class::g()->create( $audit_args, true );
+
+		$task_args = array(
+			'title'     => __( 'New task', 'task-manager' ),
+			'post_parent' => $audit->data['id'],
+			'status'    => 'inherit',
+		);
+
+		$task = \task_manager\Task_Class::g()->create( $task_args, true );
+		$tasks = array( $task );
+
+		$epi = EPI_Class::g()->get( array ( 'id' => $id  ), true );
+		ob_start();
+		\eoxia\View_Util::exec(
+			'task-manager',
+			'task',
+			'backend/tasks',
+			array(
+				'tasks'         => $tasks,
+				'with_wrapper' => '',
+			)
+		);
+		$task_view = ob_get_clean();
+
+		ob_start();
+		\eoxia\View_Util::exec( 'theepi', 'audit', 'modal-header', array(
+			'audit' => $audit,
+			'epi' => $epi
+	 	) );
+		 $modal_header = ob_get_clean();
+
+		ob_start();
+ 		\eoxia\View_Util::exec( 'theepi', 'audit', 'modal-footer', array(
+			'audit' => $audit,
+	 		'epi' => $epi
+		) );
+ 		$modal_footer = ob_get_clean();
+
+		wp_send_json_success( array(
+			'view'            => $task_view,
+			'modal_title'			=> $modal_header,
+			'buttons_view'		=> $modal_footer
+		) );
+	}
+
+	public function callback_display_control_epi () {
+		check_ajax_referer( 'display_control_epi' );
+
+		$epi_id = ! empty ( $_POST['epi_id'] ) ? (int) $_POST['epi_id'] : 0;
+		$audit_id = ! empty ( $_POST['audit_id'] ) ? (int) $_POST['audit_id'] : 0;
+
+
+		if ( ! class_exists( '\task_manager\Audit_Class' ) ) {
+			wp_send_json_error( "TASK MANAGER NOT ACTIVATE" );
 		}
 
+		$epi = EPI_Class::g()->get( array ( 'id' => $epi_id  ), true );
+		$audits = \task_manager\Audit_Class::g()->get( array( 'id' => $audit_id ) );
+		$tasks = \task_manager\Task_Class::g()->get( array ( 'post_parent' => $audit_id ) );
+		$audit = EPI_Class::g()->last_control_audit( $audits );
 
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -76,12 +131,16 @@ class Audit_Action {
 
 		ob_start();
 		\eoxia\View_Util::exec( 'theepi', 'audit', 'modal-header', array(
-		'audit' => $audit ));
+			'audit' => $audit,
+			'epi' => $epi
+		) );
 		 $modal_header = ob_get_clean();
 
 		ob_start();
  		\eoxia\View_Util::exec( 'theepi', 'audit', 'modal-footer', array(
-		'audit' => $audit ));
+			'audit' => $audit,
+	 		'epi' => $epi
+		) );
  		$modal_footer = ob_get_clean();
 
 		wp_send_json_success( array(
@@ -126,6 +185,83 @@ class Audit_Action {
 
 			) );
 
+	}
+
+	public function callback_import_task_audit() {
+		check_ajax_referer( 'import_task_audit' );
+
+		$id = ! empty ( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+
+		if (!isset( $tags )) {
+			$tags = \task_manager\Tag_Class::g()->get();
+		}
+
+		ob_start();
+		\eoxia\View_Util::exec(
+			'theepi',
+			'audit',
+			'modal-box-import',
+			array(
+				'tags' => $tags,
+				'parent_id' => $id
+			)
+		);
+		$view = ob_get_clean();
+
+		wp_send_json_success( array (
+			'namespace' => 'theEPI',
+			'module'    => 'Audit',
+			'callback_success'  => 'ImportedTaskAuditSuccess',
+			'view' 			=> $view
+		) );
+	}
+
+	public function callback_valid_audit() {
+		check_ajax_referer( 'valid_audit' );
+
+		$id = ! empty ( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+		$status_epi = ! empty( $_POST['status_epi'] ) ? sanitize_text_field( $_POST['status_epi'] ) : '';
+
+		if( ! $id || ! $status_epi ){
+			wp_send_json_error( 'id or status_epi undefined' );
+		}
+
+		$status_epi = $status_epi == "OK" ? "OK" : "KO";
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+
+
+		$epi->data['status_epi'] = $status_epi;
+
+		$epi_ = EPI_Class::g()->update( $epi->data );
+
+		ob_start();
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'item', array(
+			'epi' => $epi
+		) );
+		$view = ob_get_clean();
+
+		wp_send_json_success( array(
+			'namespace'         => 'theEPI',
+			'module'            => 'Audit',
+			'callback_success'  => 'ValidAuditSuccess',
+			'id'                => $id,
+			'view'              => $view
+		) );
+	}
+
+	public function callback_get_text_from_url_audit() {
+		check_ajax_referer( 'get_text_from_url_audit' );
+		$link = ! empty( $_POST ) && ! empty( $_POST['github'] ) ? trim( $_POST['github'] ) : null;
+		$content = file_get_contents( $link );
+
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'Audit',
+			'callback_success' => 'GetContentFromUrlAuditSuccess',
+			'content'          => $content,
+			'link'             => $link
+		) );
 	}
 
 }

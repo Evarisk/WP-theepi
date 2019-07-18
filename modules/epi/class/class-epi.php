@@ -311,7 +311,7 @@ class EPI_Class extends \eoxia\Post_Class {
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				$epi     = self::g()->create( array( 'frequency_control' => 0 ) );
+				$epi     = self::g()->create( array( 'Periodicity' => 365 ) );
 
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
 					'id'         => $epi->data['id'],
@@ -351,7 +351,7 @@ class EPI_Class extends \eoxia\Post_Class {
 
 //echo '<pre>'; print_r( $time ); echo '</pre>'; exit;
 		if( $time > 0 ) {
-			$day_rest = floor( (($time /24) / 3600) );
+			$day_rest = floor( ((($time /24) / 3600) ));
 			return $day_rest;
 
 		} else {
@@ -360,8 +360,50 @@ class EPI_Class extends \eoxia\Post_Class {
 		}
 	}
 
+	public function display_audit_epi( $id = 0 ) {
+		if( $id == 0) {
+			return false;
+		}
+
+	 $audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+
+	 $audit = $this->last_control_audit( $audits );
+
+	 $epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+	 if (!empty($audit)) {
+
+		$user = get_user_by( 'id', $audit->data['author_id'] );
+		\eoxia\View_Util::exec(
+			'theepi',
+			'audit',
+			'audit-epi',
+			array(
+				'epi'	=> $epi,
+				'audit' => $audit,
+				'user' => $user
+			) );
+		}
+	}
+
+	public function last_control_audit( $audits ) {
+
+		if ( empty( $audits ) ) {
+			return array();
+		}
+
+		$date_start = 0;
+		$date_last_control = 0;
+		$key_last_control = 0;
+		foreach ( $audits as $key => $audit ) {
+			$date_start = strtotime( $audit->data['date']['rendered']['mysql'] );
+			if ( $date_last_control < $date_start ) {
+				$date_last_control = $date_start;
+				$key_last_control = $key;
+			}
+		}
+		return $audits[$key_last_control];
+	}
+
 }
-
-
 
 EPI_Class::g();

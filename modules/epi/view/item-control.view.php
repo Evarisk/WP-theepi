@@ -72,6 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 .epi-item-control-white {
 	text-align: center;
+	background-color: white;
 	color: black;
 }
 

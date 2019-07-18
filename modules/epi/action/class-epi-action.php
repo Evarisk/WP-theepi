@@ -85,10 +85,10 @@ class EPI_Action {
 		$image_id 		= ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
 		/*$comments = ! empty( $_POST['list_comment'] ) ? (array) $_POST['list_comment'] : array();*/
 		$title     		= ! empty( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : 'New PPE';
-		$reference    = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : '';
+		$reference    = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : 'undefined';
 		$periodicity  = ! empty( $_POST['periodicity'] ) ? (int) $_POST['periodicity'] : 365;
-		$last_control = ! empty( $_POST['last_control'] ) ? sanitize_text_field( $_POST['last_control'] ) : ''; //a voir pour relier avec task manager
-		$status    		= ! empty( $_POST['status'] ) ? sanitize_text_field( $_POST['status'] ) : '';
+		$last_control = ! empty( $_POST['last_control'] ) ? sanitize_text_field( $_POST['last_control'] ) : 'No control'; //a voir pour relier avec task manager
+		$status_epi   = ! empty( $_POST['status_epi'] ) ? sanitize_text_field( $_POST['status_epi'] ) : 'OK';
 		$new_epi  		= empty( $data['id'] ) ? true : false;
 		//$epi = EPI_Class::g()->get( array( 'id' => $data['id'] ), true );
 
@@ -100,7 +100,8 @@ class EPI_Action {
 				'reference' 	 => $reference,
 				'periodicity'  => $periodicity,
 				'last_control' => $last_control,
-				'status' 			 => $status
+				'status_epi' 	 => $status_epi,
+				'status' 			 => 'publish'
 			);
 
 			if( $new_epi ){
@@ -113,7 +114,7 @@ class EPI_Action {
 				$epi->data['reference'] = $update_epi['reference'];
 				$epi->data['periodicity'] = $update_epi['periodicity'];
 				$epi->data['last_control'] = $update_epi['last_control'];
-				$epi->data['status'] = $update_epi['status'];
+				$epi->data['status_epi'] = $update_epi['status_epi'];
 				$epi = EPI_Class::g()->update( $epi->data );
 
 			}
@@ -155,6 +156,7 @@ class EPI_Action {
 		}
 
 		EPI_Class::g()->delete( $id );
+		task_manager\Audit_Class::g()->delete( $id );
 
 		wp_send_json_success( array(
 			'namespace'        => 'theEPI',
@@ -369,8 +371,6 @@ class EPI_Action {
 		wp_die();
 	}
 }
-
-
 
 
 new EPI_Action();

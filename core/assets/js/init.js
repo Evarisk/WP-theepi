@@ -55,8 +55,8 @@ window.eoxiaJS.theEPI.core.selectedFile = function() {
 		window.eoxiaJS.theEPI.core.currentButton = undefined;
 		window.eoxiaJS.theEPI.core.selectedInfos = [];
 		window.eoxiaJS.theEPI.core.mediaFrame = undefined;
-	
-		jQuery( '.wrap-theepi .wpeo-table tbody tr:first' ).after( epiView );
+
+		jQuery( '.wrap-theepi .wpeo-table tbody tr:first' ).before( epiView );
 		setTimeout( function() {
 			epiView.addClass( 'animate' );
 		}, 100 );

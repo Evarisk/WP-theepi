@@ -28,8 +28,8 @@ class EPI_Comment_Filter {
 	 */
 	public function __construct() {
 		$current_type = EPI_Comment_Class::g()->get_type();
-		add_filter( "eo_model_{$current_type}_before_post", array( $this, 'update_control_data' ), 10, 2 );
-		add_filter( "eo_model_{$current_type}_before_put", array( $this, 'update_control_data' ), 10, 2 );
+		// add_filter( "eo_model_{$current_type}_before_post", array( $this, 'update_control_data' ), 10, 2 );
+		// add_filter( "eo_model_{$current_type}_before_put", array( $this, 'update_control_data' ), 10, 2 );
 	}
 
 	/**

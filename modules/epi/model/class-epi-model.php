@@ -110,9 +110,16 @@ class EPI_Model extends \eoxia\Post_Model {
 
 		$this->schema['status'] = array(
 			'type'        => 'string',
-			'meta_type'   => 'field',
-			'field'       => '_transition_post_status()',
-			'default'     => '',
+			'default'     => 'publish',
+			'since'       => '0.1.0',
+			'version'     => '0.1.0',
+		);
+
+		$this->schema['status_epi'] = array(
+			'type'        => 'string',
+			//'default' 		=> 'OK',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_status_epi',
 			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',

@@ -84,33 +84,12 @@ class Audit_Class extends \eoxia\Post_Class {
 	*
 	* @return void
 	*/
-	public function create_task() {
-
-		$parent_id         = ! empty( $_POST['parent_id'] ) ? (int) $_POST['parent_id'] : 0;
-		$tag_slug_selected = ! empty( $_POST['tag'] ) ? sanitize_text_field( $_POST['tag'] ) : 0;
-
-		$task_args = array(
-			'title'     => __( 'New task', 'task-manager' ),
-			'parent_id' => $parent_id,
-			'status'    => 'publish',
-		);
-
-		if ( ! empty( $tag_slug_selected ) ) {
-			$tag = get_term_by( 'slug', $tag_slug_selected, 'wpeo_tag', 'ARRAY_A' );
-
-			if ( empty( $tag ) ) {
-				$tag = wp_create_term( $tag_slug_selected, 'wpeo_tag' );
-			}
-
-			$task_args['taxonomy'] = array(
-				Tag_Class::g()->get_type() => array(
-					$tag['term_id'],
-				),
-			);
+	public function get_status( $epi ) {
+		if ( $epi->data['status_epi'] == 'OK') {
+			return true;
 		}
 
-		$task = Task_Class::g()->create( $task_args, true );
-
+		return false;
 	}
 
 }

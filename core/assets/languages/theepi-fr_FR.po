@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2019-07-08 17:33+0200\n"
-"PO-Revision-Date: 2019-07-08 17:33+0200\n"
+"POT-Creation-Date: 2019-07-16 10:31+0200\n"
+"PO-Revision-Date: 2019-07-16 10:33+0200\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -35,6 +35,48 @@ msgstr "Nouveau"
 #: core/view/main.view.php:28
 msgid "New from images"
 msgstr "Nouveau à partir d'images"
+
+#: modules/audit/action/class-audit-action.php:60
+#: modules/audit/action/class-audit-action.php:112
+msgid "New task"
+msgstr "Nouvelle Tâche"
+
+#: modules/audit/view/audit-epi.view.php:28
+msgid "No name Audit"
+msgstr "Audit sans nom"
+
+#: modules/audit/view/modal-box-import.view.php:29
+msgid "Task"
+msgstr "Tâche"
+
+#: modules/audit/view/modal-box-import.view.php:33
+msgid "Point"
+msgstr "Point"
+
+#: modules/audit/view/modal-box-import.view.php:41
+msgid "Categorie"
+msgstr "Catégorie"
+
+#: modules/audit/view/modal-box-import.view.php:66
+#: modules/epi/view/item-link-edit.view.php:23
+msgid "Cancel"
+msgstr "Annuler"
+
+#: modules/audit/view/modal-box-import.view.php:71
+msgid "Import"
+msgstr "Importer"
+
+#: modules/audit/view/modal-footer.view.php:51
+msgid "Validate the control"
+msgstr "Valider le contrôle"
+
+#: modules/audit/view/modal-header.view.php:35
+msgid "KO"
+msgstr "KO"
+
+#: modules/audit/view/modal-header.view.php:37
+msgid "OK"
+msgstr "OK"
 
 #: modules/epi/class/class-epi-comment.php:82
 msgid "Create new PPE"
@@ -69,64 +111,29 @@ msgstr "JOURS"
 msgid "STAYS"
 msgstr "RESTE"
 
-#: modules/epi/view/item-create.view.php:22
-#: modules/setting/view/capability/list-item.view.php:19
-#: modules/setting/view/capability/list.view.php:22
-msgid "ID"
-msgstr "ID"
-
-#: modules/epi/view/item-create.view.php:23
-#: modules/epi/view/item-edit.view.php:23 modules/epi/view/item.view.php:31
+#: modules/epi/view/item-edit.view.php:24 modules/epi/view/item.view.php:31
 #: modules/epi/view/main.view.php:23
 msgid "Title"
 msgstr "Titre"
 
-#: modules/epi/view/item-create.view.php:24
-msgid "reference"
-msgstr " référence"
-
-#: modules/epi/view/item-create.view.php:25 modules/epi/view/item.view.php:40
-#: modules/epi/view/main.view.php:26
-msgid "Periodicity"
-msgstr "Périodicité"
-
-#: modules/epi/view/item-create.view.php:27
-#: modules/epi/view/item-edit.view.php:33
-msgid "This field must be in numeric format and better than 0"
-msgstr "Ce champ doit être une valeur numérique supérieure à 0"
-
-#: modules/epi/view/item-create.view.php:33
-#: modules/epi/view/item-edit.view.php:38
-msgid "days"
-msgstr "jours"
-
-#: modules/epi/view/item-create.view.php:34
-msgid "Date of last check and comment"
-msgstr "Date de la dernière vérification et commentaire"
-
-#: modules/epi/view/item-create.view.php:35 modules/epi/view/item.view.php:43
-#: modules/epi/view/main.view.php:28
-msgid "Status"
-msgstr "Statut"
-
-#: modules/epi/view/item-create.view.php:36 modules/epi/view/item.view.php:47
-msgid "Remaining time"
-msgstr "Reste"
-
-#: modules/epi/view/item-edit.view.php:30 modules/epi/view/item.view.php:39
+#: modules/epi/view/item-edit.view.php:31 modules/epi/view/item.view.php:41
 #: modules/epi/view/main.view.php:24
 msgid "Reference"
 msgstr "Référence"
 
-#: modules/epi/view/item-edit.view.php:31
+#: modules/epi/view/item-edit.view.php:32
 msgid "periodicity"
 msgstr "périodicité"
 
-#: modules/epi/view/item-link-edit.view.php:23
-msgid "Cancel"
-msgstr "Annuler"
+#: modules/epi/view/item-edit.view.php:34
+msgid "This field must be in numeric format and better than 0"
+msgstr "Ce champ doit être une valeur numérique supérieure à 0"
 
-#: modules/epi/view/item-link-edit.view.php:33
+#: modules/epi/view/item-edit.view.php:39
+msgid "days"
+msgstr "jours"
+
+#: modules/epi/view/item-link-edit.view.php:37
 #: modules/setting/view/capability/main.view.php:33
 #: modules/setting/view/default-data/main.view.php:33
 msgid "Save"
@@ -136,15 +143,15 @@ msgstr "Enregistrer"
 msgid "Edit"
 msgstr "Modifier"
 
-#: modules/epi/view/item-link.view.php:32
+#: modules/epi/view/item-link.view.php:31
 msgid "Perform a control"
 msgstr "Effectuer un contrôle"
 
-#: modules/epi/view/item-link.view.php:41
+#: modules/epi/view/item-link.view.php:40
 msgid "Are you sure you want to remove this PPE ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
 
-#: modules/epi/view/item-link.view.php:43
+#: modules/epi/view/item-link.view.php:42
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -152,15 +159,23 @@ msgstr "Supprimer"
 msgid "Control"
 msgstr "Contrôle"
 
-#: modules/epi/view/item.view.php:42 modules/epi/view/main.view.php:27
+#: modules/epi/view/item.view.php:42 modules/epi/view/main.view.php:25
+msgid "Periodicity"
+msgstr "Périodicité"
+
+#: modules/epi/view/item.view.php:43 modules/epi/view/main.view.php:26
 msgid "Last Control"
 msgstr "Dernier Contrôle"
+
+#: modules/epi/view/item.view.php:46 modules/epi/view/main.view.php:27
+msgid "Status"
+msgstr "Statut"
 
 #: modules/epi/view/main.view.php:21
 msgid "Image"
 msgstr "Image"
 
-#: modules/epi/view/main.view.php:46
+#: modules/epi/view/main.view.php:42
 msgid "Load more"
 msgstr "Charger plus"
 
@@ -190,6 +205,11 @@ msgstr ""
 "La capacité \"manage_theepi\" est appliqué sur tous les utilisateurs dont le "
 "rôle est abonnés. Vous devez supprimer la capacité \"manage_theepi\" sur "
 "celui-ci pour pouvoir gérer manuellement ce droit par utilisateur"
+
+#: modules/setting/view/capability/list-item.view.php:19
+#: modules/setting/view/capability/list.view.php:22
+msgid "ID"
+msgstr "ID"
 
 #: modules/setting/view/capability/list-item.view.php:20
 #: modules/setting/view/capability/list.view.php:23
@@ -243,6 +263,15 @@ msgstr "Capacité"
 #: modules/setting/view/main.view.php:24
 msgid "Default data"
 msgstr "Donnée par défaut"
+
+#~ msgid "reference"
+#~ msgstr " référence"
+
+#~ msgid "Date of last check and comment"
+#~ msgstr "Date de la dernière vérification et commentaire"
+
+#~ msgid "Remaining time"
+#~ msgstr "Reste"
 
 #~ msgid "Modified"
 #~ msgstr "Modifier"

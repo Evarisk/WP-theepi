@@ -24,7 +24,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_view_epi' ) ); ?>">
 			<span><?php esc_html_e( 'New', 'theepi' ); ?></span>
 		</div>
-		<div class="wpeo-button button-main button-radius-3" style="margin-left : 10px"
+		<div class="wpeo-button button-main button-radius-3 create-mass-epi action-attribute" style="margin-left : 10px"
+			data-action="create_mass_epi"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_mass_epi') ); ?>">
 			<span><?php esc_html_e( 'New from images', 'theepi' ); ?></span>
 		</div>
 	</h1>

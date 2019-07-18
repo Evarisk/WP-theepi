@@ -29,12 +29,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</thead>
 
 	<tbody>
-		<?php //\eoxia\View_Util::exec( 'theepi', 'epi', 'item-create', array( 'epi' => $epi_schema ) ); ?>
 		<?php EPI_Class::g()->display_epi_list( $epis, false ); ?>
 	</tbody>
 </table>
 
-<div 	class="wpeo-button button-main action-attribute button-size-large load-more <?php echo esc_attr( ( ( $offset + $per_page ) >= $count_epi ) ? 'button-disable' : '' ); ?>"
+<div 	class="wpeo-button button-main action-attribute button-size-large epi-load-more <?php echo esc_attr( ( ( $offset + $per_page ) >= $count_epi ) ? 'button-disable' : '' ); ?>"
 			data-action="load_more_epi"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_more_epi' ) ); ?>"
 			data-offset="<?php echo esc_attr( $offset + $per_page ); ?>"

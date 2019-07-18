@@ -28,7 +28,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		 ?>
 
 	</td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>"><?php echo esc_html( $epi->data['title'] ); ?>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
+		<span style="color: grey"><i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?></span></br>
+		<span style="font-size: 25px"><?php echo esc_html( $epi->data['title'] ); ?></span>
 		<?php
 		\eoxia\View_Util::exec( 'theepi', 'epi', 'item-link', array(
 			'epi'            => $epi
@@ -37,10 +39,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	</td>
 	<td class="padding" data-title="<?php echo esc_attr_e( 'Reference', 'theepi' ); ?>"><?php echo esc_html( $epi->data['reference'] ); ?></td>
-	<td class="padding" data-title="<?php echo esc_attr_e( 'Periodicity', 'theepi' ); ?>"><?php echo esc_html( $epi->data['periodicity'] ); echo esc_html( ' days', 'theepi' ); ?></td>
-	<td data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>"></td>
+	<td class="padding" data-title="<?php echo esc_attr_e( 'Periodicity', 'theepi' ); ?>"><?php echo esc_html( $epi->data['periodicity'] ); echo esc_html( ' jours', 'theepi' ); ?></td>
+	<td data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+		<?php  EPI_Class::g()->display_audit_epi( $epi->data['id'] ); ?>
+	</td>
 	<td data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
-		<?php if (EPI_Class::g()->get_days( $epi ) >= 0) : ?>
+		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( Audit_Class::g()->get_status( $epi ) ) ) : ?>
 		<i class="fas fa-check-circle fa-3x" style="color: mediumspringgreen;"></i>
 	<?php else : ?>
 		<i class="fas fa-exclamation-circle fa-3x" style="color: red;"></i>

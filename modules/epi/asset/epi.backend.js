@@ -198,7 +198,7 @@ window.eoxiaJS.theEPI.EPI.loadedMoreEPISuccess = function( triggeredElement, res
 		element.addClass( 'fadeInUp animate-on' );
 
 		jQuery( 'html, body' ).animate( {
-			scrollTop: jQuery( '.load-more' ).offset().top
+			scrollTop: jQuery( '.epi-load-more' ).offset().top
 		}, 1000 );
 	}, 10 )
 };
@@ -219,11 +219,11 @@ window.eoxiaJS.theEPI.EPI.searchedEPISuccess = function( triggeredElement, respo
 
 	if ( ! response.data.clear ) {
 		jQuery( '.wrap-theepi .box-search .action-attribute' ).removeClass( 'button-disable' );
-		jQuery( '.wrap-theepi .load-more' ).attr( 'data-term', jQuery( '.wrap-theepi .box-search input[type="text"]' ).val() );
+		jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-term', jQuery( '.wrap-theepi .box-search input[type="text"]' ).val() );
 	} else {
 		jQuery( '.wrap-theepi .box-search input[type="text"]' ).val( '' );
 		jQuery( '.wrap-theepi .box-search .action-attribute' ).addClass( 'button-disable' );
-		jQuery( '.wrap-theepi .load-more' ).attr( 'data-term', '' );
+		jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-term', '' );
 	}
 };
 
@@ -264,26 +264,26 @@ window.eoxiaJS.theEPI.EPI.checkData = function( element ) {
 window.eoxiaJS.theEPI.EPI.refreshTextLoadMore = function( addNumberEPI, addTotalNumberEPI ) {
 	var currentOffset =  currentNumberEPI = totalNumberEPI = 0;
 
-	currentNumberEPI  = parseInt( jQuery( '.wrap-theepi .load-more .number-epi' ).text() );
+	currentNumberEPI  = parseInt( jQuery( '.wrap-theepi .epi-load-more .number-epi' ).text() );
 	currentNumberEPI += addNumberEPI;
 
-	totalNumberEPI  = parseInt( jQuery( '.wrap-theepi .load-more .total-number-epi' ).text() );
+	totalNumberEPI  = parseInt( jQuery( '.wrap-theepi .epi-load-more .total-number-epi' ).text() );
 	totalNumberEPI += addTotalNumberEPI;
 
 	if ( currentNumberEPI >= totalNumberEPI ) {
 		currentNumberEPI = totalNumberEPI;
-		jQuery( '.wrap-theepi .load-more' ).addClass( 'button-disable' );
+		jQuery( '.wrap-theepi .epi-load-more' ).addClass( 'button-disable' );
 	} else {
-		jQuery( '.wrap-theepi .load-more' ).removeClass( 'button-disable' );
+		jQuery( '.wrap-theepi .epi-load-more' ).removeClass( 'button-disable' );
 	}
 
-	jQuery( '.wrap-theepi .load-more .number-epi' ).text( currentNumberEPI );
+	jQuery( '.wrap-theepi .epi-load-more .number-epi' ).text( currentNumberEPI );
 
 
-	jQuery( '.wrap-theepi .load-more .total-number-epi' ).text( totalNumberEPI );
+	jQuery( '.wrap-theepi .epi-load-more .total-number-epi' ).text( totalNumberEPI );
 
-	currentOffset = parseInt( jQuery( '.wrap-theepi .load-more' ).attr( 'data-offset' ) );
+	currentOffset = parseInt( jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-offset' ) );
 	currentOffset += addNumberEPI;
-	jQuery( '.wrap-theepi .load-more' ).attr( 'data-offset', currentOffset );
+	jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-offset', currentOffset );
 
 }

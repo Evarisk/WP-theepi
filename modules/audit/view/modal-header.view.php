@@ -15,26 +15,48 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<input type="text" name="title" value="<?php echo esc_attr( $audit->data['title'] ); ?>" />
+<span class="modal-header-title"><?php echo esc_attr( $audit->data['title'] ); ?></span>
 
-<div class="wpeo-button button-main button-radius-3 action-attribute"
+<div class="wpeo-button button-main button-radius-2 button-square-40 action-attribute"
 	data-parent-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
 	data-action="create_task_audit"
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'create_task_audit' ) ); ?>">
 	<span><i class="fas fa-plus "></i></span>
 </div>
 
-<div class="wpeo-button button-main button-radius-3 ">
+<div class="wpeo-button button-main button-radius-2 button-square-40 action-attribute"
+	data-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
+	data-action="import_task_audit"
+	data-nonce="<?php echo esc_attr( wp_create_nonce( 'import_task_audit') ); ?>">
 	<span><i class="fas fa-download"></i></span>
 </div>
 
-<input type="text" name="github"  value="" />
-<span><i class="fab fa-github"></i></span>
+<span class="button-toggle-modal-headear">
+	<?php if ( Audit_Class::g()->get_status( $epi ) ) : ?>
+		<span class="button-toggle-KO" style="color : grey; font-weight: auto"><?php esc_html_e( 'KO', 'theepi' ); ?></span>
+		<span><i class="button-toggle fas fa-toggle-on"></i></span>
+		<span class="button-toggle-OK" style="color : black; font-weight: bold"><?php esc_html_e( 'OK', 'theepi' ); ?></span>
+	<?php else : ?>
+		<span class="button-toggle-KO" style="color : black; font-weight: bold"><?php esc_html_e( 'KO', 'theepi' ); ?></span>
+		<span><i class="button-toggle fas fa-toggle-off"></i></span>
+		<span class="button-toggle-OK" style="color : grey; font-weight: auto"><?php esc_html_e( 'OK', 'theepi' ); ?></span>
+	<?php endif; ?>
+</span>
 
-<div class="wpeo-button button-main button-radius-3 ">
-	<span><i class="fas fa-download"></i></span>
-</div>
+<style>
 
-<span><?php esc_html_e( 'KO', 'theepi' ); ?></span>
-<span><i class="button-toggle fas fa-toggle-on"></i></span>
-<span><?php esc_html_e( 'OK', 'theepi' ); ?></span>
+.button-toggle-modal-headear {
+
+	position: relative;
+	left: 300px;
+	font-size: 20px;
+
+}
+
+.modal-header-title {
+	font-size: uppercase;
+	font-weight: bold;
+	border: thick double black;
+	padding: 3px;
+}
+</style>

@@ -30,8 +30,8 @@ class EPI_Filter {
 		add_filter( 'set-screen-option', array( $this, 'callback_set_screen_option' ), 10, 3 );
 
 		$current_type = EPI_Class::g()->get_type();
-		add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
-		add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
+		// add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
+		// add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
 	}
 
 	/**
@@ -71,7 +71,7 @@ class EPI_Filter {
 		if ( ! empty( $object->data['id'] ) && ! empty( $object->data['frequency_control'] ) && ! empty( $object->data['control_date'] ) ) {
 			$control_date = \DateTime::createFromFormat( 'd/m/Y', $object->data['control_date']['rendered']['date'] );
 			$control_date->modify( '+' . $object->data['frequency_control'] . ' day' );
-			
+
 			$date_now = \DateTime::createFromFormat( 'd/m/Y', current_time( 'd/m/Y' ) );
 			$interval = $date_now->diff( $control_date );
 
