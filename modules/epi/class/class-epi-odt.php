@@ -1,12 +1,12 @@
 <?php
 /**
- * Fait l'affichage du template de la liste des documents uniques
+ * Création et Génération d'un fichier ODT d'un EPI
  *
- * @author    Evarisk <dev@evarisk.com>
- * @since     6.2.1
- * @version   7.0.0
- * @copyright 2018 Evarisk.
- * @package   DigiRisk
+ * @package   TheEPI
+ * @author   Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk.
+ * @since     0.5.0
+ * @version   0.5.0
  */
 
 namespace theepi;
@@ -16,9 +16,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Fait l'affichage du template de la liste des documents uniques
+ * Class lié à génération d'un fichier ODT d'un EPI
  */
 class EPI_ODT_Class extends \eoxia\ODT_Class {
+
 
 	/**
 	 * Le nom du modèle
@@ -38,7 +39,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	 * La taxonomy du post
 	 *
 	 * @todo
-	 * @var string
+	 * @var  string
 	 */
 	public $attached_taxonomy_type = 'attachment_category';
 
@@ -71,7 +72,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	public $element_prefix = 'EPI_ODT';
 
 	/**
-	 * Le nom pour le resgister post type
+	 * Le nom pour le register post type
 	 *
 	 * @var string
 	 */
@@ -94,14 +95,34 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	 */
 	protected $odt_name = 'fiche_modele_EPI';
 
+	/**
+	 * Le path du fichier ODT
+	 *
+	 * @var string
+	 */
 	protected $path = '';
 
+	/**
+	 * Le constructeur
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 */
 	protected function construct() {
 		$this->path = PLUGIN_THEEPI_PATH;
 
 		parent::construct();
 	}
 
+	/**
+	 * Récupération de la liste des modèles de fichiers disponible pour un type d'élément
+	 *
+	 * @since 0.5.0
+	 *
+	 * @param array $model_type Le type du document.
+	 *
+	 * @return array
+	 */
 	public function get_default_model( $model_type ) {
 		if ( 'zip' === $model_type ) {
 			return;
@@ -135,30 +156,32 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 		}
 
 		// Lances la Query pour récupérer le document par défaut selon $model_type.
-		$query = new \WP_Query( array(
-			'fields'         => 'ids',
-			'post_status'    => 'inherit',
-			'posts_per_page' => 1,
-			'tax_query'      => $tax_query,
-			'post_type'      => 'attachment',
-		) );
+		$query = new \WP_Query(
+			array(
+				'fields'         => 'ids',
+				'post_status'    => 'inherit',
+				'posts_per_page' => 1,
+				'tax_query'      => $tax_query,
+				'post_type'      => 'attachment',
+			)
+		);
 
 		// Récupères le document
 		if ( $query->have_posts() ) {
 			$upload_dir = wp_upload_dir();
 
-			$model_id               = $query->posts[0];
-			$attachment_file_path   = str_replace( '\\', '/', get_attached_file( $model_id ) );
-			$response['id']   = $model_id;
-			$response['path'] = str_replace( '\\', '/', $attachment_file_path );
-			$response['url']  = str_replace( str_replace( '\\', '/', $upload_dir['basedir'] ), str_replace( '\\', '/', $upload_dir['baseurl'] ), $attachment_file_path );
+			$model_id             = $query->posts[0];
+			$attachment_file_path = str_replace( '\\', '/', get_attached_file( $model_id ) );
+			$response['id']       = $model_id;
+			$response['path']     = str_replace( '\\', '/', $attachment_file_path );
+			$response['url']      = str_replace( str_replace( '\\', '/', $upload_dir['basedir'] ), str_replace( '\\', '/', $upload_dir['baseurl'] ), $attachment_file_path );
 
 			// translators: Pour exemple: Le modèle utilisé est: C:\wamp\www\wordpress\wp-content\plugins\digirisk-alpha\core\assets\document_template\document_unique.odt.
 			$response['message'] = sprintf( __( 'Le modèle utilisé est: %1$s', 'digirisk' ), $attachment_file_path );
 		}
 
 		if ( ! is_file( $response['path'] ) ) {
-			$response['status'] = false;
+			$response['status']  = false;
 			$response['message'] = 'Le modèle ' . $response['path'] . ' est introuvable.';
 		}
 

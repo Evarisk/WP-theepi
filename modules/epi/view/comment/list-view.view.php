@@ -2,11 +2,11 @@
 /**
  * La liste des commentaires
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.1.0
- * @version 0.2.0
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2017 Evarisk
- * @package TheEPI
+ * @since     0.1.0
+ * @version   0.2.0
  */
 
 namespace theepi;
@@ -19,9 +19,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php
 	if ( ! empty( $comments ) ) :
 		foreach ( $comments as $comment ) :
-			\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/item', array(
-				'comment' => $comment,
-			) );
+			\eoxia\View_Util::exec(
+				'theepi', 'epi', 'comment/item', array(
+					'comment' => $comment,
+				)
+			);
 		endforeach;
 	endif;
 	?>

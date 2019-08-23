@@ -2,11 +2,11 @@
 /**
  * Affichage pour gérer les données par défaut.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.3.0
- * @version 0.3.0
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2015-2017 Evarisk
- * @package TheEPI
+ * @since     0.3.0
+ * @version   0.3.0
  */
 
 namespace theepi;
@@ -15,21 +15,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<div class="wpeo-form">
+<form class="wpeo-form default-data">
 	<input type="hidden" name="action" value="save_default_data" />
 	<?php wp_nonce_field( 'save_default_data' ); ?>
 
 	<h3><?php esc_html_e( 'Handle default data', 'theepi' ); ?></h3>
 
-	<div class="form-element form-modern <?php echo ! empty( $default_comment ) ? 'form-active' : ''; ?>">
-		<input name="default_comment" type="text" value="<?php echo esc_attr( $default_comment ); ?>" />
-		<label><?php echo esc_html_e( 'Default comment*', 'theepi' ); ?></label>
-		<span class="form-bar"></span>
+	<div class="form-element" style="width : 20%">
+		<span class="form-label"><?php esc_html_e( 'Periodicity', 'theepi' ); ?></span>
+		<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the periodicity of control of your PPE" ,'theepi' ); ?> </span>
+		<label class="form-field-container">
+			<input type="number" class="form-field" name="default-periodicity" value="<?php echo esc_attr( $default_periodicity ); ?>"/>
+			<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
+		</label>
 	</div>
 
-	<p><?php esc_html_e( '*This data is used for the first comment created on a new PPE', 'theepi' ); ?></p>
-
-	<div class="wpeo-button button-green button-progress action-input" data-parent="wpeo-form">
-		<span><?php echo esc_html_e( 'Save', 'theepi' ); ?></span>
+	<div class="form-element" style="width : 20%">
+		<span class="form-label"><?php esc_html_e( 'Lifetime', 'theepi' ); ?></span>
+		<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the lifetime of your PPE" ,'theepi' ); ?> </span>
+		<label class="form-field-container">
+			<input type="number" class="form-field" name="default-lifetime" value="<?php echo esc_attr( $default_lifetime ); ?>"/>
+			<span class="form-field-label-next"><?php echo esc_html_e( 'years', 'theepi' ); ?></span>
+		</label>
 	</div>
-</div>
+
+	<div class="wpeo-button button-green button-progress action-input" data-parent="wpeo-form" style="margin-top : 20px">
+		<span class="button-icon fas fa-save"></span>
+	</div>
+</form>

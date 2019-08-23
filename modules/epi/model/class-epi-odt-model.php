@@ -2,11 +2,11 @@
 /**
  * Définition des champs d'un document EPI_ODT.
  *
+ * @package   DigiRisk
  * @author    Evarisk <dev@evarisk.com>
+ * @copyright 2018 Evarisk.
  * @since     6.5.0
  * @version   7.0.0
- * @copyright 2018 Evarisk.
- * @package   DigiRisk
  */
 
 namespace theepi;
@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Définition des champs d'un document DUER.
  */
 class EPI_ODT_Model extends \eoxia\ODT_Model {
+
 
 	/**
 	 * Définition des champs
@@ -41,7 +42,7 @@ class EPI_ODT_Model extends \eoxia\ODT_Model {
 		$this->schema['document_meta'] = array(
 			'type'      => 'array',
 			'meta_type' => 'single',
-			'field'     => 'document_meta'
+			'field'     => 'document_meta',
 		);
 
 		parent::__construct( $data, $req_method );

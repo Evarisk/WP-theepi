@@ -11,9 +11,8 @@ window.eoxiaJS.theEPI.setting.init = function() {
 };
 
 window.eoxiaJS.theEPI.setting.event = function() {
-	jQuery( document ).on( 'click', '.digi-tools-main-container .nav-tab', window.eoxiaJS.theEPI.setting.tabSwitcher );
-
 	jQuery( document ).on( 'click', '.settings_page_theepi-setting .list-users .wp-digi-pagination a', window.eoxiaJS.theEPI.setting.pagination );
+	jQuery( document ).on( 'click', '.wpeo-tab.setting .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
 };
 
 /**
@@ -25,21 +24,11 @@ window.eoxiaJS.theEPI.setting.event = function() {
  * @param  {ClickEvent} event L'état de la souris lors du clic.
  * @return {void}
  */
-window.eoxiaJS.theEPI.setting.tabSwitcher = function( event ) {
-	event.preventDefault();
 
-	jQuery( this ).closest( "h2" ).children( ".nav-tab" ).each( function() {
-		jQuery( this ).removeClass( "nav-tab-active" );
-	} );
-
-	jQuery( this ).addClass( "nav-tab-active" );
-
-	jQuery( this ).closest( ".digi-tools-main-container" ).find( ".tab-content" ).each( function() {
-	 	jQuery( this ).hide();
-	} );
-
-	jQuery( "#" + jQuery( this ).attr( "data-id" ) ).show();
-},
+window.eoxiaJS.theEPI.EPI.tabRedirect = function( event ){
+    var url = jQuery( this ).attr( 'data-url' );
+    window.location.href = url;
+}
 
 /**
  * Gestion de la pagination des utilisateurs.
@@ -95,6 +84,24 @@ window.eoxiaJS.theEPI.setting.savedCapability = function( triggeredElement, resp
  * @return {void}
  */
 window.eoxiaJS.theEPI.setting.savedDefaultData = function( triggeredElement, response ) {
+	triggeredElement.addClass( 'button-success' );
+	setTimeout( function() {
+		triggeredElement.removeClass( 'button-success' );
+	}, 1000 );
+};
+
+/**
+ * Le callback en cas de réussite à la requête Ajax "save_date_management".
+ * Affiches le message de "success".
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.setting.savedDateManagement = function( triggeredElement, response ) {
 	triggeredElement.addClass( 'button-success' );
 	setTimeout( function() {
 		triggeredElement.removeClass( 'button-success' );

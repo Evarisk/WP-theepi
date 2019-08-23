@@ -2,11 +2,11 @@
 /**
  * La vue déclarant le modal audit.
  *
- * @author Nicolas Domenech <nicolas@eoxia.com>
- * @since 0.5.0
- * @version 0.5.0
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
+ * @since     0.5.0
+ * @version   0.5.0
  * @copyright 2019 Evarisk
- * @package TheEPI
+ * @package   TheEPI
  */
 
 namespace theepi;
@@ -36,16 +36,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<li>
 		<span> <?php if ( Audit_Class::g()->get_status( $epi ) ) : ?>
 			<i class="fas fa-check-circle fa-2x" style="color: mediumspringgreen;"></i>
-		<?php else : ?>
+	<?php else : ?>
 			<i class="fas fa-exclamation-circle fa-2x" style="color: red;"></i>
-		<?php endif; ?> </span>
+	<?php endif; ?> </span>
 	</li>
 </ul>
 
-<div 	class="wpeo-button button-main button-size-large button-uppercase action-attribute modal-close"
+<div     class="wpeo-button button-main button-size-large button-uppercase action-attribute modal-close"
 	data-id="<?php echo esc_attr( $audit->data['parent_id'] ); ?>"
 	data-action="valid_audit"
-	data-nonce="<?php echo esc_attr( wp_create_nonce( "valid_audit" ) ); ?>"
+	data-nonce="<?php echo esc_attr( wp_create_nonce( 'valid_audit' ) ); ?>"
 	data-status-epi="<?php echo esc_attr( $epi->data['status_epi'] ); ?>">
 	<span><?php esc_html_e( 'Validate the control', 'theepi' ); ?></span>
 </div>

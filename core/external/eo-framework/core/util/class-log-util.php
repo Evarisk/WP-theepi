@@ -2,11 +2,11 @@
 /**
  * Méthodes utiles pour les logs
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\Core\Util
+ * @package   EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -28,12 +28,13 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		/**
 		 * Le constructeur est obligatoire pour utiliser la classe \eoxia\Singleton_Util
 		 */
-		protected function construct() {}
+		protected function construct() {
+		}
 
 		/**
 		 * Méthode pour logguer.
 		 *
-		 * @since 1.3.0
+		 * @since   1.3.0
 		 * @version 1.3.0
 		 *
 		 * @param string $text      Votre texte de log.
@@ -42,7 +43,7 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		 *                          EO_NOTICE = Pour une informations
 		 *                          EO_RESPONSE_ERROR = Si la réponse de la requête est une erreur.
 		 *                          EO_RESPONSE_SUCCESS = Si la réponse de la requête est correcte.
-		 * }.
+		 *                          }.
 		 */
 		public static function log( $text, $file_name, $level = EO_NOTICE ) {
 			$bt = debug_backtrace();
@@ -67,7 +68,7 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		/**
 		 * Méthode pour loggué dans un fichier dans le dossier 'wp-content/uploads' de WordPress.
 		 *
-		 * @since 1.3.0
+		 * @since   1.3.0
 		 * @version 1.3.0
 		 *
 		 * @param string $text      Votre texte de log.
@@ -76,8 +77,9 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 		 *                          EO_NOTICE = Pour une informations
 		 *                          EO_RESPONSE_ERROR = Si la réponse de la requête est une erreur.
 		 *                          EO_RESPONSE_SUCCESS = Si la réponse de la requête est correcte.
-		 * }.
-		 * @param array  $bt         Le contexte de débogage.
+		 *                          }.
+		 * @param array  $bt        Le contexte de
+		 *                          débogage.
 		 */
 		public static function log_wp_content( $text, $file_name, $level = EO_NOTICE, $bt = array() ) {
 			if ( empty( $bt ) ) {
@@ -85,7 +87,7 @@ if ( ! class_exists( '\eoxia\LOG_Util' ) ) {
 			}
 
 			$wp_upload_dir = wp_upload_dir();
-			$file = fopen( $wp_upload_dir['path'] . '/' . $file_name . '.log', 'a' );
+			$file          = fopen( $wp_upload_dir['path'] . '/' . $file_name . '.log', 'a' );
 			fwrite( $file, current_time( '[d-M-Y H:i:s e]' ) . " PHP {$level}: {$text} in " . str_replace( '\\', '/', $bt[0]['file'] ) . " line  {$bt[0]['line']}\n" );
 			fclose( $file );
 		}

@@ -2,9 +2,9 @@
 /**
  * Les bouttons pour importer ou créer une tache dans une audit
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.9.0
- * @version 1.9.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.9.0
+ * @version   1.9.0
  * @copyright 2019 Eoxia
  */
 
@@ -24,37 +24,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<div class="modal-content">
 				<div class="tm-import-add-keyword" style="display : flex">
+
 					<div class="wpeo-button button-blue" data-type="task" style="margin-right: 8px;">
 						<i class="button-icon fas fa-plus-circle"></i>
 						<span><?php esc_html_e( 'Task', 'task-manager' ); ?></span>
 					</div>
+
 					<div class="wpeo-button button-blue" data-type="point" style="margin-right: 8px;">
 						<i class="button-icon fas fa-plus-circle"></i>
 						<span><?php esc_html_e( 'Point', 'task-manager' ); ?></span>
 					</div>
-					<?php /*<div class="wpeo-button button-blue" data-type="comment" >
-						<i class="button-icon fas fa-plus-circle"></i>
-						<span><?php esc_html_e( 'Comment', 'task-manager' ); ?></span>
-					</div>*/ ?>
-					<div class="wpeo-button button-blue" data-type="category" style="margin-right: 8px;">
-						<i class="button-icon fas fa-plus-circle"></i>
-						<span><?php esc_html_e( 'Categorie', 'task-manager' ); ?></span>
-					</div>
-					<div>
-						<?php
-						\eoxia\View_Util::exec(
-							'task-manager',
-							'import',
-							'backend/import-tag-button',
-							array(
-								'tags' => $tags
-							)
-						);
-						?>
-					</div>
+
+					<?php
+					\eoxia\View_Util::exec(
+						'task-manager',
+						'import',
+						'backend/import-tag-button',
+						array(
+							'tags' => $tags,
+						)
+					);
+					?>
+
 				</div>
-				<input type="text" name="github"  value="" />
-				<span><i class="fab fa-github"></i></span>
+				<div>
+
+				<div class="form-element">
+					<label class="form-field-container">
+						<span class="form-field-icon-prev"><i class="fab fa-github"></i></span>
+						<input type="text" class="form-field" name="github" value="" />
+					</label>
+				</div>
 
 				<div class="wpeo-button button-main button-radius-3 action-input"
 					data-action="get_text_from_url_audit"
@@ -62,6 +62,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-parent="modal-container">
 					<span><i class="fas fa-download"></i></span>
 				</div>
+			</div>
+
 				<textarea name="content" style="height : 80%; width : 100%; margin-top : 10px"></textarea>
 			</div>
 
@@ -73,5 +75,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 					data-action="audit_import_tasks_and_points"
 					data-nonce="<?php echo esc_attr( wp_create_nonce( 'audit_import_tasks_and_points' ) ); ?>" ><span><?php esc_html_e( 'Import', 'task-manager' ); ?></span></a>
 			</div>
-		</div>
 	</div>

@@ -2,11 +2,11 @@
 /**
  * Gestion de la construction des données selon les modèles.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -20,6 +20,7 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 	 * Gestion de la construction des données selon les modèles.
 	 */
 	class Data_Class extends Helper_Class {
+
 
 		/**
 		 * La liste des types de base dans PHP acceptés par EO_Framework pour les champs.
@@ -59,7 +60,7 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 		/**
 		 * Appelle la méthode pour dispatcher les données.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param Array  $data       Les données non traité. Peut être null, permet de récupérer le schéma.
@@ -88,7 +89,7 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 		/**
 		 * Dispatches les données selon le modèle.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data   Les données envoyées par l'utilisateur pour construire un objet selon un schéma.
@@ -225,7 +226,7 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 		/**
 		 * Forces le typage des données.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param mixed $value     La valeur courante.
@@ -264,7 +265,7 @@ if ( ! class_exists( '\eoxia\Data_Class' ) ) {
 		/**
 		 * Convertis le modèle en un tableau compatible WordPress.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return array Tableau compatible avec les fonctions WordPress.

@@ -2,11 +2,11 @@
 /**
  * Affichage de la liste des utilisateurs pour affecter les capacités
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.2.0
- * @version 0.4.0
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2015-2017 Evarisk
- * @package TheEPI
+ * @since     0.2.0
+ * @version   0.4.0
  */
 
 namespace theepi;

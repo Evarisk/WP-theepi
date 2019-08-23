@@ -2,11 +2,11 @@
 /**
  * Handle EPI Comments
  *
- * @author Evarisk <dev@evarisk.com>
- * @since 0.1.0
- * @version 0.4.0
+ * @author    Evarisk <dev@evarisk.com>
+ * @since     0.1.0
+ * @version   0.4.0
  * @copyright 2015-2018 Evarisk
- * @package TheEPI
+ * @package   TheEPI
  */
 
 namespace theepi;
@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Handle EPI Comments
  */
 class EPI_Comment_Class extends \eoxia\Comment_Class {
+
 
 	/**
 	 * Le nom du modèle
@@ -73,7 +74,7 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	/**
 	 * Constructeur
 	 *
-	 * @since 0.3.0
+	 * @since   0.3.0
 	 * @version 0.3.0
 	 *
 	 * @return void
@@ -85,36 +86,40 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 	/**
 	 * Récupères les commentaires puis appelle la vue list-view.view.php
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.4.0
 	 *
-	 * @param  EPI_Model $epi Les données de l'EPI.
+	 * @param EPI_Model $epi Les données de l'EPI.
 	 *
 	 * @return void
 	 */
 	public function display( $epi ) {
-		$comments = self::g()->get( array(
-			'post_id' => $epi->data['id'],
-			'orderby' => 'comment_ID',
-			'order'   => 'ASC'
-		) );
+		$comments = self::g()->get(
+			array(
+				'post_id' => $epi->data['id'],
+				'orderby' => 'comment_ID',
+				'order'   => 'ASC',
+			)
+		);
 
 		$userdata = get_userdata( get_current_user_id() );
 
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/list-view', array(
-			'epi'      => $epi,
-			'comments' => $comments,
-			'userdata' => $userdata,
-		) );
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'comment/list-view', array(
+				'epi'      => $epi,
+				'comments' => $comments,
+				'userdata' => $userdata,
+			)
+		);
 	}
 
 	/**
 	 * Affiches la vue pour éditer un commentaires
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.3.0
 	 *
-	 * @param  EPI_Model $epi Les données de l'EPI.
+	 * @param EPI_Model $epi Les données de l'EPI.
 	 *
 	 * @return void
 	 */
@@ -122,16 +127,17 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 		$comments = array();
 
 		// if ( 0 !== $epi->data['id'] ) { // 1/07/2019 -> Commentaire parce que bug affichage (formulaire de saisie)
-		// 	$comments = self::g()->get( array(
-		// 		'post_id' => $epi->data['id'],
-		// 		'orderby' => 'comment_ID',
-		// 		'order'   => 'ASC',
-		// 	) );
+		// $comments = self::g()->get( array(
+		// 'post_id' => $epi->data['id'],
+		// 'orderby' => 'comment_ID',
+		// 'order'   => 'ASC',
+		// ) );
 		// }
-
-		$comment_schema = self::g()->get( array(
-			'schema' => true,
-		), true );
+		$comment_schema = self::g()->get(
+			array(
+				'schema' => true,
+			), true
+		);
 
 		if ( 0 === $epi->data['id'] ) {
 			$comment_schema->data['content'] = get_option( $this->option_name_default_comment, $this->default_data_comment );
@@ -139,22 +145,24 @@ class EPI_Comment_Class extends \eoxia\Comment_Class {
 
 		$userdata = get_userdata( get_current_user_id() );
 
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'comment/list-edit', array(
-			'epi'            => $epi,
-			'comments'       => $comments,
-			'comment_schema' => $comment_schema,
-			'userdata'       => $userdata,
-		) );
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'comment/list-edit', array(
+				'epi'            => $epi,
+				'comments'       => $comments,
+				'comment_schema' => $comment_schema,
+				'userdata'       => $userdata,
+			)
+		);
 	}
 
 	/**
 	 * Sauvegardes les commentaires de l'EPI.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.3.0
 	 *
-	 * @param  integer $epi_id L'ID de l'EPI.
-	 * @param  array   $data   Les données des commentaires.
+	 * @param integer $epi_id L'ID de l'EPI.
+	 * @param array   $data   Les données des commentaires.
 	 *
 	 * @return boolean
 	 */

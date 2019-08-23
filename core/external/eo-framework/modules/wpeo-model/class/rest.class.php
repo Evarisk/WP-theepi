@@ -2,11 +2,11 @@
 /**
  * Gestion des routes
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -21,6 +21,7 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 	 */
 	class Rest_Class extends Singleton_Util {
 
+
 		/**
 		 * [construct description]
 		 */
@@ -33,13 +34,13 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 		 *
 		 * @param string $cap The capability name to check.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string The rest api base for current element
 		 */
 		public function check_cap( $cap ) {
-			if ( ( ! in_array( $_SERVER['REMOTE_ADDR'], Config_Util::$init['eo-framework']->wpeo_model->allowed_ip_for_unauthentified_access_rest, true ) ) && ! current_user_can( $this->capabilities[ 'get' ] ) ) {
+			if ( ( ! in_array( $_SERVER['REMOTE_ADDR'], Config_Util::$init['eo-framework']->wpeo_model->allowed_ip_for_unauthentified_access_rest, true ) ) && ! current_user_can( $this->capabilities['get'] ) ) {
 				return false;
 			}
 			return true;
@@ -48,7 +49,7 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 		/**
 		 * Return the base for rest api.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string The rest api base for current element
@@ -60,71 +61,79 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 		/**
 		 * Défini et ajoute les routes dans l'api rest de WordPress
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 */
 		public function register_routes() {
 			$element_namespace = new \ReflectionClass( get_called_class() );
-			register_rest_route( $element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . '/schema', array(
-				array(
-					'method'   => \WP_REST_Server::READABLE,
-					'callback' => array( $this, 'get_schema' ),
-				),
-			) );
+			register_rest_route(
+				$element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . '/schema', array(
+					array(
+						'method'   => \WP_REST_Server::READABLE,
+						'callback' => array( $this, 'get_schema' ),
+					),
+				)
+			);
 
-			register_rest_route( $element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base, array(
-				array(
-					'methods'             => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_from_parent' ),
-					'permission_callback' => function(){
-						return Rest_Class::g()->check_cap( 'get' );
-					}
-				),
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'create_from_parent' ),
-					'permission_callback' => function(){
-						return Rest_Class::g()->check_cap( 'post' );
-					}
-				),
-			), true );
+			register_rest_route(
+				$element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base, array(
+					array(
+						'methods'             => \WP_REST_Server::READABLE,
+						'callback'            => array( $this, 'get_from_parent' ),
+						'permission_callback' => function () {
+							return Rest_Class::g()->check_cap( 'get' );
+						},
+					),
+					array(
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => array( $this, 'create_from_parent' ),
+						'permission_callback' => function () {
+							return Rest_Class::g()->check_cap( 'post' );
+						},
+					),
+				), true
+			);
 
-			register_rest_route( $element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . '/(?P<id>[\d]+)', array(
-				array(
-					'method'              => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_from_parent' ),
-					'permission_callback' => function(){
-						return Rest_Class::g()->check_cap( 'get' );
-					},
-				),
-				array(
-					'methods'             => \WP_REST_Server::CREATABLE,
-					'callback'            => array( $this, 'create_from_parent' ),
-					'permission_callback' => function(){
-						return Rest_Class::g()->check_cap( 'put' );
-					}
-				),
-			), true );
+			register_rest_route(
+				$element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . '/(?P<id>[\d]+)', array(
+					array(
+						'method'              => \WP_REST_Server::READABLE,
+						'callback'            => array( $this, 'get_from_parent' ),
+						'permission_callback' => function () {
+							return Rest_Class::g()->check_cap( 'get' );
+						},
+					),
+					array(
+						'methods'             => \WP_REST_Server::CREATABLE,
+						'callback'            => array( $this, 'create_from_parent' ),
+						'permission_callback' => function () {
+							return Rest_Class::g()->check_cap( 'put' );
+						},
+					),
+				), true
+			);
 
-			register_rest_route( $element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . 's/(?P<id>[\d]+)', array(
-				array(
-					'method'              => \WP_REST_Server::READABLE,
-					'callback'            => array( $this, 'get_parent_from_parent' ),
-					'permission_callback' => function(){
-						return Rest_Class::g()->check_cap( 'get' );
-					}
-				),
-			), true );
+			register_rest_route(
+				$element_namespace->getNamespaceName() . '/v' . Config_Util::$init['eo-framework']->wpeo_model->api_version, '/' . $this->base . 's/(?P<id>[\d]+)', array(
+					array(
+						'method'              => \WP_REST_Server::READABLE,
+						'callback'            => array( $this, 'get_parent_from_parent' ),
+						'permission_callback' => function () {
+							return Rest_Class::g()->check_cap( 'get' );
+						},
+					),
+				), true
+			);
 
 		}
 
 		/**
 		 * Get element(s) from parent object type
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param  WP_Http::request $request The current Rest API request.
+		 * @param WP_Http::request $request The current Rest API request.
 		 *
 		 * @return mixed                     Element list or single element if id was specified.
 		 */
@@ -155,10 +164,10 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 		/**
 		 * Get element(s) from parent object type
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param  WP_Http::request $request The current Rest API request.
+		 * @param WP_Http::request $request The current Rest API request.
 		 *
 		 * @return mixed                     Element list or single element if id was specified.
 		 */
@@ -178,10 +187,10 @@ if ( ! class_exists( '\eoxia\Rest_Class' ) ) {
 		/**
 		 * Create / Update element from request
 		 *
-		 * @since 1.6.0
+		 * @since   1.6.0
 		 * @version 1.6.0
 		 *
-		 * @param  WP_Http::request $request The current Rest API request.
+		 * @param WP_Http::request $request The current Rest API request.
 		 *
 		 * @return mixed                     New created element.
 		 */

@@ -2,11 +2,11 @@
 /**
  * Inclusions de wpeo_assets
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\Core\Action
+ * @package   EO_Framework\Core\Action
  */
 
 namespace eoxia;
@@ -20,12 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Core_Action {
 
+
 	/**
 	 * Le constructeur ajoutes les actions WordPress suivantes:
 	 * admin_enqueue_scripts (Pour appeller les scripts JS et CSS dans l'admin)
 	 * wp_enqueue_script (Pour appeller les scripts JS et CSS dans le frontend)
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function __construct() {
@@ -37,7 +38,7 @@ class Core_Action {
 	/**
 	 * Initialise les fichiers JS inclus dans WordPress (jQuery, wp.media et thickbox)
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return void
@@ -58,7 +59,7 @@ class Core_Action {
 	/**
 	 * Renvoies les données pour les scripts JS.
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @return array {
@@ -66,15 +67,15 @@ class Core_Action {
 	 */
 	public function get_localize_script_data() {
 		ob_start();
-		require \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal.view.php';
+		include \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal.view.php';
 		$view_modal = ob_get_clean();
 
 		ob_start();
-		require \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal-title.view.php';
+		include \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal-title.view.php';
 		$view_modal_title = ob_get_clean();
 
 		ob_start();
-		require \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal-buttons.view.php';
+		include \eoxia\Config_Util::$init['eo-framework']->path . 'core/view/modal-buttons.view.php';
 		$view_modal_buttons = ob_get_clean();
 
 		$data = array(
@@ -89,7 +90,7 @@ class Core_Action {
 	/**
 	 * Initialise le fichier MO
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function callback_plugins_loaded() {

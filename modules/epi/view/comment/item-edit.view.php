@@ -2,11 +2,11 @@
 /**
  * Ajout le champ pour ajouter un commentaire
  *
- * @author Evarisk <dev@evarisk.com>
- * @since 0.1.0
- * @version 0.4.0
+ * @package   TheEPI
+ * @author    Evarisk <dev@evarisk.com>
  * @copyright 2018 Evarisk
- * @package TheEPI
+ * @since     0.1.0
+ * @version   0.4.0
  */
 
 namespace theepi;

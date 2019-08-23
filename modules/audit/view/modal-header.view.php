@@ -2,11 +2,11 @@
 /**
  * La vue déclarant le modal audit.
  *
- * @author Nicolas Domenech <nicolas@eoxia.com>
- * @since 0.5.0
- * @version 0.5.0
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
+ * @since     0.5.0
+ * @version   0.5.0
  * @copyright 2019 Evarisk
- * @package TheEPI
+ * @package   TheEPI
  */
 
 namespace theepi;
@@ -27,12 +27,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wpeo-button button-main button-radius-2 button-square-40 action-attribute"
 	data-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
 	data-action="import_task_audit"
-	data-nonce="<?php echo esc_attr( wp_create_nonce( 'import_task_audit') ); ?>">
+	data-nonce="<?php echo esc_attr( wp_create_nonce( 'import_task_audit' ) ); ?>">
 	<span><i class="fas fa-download"></i></span>
 </div>
 
-<span class="button-toggle-modal-headear">
-	<?php if ( Audit_Class::g()->get_status( $epi ) ) : ?>
+<span class="button-toggle-modal-headear"
+	data-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
+	data-action = "valid_statut_audit"
+	data-nonce = "<?php echo esc_attr( wp_create_nonce( 'valid_statut_audit' ) ); ?>">
+	<?php if ( $audit->data['status_audit'] == "OK" ) : // Audit_Class::g()->get_status( $epi ) ?>
+
 		<span class="button-toggle-KO" style="color : grey; font-weight: auto"><?php esc_html_e( 'KO', 'theepi' ); ?></span>
 		<span><i class="button-toggle fas fa-toggle-on"></i></span>
 		<span class="button-toggle-OK" style="color : black; font-weight: bold"><?php esc_html_e( 'OK', 'theepi' ); ?></span>

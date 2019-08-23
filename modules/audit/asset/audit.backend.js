@@ -19,9 +19,10 @@ window.eoxiaJS.theEPI.Audit.event = function() {
 window.eoxiaJS.theEPI.Audit.buttonToggle = function( event ) {
 
 	var toggleON = jQuery( this ).hasClass( 'fa-toggle-on' );
-
+	var nextStep = '';
 	if (toggleON) {
 
+		nextStep = 'KO';
 		jQuery( this ).removeClass( "fa-toggle-on" ).addClass( "fa-toggle-off" );
 		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'KO' );
 		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
@@ -29,12 +30,27 @@ window.eoxiaJS.theEPI.Audit.buttonToggle = function( event ) {
 
 	} else {
 
+		nextStep = 'OK';
 		jQuery( this ).removeClass( "fa-toggle-off" ).addClass( "fa-toggle-on" );
 		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'OK' );
 		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
 		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
 
 	}
+
+	var id = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-id' );
+	var action = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-action' );
+	var nonce = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-nonce' );
+	var data = {
+		action: action,
+		_wpnonce: nonce,
+		id: id,
+		next_step: nextStep
+	};
+
+	window.eoxiaJS.loader.display( jQuery( this ).closest( '.button-toggle-modal-headear' ) );
+	window.eoxiaJS.request.send( jQuery( this ), data );
+
 };
 
 /**
@@ -87,8 +103,6 @@ window.eoxiaJS.theEPI.Audit.ImportedTaskAuditSuccess = function( triggeredElemen
  * @version 0.5.0
  */
 window.eoxiaJS.theEPI.Audit.ImportedButtonTaskAuditSuccess = function( triggeredElement, response ) {
-	console.log( 'OK ');
-	console.log( response.data.view  );
 	var header = triggeredElement.closest( '.wpeo-modal' ).find( '.modal-header' ).find('.modal-title-header');
 	header.html( response.data.modal_title );
 	var content = triggeredElement.closest( '.wpeo-modal' ).find( '.modal-content' );
@@ -97,6 +111,21 @@ window.eoxiaJS.theEPI.Audit.ImportedButtonTaskAuditSuccess = function( triggered
 	footer.html( response.data.buttons_view);
 
 };
+
+window.eoxiaJS.theEPI.Audit.ControlEPISuccess = function( triggeredElement, response ) {
+	triggeredElement.closest( '.epi-row' ).find( '.control_audit' ).html( response.data.view_item );
+	triggeredElement.parent().append( response.data.modal_template );
+};
+
+window.eoxiaJS.theEPI.Audit.DisplayControlEPISuccess = function( triggeredElement, response ) {
+	triggeredElement.parent().append( response.data.modal_template );
+};
+
+
+
+
+
+
 
 /**
  * Le callback en cas de réussite à la requête Ajax "create_task_audit".
@@ -120,13 +149,13 @@ window.eoxiaJS.theEPI.Audit.GetContentFromUrlAuditSuccess = function( triggeredE
 }
 
 window.eoxiaJS.theEPI.Audit.DisplayAllAuditSuccess = function( triggeredElement, response ) {
-	var toggleChevron = triggeredElement.find( '.fas' ).hasClass( 'fa-chevron-right' );
+	var toggleChevron = triggeredElement.find( '.icon' ).hasClass( 'fa-chevron-right' );
 
 	if (toggleChevron) {
-		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.fas' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
+		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
 		triggeredElement.closest( '.control_audit').html( response.data.view );
 	} else {
-		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.fas' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );
+		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );
 		jQuery( '.wrap .container-content .epi .epi-row[ data-id="' + response.data.id + '"]' ).find( '.control_audit').html( response.data.single_view_audit );
 
 	}

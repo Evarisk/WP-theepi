@@ -2,11 +2,11 @@
 /**
  * Gestion des termes (POST, PUT, GET, DELETE)
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -21,6 +21,7 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 	 * Gestion des termes (POST, PUT, GET, DELETE)
 	 */
 	class Term_Class extends Object_Class {
+
 
 		/**
 		 * Le nom du modèle
@@ -61,7 +62,7 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 		 * Utiles pour récupérer la clé unique
 		 *
 		 * @todo Rien à faire ici
-		 * @var string
+		 * @var  string
 		 */
 		protected $identifier_helper = 'term';
 
@@ -82,7 +83,7 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 		 *
 		 * @return void
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 */
 		protected function construct() {
@@ -94,7 +95,7 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 		/**
 		 * Initialise la taxonomie
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return void
@@ -113,11 +114,12 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 		/**
 		 * Récupères les données selon le modèle définis.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param array   $args Les paramètres de get_terms @https://codex.wordpress.org/Function_Reference/get_terms.
-		 * @param boolean $single Si on veut récupérer un tableau, ou qu'une seule entrée.
+		 * @param                                                     array   $args   Les paramètres de get_terms
+		 * @https://codex.wordpress.org/Function_Reference/get_terms.
+		 * @param                                                     boolean $single Si on veut récupérer un tableau, ou qu'une seule entrée.
 		 *
 		 * @return Object
 		 */
@@ -147,13 +149,12 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 
 			// @Todo: a voir pourquoi wp_get_post_terms et pas wp_get_object_terms et si pas d'autre moyen que ici.
 			// elseif ( isset( $args['post_id'] ) ) {
-			// 	$array_term = wp_get_post_terms( $args['post_id'], $this->get_type(), $term_final_args );
+			// $array_term = wp_get_post_terms( $args['post_id'], $this->get_type(), $term_final_args );
 			//
-			// 	if ( empty( $array_term ) ) {
-			// 		$array_term[] = array();
-			// 	}
+			// if ( empty( $array_term ) ) {
+			// $array_term[] = array();
 			// }
-
+			// }
 			$args_cb    = array(
 				'args'         => $args,
 				'default_args' => $default_args,
@@ -187,7 +188,7 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 		/**
 		 * Insère ou met à jour les données dans la base de donnée.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  Array $data Les données a insérer ou à mêttre à jour.
@@ -220,9 +221,11 @@ if ( ! class_exists( '\eoxia\Term_Class' ) ) {
 
 			if ( is_wp_error( $term ) ) {
 				if ( ! empty( $term->error_data['term_exists'] ) && is_int( $term->error_data['term_exists'] ) ) {
-					return $this->get( array(
-						'id' => $term->error_data['term_exists'],
-					), true );
+					return $this->get(
+						array(
+							'id' => $term->error_data['term_exists'],
+						), true
+					);
 				}
 
 				return $term;

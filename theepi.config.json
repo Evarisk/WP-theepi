@@ -16,6 +16,7 @@
 		"core/core.config.json",
 		"modules/epi/epi.config.json",
 		"modules/audit/audit.config.json",
+		"modules/service/service.config.json",
 		"modules/setting/setting.config.json"
 	],
 	"debug": false,

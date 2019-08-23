@@ -5,11 +5,11 @@
  * @author    Eoxia <dev@eoxia.com>
  * @copyright (c) 2015-2018 Eoxia <dev@eoxia.com>.
  *
- * @license   GPLv3 <https://spdx.org/licenses/GPL-3.0-or-later.html>
+ * @license GPLv3 <https://spdx.org/licenses/GPL-3.0-or-later.html>
  *
- * @package   EO_Framework\EO_Search\Template
+ * @package EO_Framework\EO_Search\Template
  *
- * @since     1.1.0
+ * @since 1.1.0
  */
 
 namespace eoxia;
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || exit; ?>
 	<?php
 	if ( ! empty( $atts['label'] ) ) :
 		?>
-		<span class="form-label"><?php esc_html_e( 'Responsable', 'digirisk' ); ?></span>
+	 <span class="form-label"><?php esc_html_e( 'Responsable', 'digirisk' ); ?></span>
 		<?php
 	endif;
 	?>
@@ -35,9 +35,9 @@ defined( 'ABSPATH' ) || exit; ?>
 
 				<?php
 				if ( ! empty( $atts['icon'] ) ) :
-					?>
+		?>
 					<i class="autocomplete-icon-before far <?php echo esc_attr( $atts['icon'] ); ?>"></i>
-					<?php
+		<?php
 				endif;
 				?>
 

@@ -2,7 +2,7 @@
 /**
  * Main class for search module.
  *
- * @author Eoxia <dev@eoxia.com>
+ * @author    Eoxia <dev@eoxia.com>
  * @copyright (c) 2015-2018 Eoxia <dev@eoxia.com>.
  *
  * @license GPLv3 <https://spdx.org/licenses/GPL-3.0-or-later.html>
@@ -21,6 +21,7 @@ defined( 'ABSPATH' ) || exit;
  */
 class Search_Class extends Singleton_Util {
 
+
 	/**
 	 * List of registered search.
 	 *
@@ -35,7 +36,8 @@ class Search_Class extends Singleton_Util {
 	 *
 	 * @since 1.1.0
 	 */
-	protected function construct() {}
+	protected function construct() {
+	}
 
 	public function register_search( $slug, $atts ) {
 		$this->registered_search[ $slug ] = $this->construct_atts( $slug, $atts );
@@ -71,14 +73,16 @@ class Search_Class extends Singleton_Util {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param  array $atts [description]
+	 * @param array $atts [description]
 	 */
 	public function display( $slug, $visible_value = '', $hidden_value = '' ) {
 		$atts = $this->get_registered_search( $slug );
 
-		\eoxia\View_Util::exec( 'eo-framework', 'wpeo_search', 'main', array(
-			'atts' => $atts,
-		) );
+		\eoxia\View_Util::exec(
+			'eo-framework', 'wpeo_search', 'main', array(
+				'atts' => $atts,
+			)
+		);
 	}
 
 	/**
@@ -86,18 +90,18 @@ class Search_Class extends Singleton_Util {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @param  string $term Term of search.
-	 * @param  string $type Type of search.
-	 * @param  array  $args Other parameters.
+	 * @param string $term Term of search.
+	 * @param string $type Type of search.
+	 * @param array  $args Other parameters.
 	 *
 	 * @return array        Array of results.
 	 */
 	public function search( $term, $type, $args ) {
 		switch ( $type ) {
-			case "user":
+			case 'user':
 				$results = $this->search_user( $term );
 				break;
-			case "post":
+			case 'post':
 				$results = $this->search_post( $term, $args );
 				break;
 			default:
@@ -109,13 +113,17 @@ class Search_Class extends Singleton_Util {
 
 	private function search_user( $term ) {
 		if ( ! empty( $term ) ) {
-			$results = User_Class::g()->get( array(
-				'search' => '*' . $term . '*',
-			) );
+			$results = User_Class::g()->get(
+				array(
+					'search' => '*' . $term . '*',
+				)
+			);
 		} else {
-			$results = User_Class::g()->get( array(
-				'exclude' => array( 1 ),
-			) );
+			$results = User_Class::g()->get(
+				array(
+					'exclude' => array( 1 ),
+				)
+			);
 		}
 
 		return $results;
