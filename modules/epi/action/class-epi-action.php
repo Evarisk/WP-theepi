@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -22,7 +22,7 @@ class EPI_Action {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.1.0
 	 * @version 0.5.0
@@ -44,10 +44,10 @@ class EPI_Action {
 
 
 	/**
-	 * Affiche un EPI lors de sa création
+	 * Affiche un EPI lors de sa création.
 	 *
 	 * @since   0.5.0
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 */
@@ -104,10 +104,10 @@ class EPI_Action {
 	}
 
 	/**
-	 * Sauvegardes un EPI
+	 * Sauvegardes un EPI.
 	 *
 	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 */
@@ -130,11 +130,11 @@ class EPI_Action {
 		$reference          = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : esc_html__( 'undefined', 'theepi' );
 		$lifetime           = ! empty( $_POST['lifetime'] ) ? (int)( $_POST['lifetime'] ) : get_option( EPI_Class::g()->option_name_default_data_lifetime );
 		$periodicity        = ! empty( $_POST['periodicity'] ) ? (int)( $_POST['periodicity'] ) : get_option( EPI_Class::g()->option_name_default_data_periodicity );
-		$manufacture_date   = ! empty( $_POST['manufacture_date'] ) ? sanitize_text_field( $_POST['manufacture_date'] ) : esc_html__( '', 'theepi' );
-		$purchase_date      = ! empty( $_POST['purchase_date'] ) ? sanitize_text_field( $_POST['purchase_date'] ) : esc_html__( '', 'theepi' );
-		$control_date       = ! empty( $_POST['control_date'] ) ? sanitize_text_field( $_POST['control_date'] ) : esc_html__( '', 'theepi' );
-		$end_life_date      = ! empty( $_POST['end_life_date'] ) ? sanitize_text_field( $_POST['end_life_date'] ) : esc_html__( '', 'theepi' );
-		$disposal_date      = ! empty( $_POST['disposal_date'] ) ? sanitize_text_field( $_POST['disposal_date'] ) : esc_html__( '', 'theepi' );
+		$manufacture_date   = ! empty( $_POST['manufacture_date'] ) ? sanitize_text_field( $_POST['manufacture_date'] ) : '';
+		$purchase_date      = ! empty( $_POST['purchase_date'] ) ? sanitize_text_field( $_POST['purchase_date'] ) : '';
+		$control_date       = ! empty( $_POST['control_date'] ) ? sanitize_text_field( $_POST['control_date'] ) : '';
+		$end_life_date      = ! empty( $_POST['end_life_date'] ) ? sanitize_text_field( $_POST['end_life_date'] ) : '';
+		$disposal_date      = ! empty( $_POST['disposal_date'] ) ? sanitize_text_field( $_POST['disposal_date'] ) : '';
 
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
@@ -147,7 +147,12 @@ class EPI_Action {
 			$manufacture_date = Service_Class::g()->calcul_date_fabrication( $commissioning_date , $manufacture_date_valued );
 		}
 
+		$end_life_date = Service_Class::g()->calcul_date_fin_vie( $manufacture_date, $lifetime );
+		$control_date = Service_Class::g()->calcul_date_control( $purchase_date, $end_life_date, $commissioning_date, $periodicity );
+		$disposal_date = Service_Class::g()->calcul_date_mise_rebut( $end_life_date );
+
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+
 		$update_epi = array(
 			'image_id'                 => $image_id,
 			'title'                    => $title,
@@ -189,14 +194,14 @@ class EPI_Action {
 				'namespace'         => 'theEPI',
 				'module'            => 'EPI',
 				'callback_success'  => $callback_js,
-				'view'     				  => $view,
+				'view'     		    => $view,
 				'error'             => $date_valid
 			)
 		);
 	}
 
 	/**
-	 * Supprimes un EPI et ses audits
+	 * Supprimes un EPI et ses audits.
 	 *
 	 * @return void
 	 *
@@ -233,12 +238,12 @@ class EPI_Action {
 	}
 
 	/**
-	 * Editer un EPI (mode édition)
+	 * Editer un EPI (mode édition).
 	 *
 	 * @return void
 	 *
 	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 */
 	public function callback_edit_epi() {
 		check_ajax_referer( 'edit_epi' );
@@ -295,7 +300,7 @@ class EPI_Action {
 	}
 
 	/**
-	 * Annule le mode édition d'un EPI
+	 * Annule le mode édition d'un EPI.
 	 *
 	 * @return void
 	 *
@@ -331,7 +336,7 @@ class EPI_Action {
 	}
 
 	/**
-	 * Charges les données d'un EPI
+	 * Charges les données d'un EPI.
 	 *
 	 * @since   0.1.0
 	 * @version 0.2.0
@@ -374,34 +379,45 @@ class EPI_Action {
 	 * Gestion du chargement supplémentaire des EPI.
 	 *
 	 * @since   0.2.0
-	 * @version 0.4.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 */
 	public function callback_load_more_epi() {
 		check_ajax_referer( 'load_more_epi' );
 
-		$offset = ! empty( $_POST['offset'] ) ? (int) $_POST['offset'] : 1;
-		$term   = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
+		$pagination = ! empty( $_POST['pagination'] ) ? (int) $_POST['pagination'] : 1;
+		$page       = ! empty( $_POST['page'] ) ? sanitize_text_field ( $_POST['page'] ) : "";
+		$offset     = ! empty( $_POST['offset'] ) ? (int) $_POST['offset'] : 0;
+		$term       = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
 
 		$pagination_data = EPI_Class::g()->get_pagination_data( $offset, $term );
 
-		$epis = EPI_Class::g()->get_epis( $pagination_data, $term );
+		$data_epis = EPI_Class::g()->get_epis( $pagination_data, $term , $page);
+		$epis = $data_epis['epis'];
 
 		ob_start();
 		EPI_Class::g()->display_epi_list( $epis );
+		$view = ob_get_clean();
+
+		ob_start();
+		EPI_Class::g()->display_epi_pagination( $offset, $page, $pagination );
+		$view_pagination = ob_get_clean();
+
 		wp_send_json_success(
 			array(
 				'namespace'        => 'theEPI',
 				'module'           => 'EPI',
 				'callback_success' => 'loadedMoreEPISuccess',
-				'view'             => ob_get_clean(),
+				'pagination'       => $pagination,
+				'view'             => $view,
+				'view_pagination'  => $view_pagination
 			)
 		);
 	}
 
 	/**
-	 * Recherches tous les EPI
+	 * Recherches tous les EPI.
 	 *
 	 * @since   0.4.0
 	 * @version 0.4.0
@@ -427,7 +443,7 @@ class EPI_Action {
 	}
 
 	/**
-	 * Met la recherche à 0
+	 * Met la recherche à 0.
 	 *
 	 * @since   0.4.0
 	 * @version 0.4.0
@@ -473,21 +489,19 @@ class EPI_Action {
 	}
 
 	/**
-	 * Affiches la liste des EPI
+	 * Recharge un EPI.
 	 *
 	 * @since   0.1.0
-	 * @version 0.4.0
+	 * @version 0.6.0
 	 *
-	 * @param array $epis La liste des EPI.
-	 * @param bool $new l'état de l'EPI - nouvel EPI = true
-	 *
-	 * @return void
+	 * @return object view La vue à recharger.
 	 */
 	public function reload_epis() {
 
 		$pagination_data = EPI_Class::g()->get_pagination_data( 0, '' );
 
-		$epis = EPI_Class::g()->get_epis( $pagination_data, '' );
+		$data_epis = EPI_Class::g()->get_epis( $pagination_data, '' );
+		$epis = $data_epis['epis'];
 		ob_start();
 		EPI_Class::g()->display_epi_list( $epis );
 		return ob_get_clean();

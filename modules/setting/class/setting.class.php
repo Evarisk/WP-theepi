@@ -3,10 +3,10 @@
  * Classe gérant les configurations de TheEPI.
  *
  * @package   TheEPI
- * @author    Jimmy Latour <jimmy@evarisk.com>
- * @copyright 2015-2017 Evarisk
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.4.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -24,7 +24,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 
 
 	/**
-	 * La limite des utilisateurs de la page "theepi-setting"
+	 * La limite des utilisateurs de la page "theepi-setting".
 	 *
 	 * @var integer
 	 */
@@ -38,7 +38,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	public $option_name = 'user_per_page';
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @return void
 	 *
@@ -149,11 +149,12 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * Enregistres les données par défaut.
 	 *
 	 * @since   0.3.0
-	 * @version 0.3.0
+	 * @version 0.6.0
 	 *
-	 * @param  string $default_periodicity La périodicité de contrôle par défaut.
-	 * @param  string $default_lifetime La durée de vie par défaut.
-	 * @return bool                    True si tout s'est bien passé.
+	 * @param integer $default_periodicity La périodicité de contrôle d'un EPI par défaut.
+	 * @param integer $default_lifetime    La durée de vie d'un EPI par défaut.
+	 *
+	 * @return bool  True si tout s'est bien passé.
 	 */
 	public function save_default_data( $default_periodicity, $default_lifetime ) {
 
@@ -174,10 +175,12 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * Enregistres les données par défaut de la gestion des dates.
 	 *
 	 * @since   0.3.0
-	 * @version 0.3.0
+	 * @version 0.6.0
 	 *
-	 * @param  string $default_comment Le commentaire par défaut.
-	 * @return bool                    True si tout s'est bien passé.
+	 * @param bool    $default_purchase_date    La date d'achat d'un EPI par défaut.
+	 * @param integer $default_manufacture_date La date de fabrication d'un EPI par défaut.
+	 *
+	 * @return bool  True si tout s'est bien passé.
 	 */
 	public function save_date_management( $default_purchase_date, $default_manufacture_date ) {
 		// Seulement pour garder une trace dans les LOG.

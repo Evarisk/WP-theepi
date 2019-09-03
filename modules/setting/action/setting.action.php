@@ -3,10 +3,10 @@
  * Les actions relatives aux réglages de TheEPI.
  *
  * @package   TheEPI
- * @author    Jimmy Latour <jimmy@evarisk.com>
- * @copyright 2015-2017 Evarisk
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.3.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -22,7 +22,7 @@ class Setting_Action {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.2.0
 	 * @version 0.2.0
@@ -38,7 +38,7 @@ class Setting_Action {
 	}
 
 	/**
-	 * La fonction de callback de l'action admin_menu de WordPress
+	 * La fonction de callback de l'action admin_menu de WordPress.
 	 *
 	 * @return void
 	 *
@@ -51,10 +51,10 @@ class Setting_Action {
 	}
 
 	/**
-	 * Appelle la vue main du module setting
+	 * Appelle la vue main du module setting.
 	 *
 	 * @since   0.2.0
-	 * @version 0.3.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 * @todo:  nonce
@@ -117,7 +117,7 @@ class Setting_Action {
 	 * Enregistres les données par défaut.
 	 *
 	 * @since   0.2.0
-	 * @version 0.2.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 */
@@ -142,7 +142,7 @@ class Setting_Action {
 	 * Enregistres les données par défaut de la gestion des dates.
 	 *
 	 * @since   0.2.0
-	 * @version 0.2.0
+	 * @version 0.6.0
 	 *
 	 * @return void
 	 */
@@ -164,7 +164,7 @@ class Setting_Action {
 	}
 
 	/**
-	 * Méthode appelé par le champs de recherche dans la page "theepi"
+	 * Méthode appelé par le champs de recherche dans la page "theepi".
 	 *
 	 * @param  integer $id           L'ID de la société.
 	 * @param  array   $list_user_id Le tableau des ID des évaluateurs trouvés par la recherche.
@@ -186,7 +186,7 @@ class Setting_Action {
 	}
 
 	/**
-	 * Gestion de la pagination
+	 * Gestion de la pagination.
 	 *
 	 * @since   0.2.0
 	 * @version 0.2.0

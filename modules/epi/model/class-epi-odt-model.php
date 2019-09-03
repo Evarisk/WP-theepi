@@ -2,11 +2,11 @@
 /**
  * Définition des champs d'un document EPI_ODT.
  *
- * @package   DigiRisk
+ * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
- * @copyright 2018 Evarisk.
- * @since     6.5.0
- * @version   7.0.0
+ * @copyright 2019 Evarisk.
+ * @since     0.5.0
+ * @version   0.5.0
  */
 
 namespace theepi;
@@ -16,16 +16,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Définition des champs d'un document DUER.
+ * Définition des champs d'un document EPI_ODT.
  */
 class EPI_ODT_Model extends \eoxia\ODT_Model {
 
 
 	/**
-	 * Définition des champs
+	 * Définition des champs.
 	 *
-	 * @since   6.5.0
-	 * @version 7.0.0
+	 * @since   0.5.0
+	 * @version 0.5.0
 	 *
 	 * @param array $data       Data.
 	 * @param mixed $req_method Peut être "GET", "POST", "PUT" ou null.

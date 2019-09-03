@@ -1,6 +1,6 @@
 <?php
 /**
- * La vue déclarant le modal audit.
+ * La vue header déclarant le modal audit.
  *
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @since     0.5.0

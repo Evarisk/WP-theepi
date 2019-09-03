@@ -22,7 +22,7 @@ class Setting_Filter {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.1.0
 	 * @version 0.2.0

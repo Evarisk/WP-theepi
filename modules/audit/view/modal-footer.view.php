@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue déclarant le modal audit.
+ * La vue footer déclarant le modal audit.
  *
+ * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
  * @since     0.5.0
  * @version   0.5.0
- * @copyright 2019 Evarisk
- * @package   TheEPI
  */
 
 namespace theepi;

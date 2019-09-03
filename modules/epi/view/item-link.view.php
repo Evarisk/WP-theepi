@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue des liens d'un item de la page "EPI"
+ * La vue des liens d'un item de la page "EPI".
  *
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -26,15 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php esc_html_e( 'Edit', 'theepi' ); ?>
 	</a>
 	 |
-
-	<a href="#" class="action-attribute epi-item-link-control"
-		data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-		data-action="control_epi"
-		data-nonce="<?php echo esc_attr( wp_create_nonce( 'control_epi' ) ); ?>">
-	 <?php esc_html_e( 'Perform a control', 'theepi' ); ?>
-	</a>
- |
-
 	<a href="#" class="action-delete epi-item-link-delete"
 		data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 		data-action="delete_epi"

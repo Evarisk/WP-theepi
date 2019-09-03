@@ -1,6 +1,6 @@
 <?php
 /**
- * Le formulaire pour éditer.
+ * La vue Edition du module EPI.
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
@@ -51,6 +51,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Commissioning Date', 'theepi' ); ?>">
+		<span class="error" style="color : red ;"></span>
 		<div class="wpeo-form" style="margin-left : 35px">
 			<div class="form-element form-element-required group-date">
 				<label class="form-field-container">
@@ -66,22 +67,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</label>
 			</div>
 		</div>
-		<!-- <div class="wpeo-form">
-			<div class="form-element">
-				<label class="form-field-container">
-					<input class="wpeo-popover-event form-field"
-					aria-label="<?php esc_attr_e( 'This field must be in numeric format and better than 0', 'theepi' ); ?>"
-					data-color="red"
-					data-before-method="checkData"
-					type="text"
-					name="periodicity"
-					value="<?php echo esc_attr( $epi->data['periodicity'] ); ?>" />
-					<span class="form-field-label-next"><?php esc_html_e( 'days', 'theepi' ); ?></span>
-				</label>
-			</div>
-		</div> -->
 	</div>
-	<div class="table-cell">
+
+	<div class="table-cell table-250">
 
 	</div>
 

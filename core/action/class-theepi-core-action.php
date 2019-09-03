@@ -136,8 +136,19 @@ class TheEPI_Core_Action {
 	 * @return void
 	 */
 	public function callback_admin_menu() {
-		$hook = add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'dashicons-shield-alt' );
+		$hook = add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'data:image/svg+xml;base64,' . base64_encode( "
+		<svg data-prefix='fas' data-icon='hard-hat' 
+			class='svg-inline--fa fa-hard-hat fa-w-16' 
+			role='img' 
+			xmlns='http://www.w3.org/2000/svg' 
+			viewBox='0 0 512 512'>
+			<path fill='rgba(240,245,250,.6)' 
+				d='M480 288c0-80.25-49.28-148.92-119.19-177.62L320 192V80a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v112l-40.81-81.62C81.28 139.08 32 207.75 32 288v64h448zm16 96H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h480a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z'>
+			</path>
+		</svg> ")
+	 );
 		add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );
+
 
 	}
 }

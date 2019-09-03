@@ -1,12 +1,12 @@
 <?php
 /**
- * Création et Génération d'un fichier ODT d'un EPI
+ * Création et Génération d'un fichier ODT d'un EPI.
  *
  * @package   TheEPI
- * @author   Nicolas Domenech <nicolas@eoxia.com>
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk.
  * @since     0.5.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -16,27 +16,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Class lié à génération d'un fichier ODT d'un EPI
+ * Class lié à génération d'un fichier ODT d'un EPI.
  */
 class EPI_ODT_Class extends \eoxia\ODT_Class {
 
 
 	/**
-	 * Le nom du modèle
+	 * Le nom du modèle.
 	 *
 	 * @var string
 	 */
 	protected $model_name = '\theepi\EPI_ODT_Model';
 
 	/**
-	 * Le type du document
+	 * Le type du document.
 	 *
 	 * @var string
 	 */
 	protected $type = 'epi_odt';
 
 	/**
-	 * La taxonomy du post
+	 * La taxonomy du post.
 	 *
 	 * @todo
 	 * @var  string
@@ -44,35 +44,35 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	public $attached_taxonomy_type = 'attachment_category';
 
 	/**
-	 * La clé principale de l'objet
+	 * La clé principale de l'objet.
 	 *
 	 * @var string
 	 */
 	protected $meta_key = '_epi_document_odt';
 
 	/**
-	 * La base de l'URI pour la Rest API
+	 * La base de l'URI pour la Rest API.
 	 *
 	 * @var string
 	 */
 	protected $base = 'epi-odt';
 
 	/**
-	 * La version pour la Rest API
+	 * La version pour la Rest API.
 	 *
 	 * @var string
 	 */
 	protected $version = '0.1';
 
 	/**
-	 * Le préfixe pour le champs "unique_key" de l'objet
+	 * Le préfixe pour le champs "unique_key" de l'objet.
 	 *
 	 * @var string
 	 */
 	public $element_prefix = 'EPI_ODT';
 
 	/**
-	 * Le nom pour le register post type
+	 * Le nom pour le register post type.
 	 *
 	 * @var string
 	 */
@@ -89,21 +89,21 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 
 
 	/**
-	 * Le nom de l'ODT sans l'extension; exemple: document_unique
+	 * Le nom de l'ODT sans l'extension; exemple: fiche_modele_EPI.
 	 *
 	 * @var string
 	 */
 	protected $odt_name = 'fiche_modele_EPI';
 
 	/**
-	 * Le path du fichier ODT
+	 * Le path du fichier ODT.
 	 *
 	 * @var string
 	 */
 	protected $path = '';
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.5.0
 	 * @version 0.5.0
@@ -115,13 +115,17 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	}
 
 	/**
-	 * Récupération de la liste des modèles de fichiers disponible pour un type d'élément
+	 * Récupération de la liste des modèles de fichiers disponible pour un type d'élément.
 	 *
 	 * @since 0.5.0
 	 *
 	 * @param array $model_type Le type du document.
 	 *
-	 * @return array
+	 * @return array ['status']  True si tout s'est bien passé.
+	 *               ['id']   	 L'id du modèle.
+	 *               ['path']    Le chemin d'accès au modèle.
+	 *               ['url']     le lien d'accès au modèle.
+	 *               ['message'] Le message indiquant quelle modèle est utilisé.
 	 */
 	public function get_default_model( $model_type ) {
 		if ( 'zip' === $model_type ) {

@@ -4,9 +4,9 @@
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
- * @copyright 2017 Evarisk
+ * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.4.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -22,7 +22,7 @@ class EPI_Filter {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.1.0
 	 * @version 0.4.0
@@ -54,8 +54,6 @@ class EPI_Filter {
 
 		return $status;
 	}
-
-
 
 	/**
 	 * Met à jour le temps restant avant la date de hors d'état.

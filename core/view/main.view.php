@@ -4,8 +4,8 @@
  *
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @since     0.1.0
- * @version   0.5.0
- * @copyright 2017 Evarisk
+ * @version   0.6.0
+ * @copyright 2019 Evarisk
  * @package   TheEPI
  */
 

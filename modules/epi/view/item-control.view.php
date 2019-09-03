@@ -1,6 +1,6 @@
 <?php
 /**
- * La vue des contrôles d'un item de la page "EPI"
+ * La vue des contrôles d'un item de la page "EPI".
  *
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>

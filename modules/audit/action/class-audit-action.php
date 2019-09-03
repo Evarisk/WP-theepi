@@ -1,12 +1,12 @@
 <?php
 /**
- * Handle EPI Actions like save, delete, create_mass_epi.
+ * Gères toutes les actions du module audit.
  *
- * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
- * @since     0.1.0
- * @version   0.5.0
- * @copyright 2019 Evarisk
  * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.5.0
+ * @version   0.5.0
  */
 
 namespace theepi;
@@ -16,15 +16,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gères toutes les actions des AUDIT lié à un EPI.
+ * Gères toutes les actions du module audit.
  */
 class Audit_Action {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
-	 * @since   0.1.0
+	 * @since   0.5.0
 	 * @version 0.5.0
 	 */
 	public function __construct() {
@@ -36,9 +36,16 @@ class Audit_Action {
 		add_action( 'wp_ajax_valid_audit', array( $this, 'callback_valid_audit' ) );
 		add_action( 'wp_ajax_get_text_from_url_audit', array( $this, 'callback_get_text_from_url_audit' ) );
 		add_action( 'wp_ajax_valid_statut_audit', array( $this, 'callback_valid_statut_audit' ) );
-
 	}
 
+	/**
+	 * Effectuer un contrôle d'un EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_control_epi() {
 		check_ajax_referer( 'control_epi' );
 
@@ -107,6 +114,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Affiche le dernier contrôle EPI effectué.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_display_control_epi() {
 		check_ajax_referer( 'display_control_epi' );
 
@@ -146,6 +161,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Affiche tout les contrôles EPIS effectués.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_display_all_audits() {
 		check_ajax_referer( 'display_all_audits' );
 
@@ -184,6 +207,7 @@ class Audit_Action {
 				'epi'   => $epi,
 				'audit' => $single_audit,
 				'user'  => $user,
+				'edit_audit' => true
 			)
 		);
 		$single_view_audit = ob_get_clean();
@@ -200,6 +224,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Ajoute une tâche sur l'audit de contrôle EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_create_task_audit() {
 		check_ajax_referer( 'create_task_audit' );
 
@@ -240,6 +272,14 @@ class Audit_Action {
 
 	}
 
+	/**
+	 * Importe une tâche sur l'audit de contrôle EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_import_task_audit() {
 		check_ajax_referer( 'import_task_audit' );
 
@@ -271,6 +311,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Valide l'audit de contrôle EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_valid_audit() {
 		check_ajax_referer( 'valid_audit' );
 
@@ -308,6 +356,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Récupère la tâche et points depuis github d'un audit de contrôle EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_get_text_from_url_audit() {
 		check_ajax_referer( 'get_text_from_url_audit' );
 		$link    = ! empty( $_POST ) && ! empty( $_POST['github'] ) ? trim( $_POST['github'] ) : null;
@@ -324,6 +380,14 @@ class Audit_Action {
 		);
 	}
 
+	/**
+	 * Récupère le statut de l'audit de contrôle EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @return void
+	 */
 	public function callback_valid_statut_audit() {
 		check_ajax_referer( 'valid_statut_audit' );
 
@@ -334,13 +398,11 @@ class Audit_Action {
 			wp_send_json_error( 'id or next_step undefined' );
 		}
 		$audit = \task_manager\Audit_Class::g()->get( array( 'id' => $id ), true );
-	  $audit->data['status_audit'] = $status_audit;
+	  	$audit->data['status_audit'] = $status_audit;
 		$audit = \task_manager\Audit_Class::g()->update( $audit->data, true );
 		wp_send_json_success();
 
 	}
-
-
 
 }
 

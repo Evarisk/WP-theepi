@@ -4,9 +4,9 @@
  *
  * @package   TheEPI
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
- * @copyright 2015-2018 Evarisk
+ * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -25,7 +25,7 @@ class EPI_Model extends \eoxia\Post_Model {
 	 * Construct
 	 *
 	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @version 0.6.0
 	 *
 	 * @param EPI_Class $object     Les données  de l'epi.
 	 * @param string    $req_method La méthode de la requête.
@@ -76,8 +76,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_reference',
 			'description' => 'Is the reference of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.4.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['periodicity'] = array(
@@ -85,8 +85,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_periodicity',
 			'description' => 'Is the periodicity of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.4.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['serial_number'] = array(
@@ -94,8 +94,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_serial_number',
 			'description' => 'Is the serial number of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['maker'] = array(
@@ -103,8 +103,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_maker',
 			'description' => 'Is the maker of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['seller'] = array(
@@ -112,8 +112,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_seller',
 			'description' => 'Is the seller of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['manager'] = array(
@@ -121,8 +121,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_manager',
 			'description' => 'Is the manager of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['status_epi'] = array(
@@ -130,8 +130,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_status_epi',
 			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.5.0',
+			'version'     => '0.5.0',
 		);
 
 
@@ -140,8 +140,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'context'     => array( 'GET' ),
 			'meta_type'   => 'multiple',
 			'description' => 'Is the control date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['manufacture_date'] = array(
@@ -150,8 +150,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_manufacture_date',
 			'description' => 'Is the manufacture date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['manufacture_date_valid'] = array(
@@ -159,8 +159,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_manufacture_date_valid',
 			'description' => 'Check if manufacture date is update',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 			'default'     => 0,
 		);
 
@@ -170,8 +170,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_purchase_date',
 			'description' => 'Is the purchase date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['purchase_date_valid'] = array(
@@ -179,8 +179,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_purchase_date_valid',
 			'description' => 'Check if purchase date is update',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 			'default'     => 0,
 		);
 
@@ -190,8 +190,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_end_life_date',
 			'description' => 'Is the end life date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['commissioning_date'] = array(
@@ -209,8 +209,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_commissioning_date_valid',
 			'description' => 'Check if commissioning date is update',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 			'default'     => 0,
 		);
 
@@ -220,8 +220,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_disposal_date',
 			'description' => 'Is the disposal date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		$this->schema['lifetime_epi'] = array(
@@ -229,8 +229,8 @@ class EPI_Model extends \eoxia\Post_Model {
 			'meta_type'   => 'single',
 			'field'       => '_theepi_lifetime_epi',
 			'description' => 'Is the lifetime of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		parent::__construct( $object, $req_method );

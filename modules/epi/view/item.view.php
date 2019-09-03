@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue principale de la page "EPI"
+ * La vue principale de la page "EPI".
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
- * @copyright 2018 Evarisk
+ * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.4.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
 	</div>
 
-	<div class="table-cell table-150 table-padding-0" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
+	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ); ?>">
 		<?php
 			\eoxia\View_Util::exec(
 				'theepi', 'epi', 'item-control', array(
@@ -47,15 +47,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="table-cell table-250" style="text-align : center" data-title="<?php echo esc_attr_e( 'Commissioning Date', 'theepi' ); ?>"><?php echo esc_html( $epi->data['commissioning_date']['rendered']['date'] ); ?></div>
 
-	<div  class="table-cell control_audit" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
-		<?php EPI_Class::g()->display_audit_epi( $epi->data['id'] ); ?>
+	<div class="table-cell table-250 control_audit" style="text-align: center" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
+		<?php EPI_Class::g()->display_audit_epi( $epi->data['id'], false ) ?>
+			<a href="#" class="action-attribute epi-item-link-control"
+			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+			data-action="control_epi"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'control_epi' ) ); ?>">
+			<?php esc_html_e( 'Perform a control', 'theepi' ); ?>
+			</a>
 	</div>
 
-	<div class="table-cell" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
+	<div class="table-cell table-200" style="text-align : center;" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
 		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( Audit_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
 			<i class="fas fa-check-circle fa-3x" style="color: mediumspringgreen;"></i>
 		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( Audit_Class::g()->get_status( $epi ) == "rebut" ) ) : ?>
-			<i class="fas fa-trash fa-3x" style="color: blue;"></i>
+			<i class="fas fa-trash fa-3x" style="color: black;"></i>
 		<?php else : ?>
 			<i class="fas fa-exclamation-circle fa-3x" style="color: red;"></i>
 		<?php endif; ?>
@@ -68,5 +74,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'export_epi_odt' ) ); ?>"> <i class="fas fa-download"></i>
 		</div>
 	</div>
-
 </div>

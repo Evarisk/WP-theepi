@@ -3,10 +3,10 @@
  * Affichage pour gérer les données par défaut.
  *
  * @package   TheEPI
- * @author    Jimmy Latour <jimmy@evarisk.com>
- * @copyright 2015-2017 Evarisk
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
  * @since     0.3.0
- * @version   0.3.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<form class="wpeo-form default-data">
+<form class="wpeo-form" data-page="<?php echo esc_attr( $page ); ?>" >
 	<input type="hidden" name="action" value="save_default_data" />
 	<?php wp_nonce_field( 'save_default_data' ); ?>
 
@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</label>
 	</div>
 
-	<div class="wpeo-button button-green button-progress action-input" data-parent="wpeo-form" style="margin-top : 20px">
+	<div class="wpeo-button button-green button-progress button-disable action-input" data-parent="wpeo-form" style="margin-top : 20px">
 		<span class="button-icon fas fa-save"></span>
 	</div>
 </form>

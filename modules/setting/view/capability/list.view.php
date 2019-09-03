@@ -1,6 +1,6 @@
 <?php
 /**
- * Affichage de la liste des utilisateurs pour affecter les capacités
+ * Affichage de la liste des utilisateurs pour affecter les capacités.
  *
  * @package   TheEPI
  * @author    Jimmy Latour <jimmy@evarisk.com>

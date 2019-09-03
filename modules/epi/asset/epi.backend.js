@@ -2,7 +2,7 @@
  * Initialise l'objet "EPI" ainsi que la méthode "init" obligatoire pour la bibliothèque EoxiaJS.
  *
  * @since 0.1.0
- * @version 0.4.0
+ * @version 0.6.0
  */
 window.eoxiaJS.theEPI.EPI = {};
 
@@ -12,13 +12,10 @@ window.eoxiaJS.theEPI.EPI.init = function() {
 
 window.eoxiaJS.theEPI.EPI.event = function() {
 	jQuery( document ).on( 'keyup', '.wrap-theepi .wpeo-table.epi .epi-row input[name="periodicity"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
-	jQuery( document ).on( 'click', '.wrap-theepi .scroll-top', window.eoxiaJS.theEPI.EPI.scrollTop );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .edit .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-tab.epi .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
 
 	jQuery( document ).on( 'click', '.wrap-theepi .action-request-edit-epi', window.eoxiaJS.theEPI.EPI.requestEpiEdit );
-
-
 };
 
 /**
@@ -31,6 +28,7 @@ window.eoxiaJS.theEPI.EPI.event = function() {
  * @version 0.4.0
  *
  * @param  {KeyboardEvent} event L'état du clavier.
+ *
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
@@ -43,30 +41,16 @@ window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
 };
 
 /**
- * Remontes tout en haut de la page.
- *
- * @since 0.4.0
- * @version 0.4.0
- *
- * @param  {ClickEvent} event L'état du clavier.
- * @return {void}
- */
-window.eoxiaJS.theEPI.EPI.scrollTop = function( event ) {
-	jQuery( 'html, body' ).animate( {
-		scrollTop: jQuery( '.wrap-theepi' ).offset().top
-	}, 500);
-};
-
-/**
  * Le callback en cas de réussite à la requête Ajax "create_epi".
- * Remplaces le contenu de <tbody> du tableau "epi".
+ * Affiche la vue Edition et Service d'un EPI pour la création.
+ *
+ * @since 0.1.0
+ * @version 0.6.0
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
  *
- * @since 0.1.0
- * @version 0.5.0
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.CreatedEpiSuccess = function( triggeredElement, response ) {
 
@@ -79,14 +63,15 @@ window.eoxiaJS.theEPI.EPI.CreatedEpiSuccess = function( triggeredElement, respon
 
 /**
  * Le callback en cas de réussite à la requête Ajax "load_epi".
- * Remplaces la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Remplaces la ligne courante du tableau "epi".
  *
  * @since 0.1.0
  * @version 0.4.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( '.table-row' ).replaceWith( response.data.template );
@@ -94,15 +79,16 @@ window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, respons
 
 
 /**
- * Le callback en cas de réussite à la requête Ajax "load_epi".
- * Remplaces la ligne courante du tableau "epi"
+ * Le callback en cas de réussite à la requête Ajax "save_epi".
+ * Enregistre les données d'un EPI.
+ *
+ * @since 0.1.0
+ * @version 0.6.0
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
  *
- * @since 0.1.0
- * @version 0.4.0
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( '.table-row' ).replaceWith( response.data.view );
@@ -110,42 +96,41 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
 };
 
 /**
- * Le callback en cas de réussite à la requête Ajax "load_epi".
- * Remplaces la ligne courante du tableau "epi"
+ * Le callback en cas de d'erreur à la requête Ajax "save_epi".
+ * Affiche l'erreur sur le champ en mode Edition.
+ *
+ * @since 0.1.0
+ * @version 0.6.0
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
  *
- * @since 0.1.0
- * @version 0.4.0
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response ) {
 	var parent_element = triggeredElement.closest( '.wpeo-table' ).find( '.service' );
+	var parent_element_edit = triggeredElement.closest( '.wpeo-table' ).find( '.edit' );
 	for ( i = 0; i < response.data.error.element.length; ++i ) {
 		var input_element = parent_element.find( '.form-field[name="' + response.data.error.element[i] + '"]');
-		/*window.eoxiaJS.popover.remove( input_element.find( '.wpeo-popover-event' ) );
-		console.log( 	window.eoxiaJS.popover.remove( input_element.find( '.wpeo-popover-event' ) ) );
-		input_element.attr( 'aria-label' , response.data.error.error[i] );
-		window.eoxiaJS.popover.toggle( input_element.find( '.wpeo-popover-event' ) );*/
 		input_element.closest( '.form-element' ).find( '.error' ).html( response.data.error.error[i] );
-
+		var input_element_edit = parent_element_edit.find( '.form-field[name="' + response.data.error.element[i] + '"]');
+		input_element_edit.closest( '.table-cell' ).find( '.error' ).html( response.data.error.error[i] );
 	}
-	//window.eoxiaJS.popover.remove( input_element.find( '.wpeo-popover-event' ) );
+
 };
 
 
 /**
  * Le callback en cas de réussite à la requête Ajax "delete_epi".
- * Supprimes la ligne courante du tableau "epi"
- * Supprimes la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Supprimes la ligne courante du tableau "epi".
  *
  * @since 0.1.0
  * @version 0.4.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( '.table-row' ).fadeOut();
@@ -153,14 +138,15 @@ window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( triggeredElement, respon
 
 /**
  * Le callback en cas de réussite à la requête Ajax "edit_epi".
- * Edition d'un "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Edition d'un "epi".
  *
  * @since 0.1.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( '.tab-container').find( '.epi-row.service' ).remove();
@@ -178,14 +164,15 @@ window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, respons
 
 /**
  * Le callback en cas de réussite à la requête Ajax "cancel_edit_epi".
- * Annule le mode édition d'un "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Annule le mode édition d'un "epi".
  *
  * @since 0.1.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.canceledEditEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest('.wpeo-table').find('.service').remove();
@@ -194,42 +181,34 @@ window.eoxiaJS.theEPI.EPI.canceledEditEpiSuccess = function( triggeredElement, r
 
 /**
  * Le callback en cas de réussite à la requête Ajax "load_more_epi".
- * Ajoutes des entrées à la fin du <tbody> du tableau .wpeo-table.epi.
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Charge les autres EPIS en fonction de la page et de la pagination.
  *
  * @since 0.4.0
  * @version 0.4.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.loadedMoreEPISuccess = function( triggeredElement, response ) {
 	var element   = jQuery( response.data.view );
-	var countMore = response.data.count_more ? response.data.count_more : parseInt( jQuery( '#epi_per_page' ).val() );
+	jQuery( '.wrap-theepi .wpeo-table.table-flex.epi .tab-container' ).html(element);
+	var page = triggeredElement.closest( '.wpeo-pagination.epi' ).replaceWith( response.data.view_pagination );
 
-	jQuery( '.wrap-theepi .wpeo-table.epi tbody' ).append( element );
-
-	window.eoxiaJS.theEPI.EPI.refreshTextLoadMore( countMore, 0 );
-
-	setTimeout( function() {
-		element.addClass( 'fadeInUp animate-on' );
-
-		jQuery( 'html, body' ).animate( {
-			scrollTop: jQuery( '.epi-load-more' ).offset().top
-		}, 1000 );
-	}, 10 )
 };
 
 /**
  * Le callback en cas de réussite à la requête Ajax "search_epi".
- * Remplaces tout le tableau avec la bouton "load_more".
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Efface le contenue de la recherche.
  *
  * @since 0.4.0
  * @version 0.4.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.searchedEPISuccess = function( triggeredElement, response ) {
 	jQuery( '.wrap-theepi .container-content' ).html( response.data.view );
@@ -243,8 +222,6 @@ window.eoxiaJS.theEPI.EPI.searchedEPISuccess = function( triggeredElement, respo
 		jQuery( '.wrap-theepi .epi-load-more' ).attr( 'data-term', '' );
 	}
 };
-
-
 
 /**
  * Met à jour l'affichage du bouton "Load More" en bas de la page.
@@ -284,8 +261,20 @@ window.eoxiaJS.theEPI.EPI.refreshTextLoadMore = function( addNumberEPI, addTotal
 
 };
 
+/**
+ * Le callback en cas de réussite à la requête Ajax "export_epi".
+ * Exporte la fiche de vie d'un EPI au format ODT.
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, response ) {
-	/*var element = document.createElement('a');
+	var element = document.createElement('a');
 	console.log( response.data );
   element.setAttribute('href', response.data.link );
   element.setAttribute('download', response.data.filename);
@@ -295,28 +284,19 @@ window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, resp
 
   element.click();
 
-  document.body.removeChild(element);*/
-
-
-	/*fetch(response.data.link)
-  .then(resp => resp.blob())
-  .then(blob => {
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.style.display = 'none';
-    a.href = url;
-    // the filename you want
-    a.download = response.data.filename;
-    document.body.appendChild(a);
-    a.click();
-    window.URL.revokeObjectURL(url);
-    alert('your file has downloaded!'); // or you know, something with better UX...
-  })
-  .catch(() => alert('oh no!'));*/
-
+  document.body.removeChild(element);
 };
 
-
+/**
+ * Récupère les données d'un EPI et déclenche l'action AJAX save_epi.
+ *
+ * @since 0.6.0
+ * @version 0.6.0
+ *
+ * @param  {ClickEvent} event [save]
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 	var id = jQuery( this ).attr( 'data-id' );
 	var fieldset_element    = jQuery( this ).closest( '.wpeo-table' ).find( '.service[ data-id="' + id + '"]' );
@@ -363,57 +343,35 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 
 	};
 
-//	var data_valid = window.eoxiaJS.theEPI.EPI.checkData( data ) ;
-	//if ( data_valid[ 'success' ] ) {
-		console.log(data);
-		window.eoxiaJS.loader.display( jQuery( this ).closest( '.table-row' ) );
-		window.eoxiaJS.request.send( jQuery( this ), data );
-/*	}else {
-		alert('ok');
-	}*/
-}
-
-/**
- * Vérifie si le champ période de controle est bien un nombre pour continuer le formulaire d'ajout d'un EPI.
- *
- * @param  {HTMLDivElement} element Le bouton pour ajouter un EPI
- * @return {boolean}
- *
- * @since 0.1.0
- * @version 0.4.0
- */
-window.eoxiaJS.theEPI.EPI.checkData = function( data ) {
-	/*window.eoxiaJS.popover.remove( element.closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
-
-	if ( isNaN( element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ) || '' == element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ||
-		( element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() && '0' == element.closest( '.epi-row' ).find( 'input[name="periodicity"]' ).val() ) ) {
-		window.eoxiaJS.popover.toggle( element.closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
-		return false;
-	}
-
-	window.eoxiaJS.popover.remove( element.closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
-
-	return true;*/
-/*	var data_return = {};
-	data_return.success = true;
-	data_return.error = "";
-	console.log(data.purchase_date);
-
-	if( data.purchase_date == "" || Date.parse(test)/1000 <=  Date.parse(data.manufacture_date)/1000 ) {
-		console.log((Date.parse(test)/1000 ));
-		data_return.success = false;
-		data_return.error = "Purchase date not valid";
-	}
-
-
-	return data_return;*/
+	window.eoxiaJS.loader.display( jQuery( this ).closest( '.table-row' ) );
+	window.eoxiaJS.request.send( jQuery( this ), data );
 };
 
+/**
+ * change l'onglet.
+ *
+ * @since 0.6.0
+ * @version 0.6.0
+ *
+ * @param  {ClickEvent} event [tab]
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.EPI.tabRedirect = function( event ){
     var url = jQuery( this ).attr( 'data-url' );
     window.location.href = url;
-}
+};
 
+/**
+ * Verifie si la vue EDITION est ouverte
+ *
+ * @since 0.6.0
+ * @version 0.6.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ *
+ * @return {integer} id  La vue edition à fermer.
+ */
 window.eoxiaJS.theEPI.EPI.checkEditMode = function( triggeredElement ){
 	var element = triggeredElement.closest( '.wrap-theepi' ).find( '.wpeo-table.epi' );
   var text = triggeredElement.attr( 'data-message' );
@@ -426,8 +384,18 @@ window.eoxiaJS.theEPI.EPI.checkEditMode = function( triggeredElement ){
 		}
 	}
 	return 0;
-}
+};
 
+/**
+ * Récupère la vue Edition à fermer et déclenche l'action AJAX edit_epi.
+ *
+ * @since 0.6.0
+ * @version 0.6.0
+ *
+ * @param  {ClickEvent} event [edit]
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
 	var id = window.eoxiaJS.theEPI.EPI.checkEditMode( jQuery( this ) );
 
@@ -442,4 +410,4 @@ window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
 		window.eoxiaJS.loader.display( jQuery( this ) );
 		window.eoxiaJS.request.send( jQuery( this ), data );
 	}
-}
+};

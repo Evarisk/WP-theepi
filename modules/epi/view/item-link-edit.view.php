@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue des liens d'un item de la page "EPI"
+ * La vue des liens d'un item de la page Edition d'un EPI.
  *
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -25,12 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	 |
 
-	<a href="#" class="epi-item-link-save action-input"
-		data-parent="epi-row"
-		data-namespace="theEPI"
-		data-module="EPI"
-		data-before-method="checkData"
-		data-loader="wpeo-table"
+	<a href="#" class="epi-item-link-save edit button-save-epi"
 		data-action="save_epi"
 		data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 		data-nonce="<?php echo esc_attr( wp_create_nonce( 'save_epi' ) ); ?>">

@@ -3,7 +3,7 @@
  * Handle EPI Actions like save, delete, create_mass_epi.
  *
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
- * @since     0.1.0
+ * @since     0.5.0
  * @version   0.5.0
  * @copyright 2019 Evarisk
  * @package   TheEPI
@@ -16,21 +16,30 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gères toutes les actions des AUDIT lié à un EPI.
+ * Gères toutes les filtres lié au module audit.
  */
 class Audit_Filter {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
-	 * @since   0.1.0
+	 * @since   0.5.0
 	 * @version 0.5.0
 	 */
 	public function __construct() {
 		add_filter( 'tm_audit_import_tasks_and_points_return', array( $this, 'callback_tm_audit_import_tasks_and_points_return' ), 10, 2 );
 	}
 
+	/**
+	 * Affiche un EPI lors de sa création.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 * @param array $data_array_import
+	 * @param integer $id L'id de l'audit à importer.
+	 * @return array $data_array_return
+	 */
 	public function callback_tm_audit_import_tasks_and_points_return( $data_array_import, $id ) {
 
 		$audit = \task_manager\Audit_Class::g()->get( array( 'id' => $id ), true );

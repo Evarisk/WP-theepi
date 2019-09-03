@@ -1,11 +1,11 @@
 <?php
 /**
- * Handle EPI Actions like save, delete, create_mass_epi.
+ * Action qui s'occupe de la Création et la Génération d'un fichier ODT d'un EPI.
  *
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
- * @since     0.1.0
- * @version   0.5.0
- * @copyright 2017 Evarisk
+ * @since     0.5.0
+ * @version   0.6.0
+ * @copyright 209 Evarisk
  * @package   TheEPI
  */
 
@@ -16,13 +16,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gères toutes les actions des EPI.
+ * Gères toutes les actions des EPI_ODT.
  */
 class EPI_ODT_Action {
 
 
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
 	 * @since   0.5.0
 	 * @version 0.5.0
@@ -31,7 +31,14 @@ class EPI_ODT_Action {
 		add_action( 'wp_ajax_export_epi_odt', array( $this, 'callback_export_epi_odt' ) );
 	}
 
-
+	/**
+	 * Exporte la fiche de vie d'un EPI en focntion du modèle.
+	 *
+	 * @since   0.5.0
+	 * @version 0.6.0
+	 *
+	 * @return void
+	 */
 	public function callback_export_epi_odt() {
 		check_ajax_referer( 'export_epi_odt' );
 		$upload_dir = wp_upload_dir();
@@ -46,8 +53,13 @@ class EPI_ODT_Action {
 		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
 
 		$picture = array();
+
+		$site_id = get_current_blog_id();
+
 		$title   = current_time( 'Ymd' ) . '_';
-		$title  .= sanitize_title( $epi->data['title'] ) . '_';
+		$title  .= 'EPI' . '_';
+		$title  .=  $site_id . '_';
+		$title  .=  sanitize_title( $epi->data['id'] ) . '_';
 		$title  .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
 		$title   = str_replace( '-', '_', $title );
 
@@ -79,6 +91,7 @@ class EPI_ODT_Action {
 			'control'       => $control,
 			'serial_number' => $epi->data['serial_number'],
 			'manager'       => $epi->data['manager'],
+			'id'            => $epi->data['id'],
 			'title'         => $epi->data['title'],
 
 			'maker'         => $epi->data['maker'],
@@ -96,18 +109,42 @@ class EPI_ODT_Action {
 
 		foreach ( $audits as $key => $audit ) {
 			$user = get_user_by( 'id', $audit->data['author_id'] );
-			$document_meta['audits']['value'][] = array(
+			$tasks  = \task_manager\Task_Class::g()->get( array( 'post_parent' => $audit->data['id'] ) );
+
+			$temp_tasks = array();
+			$tasks_points = "";
+			foreach ($tasks as $key => $task ) {
+				$points = \task_manager\Point_Class::g()->get( array( 'post_id' => $task->data['id'] ) );
+
+				$nbr_point = "(" . count( $points ) . " points définis)";
+				$tasks_points .= "\n -> " . $task->data[ 'title' ] . " " . $nbr_point . " <- \n";
+				if( empty( $points ) ){
+					$tasks_points .= "Aucun point défini \n";
+				}else{
+					foreach ($points as $key => $point) {
+						$tasks_points .= '- ' . $point->data[ 'content' ] . "\n";
+					}
+				}
+
+			}
+
+			$default_data = array(
 				'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
-				// 'point'        =>
+				'title_audit'  => $audit->data[ 'title' ],
+				'tasks_points' => $tasks_points,
 				'user'         => $user->data->display_name,
 				'status'       => $audit->data['status_audit'],
 			);
-		}
 
+			$document_meta['audits']['value'][] = $default_data;
+
+		}
 		$response = EPI_ODT_Class::g()->save_document_data( $id, $document_meta, $args );
 
 		$response['document']->data['title']             = current_time( 'Ymd' ) . '_';
-		$response['document']->data['title']            .= sanitize_title( $epi->data['title'] ) . '_';
+		$response['document']->data['title']            .= 'EPI' . '_';
+		$response['document']->data['title']            .= $site_id . '_';
+		$response['document']->data['title']            .= sanitize_title( $epi->data['id'] ) . '_';
 		$response['document']->data['title']            .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
 		$response['document']->data['title']             = str_replace( '-', '_', $response['document']->data['title'] );
 		$response['document']->data['guid']              = str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';

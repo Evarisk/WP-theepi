@@ -16,6 +16,16 @@ window.eoxiaJS.theEPI.Audit.event = function() {
 
 };
 
+/**
+ * Récupère l'état du bouton toggle.
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {ClickEvent} event [t]
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.Audit.buttonToggle = function( event ) {
 
 	var toggleON = jQuery( this ).hasClass( 'fa-toggle-on' );
@@ -55,14 +65,15 @@ window.eoxiaJS.theEPI.Audit.buttonToggle = function( event ) {
 
 /**
  * Le callback en cas de réussite à la requête Ajax "create_task_audit".
- * Remplaces la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Ajoute une tâche à l'audit de contrôle.
  *
  * @since 0.5.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.Audit.createdTaskAuditSuccess = function( triggeredElement, response ) {
 	console.log( 'OK ');
@@ -73,15 +84,16 @@ window.eoxiaJS.theEPI.Audit.createdTaskAuditSuccess = function( triggeredElement
 };
 
 /**
- * Le callback en cas de réussite à la requête Ajax "create_task_audit".
- * Remplaces la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Le callback en cas de réussite à la requête Ajax "import_task_audit".
+ * Importer une tâche à l'audit de contrôle.
  *
  * @since 0.5.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.Audit.ImportedTaskAuditSuccess = function( triggeredElement, response ) {
 	console.log( 'OK ');
@@ -92,15 +104,16 @@ window.eoxiaJS.theEPI.Audit.ImportedTaskAuditSuccess = function( triggeredElemen
 };
 
 /**
- * Le callback en cas de réussite à la requête Ajax "create_task_audit".
- * Remplaces la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Le callback en cas de réussite à la requête Ajax "import_button_task_audit".
+ * Importer les boutons sur l'audit de contrôle.
  *
  * @since 0.5.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.Audit.ImportedButtonTaskAuditSuccess = function( triggeredElement, response ) {
 	var header = triggeredElement.closest( '.wpeo-modal' ).find( '.modal-header' ).find('.modal-title-header');
@@ -112,48 +125,94 @@ window.eoxiaJS.theEPI.Audit.ImportedButtonTaskAuditSuccess = function( triggered
 
 };
 
+/**
+ * Le callback en cas de réussite à la requête Ajax "control_epi".
+ * Affiche le modal template pour effecter le contrôle.
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.Audit.ControlEPISuccess = function( triggeredElement, response ) {
+	triggeredElement.closest( '.table-row' ).append( response.data.modal_template );
 	triggeredElement.closest( '.epi-row' ).find( '.control_audit' ).html( response.data.view_item );
-	triggeredElement.parent().append( response.data.modal_template );
 };
 
+/**
+ * Le callback en cas de réussite à la requête Ajax "display_control_epi".
+ * Affiche la vue du dernier contrôle effectué.
+ *
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.Audit.DisplayControlEPISuccess = function( triggeredElement, response ) {
 	triggeredElement.parent().append( response.data.modal_template );
 };
 
-
-
-
-
-
-
 /**
- * Le callback en cas de réussite à la requête Ajax "create_task_audit".
- * Remplaces la ligne courante du tableau "epi"
- *
- * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
- * @param  {Object}         response          Les données renvoyées par la requête Ajax.
- * @return {void}
+ * Le callback en cas de réussite à la requête Ajax "valid_audit".
+ * Valide le contrôle.
  *
  * @since 0.5.0
  * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
  */
 window.eoxiaJS.theEPI.Audit.ValidAuditSuccess = function( triggeredElement, response ) {
 	jQuery( '.wrap .container-content .epi .epi-row[ data-id="' + response.data.id + '"]' ).replaceWith( response.data.view );
 };
 
+/**
+ * Le callback en cas de réussite à la requête Ajax "get_content_from_url_audit".
+ * Récupère le texte d'une url github.
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.Audit.GetContentFromUrlAuditSuccess = function( triggeredElement, response ){
     if( response.data.content != "" ){
         triggeredElement.closest( '.modal-content' ).find( 'textarea[ name="content"]' ).html( response.data.content );
     }
 }
 
+/**
+ * Le callback en cas de réussite à la requête Ajax "display_all_audit".
+ * Affiche tout les contrôle effectués sur un EPI.
+ *
+ * @since 0.5.0
+ * @version 0.6.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ * @param  {Object}         response          Les données renvoyées par la requête Ajax.
+ *
+ * @return {void}
+ */
 window.eoxiaJS.theEPI.Audit.DisplayAllAuditSuccess = function( triggeredElement, response ) {
 	var toggleChevron = triggeredElement.find( '.icon' ).hasClass( 'fa-chevron-right' );
 
 	if (toggleChevron) {
 		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
 		triggeredElement.closest( '.control_audit').html( response.data.view );
+		console.log(triggeredElement.closest( '.control_audit .tm-audit .audit-container' ));
+		triggeredElement.closest( '.control_audit .tm-audit .audit-container' ).find( '.epi-item-link-control' ).remove();
 	} else {
 		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );
 		jQuery( '.wrap .container-content .epi .epi-row[ data-id="' + response.data.id + '"]' ).find( '.control_audit').html( response.data.single_view_audit );
