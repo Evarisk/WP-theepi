@@ -1286,3 +1286,11 @@
   /* Internet explorer depuis la version 10 et Edge */
   user-select: none;
   /* Propriété standard */ }
+
+.fa-toggle-off {
+  color: red;
+  font-size: 20px; }
+
+.fa-toggle-on {
+  color: mediumspringgreen;
+  font-size: 20px; }

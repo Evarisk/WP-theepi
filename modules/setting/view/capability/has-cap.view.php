@@ -2,11 +2,11 @@
 /**
  * Affiches les rôles qui ont les capacités "manage_theepi".
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.2.0
- * @version 0.2.0
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2015-2017 Evarisk
- * @package TheEPI
+ * @since     0.2.0
+ * @version   0.2.0
  */
 
 namespace theepi;

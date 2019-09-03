@@ -1,0 +1,12 @@
+{
+	"name": "AUDIT",
+	"slug": "audit",
+	"version": "0.5.0",
+	"description": "Handle AUDIT",
+	"path": "modules/audit/",
+	"dependencies": {
+		"action": {},
+		"class" : {},
+		"filter" : {}
+	}
+}

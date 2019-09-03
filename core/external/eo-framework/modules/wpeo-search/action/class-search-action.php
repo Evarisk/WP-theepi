@@ -2,7 +2,7 @@
 /**
  * Handle action for search module.
  *
- * @author Eoxia <dev@eoxia.com>
+ * @author    Eoxia <dev@eoxia.com>
  * @copyright (c) 2015-2018 Eoxia <dev@eoxia.com>.
  *
  * @license GPLv3 <https://spdx.org/licenses/GPL-3.0-or-later.html>
@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * Search Action Class.
  */
 class Search_Action {
+
 
 	/**
 	 * Constructor.
@@ -47,23 +48,25 @@ class Search_Action {
 		$title = $q->get( '_meta_or_title' );
 
 		if ( $title ) {
-			add_filter( 'get_meta_sql', function( $sql ) use ( $title ) {
-				global $wpdb;
+			add_filter(
+				'get_meta_sql', function ( $sql ) use ( $title ) {
+					global $wpdb;
 
-				static $nr = 0;
+					static $nr = 0;
 
-				if ( 0 != $nr++ ) {
+					if ( 0 != $nr++ ) {
+						return $sql;
+					}
+
+					$sql['where'] = sprintf(
+						'AND ( %s OR %s ) ',
+						$wpdb->prepare( "{$wpdb->posts} . post_title LIKE '%%%s%%'", $title ),
+						mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
+					);
+
 					return $sql;
 				}
-
-				$sql['where'] = sprintf(
-					'AND ( %s OR %s ) ',
-					$wpdb->prepare( "{$wpdb->posts} . post_title LIKE '%%%s%%'", $title ),
-					mb_substr( $sql['where'], 5, mb_strlen( $sql['where'] ) )
-				);
-
-				return $sql;
-			} );
+			);
 		}
 	}
 
@@ -82,17 +85,26 @@ class Search_Action {
 		$results = Search_Class::g()->search( $term, $type, $args );
 		$results = apply_filters( 'eo_search_results_' . $slug, $results );
 
-		do_action( $next_action, array( 'users' => $results, 'args' => $args ) );
+		do_action(
+			$next_action, array(
+				'users' => $results,
+				'args'  => $args,
+			)
+		);
 
 		ob_start();
-		\eoxia\View_Util::exec( 'eo-framework', 'wpeo_search', 'list-' . $type, array(
-			'term'    => $term,
-			'results' => $results,
-		) );
+		\eoxia\View_Util::exec(
+			'eo-framework', 'wpeo_search', 'list-' . $type, array(
+				'term'    => $term,
+				'results' => $results,
+			)
+		);
 
-		wp_send_json_success( array(
-			'view' => ob_get_clean(),
-		) );
+		wp_send_json_success(
+			array(
+				'view' => ob_get_clean(),
+			)
+		);
 	}
 }
 

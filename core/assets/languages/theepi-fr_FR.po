@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2018-10-24 11:09+0200\n"
-"PO-Revision-Date: 2018-10-24 11:09+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2019-08-22 11:19+0200\n"
+"PO-Revision-Date: 2019-08-22 11:26+0200\n"
+"Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.5\n"
+"X-Generator: Poedit 2.0.7\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -19,20 +19,82 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: test\n"
 "X-Poedit-SearchPathExcluded-2: core/external\n"
 
-#: core/action/class-theepi-core-action.php:132 core/view/main.view.php:21
-#: modules/setting/action/setting.action.php:47
+#: core/action/class-theepi-core-action.php:139
+#: modules/setting/action/setting.action.php:49
 msgid "TheEPI"
 msgstr "TheEPI"
 
-#: core/view/main.view.php:23
-msgid "Create mass from image"
-msgstr "Créer en masse à partir d'image"
+#: core/view/main.view.php:21
+msgid "List of PPE"
+msgstr "Liste des EPI"
 
-#: modules/epi/class/class-epi-comment.php:82
+#: core/view/main.view.php:23 modules/epi/view/item-link.view.php:23
+msgid "Do you want to exit edit mode"
+msgstr "Voulez vous quitter le mode édition"
+
+#: core/view/main.view.php:26
+msgid "New"
+msgstr "Nouveau"
+
+#: core/view/main.view.php:31
+msgid "New from images"
+msgstr "Nouveau à partir d'images"
+
+#: modules/audit/action/class-audit-action.php:64
+#: modules/audit/action/class-audit-action.php:211
+msgid "New task"
+msgstr "Nouvelle Tâche"
+
+#: modules/audit/view/audit-epi.view.php:49
+msgid "No name Audit"
+msgstr "Audit sans nom"
+
+#: modules/audit/view/modal-box-import.view.php:30
+msgid "Task"
+msgstr "Tâche"
+
+#: modules/audit/view/modal-box-import.view.php:35
+msgid "Point"
+msgstr "Point"
+
+#: modules/audit/view/modal-box-import.view.php:71
+#: modules/epi/view/item-link-edit.view.php:23
+msgid "Cancel"
+msgstr "Annuler"
+
+#: modules/audit/view/modal-box-import.view.php:76
+msgid "Import"
+msgstr "Importer"
+
+#: modules/audit/view/modal-footer.view.php:50
+msgid "Validate the control"
+msgstr "Valider le contrôle"
+
+#: modules/audit/view/modal-header.view.php:40
+#: modules/audit/view/modal-header.view.php:44
+msgid "KO"
+msgstr "KO"
+
+#: modules/audit/view/modal-header.view.php:42
+#: modules/audit/view/modal-header.view.php:46
+msgid "OK"
+msgstr "OK"
+
+#: modules/epi/class/class-epi-comment.php:83
 msgid "Create new PPE"
 msgstr "Créer un nouveau EPI"
 
-#: modules/epi/class/class-epi.php:207
+#: modules/epi/class/class-epi-odt.php:137
+#, php-format
+msgid "Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt"
+msgstr ""
+
+#: modules/epi/class/class-epi-odt.php:180
+#, php-format
+msgid "Le modèle utilisé est: %1$s"
+msgstr ""
+
+#: modules/epi/class/class-epi.php:314
 msgid "EPI per page"
 msgstr "EPI par page"
 
@@ -44,73 +106,178 @@ msgstr "Pas d'utilisateur"
 msgid "No comment"
 msgstr "Pas de commentaire"
 
-#: modules/epi/view/item-edit.view.php:26 modules/epi/view/item.view.php:22
-#: modules/epi/view/main.view.php:22
-#: modules/setting/view/capability/list-item.view.php:19
-#: modules/setting/view/capability/list.view.php:22
-msgid "ID"
-msgstr "ID"
+#: modules/epi/view/item-control.view.php:21
+msgid "EXCEEDED"
+msgstr "DEPASSE"
 
-#: modules/epi/view/item-edit.view.php:27 modules/epi/view/item.view.php:23
-#: modules/epi/view/main.view.php:23
-msgid "Name"
-msgstr "Nom"
+#: modules/epi/view/item-control.view.php:23
+#: modules/epi/view/item-control.view.php:31
+#: modules/epi/view/item-control.view.php:39
+#: modules/epi/view/item-control.view.php:47
+msgid "DAYS"
+msgstr "JOURS"
 
-#: modules/epi/view/item-edit.view.php:28 modules/epi/view/item.view.php:24
-#: modules/epi/view/main.view.php:24
-msgid "Serial number"
-msgstr "Numéro de série"
+#: modules/epi/view/item-control.view.php:29
+#: modules/epi/view/item-control.view.php:37
+#: modules/epi/view/item-control.view.php:45
+msgid "STAYS"
+msgstr "RESTE"
 
-#: modules/epi/view/item-edit.view.php:29 modules/epi/view/item.view.php:25
-#: modules/epi/view/main.view.php:25
-msgid "Period of control"
-msgstr "Période de contrôle"
+#: modules/epi/view/item-edit.view.php:25 modules/epi/view/item.view.php:34
+#: modules/epi/view/main-header.view.php:22 modules/epi/view/main.view.php:32
+msgid "Title"
+msgstr "Titre"
 
-#: modules/epi/view/item-edit.view.php:31
+#: modules/epi/view/item-edit.view.php:42 modules/epi/view/item.view.php:46
+#: modules/epi/view/main.view.php:33
+msgid "Serial Number"
+msgstr "Numéro de Série"
+
+#: modules/epi/view/item-edit.view.php:53 modules/epi/view/item.view.php:48
+#: modules/epi/view/main.view.php:34 modules/service/view/main.view.php:157
+msgid "Commissioning Date"
+msgstr "Date de Mise en Service"
+
+#: modules/epi/view/item-edit.view.php:73
 msgid "This field must be in numeric format and better than 0"
 msgstr "Ce champ doit être une valeur numérique supérieure à 0"
 
-#: modules/epi/view/item-edit.view.php:36
+#: modules/epi/view/item-edit.view.php:79
+#: modules/service/view/main.view.php:109
+#: modules/setting/view/default-data/main.view.php:28
 msgid "days"
 msgstr "jours"
 
-#: modules/epi/view/item-edit.view.php:37 modules/epi/view/item.view.php:27
-#: modules/epi/view/main.view.php:27
-msgid "Date of last check and comment"
-msgstr "Date de la dernière vérification et commentaire"
+#: modules/epi/view/item-edit.view.php:88 modules/epi/view/item.view.php:54
+#: modules/epi/view/main-header.view.php:26 modules/epi/view/main.view.php:36
+msgid "Status"
+msgstr "Statut"
 
-#: modules/epi/view/item-edit.view.php:38 modules/epi/view/item.view.php:28
-#: modules/epi/view/main.view.php:28
-msgid "State"
-msgstr "Status"
+#: modules/epi/view/item-link-edit.view.php:37
+#: modules/setting/view/capability/main.view.php:33
+#: modules/setting/view/default-data/main.view.php:43
+msgid "Save"
+msgstr "Enregistrer"
 
-#: modules/epi/view/item-edit.view.php:39 modules/epi/view/item.view.php:29
-#: modules/epi/view/main.view.php:29
-msgid "Remaining time"
-msgstr "Reste"
+#: modules/epi/view/item-link.view.php:26
+msgid "Edit"
+msgstr "Modifier"
 
-#: modules/epi/view/item.view.php:48
+#: modules/epi/view/item-link.view.php:34
+msgid "Perform a control"
+msgstr "Effectuer un contrôle"
+
+#: modules/epi/view/item-link.view.php:42
 msgid "Are you sure you want to remove this PPE ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
 
-#: modules/epi/view/main.view.php:46
+#: modules/epi/view/item-link.view.php:44
+msgid "Delete"
+msgstr "Supprimer"
+
+#: modules/epi/view/item.view.php:23 modules/epi/view/main-header.view.php:21
+#: modules/epi/view/main.view.php:31
+msgid "Control"
+msgstr "Contrôle"
+
+#: modules/epi/view/item.view.php:50 modules/epi/view/main-header.view.php:25
+#: modules/epi/view/main.view.php:35
+msgid "Last Control"
+msgstr "Dernier Contrôle"
+
+#: modules/epi/view/main-footer.view.php:24 modules/epi/view/main.view.php:51
 msgid "Load more"
 msgstr "Charger plus"
 
-#: modules/epi/view/pagination.view.php:26
-#: modules/setting/view/capability/list.view.php:50
+#: modules/epi/view/main-header.view.php:20 modules/epi/view/main.view.php:30
+msgid "Image"
+msgstr "Image"
+
+#: modules/epi/view/main-header.view.php:23
+#: modules/service/view/main.view.php:85
+msgid "Reference"
+msgstr "Référence"
+
+#: modules/epi/view/main-header.view.php:24
+#: modules/service/view/main.view.php:106
+#: modules/setting/view/default-data/main.view.php:25
+msgid "Periodicity"
+msgstr "Périodicité"
+
+#: modules/epi/view/pagination.view.php:27
+#: modules/setting/view/capability/list.view.php:53
 msgid "Page"
 msgstr "Page"
 
-#: modules/epi/view/search.view.php:20
-msgid "Search"
-msgstr "Rechercher"
-
-#: modules/epi/view/search.view.php:22
+#: modules/epi/view/search.view.php:23
 msgid "Search term"
 msgstr "Critère de recherche"
 
-#: modules/setting/class/setting.class.php:135
+#: modules/epi/view/search.view.php:29
+msgid "Search"
+msgstr "Rechercher"
+
+#: modules/service/action/class-service-menu-action.php:35
+msgid "Mise en Service"
+msgstr "Mise en Service"
+
+#: modules/service/view/main.view.php:20
+msgid "Commissioning"
+msgstr "Mise en Service"
+
+#: modules/service/view/main.view.php:57
+msgid "Maker"
+msgstr "Fabricant"
+
+#: modules/service/view/main.view.php:66
+msgid "Seller"
+msgstr "Vendeur"
+
+#: modules/service/view/main.view.php:75
+msgid "Manager"
+msgstr "Responsable"
+
+#: modules/service/view/main.view.php:95
+#: modules/setting/view/default-data/main.view.php:34
+msgid "Lifetime"
+msgstr "Durée de Vie"
+
+#: modules/service/view/main.view.php:98
+#: modules/setting/view/date-management/main.view.php:41
+#: modules/setting/view/default-data/main.view.php:37
+msgid "years"
+msgstr "ans"
+
+#: modules/service/view/main.view.php:118
+msgid "Manufacture Date"
+msgstr "Date de Fabrication"
+
+#: modules/service/view/main.view.php:138
+msgid "Purchase Date"
+msgstr "Date d'Achat"
+
+#: modules/service/view/main.view.php:174
+#: modules/service/view/main.view.php:216
+msgid "Control Date : "
+msgstr "Date de Contrôle :"
+
+#: modules/service/view/main.view.php:190
+msgid "End Life Date"
+msgstr "Date de Fin de Vie"
+
+#: modules/service/view/main.view.php:201
+msgid "Disposal Date"
+msgstr "Date de Mise au Rebut"
+
+#: modules/service/view/main.view.php:222
+msgid "End Life Date : "
+msgstr "Date de Fin de Vie :"
+
+#: modules/service/view/main.view.php:226
+msgid "Disposal Date : "
+msgstr "Date de Mise au Rebut :"
+
+#: modules/setting/class/setting.class.php:141
 msgid "User per page"
 msgstr "Utilisateur par page"
 
@@ -123,6 +290,11 @@ msgstr ""
 "La capacité \"manage_theepi\" est appliqué sur tous les utilisateurs dont le "
 "rôle est abonnés. Vous devez supprimer la capacité \"manage_theepi\" sur "
 "celui-ci pour pouvoir gérer manuellement ce droit par utilisateur"
+
+#: modules/setting/view/capability/list-item.view.php:19
+#: modules/setting/view/capability/list.view.php:22
+msgid "ID"
+msgstr "ID"
 
 #: modules/setting/view/capability/list-item.view.php:20
 #: modules/setting/view/capability/list.view.php:23
@@ -151,36 +323,111 @@ msgstr "Gestion des droits de TheEPI"
 msgid "Set access rights to the TheEPI app"
 msgstr "Définir les droits d'accès à l'application TheEPI"
 
-#: modules/setting/view/capability/main.view.php:33
-#: modules/setting/view/default-data/main.view.php:33
-msgid "Save"
-msgstr "Enregistrer"
+#: modules/setting/view/date-management/main.view.php:22
+msgid "Handle date management"
+msgstr "Gestion des dates"
+
+#: modules/setting/view/date-management/main.view.php:25
+msgid "Purchase Date Valued"
+msgstr "Date d'Achat estimée"
+
+#: modules/setting/view/date-management/main.view.php:32
+msgid "Purchase Date = Commissioning Date"
+msgstr "Date d'Achat = Date de Mise en Service"
+
+#: modules/setting/view/date-management/main.view.php:34
+msgid ""
+"Please indicate if you want your Purchase Date and your Commissioning Date "
+"are equal"
+msgstr ""
+"Veuillez indiquer si vous voulez que la Date d'Achat et la Date de Mise en "
+"Service sont égales"
+
+#: modules/setting/view/date-management/main.view.php:38
+msgid "Manufacture Date Valued"
+msgstr "Date de Fabrication estimée"
+
+#: modules/setting/view/date-management/main.view.php:43
+msgid "Please indicate the Manufacture Date valued of your PPE"
+msgstr "Veuillez indiquer la date de Fabrication estimée de votre EPI"
 
 #: modules/setting/view/default-data/main.view.php:22
 msgid "Handle default data"
 msgstr "Gestion des données par défaut"
 
-#: modules/setting/view/default-data/main.view.php:26
-msgid "Default comment*"
-msgstr "Commentaire par défaut*"
-
 #: modules/setting/view/default-data/main.view.php:30
-msgid "*This data is used for the first comment created on a new PPE"
-msgstr ""
-"*Cette donnée est le commentaire par défaut lors de la création d'un nouveau "
-"EPI"
+msgid "Please indicate the periodicity of control of your PPE"
+msgstr "Veuillez indiquer la périodicité de contrôle de votre EPI"
+
+#: modules/setting/view/default-data/main.view.php:39
+msgid "Please indicate the lifetime of your PPE"
+msgstr "Veuillez indiquer la durée de vie de votre EPI"
 
 #: modules/setting/view/main.view.php:19
 msgid "TheEPI settings"
 msgstr "TheEPI réglages"
 
-#: modules/setting/view/main.view.php:23
-msgid "Capacités"
+#: modules/setting/view/main.view.php:22
+msgid "Capability"
 msgstr "Capacité"
 
+#: modules/setting/view/main.view.php:23
+msgid "Default Data"
+msgstr "Donnée par Défaut"
+
 #: modules/setting/view/main.view.php:24
-msgid "Default data"
-msgstr "Donnée par défaut"
+msgid "Date Management"
+msgstr "Dates"
+
+#~ msgid "Categorie"
+#~ msgstr "Catégorie"
+
+#~ msgid "periodicity"
+#~ msgstr "périodicité"
+
+#~ msgid "Control Date"
+#~ msgstr "Date de Contrôle"
+
+#~ msgid "Default comment*"
+#~ msgstr "Commentaire par défaut*"
+
+#~ msgid "*This data is used for the first comment created on a new PPE"
+#~ msgstr ""
+#~ "*Cette donnée est le commentaire par défaut lors de la création d'un "
+#~ "nouveau EPI"
+
+#~ msgid "Capacités"
+#~ msgstr "Capacité"
+
+#~ msgid "Default data"
+#~ msgstr "Donnée par défaut"
+
+#~ msgid "reference"
+#~ msgstr " référence"
+
+#~ msgid "Date of last check and comment"
+#~ msgstr "Date de la dernière vérification et commentaire"
+
+#~ msgid "Remaining time"
+#~ msgstr "Reste"
+
+#~ msgid "Modified"
+#~ msgstr "Modifier"
+
+#~ msgid "Create mass from image"
+#~ msgstr "Créer en masse à partir d'image"
+
+#~ msgid "Name"
+#~ msgstr "Nom"
+
+#~ msgid "Serial number"
+#~ msgstr "Numéro de série"
+
+#~ msgid "Period of control"
+#~ msgstr "Période de contrôle"
+
+#~ msgid "State"
+#~ msgstr "Status"
 
 #~ msgid "Are you sure you want to remove this PPE"
 #~ msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"

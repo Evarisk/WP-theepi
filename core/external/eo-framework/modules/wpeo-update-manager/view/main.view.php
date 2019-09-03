@@ -2,11 +2,11 @@
 /**
  * La vue principale pour les mises à jour.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\EO_Update_Manager\View
+ * @package   EO_Framework\EO_Update_Manager\View
  */
 
 namespace task_manager;
@@ -31,19 +31,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="wpeo-grid grid-3">
-			<?php
-			foreach ( $data as $index => $def ) :
-				$total_number = null;
-				$stats        = '';
-				if ( isset( $def['count_callback'] ) && ! empty( $def['count_callback'] ) ) {
-					$total_number = call_user_func( $def['count_callback'] );
-					$stats        = '0 / ' . $total_number;
-					if ( 0 === $total_number ) {
-						$stats = __( 'No update requires for your installation', 'eoxia' );
-					}
-				}
-			?>
-			<div>
+	<?php
+	foreach ( $data as $index => $def ) :
+		$total_number = null;
+		$stats        = '';
+		if ( isset( $def['count_callback'] ) && ! empty( $def['count_callback'] ) ) {
+			$total_number = call_user_func( $def['count_callback'] );
+			$stats        = '0 / ' . $total_number;
+			if ( 0 === $total_number ) {
+				$stats = __( 'No update requires for your installation', 'eoxia' );
+			}
+		}
+	?>
+	<div>
 				<div class="wpeo-update-item <?php echo esc_attr( null === $total_number || 0 < $total_number ? 'wpeo-update-waiting-item' : 'wpeo-update-done-item' ); ?>" id="wpeo-upate-item-<?php echo esc_attr( $def['update_index'] ); ?>" >
 					<div class="wpeo-update-item-spin">
 						<span class="wpeo-update-spinner"><i class="fas fa-circle-notch fa-spin"></i></span>
@@ -68,8 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</form>
 					</div>
 				</div>
-			</div>
-			<?php endforeach; ?>
+	</div>
+	<?php endforeach; ?>
 		</div>
 	<?php endforeach; ?>
 	<div class="wpeo-update-waiting-item" id="wpeo-update-redirect-to-application" >
@@ -82,7 +82,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="wpeo-update-general-message" ></div>
 <?php else : ?>
 		<h1><?php esc_html_e( 'Update manager', 'eoxia' ); ?></h1>
-		<?php esc_html_e( 'No updates available for current version', 'eoxia' ); ?>
+	<?php esc_html_e( 'No updates available for current version', 'eoxia' ); ?>
 		<strong><a href="<?php echo esc_attr( admin_url( 'admin.php?page=' . $dashboard_url ) ); ?>"><?php echo esc_html_e( 'Back to main application', 'eoxia' ); ?></a></strong>
 <?php endif; ?>
 	</div>

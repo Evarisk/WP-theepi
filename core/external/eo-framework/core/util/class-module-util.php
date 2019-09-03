@@ -3,11 +3,11 @@
  * Gestion des modules.
  * Les externals doivent être placés dans modules/
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\Core\Util
+ * @package   EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,30 +21,32 @@ if ( ! class_exists( '\eoxia\Module_Util' ) ) {
 	 * Gestion des modules
 	 */
 	class Module_Util extends \eoxia\Singleton_Util {
+
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return void
 		 */
-		protected function construct() {}
+		protected function construct() {
+		}
 
 		/**
 		 * Parcours le fichier digirisk.config.json pour récupérer les chemins vers tous les modules.
 		 * Initialise ensuite un par un, tous ses modules.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $path        Le chemin vers le module externe.
 		 * @param string $plugin_slug Le slug principale du plugin dans le fichier principale config.json.
 		 *
 		 * @return \WP_Error|boolean {
-		 *																		WP_Error Si le fichier est inexistant ou si le plugin n'a pas de submodule.
+		 *                                                                        WP_Error Si le fichier est inexistant ou si le plugin n'a pas de submodule.
 		 *                                    boolean  True si aucune erreur s'est produite.
-		 *}.
+		 * }.
 		 */
 		public function exec_module( $path, $plugin_slug ) {
 			if ( empty( \eoxia\Config_Util::$init[ $plugin_slug ] ) ) {
@@ -62,7 +64,7 @@ if ( ! class_exists( '\eoxia\Module_Util' ) ) {
 		/**
 		 * Appelle la méthode init_config de \eoxia\Config_Util pour initialiser les configs du module
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $plugin_slug      Le slug du module externe à initialiser.
@@ -82,7 +84,7 @@ if ( ! class_exists( '\eoxia\Module_Util' ) ) {
 		/**
 		 * Inclus les dépendences du module (qui sont défini dans le config.json du module en question)
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $plugin_slug      Le slug du module externe à initialiser.
@@ -134,20 +136,21 @@ if ( ! class_exists( '\eoxia\Module_Util' ) ) {
 		/**
 		 * Inclus les fichiers prioritaires qui se trouvent dans la clé "priority" dans le .config.json du module
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  string $path_to_module_and_dependence_folder Le chemin vers le module.
 		 * @param  string $dependence_folder                    le chemin vers le dossier à inclure.
-		 * @param  array  $list_priority_file                    La liste des chemins des fichiers à inclure en priorité.
-		 * @return void                                       	nothing
+		 * @param  array  $list_priority_file                   La liste des chemins des fichiers à inclure en
+		 *                                                      priorité.
+		 * @return void                                           nothing
 		 */
 		public function inc_priority_file( $path_to_module_and_dependence_folder, $dependence_folder, $list_priority_file ) {
 			if ( ! empty( $list_priority_file ) ) {
 				foreach ( $list_priority_file as $file_name ) {
-					$path_file = realpath( $path_to_module_and_dependence_folder . $file_name  );
+					$path_file = realpath( $path_to_module_and_dependence_folder . $file_name );
 
-					require_once( $path_file );
+					include_once $path_file;
 				}
 			}
 		}
@@ -155,23 +158,25 @@ if ( ! class_exists( '\eoxia\Module_Util' ) ) {
 		/**
 		 * Désactives ou actives un module
 		 *
-		 * @since 1.2.0
+		 * @since   1.2.0
 		 * @version 1.2.0
 		 *
 		 * @param string $namespace Le SLUG principale de lu plugin.
 		 * @param string $slug      Le SLUG du module en question.
-		 * @param bool $state       true ou false.
+		 * @param bool   $state     true ou false.
 		 */
 		public function set_state( $namespace, $slug, $state ) {
 			$path_to_json = \eoxia\Config_Util::$init[ $namespace ]->$slug->path . '/' . $slug . '.config.json';
 
-			$json_content = \eoxia\JSON_Util::g()->open_and_decode( $path_to_json );
+			$json_content        = \eoxia\JSON_Util::g()->open_and_decode( $path_to_json );
 			$json_content->state = $state;
-			$json_content = json_encode( $json_content, JSON_PRETTY_PRINT );
-			$json_content = preg_replace_callback( '/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
-				$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
-				return $sym;
-			}, $json_content );
+			$json_content        = json_encode( $json_content, JSON_PRETTY_PRINT );
+			$json_content        = preg_replace_callback(
+				'/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
+					$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
+					return $sym;
+				}, $json_content
+			);
 
 			$file = fopen( $path_to_json, 'w+' );
 			fwrite( $file, str_replace( '\/', '/', $json_content ) );

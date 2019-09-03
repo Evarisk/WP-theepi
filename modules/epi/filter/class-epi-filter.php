@@ -2,11 +2,11 @@
 /**
  * Handle EPI Filter.
  *
- * @author Evarisk <dev@evarisk.com>
- * @since 0.2.0
- * @version 0.4.0
- * @copyright 2017 Evarisk
- * @package TheEPI
+ * @package   TheEPI
+ * @author    Evarisk <dev@evarisk.com>
+ * @copyright 2019 Evarisk
+ * @since     0.2.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -20,10 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class EPI_Filter {
 
+
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.4.0
 	 */
 	public function __construct() {
@@ -37,7 +38,7 @@ class EPI_Filter {
 	/**
 	 * Sauvegardes les options de l'écran.
 	 *
-	 * @since 0.2.0
+	 * @since   0.2.0
 	 * @version 0.3.0
 	 *
 	 * @param mixed  $status J'sais pas.
@@ -54,15 +55,13 @@ class EPI_Filter {
 		return $status;
 	}
 
-
-
 	/**
 	 * Met à jour le temps restant avant la date de hors d'état.
 	 *
-	 * @param  Comment_Model $object Les données du commentaires.
-	 * @param  array         $args   Les arguments lors du GET.
+	 * @param Comment_Model $object Les données du commentaires.
+	 * @param array         $args   Les arguments lors du GET.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.4.0
 	 *
 	 * @return Comment_Model
@@ -71,7 +70,7 @@ class EPI_Filter {
 		if ( ! empty( $object->data['id'] ) && ! empty( $object->data['frequency_control'] ) && ! empty( $object->data['control_date'] ) ) {
 			$control_date = \DateTime::createFromFormat( 'd/m/Y', $object->data['control_date']['rendered']['date'] );
 			$control_date->modify( '+' . $object->data['frequency_control'] . ' day' );
-			
+
 			$date_now = \DateTime::createFromFormat( 'd/m/Y', current_time( 'd/m/Y' ) );
 			$interval = $date_now->diff( $control_date );
 

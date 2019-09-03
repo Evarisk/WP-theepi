@@ -2,11 +2,11 @@
 /**
  * Gestion des filtres globaux concernant les posts dans EO_Framework.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\EO_Model\Filter
+ * @package   EO_Framework\EO_Model\Filter
  */
 
 namespace eoxia;
@@ -19,6 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gestion des filtres globaux concernant les champs de type "float" dans EO_Framework.
  */
 class Post_Filter {
+
 
 	/**
 	 * Initialisation et appel des différents filtres définis dans EO_Framework.
@@ -33,7 +34,7 @@ class Post_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir récupéré un objet de type "Post"
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param Post_Model $object L'objet qu'il faut "modifier".
@@ -46,9 +47,11 @@ class Post_Filter {
 			$model = $object->get_model();
 			if ( ! empty( $model['taxonomy']['child'] ) ) {
 				foreach ( $model['taxonomy']['child'] as $key => $value ) {
-					$object->data['taxonomy'][ $key ] = wp_get_object_terms( $object->data['id'], $key, array(
-						'fields' => 'ids',
-					) );
+					$object->data['taxonomy'][ $key ] = wp_get_object_terms(
+						$object->data['id'], $key, array(
+							'fields' => 'ids',
+						)
+					);
 				}
 			}
 		}
@@ -59,7 +62,7 @@ class Post_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir mis à jour un objet de type "Post"
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param Post_Model $object L'objet qu'il faut "modifier".

@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue déclarant le tableau HTML des EPI.
+ * La vue qui s'occupe de la Navigation des EPI.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.2.0
- * @version 0.4.0
- * @copyright 2017 Evarisk
- * @package TheEPI
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.2.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -15,38 +15,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<table class="wpeo-table epi">
-	<thead>
-		<tr>
-			<th class="w50"></th>
-			<th class="w50 padding" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></th>
-			<th class="wm130 padding" data-title="<?php esc_attr_e( 'Name', 'theepi' ); ?>"><span><?php esc_html_e( 'Name', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Serial number', 'theepi' ); ?>"><span><?php esc_html_e( 'Serial number', 'theepi' ); ?></span></th>
-			<th class="padding w50" data-title="<?php esc_attr_e( 'Period of control', 'theepi' ); ?>"><span><?php esc_html_e( 'Period of control', 'theepi' ); ?></span></th>
-			<th class="w50"></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Date of last check and comment', 'theepi' ); ?>"><span><?php esc_html_e( 'Date of last check and comment', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'State', 'theepi' ); ?>"><span><?php esc_html_e( 'State', 'theepi' ); ?></span></th>
-			<th class="padding" data-title="<?php esc_attr_e( 'Remaining time', 'theepi' ); ?>"><span><?php esc_html_e( 'Remaining time', 'theepi' ); ?></span></th>
-			<th class="wpeo-grid grid-2"></th>
-		</tr>
-	</thead>
+<div class="wpeo-tab epi">
+	<ul class="tab-list tab-redirect" style="float: left">
+		<li class="tab-element <?php echo $page == "all" ? 'tab-active' : ''; ?>" data-tab="all" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=all' ) ); ?> "> <i class="fas fa-list fa-2x" style="color : #0084ff"></i> </li>
+		<li class="tab-element <?php echo $page == "ok" ? 'tab-active' : ''; ?>" data-tab="ok" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=ok' ) ); ?>"> <i class="fas fa-check-circle fa-2x" style="color: mediumspringgreen;"></i></li>
+		<li class="tab-element <?php echo $page == "ko" ? 'tab-active' : ''; ?>" data-tab="ko" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=ko' ) ); ?>"> <i class="fas fa-exclamation-circle fa-2x" style="color: red;"></i></li>
+		<li class="tab-element <?php echo $page == "rebut" ? 'tab-active' : ''; ?>" data-tab="rebut" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=rebut' ) ); ?>"> <i class="fas fa-trash fa-2x" style="color: black;"></i></li>
+	</ul>
 
-	<tbody>
-		<?php \eoxia\View_Util::exec( 'theepi', 'epi', 'item-edit', array( 'epi' => $epi_schema ) ); ?>
-		<?php EPI_Class::g()->display_epi_list( $epis, false ); ?>
-	</tbody>
-</table>
+	<?php EPI_Class::g()->display_search(); ?>
 
-<div 	class="wpeo-button button-main action-attribute button-size-large load-more <?php echo esc_attr( ( ( $offset + $per_page ) >= $count_epi ) ? 'button-disable' : '' ); ?>"
-			data-action="load_more_epi"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'load_more_epi' ) ); ?>"
-			data-offset="<?php echo esc_attr( $offset + $per_page ); ?>"
-			data-term="">
-	<span>
-		<span><?php esc_html_e( 'Load more', 'theepi' ); ?></span>
-		&nbsp;
-		(<span class="number-epi"><?php echo esc_attr( $offset + $per_page ); ?></span>/<span class="total-number-epi"><?php echo esc_attr( $count_epi ); ?></span>)
-	</span>
+	<div class="wpeo-table table-flex epi">
+		<div class="table-row table-header" style="background-color : #0084ff">
+			<div class="table-cell table-100 padding" data-title="<?php esc_attr_e( 'Image', 'theepi' ); ?>"><span><?php esc_html_e( 'Image', 'theepi' ); ?></span></div>
+			<div class="table-cell table-150" style="text-align : center" data-title="<?php esc_attr_e( 'Next Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Next Control', 'theepi' ); ?></span></div>
+			<div class="table-cell table-300" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></div>
+			<div class="table-cell table-200" style="text-align : center" data-title="<?php esc_attr_e( 'Serial Number', 'theepi' ); ?>"><i class="fas fa-barcode"></i> <?php esc_html_e( 'Serial Number', 'theepi' ); ?></span></div>
+			<div class="table-cell table-250" style="text-align : center" data-title="<?php esc_attr_e( 'Commissioning Date', 'theepi' ); ?>"><span><?php esc_html_e( 'Commissioning Date', 'theepi' ); ?></span></div>
+			<div class="table-cell table-250" style="text-align : center" data-title="<?php esc_attr_e( 'Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Control', 'theepi' ); ?></span></div>
+			<div class="table-cell table-200" style="text-align : center;"data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></div>
+			<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>"><span><?php esc_html_e( 'Life Sheet', 'theepi' ); ?></span></div>
+		</div>
+
+
+		<div class="tab-container">
+			<?php EPI_Class::g()->display_epi_list( $epis, false, $page ); ?>
+		</div>
+	</div>
+
+	<div clas="pagination epi" style="margin-top: 20px">
+		<?php EPI_Class::g()->display_epi_pagination( $offset, $page ); ?>
+	</div>
 </div>
-
-<div class="wpeo-button button-light scroll-top"><i class="fa fa-arrow-circle-up" aria-hidden="true"></i></div>

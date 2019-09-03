@@ -2,11 +2,11 @@
 /**
  * Définition des données des terms
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Model
+ * @package   EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -22,6 +22,7 @@ if ( ! class_exists( '\eoxia\Term_Model' ) ) {
 	 */
 	class Term_Model extends Data_Class {
 
+
 		/**
 		 * Définition du modèle principal des taxonomies
 		 *
@@ -32,7 +33,7 @@ if ( ! class_exists( '\eoxia\Term_Model' ) ) {
 		/**
 		 * Le constructeur
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data       Les données de l'objet.

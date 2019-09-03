@@ -2,11 +2,11 @@
 /**
  * Handle EPI.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.1.0
- * @version 0.4.0
- * @copyright 2018 Evarisk
- * @package TheEPI
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.1.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -16,40 +16,41 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Handle EPI
+ * Handle EPI.
  */
 class EPI_Class extends \eoxia\Post_Class {
 
+
 	/**
-	 * Le nom du modèle
+	 * Le nom du modèle.
 	 *
 	 * @var string
 	 */
 	protected $model_name = '\theepi\EPI_Model';
 
 	/**
-	 * Le post type
+	 * Le post type.
 	 *
 	 * @var string
 	 */
 	protected $type = 'theepi-epi';
 
 	/**
-	 * La clé principale du modèle
+	 * La clé principale du modèle.
 	 *
 	 * @var string
 	 */
 	protected $meta_key = '_theepi_epi';
 
 	/**
-	 * La route pour accéder à l'objet dans la rest API
+	 * La route pour accéder à l'objet dans la rest API.
 	 *
 	 * @var string
 	 */
 	protected $base = 'theepi/epi';
 
 	/**
-	 * La version de l'objet
+	 * La version de l'objet.
 	 *
 	 * @var string
 	 */
@@ -63,21 +64,82 @@ class EPI_Class extends \eoxia\Post_Class {
 	public $element_prefix = 'EPI';
 
 	/**
-	 * La limite des risques a affiché par page
+	 * La limite des EPI a affiché par page.
 	 *
 	 * @var integer
 	 */
 	protected $limit_epi = 10;
 
 	/**
-	 * L'option pour enregistrer le commentaire par défault.
+	 * le nom de l'option pour enregistrer le nombre d'epi par page (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_per_page = 'epi_per_page';
 
 	/**
-	 * Le nom pour le register post type
+	 * le nom de l'option pour enregistrer la périodicité d'un epi (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_default_data_periodicity = 'theepi_default_data_periodicity';
+
+	/**
+	 * le nom de l'option pour enregistrer la durée de vie d'un epi (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_default_data_lifetime = 'theepi_default_data_lifetime';
+
+
+	/**
+	 * le nom de l'option pour enregistrer la date d'achat d'un epi (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_date_management_purchase_date = 'theepi_date_management_purchase_date';
+
+	/**
+	 * le nom de l'option pour enregistrer la date de fabrication d'un epi (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_date_management_manufacture_date = 'theepi_date_management_manufacture_date';
+
+	/**
+	 * La donnée par défaut de la périodicité.
+	 * Initialisé dans le constructeur.
+	 *
+	 * @var integer
+	 */
+	public $default_data_periodicity;
+
+	/**
+	 * La donnée par défaut de la durée de vie.
+	 * Initialisé dans le constructeur.
+	 *
+	 * @var integer
+	 */
+	public $default_data_lifetime;
+
+	/**
+	 * La donnée par défaut de la date d'achat.
+	 * Initialisé dans le constructeur.
+	 *
+	 * @var bool
+	 */
+	public $default_data_purchase_date;
+
+	/**
+	 * La donnée par défaut de la date de fabrication.
+	 * Initialisé dans le constructeur.
+	 *
+	 * @var integer
+	 */
+	public $default_data_manufacture_date;
+
+	/**
+	 * Le nom pour le register post type.
 	 *
 	 * @var string
 	 */
@@ -91,60 +153,122 @@ class EPI_Class extends \eoxia\Post_Class {
 	protected $attached_taxonomy_type = '_theepi_state';
 
 	/**
+	 * Constructeur.
+	 *
+	 * @since   0.6.0
+	 * @version 0.6.0
+	 *
+	 * @return void
+	 */
+	protected function construct() {
+		$this->default_data_periodicity = 365;
+		$this->default_data_lifetime = 10;
+		$this->default_data_purchase_date = true;
+		$this->default_data_manufacture_date = 1;
+
+	}
+
+	/**
 	 * Appel la vue principale pour afficher le tableau HTML contenant les EPI.
 	 *
-	 * @since 0.2.0
-	 * @version 0.4.0
+	 * @since   0.2.0
+	 * @version 0.6.0
 	 *
 	 * @param string $term Terme de la recherche. Défault ''.
 	 *
 	 * @return void
 	 */
 	public function display( $term = '' ) {
-		$epi_schema = self::g()->get( array(
-			'schema' => true,
-		), true );
+		$page = isset ( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : "all";
+		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "rebut" ){
+			$page = "all";
+		}
+
+		$epi_schema = self::g()->get(
+			array(
+				'schema' => true,
+			), true
+		);
 
 		$pagination_data = $this->get_pagination_data( 0, $term );
 
-		$epis = $this->get_epis( $pagination_data, $term );
+		$data_epis = $this->get_epis( $pagination_data, $term, $page );
+		$epis = $data_epis['epis'];
 
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'main', array(
-			'offset'     => $pagination_data['offset'],
-			'count_epi'  => $pagination_data['count_epi'],
-			'per_page'   => $pagination_data['per_page'],
-			'epis'       => $epis,
-			'epi_schema' => $epi_schema,
-			'term'       => $term,
-		) );
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'main', array(
+				'offset'     => $pagination_data['offset'],
+				'count_epi'  => $pagination_data['count_epi'],
+				'per_page'   => $pagination_data['per_page'],
+				'epis'       => $epis,
+				'epi_schema' => $epi_schema,
+				'term'       => $term,
+				'page'       => $page
+			)
+		);
 	}
 
 	/**
 	 * Récupères la liste des EPI.
 	 *
-	 * @since 0.4.0
-	 * @version 0.4.0
+	 * @since   0.4.0
+	 * @version 0.5.0
 	 *
-	 * @param array  $data (Voir au dessus.).
+	 * @param array  ['offset']    		(integer) Le nombre d'EPI à sauter.
+	 * 				 ['posts_per_page'] (integer) le nombre d'EPI par page.
+	 *
 	 * @param string $term Terme de la recherche. Défault ''.
+	 * @param string $page La page de l'EPI.
 	 *
-	 * @return array       Les EPI.
+	 * @return array ['epis']     (array)   Les EPIS en fonction de la page.
+	 * 				 ['nbr_epis'] (integer) le nombre d'EPI en fonction de la page.
 	 */
-	public function get_epis( $data, $term = '' ) {
+	public function get_epis( $data, $term = '', $page ) {
 		$args = array(
 			'offset'         => $data['offset'],
 			'posts_per_page' => $data['per_page'],
 			's'              => $term,
 		);
 
+		$status    = mb_strtoupper( $page );
+		switch ( $status ) {
+			case 'OK':
+			$temp_args = array(
+				'meta_key' => '_theepi_status_epi',
+				'meta_value' => 'OK'
+			);
+			break;
+			case 'KO':
+			$temp_args = array(
+				'meta_key' => '_theepi_status_epi',
+				'meta_value' => 'KO'
+			);
+			break;
+			case 'REBUT':
+			$temp_args = array(
+				'meta_key' => '_theepi_status_epi',
+				'meta_value' => 'REBUT'
+			);
+			break;
+			default:
+				$temp_args = array();
+				break;
+
+		}
+		$args = wp_parse_args( $temp_args, $args );
+
 		$epis = self::g()->get( $args );
-		return $epis;
+		$nbr_epis = count( self::g()->get( $temp_args ) );
+
+		$data_epis = array( 'epis' => $epis, 'nbr_epis' => $nbr_epis );
+
+		return $data_epis;
 	}
 
 	/**
 	 * Appel la vue pour afficher le formulaire de recherche.
 	 *
-	 * @since 0.4.0
+	 * @since   0.4.0
 	 * @version 0.4.0
 	 *
 	 * @return void
@@ -156,33 +280,31 @@ class EPI_Class extends \eoxia\Post_Class {
 	/**
 	 * Récupères les données liée à la pagination des EPI.
 	 *
-	 * @since 0.4.0
-	 * @version 0.4.0
+	 * @since   0.4.0
+	 * @version 0.6.0
 	 *
-	 * @param integer $offset       Le nombre de post à sauté. Défault 0.
-	 * @param string  $term         Terme de la recherche. Défault ''.
+	 * @param integer $offset Le nombre de post à sauté. Défault 0.
+	 * @param string  $term   Terme de la recherche. Défault ''.
 	 *
-	 * ['count_epi']    integer Le nombre d'EPI en base de donnée.
-	 * ['per_page']     integer Le nombre d'EPI par page.
-	 * ['offset']       integer Le nombre d'EPI à sauter.
-	 *
-	 * @return array (Voir au dessus.)
+	 * @return array ['offset']    (integer) Le nombre d'EPI à sauter.
+	 * 				 ['count_epi'] (integer) le nombre d'EPI en base de donnée.
+	 * 				 ['per_page']  (integer) Le nombre d'EPI par page.
 	 */
 	public function get_pagination_data( $offset = 0, $term = '' ) {
 
-		$count_epi = count( self::g()->get( array(
-			'fields' => array( 'ID' ),
-			's'      => $term,
-		) ) );
+		$count_epi = count(
+			self::g()->get(
+				array(
+					'fields' => array( 'ID' ),
+					's'      => $term,
+				)
+			)
+		);
 
 		$per_page = get_user_meta( get_current_user_id(), $this->option_name_per_page, true );
 
 		if ( empty( $per_page ) || $per_page < 1 ) {
 			$per_page = $this->limit_epi;
-		}
-
-		if ( $count_epi < $per_page ) {
-			$per_page = $count_epi;
 		}
 
 		return array(
@@ -195,7 +317,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	/**
 	 * Initialise les options d'écrans.
 	 *
-	 * @since 0.2.0
+	 * @since   0.2.0
 	 * @version 0.3.0
 	 *
 	 * @return void
@@ -212,43 +334,95 @@ class EPI_Class extends \eoxia\Post_Class {
 	}
 
 	/**
-	 * Affiches la liste des EPI
+	 * Affiches la liste des EPI.
 	 *
-	 * @since 0.1.0
-	 * @version 0.4.0
+	 * @since   0.1.0
+	 * @version 0.6.0
 	 *
-	 * @param array $epis La liste des EPI.
+	 * @param array  $epis La liste des EPI.
+	 * @param bool   $new  L'état de l'EPI - nouvel EPI = true.
+	 * @param string $page La page de l'EPI.
 	 *
 	 * @return void
 	 */
-	public function display_epi_list( $epis, $new = false ) {
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'list', array(
-			'epis' => $epis,
-			'new'  => $new,
-		) );
+	public function display_epi_list( $epis, $new = false , $page ) {
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'list', array(
+				'epis' => $epis,
+				'new'  => $new,
+			)
+		);
+	}
+
+	/**
+	 * Affiches la vue pagination des EPI.
+	 *
+	 * @since   0.6.0
+	 * @version 0.6.0
+	 *
+	 * @param integer  $offset     Le nombre d'EPI à sauter.
+	 * @param string   $page       La page de l'EPI.
+	 * @param integer  $pagination Le numéro de la page (défault page 1).
+	 *
+	 * @return void
+	 */
+	public function display_epi_pagination( $offset, $page, $pagination = 1 ) {
+
+		$pagination_data = $this->get_pagination_data( $offset );
+		$data_epis = $this->get_epis( $pagination_data, $term, $page );
+		$epis = $data_epis['epis'];
+		$nbr_epis = $data_epis['nbr_epis'];
+
+		if ( ( $page == 'ok') || ( $page == 'ko') || ( $page == 'rebut' ) ) {
+			$count_epi = $nbr_epis;
+		}else {
+			$count_epi = $pagination_data['count_epi'];
+		}
+
+		$per_page = $pagination_data['per_page'];
+
+		//Calcul le nombre de page
+		if( $count_epi > 0 ) {
+			$number_pages = intval( $count_epi / $per_page );
+			if( intval( $count_epi % $per_page ) > 0 ) {
+				$number_pages++;
+			}
+		}
+
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'pagination', array(
+				'offset'       => $pagination_data['offset'],
+				'count_epi'    => $pagination_data['count_epi'],
+				'per_page'     => $pagination_data['per_page'],
+				'pagination'   => $pagination,
+  				'number_pages' => $number_pages,
+				'page'         => $page
+
+			)
+		);
 	}
 
 	/**
 	 * Enregistres un EPI.
 	 *
-	 * @since 0.3.0
+	 * @since   0.3.0
 	 * @version 0.3.0
 	 *
-	 * @param  EPI_Model $epi      Les données de l'EPI.
-	 * @param  integer   $image_id L'ID de l'image téléversé.
+	 * @param EPI_Model $epi      Les données de l'EPI.
+	 * @param integer   $image_id L'ID de l'image téléversé.
 	 *
-	 * ['post_id'] integer L'ID de l'EPI. (Ce n'est pas un doublon avec $data['id']).
-	 * ['id']      integer L'ID du commentaire.
-	 * ['date']    string  La date du commentaire au format MySQL.
-	 * ['content'] string  Le contenu du commentaire.
-	 * ['state']   string  Le status de l'EPI. Peut être OK ou KO.
-	 * @param  array     $comments (See above).
+	 *  ['post_id'] integer L'ID de l'EPI. (Ce n'est pas un doublon avec $data['id']).
+	 *  ['id']      integer L'ID du commentaire.
+	 *  ['date']    string  La date du commentaire au format MySQL.
+	 *  ['content'] string  Le contenu du commentaire.
+	 *  ['state']   string  Le status de l'EPI. Peut être OK ou KO.
+	 *
+	 * @param array     $comments (See above).
 	 *
 	 * @return EPI_Model Retourne l'objet EPI créé ou mise à jour.
 	 */
 	public function save( $epi, $image_id, $comments ) {
 		$epi = self::g()->update( $epi->data );
-
 		\eoxia\LOG_Util::g()->log( sprintf( 'Update EPI "%d" with the data %s', $epi->data['id'], wp_json_encode( $epi->data ) ), 'theepi' );
 
 		if ( ! empty( $image_id ) ) {
@@ -265,8 +439,6 @@ class EPI_Class extends \eoxia\Post_Class {
 			\eoxia\LOG_Util::g()->log( sprintf( 'Add media on EPI "%d", media ID "%d"', $epi->data['id'], $image_id ), 'theepi' );
 		}
 
-		EPI_Comment_Class::g()->save_comments( $epi->data['id'], $comments );
-
 		// Obliger de get à nouveau pour récupérer control_date, et state.
 		$epi = self::get( array( 'id' => $epi->data['id'] ), true );
 
@@ -276,17 +448,15 @@ class EPI_Class extends \eoxia\Post_Class {
 	/**
 	 * Supprimes un EPI.
 	 *
-	 * @since 0.3.0
+	 * @since   0.3.0
 	 * @version 0.4.0
 	 *
-	 * @param  integer $id L'ID de l'EPI.
+	 * @param integer $id L'ID de l'EPI.
 	 *
-	 * @return bool        True si tout s'est bien passé.
+	 * @return bool  True si tout s'est bien passé.
 	 */
 	public function delete( $id ) {
-		$epi = self::g()->get( array(
-			'id' => $id,
-		), true );
+		$epi = self::g()->get( array( 'id' => $id ), true );
 
 		$epi->data['status'] = 'trash';
 
@@ -299,12 +469,12 @@ class EPI_Class extends \eoxia\Post_Class {
 	/**
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
-	 * @since 0.3.0
+	 * @since   0.3.0
 	 * @version 0.4.0
 	 *
-	 * @param array $files_id Un tableau d'ID.
+	 * @param array  $files_id  Un tableau d'ID.
 	 *
-	 * @return bool           True si tout s'est bien passé.
+	 * @return bool True si tout s'est bien passé.
 	 */
 	public function create_mass_epi( array $files_id ) {
 		$epis = array();
@@ -312,20 +482,29 @@ class EPI_Class extends \eoxia\Post_Class {
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				$epi     = self::g()->create( array( 'frequency_control' => 0 ) );
+				$epi     = self::g()->create(
+					array(
+						'periodicity' => 365,
+						'status_epi'  => 'OK',
+					)
+				);
 
-				\eoxia\WPEO_Upload_Class::g()->set_thumbnail( array(
-					'id'         => $epi->data['id'],
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-				) );
+				\eoxia\WPEO_Upload_Class::g()->set_thumbnail(
+					array(
+						'id'         => $epi->data['id'],
+						'file_id'    => $file_id,
+						'model_name' => '\theepi\EPI_Class',
+					)
+				);
 
-				\eoxia\WPEO_Upload_Class::g()->associate_file( array(
-					'id'         => $epi->data['id'],
-					'file_id'    => $file_id,
-					'model_name' => '\theepi\EPI_Class',
-					'field_name' => 'image',
-				) );
+				\eoxia\WPEO_Upload_Class::g()->associate_file(
+					array(
+						'id'         => $epi->data['id'],
+						'file_id'    => $file_id,
+						'model_name' => '\theepi\EPI_Class',
+						'field_name' => 'image',
+					)
+				);
 
 				$epis[] = $epi;
 
@@ -334,6 +513,114 @@ class EPI_Class extends \eoxia\Post_Class {
 		}
 
 		return $epis;
+	}
+
+	/**
+	 * Récupère le nombre de jour restant avant le prochain contrôle de l'EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.6.0
+	 *
+	 * @param array    $epi        Les données de l'EPI.
+	 *
+	 * @return integer $day_rest   retourne le nombre de jour.
+	 */
+
+	public function get_days( $epi ) {
+		$day_rest      = 0;
+
+		$control_date = $epi->data['control_date']['rendered']['mysql'];
+		$time = strtotime( $control_date) - strtotime( 'now' ); // seconde
+
+		if ( $time > 0 ) {
+			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
+			return $day_rest;
+
+		} else {
+			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
+			return $day_rest;
+		}
+	}
+
+	/**
+	 * Affiche les données des audits lié à un EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.6.0
+	 *
+	 * @param integer $id  L'id de l'EPI.
+	 *
+	 * @return bool   True si tout s'est bien passé.
+	 */
+
+	public function display_audit_epi( $id = 0 , $edit_audit = false ) {
+		if ( $id == 0 ) {
+			return false;
+		}
+
+		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+
+		$audit = $this->last_control_audit( $audits );
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+		if ( ! empty( $audit ) ) {
+
+			$user = get_user_by( 'id', $audit->data['author_id'] );
+			\eoxia\View_Util::exec(
+				'theepi',
+				'audit',
+				'audit-epi',
+				array(
+					'epi'        => $epi,
+					'audit'      => $audit,
+					'user'       => $user,
+					'edit_audit' => $edit_audit
+				)
+			);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * Récupère le dernier audit lié à un EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @param array  $audits       Les données des audits.
+	 *
+	 * @return array $audits[key]  retourne l'audit le plus récent.
+	 */
+
+	public function last_control_audit( $audits ) {
+
+		if ( empty( $audits ) ) {
+			return array();
+		}
+
+		$date_start        = 0;
+		$date_last_control = 0;
+		$key_last_control  = 0;
+		foreach ( $audits as $key => $audit ) {
+			$date_start = strtotime( $audit->data['date']['rendered']['mysql'] );
+			if ( $date_last_control < $date_start ) {
+				$date_last_control = $date_start;
+				$key_last_control  = $key;
+			}
+		}
+		return $audits[ $key_last_control ];
+	}
+
+	public function reload_single_epi( $epi ) {
+		ob_start();
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'item', array(
+				'epi' => $epi,
+			)
+		);
+		return ob_get_clean();
 	}
 }
 

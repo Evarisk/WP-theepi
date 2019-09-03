@@ -2,11 +2,11 @@
 /**
  * Méthodes utilitaires pour les dates.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\Core\Util
+ * @package   EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,43 +21,45 @@ if ( ! class_exists( '\eoxia\Date_Util' ) ) {
 	 * Méthodes utilitaires pour les dates.
 	 */
 	class Date_Util extends \eoxia\Singleton_Util {
+
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return void
 		 */
-		protected function construct() {}
+		protected function construct() {
+		}
 
 		/**
 		 * Remplis les champs de type 'wpeo_date'.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param  string $current_time Le date envoyé par l'objet.
 		 * @return array {
 		 *         Les propriétés
 		 *
-		 *         @type array data_input {
+		 * @type array data_input {
 		 *               Les propriétés de date_input
 		 *
-		 *               @type string date La date au format MySQL
-		 *               @type array  fr_FR {
+		 * @type string date La date au format MySQL
+		 * @type array  fr_FR {
 		 *                     Les propriétés de fr_FR
 		 *
-		 *                     @type string date      La date au format d/m/Y
-		 *                     @type string date_time La date au format d/m/Y H:i:s
+		 * @type string date      La date au format d/m/Y
+		 * @type string date_time La date au format d/m/Y H:i:s
 		 *               }
-		 *               @type array  en_US {
+		 * @type array  en_US {
 		 *                     Les propriétés de en_US
 		 *
-		 *                     @type string date      La date au format m-d-y
-		 *                     @type string date_time La date au format m-d-y H:i:s
+		 * @type string date      La date au format m-d-y
+		 * @type string date_time La date au format m-d-y H:i:s
 		 *               }
-		 *               @type string date_human_readable La date au format lisible.
+		 * @type string date_human_readable La date au format lisible.
 		 *         }
 		 * }
 		 */
@@ -83,9 +85,9 @@ if ( ! class_exists( '\eoxia\Date_Util' ) ) {
 				$formatter                   = new \IntlDateFormatter( $locale, \IntlDateFormatter::FULL, \IntlDateFormatter::SHORT );
 				$data['date_human_readable'] = \ucwords( $formatter->format( $date ) );
 			} else {
-				$data['date'] = $date->format( 'n/j/Y' );
-				$data['date_time'] = $date->format( 'n/j/Y, g:i A' );
-				$data['time'] = $date->format( 'g:i A' );
+				$data['date']                = $date->format( 'n/j/Y' );
+				$data['date_time']           = $date->format( 'n/j/Y, g:i A' );
+				$data['time']                = $date->format( 'g:i A' );
 				$data['date_human_readable'] = $date->format( 'l, F j, Y \A\t g:i A' );
 			}
 
@@ -95,11 +97,11 @@ if ( ! class_exists( '\eoxia\Date_Util' ) ) {
 		/**
 		 * Renvoie la date au format du WordPress de l'utilisateur.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  string $date La date à formater.
-		 * @return string      	La date formatée au format SQL
+		 * @return string          La date formatée au format SQL
 		 *
 		 * @todo: Est-ce utile ?
 		 */
@@ -107,19 +109,22 @@ if ( ! class_exists( '\eoxia\Date_Util' ) ) {
 			$format = get_option( 'date_format' );
 			if ( $with_time ) {
 				$format .= ' ' . get_option( 'time_format' );
+
 			}
 
 			return mysql2date( $format, $date );
+
 		}
 
 		/**
 		 * Convertis les minutes en un format spécial sur 7h = 1 jour.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param  integer $min               Le nombre de minute.
-		 * @param  boolean $display_full_min  Si oui, affiches $min entre paranthèse.
+		 * @param integer $min              Le nombre de minute.
+		 * @param boolean $display_full_min Si oui, affiches $min entre
+		 *                                  paranthèse.
 		 *
 		 * @return string                     La date formatée.
 		 */
@@ -132,10 +137,10 @@ if ( ! class_exists( '\eoxia\Date_Util' ) ) {
 			$display           = '';
 
 			// if ( ! empty( $day ) ) {
-				$display .= $day . 'j ';
+			$display .= $day . 'j ';
 			// }
 			// if ( ! empty( $hour ) ) {
-				$display .= $hour . 'h ';
+			$display .= $hour . 'h ';
 			// }
 			$display .= $clone_min . 'min';
 			if ( $display_full_min ) {

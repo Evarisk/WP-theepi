@@ -2,11 +2,11 @@
 /**
  * Gestion des posts (POST, PUT, GET, DELETE)
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -21,6 +21,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 	 * Gestion des posts (POST, PUT, GET, DELETE)
 	 */
 	class Post_Class extends Object_Class {
+
 
 		/**
 		 * Le nom du modèle
@@ -61,7 +62,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		 * Utiles pour récupérer la clé unique
 		 *
 		 * @todo Rien à faire ici
-		 * @var string
+		 * @var  string
 		 */
 		protected $identifier_helper = 'post';
 
@@ -92,10 +93,10 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		 * Initialise le post type selon $name et $name_singular.
 		 * Initialise la taxonomy si elle existe.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @see register_post_type
+		 * @see    register_post_type
 		 * @return boolean
 		 */
 		public function init_post_type() {
@@ -115,7 +116,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		/**
 		 * Récupères les données selon le modèle défini.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param array   $args   Les paramètres à appliquer pour la récupération @see https://codex.wordpress.org/Function_Reference/WP_Query.
@@ -182,10 +183,11 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		/**
 		 * Insère ou met à jour les données dans la base de donnée.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param Array $data    Les données a insérer ou à mêttre à jour.
+		 * @param Array $data Les données a insérer ou à mêttre à
+		 *                    jour.
 		 *
 		 * @return Object      L'objet construit grâce au modèle.
 		 */
@@ -247,12 +249,13 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 				return $post_save_result;
 			}
 
-
 			$object = apply_filters( 'eo_model_post_after_' . $req_method, $object, $args_cb );
-			$object = $this->get( array(
-				'id'          => $object->data['id'],
-				'post_status' => array( 'any', 'trash' ),
-			), true );
+			$object = $this->get(
+				array(
+					'id'          => $object->data['id'],
+					'post_status' => array( 'any', 'trash' ),
+				), true
+			);
 
 			// Il ne faut pas lancer plusieurs fois pour post.
 			if ( 'post' !== $this->get_type() ) {
@@ -265,7 +268,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		/**
 		 * Recherche dans les meta value.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param string $search Le terme de la recherche.
@@ -302,9 +305,11 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 			$list_model = array();
 			if ( ! empty( $list_group ) ) {
 				foreach ( $list_group as $element ) {
-					$list_model[] = $this->get( array(
-						'id' => $element->ID,
-					) );
+					$list_model[] = $this->get(
+						array(
+							'id' => $element->ID,
+						)
+					);
 				}
 			}
 
@@ -314,7 +319,7 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		/**
 		 * Retournes le nom de la catégorie attachée au post.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string Le nom de la catégorie.
@@ -322,11 +327,11 @@ if ( ! class_exists( '\eoxia\Post_Class' ) ) {
 		public function get_attached_taxonomy() {
 			return $this->attached_taxonomy_type;
 		}
-		
+
 		/**
 		 * Retournes le nom du post type.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string Le nom du post type.

@@ -2,11 +2,11 @@
 /**
  * Define EPI Model.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.1.0
- * @version 0.4.0
- * @copyright 2015-2018 Evarisk
- * @package TheEPI
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.1.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -20,13 +20,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class EPI_Model extends \eoxia\Post_Model {
 
+
 	/**
 	 * Construct
 	 *
-	 * @since 0.1.0
-	 * @version 0.4.0
+	 * @since   0.1.0
+	 * @version 0.6.0
 	 *
-	 * @param EPI_Class $object     Les données du commentaire de l'epi.
+	 * @param EPI_Class $object     Les données  de l'epi.
 	 * @param string    $req_method La méthode de la requête.
 	 */
 	public function __construct( $object, $req_method = null ) {
@@ -62,60 +63,174 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
+		$this->schema['status'] = array(
+			'type'    => 'string',
+			'default' => 'publish',
+			'since'   => '0.1.0',
+			'version' => '0.1.0',
+		);
+
+
+		$this->schema['reference'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_reference',
+			'description' => 'Is the reference of the EPI.',
+			'since'       => '0.4.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['periodicity'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_periodicity',
+			'description' => 'Is the periodicity of the EPI.',
+			'since'       => '0.4.0',
+			'version'     => '0.6.0',
+		);
+
 		$this->schema['serial_number'] = array(
 			'type'        => 'string',
 			'meta_type'   => 'single',
-			'field'       => '_serial_number',
+			'field'       => '_theepi_serial_number',
 			'description' => 'Is the serial number of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
-		$this->schema['production_date'] = array(
-			'type'        => 'wpeo_date',
-			'context'     => array( 'GET' ),
-			'meta_type'   => 'multiple',
-			'description' => 'Is the production date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+		$this->schema['maker'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_maker',
+			'description' => 'Is the maker of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
-		$this->schema['frequency_control'] = array(
-			'type'        => 'integer',
-			'meta_type'   => 'multiple',
-			'required'    => true,
-			'description' => 'Is the frequency control of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+		$this->schema['seller'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_seller',
+			'description' => 'Is the seller of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
+
+		$this->schema['manager'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_manager',
+			'description' => 'Is the manager of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['status_epi'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_status_epi',
+			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
+			'since'       => '0.5.0',
+			'version'     => '0.5.0',
+		);
+
 
 		$this->schema['control_date'] = array(
 			'type'        => 'wpeo_date',
 			'context'     => array( 'GET' ),
 			'meta_type'   => 'multiple',
 			'description' => 'Is the control date of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['manufacture_date'] = array(
+			'type'        => 'wpeo_date',
+			'context'     => array( 'GET' ),
+			'meta_type'   => 'single',
+			'field'       => '_theepi_manufacture_date',
+			'description' => 'Is the manufacture date of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['manufacture_date_valid'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_manufacture_date_valid',
+			'description' => 'Check if manufacture date is update',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+			'default'     => 0,
+		);
+
+		$this->schema['purchase_date'] = array(
+			'type'        => 'wpeo_date',
+			'context'     => array( 'GET' ),
+			'meta_type'   => 'single',
+			'field'       => '_theepi_purchase_date',
+			'description' => 'Is the purchase date of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['purchase_date_valid'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_purchase_date_valid',
+			'description' => 'Check if purchase date is update',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+			'default'     => 0,
+		);
+
+		$this->schema['end_life_date'] = array(
+			'type'        => 'wpeo_date',
+			'context'     => array( 'GET' ),
+			'meta_type'   => 'single',
+			'field'       => '_theepi_end_life_date',
+			'description' => 'Is the end life date of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['commissioning_date'] = array(
+			'type'        => 'wpeo_date',
+			'context'     => array( 'GET' ),
+			'meta_type'   => 'single',
+			'field'       => '_theepi_commissioning_date',
+			'description' => 'Is the commissioning date of the EPI.',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
 		);
 
-		$this->schema['compiled_remaining_time'] = array(
-			'type'        => 'string',
-			'meta_type'   => 'field',
-			'field'       => '_compiled_remaining_time',
-			'default'     => '',
-			'description' => 'Is compiled time remaining before the EPI is broken.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+		$this->schema['commissioning_date_valid'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_commissioning_date_valid',
+			'description' => 'Check if commissioning date is update',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+			'default'     => 0,
 		);
 
-		$this->schema['state'] = array(
-			'type'        => 'string',
-			'meta_type'   => 'field',
-			'field'       => '_state',
-			'default'     => '',
-			'description' => 'Is the state of the EPI. Broken or not. Value can be "OK" or "KO".',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+		$this->schema['disposal_date'] = array(
+			'type'        => 'wpeo_date',
+			'context'     => array( 'GET' ),
+			'meta_type'   => 'single',
+			'field'       => '_theepi_disposal_date',
+			'description' => 'Is the disposal date of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
+		);
+
+		$this->schema['lifetime_epi'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_lifetime_epi',
+			'description' => 'Is the lifetime of the EPI.',
+			'since'       => '0.6.0',
+			'version'     => '0.6.0',
 		);
 
 		parent::__construct( $object, $req_method );

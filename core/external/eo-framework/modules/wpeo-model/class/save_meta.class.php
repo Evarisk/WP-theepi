@@ -2,11 +2,11 @@
 /**
  * Gestion des meta
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -22,23 +22,25 @@ if ( ! class_exists( '\eoxia\Save_Meta_Class' ) ) {
 	 */
 	class Save_Meta_Class extends Singleton_Util {
 
+
 		/**
 		 * Le constructeur
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 */
-		protected function construct() {}
+		protected function construct() {
+		}
 
 		/**
 		 * Apelle la méthode selon si la définition du champ est en meta "single" ou "multiple".
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param  object $object   L'objet courant.
-		 * @param  string $function La méthode a appeler.
-		 * @param  string $meta_key Le nom de la meta key.
+		 * @param object $object   L'objet courant.
+		 * @param string $function La méthode a appeler.
+		 * @param string $meta_key Le nom de la meta key.
 		 */
 		public static function save_meta_data( $object, $function, $meta_key ) {
 			$schema = $object->get_model();
@@ -68,7 +70,7 @@ if ( ! class_exists( '\eoxia\Save_Meta_Class' ) ) {
 		 * @param string $function La function a appeler.
 		 * @param string $meta_key Le nom de la meta.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 */
 		private function save_single_meta_data( $id, $value, $function, $meta_key ) {
@@ -77,10 +79,12 @@ if ( ! class_exists( '\eoxia\Save_Meta_Class' ) ) {
 			if ( is_array( $data ) ) {
 				$data = \wp_json_encode( $data );
 				$data = addslashes( $data );
-				$data = preg_replace_callback( '/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
-					$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
-					return $sym;
-				}, $data );
+				$data = preg_replace_callback(
+					'/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
+						$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
+						return $sym;
+					}, $data
+				);
 			}
 
 			call_user_func( $function, $id, $meta_key, $data );
@@ -94,7 +98,7 @@ if ( ! class_exists( '\eoxia\Save_Meta_Class' ) ) {
 		 * @param string $function    La function a appeler.
 		 * @param string $meta_key    Le nom de la meta.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 */
 		private function save_multiple_meta_data( $id, $array_value, $function, $meta_key ) {
@@ -104,10 +108,12 @@ if ( ! class_exists( '\eoxia\Save_Meta_Class' ) ) {
 			$data = addslashes( $data );
 
 			// Remplaces le paramètre $options de json_encode disponible à partir de php 5.4.0: JSON_UNESCAPED_UNICODE.
-			$data = preg_replace_callback( '/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
-				$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
-				return $sym;
-			}, $data );
+			$data = preg_replace_callback(
+				'/\\\\u([0-9a-f]{4})/i', function ( $matches ) {
+					$sym = mb_convert_encoding( pack( 'H*', $matches[1] ), 'UTF-8', 'UTF-16' );
+					return $sym;
+				}, $data
+			);
 
 			call_user_func( $function, $id, $meta_key, $data );
 		}

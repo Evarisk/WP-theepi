@@ -2,16 +2,18 @@
 /**
  * Classe helper pour les modèles.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
 
-if ( ! defined( 'ABSPATH' ) ) { exit; }
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 
@@ -20,10 +22,11 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 	 */
 	class Helper_Class implements \ArrayAccess {
 
+
 		/**
 		 * Récupères le modèle.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return Object le modèle.
@@ -35,19 +38,19 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 		/**
 		 * Récupères le nom de la classe selon le model.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string Le nom de la classe avec le namespace si existant.
 		 */
-		 public function get_class() {
-			 $class_name = get_class( $this );
-			 $class_name = str_replace( 'Model', 'Class', $class_name );
-			 $class_name = str_replace( 'model', 'Class', $class_name );
-			 $class_name = str_replace( '\\', '/', $class_name );
+		public function get_class() {
+			$class_name = get_class( $this );
+			$class_name = str_replace( 'Model', 'Class', $class_name );
+			$class_name = str_replace( 'model', 'Class', $class_name );
+			$class_name = str_replace( '\\', '/', $class_name );
 
-			 return $class_name;
-		 }
+			return $class_name;
+		}
 
 		/**
 		 * Permet de faire echo sur un objet et supprimes la définition du modèle avant l'affichage.
@@ -56,17 +59,19 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 		 */
 		public function __toString() {
 			$this->delete_model_for_print( $this );
-			echo '<pre>'; print_r( $this ); echo '</pre>';
+			echo '<pre>';
+			print_r( $this );
+			echo '</pre>';
 			return '';
 		}
 
 		/**
 		 * Supprime le modèle.
 		 *
-		 * @since 1.0.0
+		 * @since   1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param  object $current L'objet complet.
+		 * @param object $current L'objet complet.
 		 */
 		private function delete_model_for_print( $current ) {
 			if ( ! empty( $this->model ) ) {
@@ -90,7 +95,7 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $offset Parameter name.
+		 * @param  string $offset Parameter name.
 		 * @return bool Whether the parameter is set.
 		 */
 		public function offsetExists( $offset ) {
@@ -102,7 +107,7 @@ if ( ! class_exists( '\eoxia\Helper_Class' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param string $offset Parameter name.
+		 * @param  string $offset Parameter name.
 		 * @return mixed|null Value if set, null otherwise.
 		 */
 		public function offsetGet( $offset ) {

@@ -1,0 +1,10 @@
+{
+	"name": "Service",
+	"slug": "service",
+	"version": "0.6.0",
+	"description": "Handle Service EPI",
+	"path": "modules/service/",
+	"dependencies": {
+		"class": {}
+	}
+}

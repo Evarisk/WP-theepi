@@ -2,11 +2,11 @@
 /**
  * Handle main actions.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.1.0
- * @version 0.2.0
+ * @author    Jimmy Latour <jimmy@evarisk.com>
+ * @since     0.1.0
+ * @version   0.2.0
  * @copyright 2017 Evarisk
- * @package TheEPI
+ * @package   TheEPI
  */
 
 namespace theepi;
@@ -20,10 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class TheEPI_Core_Action {
 
+
 	/**
 	 * Le constructeur
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.1.0
 	 */
 	public function __construct() {
@@ -47,7 +48,7 @@ class TheEPI_Core_Action {
 	/**
 	 * Initialise le fichier style.min.css du plugin Digirisk-EPI.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.2.0
 	 *
 	 * @return void
@@ -61,7 +62,7 @@ class TheEPI_Core_Action {
 	/**
 	 * Initialise les fichiers JS inclus dans WordPress (jQuery, wp.media et thickbox)
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.1.0
 	 *
 	 * @return void
@@ -76,7 +77,7 @@ class TheEPI_Core_Action {
 	/**
 	 * Initialise le fichier backend.min.js du plugin.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.1.0
 	 *
 	 * @return void
@@ -89,7 +90,7 @@ class TheEPI_Core_Action {
 	/**
 	 * Initialise le fichier MO du plugin et les capacitées.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.2.0
 	 *
 	 * @return void
@@ -101,36 +102,54 @@ class TheEPI_Core_Action {
 	/**
 	 * Initialise les capacitées
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.1.0
 	 *
 	 * @return void
 	 */
 	public function callback_admin_init() {
-		/** Set capability to subscriber by default */
+		/**
+ * Set capability to subscriber by default
+*/
 		$subscriber_role = get_role( 'subscriber' );
 		if ( ! $subscriber_role->has_cap( 'manage_theepi' ) ) {
 			$subscriber_role->add_cap( 'manage_theepi', false );
 		}
 
-		/** Set capability to administrator by default */
+		/**
+ * Set capability to administrator by default
+*/
 		$administrator_role = get_role( 'administrator' );
 		if ( ! $administrator_role->has_cap( 'manage_theepi' ) ) {
 			$administrator_role->add_cap( 'manage_theepi', true );
 		}
+
+		\eoxia\Config_Util::$init['task-manager']->insert_scripts_pages[] = 'theepi';
 	}
 
 	/**
 	 * Initialise le sous menu "TheEPI" dans le menu WordPress.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.2.0
 	 *
 	 * @return void
 	 */
 	public function callback_admin_menu() {
-		$hook = add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'dashicons-shield-alt' );
+		$hook = add_menu_page( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'manage_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'data:image/svg+xml;base64,' . base64_encode( "
+		<svg data-prefix='fas' data-icon='hard-hat' 
+			class='svg-inline--fa fa-hard-hat fa-w-16' 
+			role='img' 
+			xmlns='http://www.w3.org/2000/svg' 
+			viewBox='0 0 512 512'>
+			<path fill='rgba(240,245,250,.6)' 
+				d='M480 288c0-80.25-49.28-148.92-119.19-177.62L320 192V80a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v112l-40.81-81.62C81.28 139.08 32 207.75 32 288v64h448zm16 96H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h480a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z'>
+			</path>
+		</svg> ")
+	 );
 		add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );
+
+
 	}
 }
 

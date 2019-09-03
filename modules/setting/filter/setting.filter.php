@@ -2,11 +2,11 @@
 /**
  * Handle Setting Filter.
  *
- * @author Jimmy Latour <jimmy@evarisk.com>
- * @since 0.2.0
- * @version 0.2.0
+ * @package   TheEPI
+ * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2017 Evarisk
- * @package TheEPI
+ * @since     0.2.0
+ * @version   0.2.0
  */
 
 namespace theepi;
@@ -20,10 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Setting_Filter {
 
+
 	/**
-	 * Le constructeur
+	 * Le constructeur.
 	 *
-	 * @since 0.1.0
+	 * @since   0.1.0
 	 * @version 0.2.0
 	 */
 	public function __construct() {
@@ -33,7 +34,7 @@ class Setting_Filter {
 	/**
 	 * Sauvegardes les options de l'écran.
 	 *
-	 * @since 0.2.0
+	 * @since   0.2.0
 	 * @version 0.2.0
 	 *
 	 * @param mixed  $status J'sais pas.

@@ -10,6 +10,7 @@
  */
 class TestPostClass extends WP_UnitTestCase {
 
+
 	/**
 	 * Testes de Post_Model.
 	 *
@@ -23,7 +24,7 @@ class TestPostClass extends WP_UnitTestCase {
 	function test_create_post( $data, $expected ) {
 		$post = \eoxia\Post_Class::g()->create( $data, true );
 
-		$this->assertInstanceOf($expected['is_instance'], $post);
+		$this->assertInstanceOf( $expected['is_instance'], $post );
 
 		$this->assertEquals( $expected['data']['title'], $post->data['title'] );
 		$this->assertInternalType( $expected['schema']['title']['type'], $post->data['title'] );
@@ -77,8 +78,8 @@ class TestPostClass extends WP_UnitTestCase {
 					'date'      => $date,
 				),
 				array(
-					'is_instance'      => \eoxia\Post_Model::class,
-					'data'             => array(
+					'is_instance' => \eoxia\Post_Model::class,
+					'data'        => array(
 						'title'          => 'Hello tout le monde !',
 						'author_id'      => 1,
 						'parent_id'      => 0,
@@ -92,7 +93,7 @@ class TestPostClass extends WP_UnitTestCase {
 						'comment_count'  => 0,
 						'thumbnail_id'   => 0,
 					),
-					'schema'           => \eoxia\Post_Class::g()->get_schema(),
+					'schema'      => \eoxia\Post_Class::g()->get_schema(),
 				),
 			),
 		);

@@ -2,11 +2,11 @@
 /**
  * Définition des données des utilisateurs
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Model
+ * @package   EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -20,6 +20,7 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 	 * Définition des données des utilisateurs
 	 */
 	class User_Model extends Data_Class {
+
 
 		/**
 		 * Définition des différentes couleurs pour l'avatar
@@ -45,7 +46,7 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 		/**
 		 * Le constructeur
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data       Les données de l'objet.

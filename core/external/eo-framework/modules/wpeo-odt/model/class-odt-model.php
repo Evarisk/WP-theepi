@@ -2,11 +2,11 @@
 /**
  * Définition des données des ODT
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Model
+ * @package   EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -22,6 +22,7 @@ if ( ! class_exists( '\eoxia\ODT_Model' ) ) {
 	 */
 	class ODT_Model extends Attachment_Model {
 
+
 		/**
 		 * Définition du modèle principal des attachements
 		 *
@@ -32,7 +33,7 @@ if ( ! class_exists( '\eoxia\ODT_Model' ) ) {
 		/**
 		 * Défini le schéma de WP_Post de type attachment.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data       Data.

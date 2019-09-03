@@ -2,11 +2,11 @@
 /**
  * Gestion des actions pour les mises à jours.
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 1.0.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     1.0.0
+ * @version   1.0.0
  * @copyright 2015-2018 Eoxia
- * @package EO_Framework\EO_Update_Manager\Action
+ * @package   EO_Framework\EO_Update_Manager\Action
  */
 
 namespace eoxia;
@@ -20,6 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Update_Manager_Action {
 
+
 	/**
 	 * Définition du namespace courant pour le module de mise à jour.
 	 *
@@ -30,7 +31,7 @@ class Update_Manager_Action {
 	/**
 	 * Instanciation de la classe de gestions des mises à jour des données suite aux différentes versions de l'extension
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function __construct() {
@@ -43,7 +44,7 @@ class Update_Manager_Action {
 	/**
 	 * Charges le CSS et le JS de WPEO_Update_Manager
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function callback_admin_scripts() {
@@ -55,7 +56,7 @@ class Update_Manager_Action {
 	 * On récupère la version actuelle de l'extension principale pour savoir si une mise à jour est nécessaire
 	 * On regarde également si des mises à jour n'ont pas été faite suite à un suivi des mises à jours non régulier
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function automatic_update_redirect() {
@@ -72,7 +73,7 @@ class Update_Manager_Action {
 				$update_data_path = Config_Util::$init[ $this->current_plugin_slug ]->update_manager->path . 'data/';
 				for ( $i = ( (int) substr( $last_version_done, 0, 4 ) + 1 ); $i <= $current_version_to_check; $i++ ) {
 					if ( is_file( $update_data_path . 'update-' . $i . '-data.php' ) ) {
-						require_once $update_data_path . 'update-' . $i . '-data.php';
+						include_once $update_data_path . 'update-' . $i . '-data.php';
 						$waiting_updates[ $i ] = $datas;
 
 						update_option( Config_Util::$init[ $this->current_plugin_slug ]->key_waiting_updates, $waiting_updates );
@@ -87,15 +88,13 @@ class Update_Manager_Action {
 	 *
 	 * @return void
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 * @version 1.0.0
 	 */
 	public function callback_admin_menu() {
-
 		$element_namespace             = new \ReflectionClass( get_called_class() );
 		$current_plugin_update_manager = '\\' . $element_namespace->getNamespaceName() . '\Update_Manager';
 		add_submenu_page( 'eo-update-manager-' . $this->current_plugin_slug, __( 'Update Manager', 'eoxia' ), __( 'Update Manager', 'eoxia' ), 'manage_options', Config_Util::$init[ $this->current_plugin_slug ]->update_page_url, array( $current_plugin_update_manager::g(), 'display' ) );
-
 	}
 
 }

@@ -2,11 +2,11 @@
 /**
  * Gestion des utilisateurs (POST, PUT, GET, DELETE)
  *
- * @author Eoxia <dev@eoxia.com>
- * @since 0.1.0
- * @version 1.0.0
+ * @author    Eoxia <dev@eoxia.com>
+ * @since     0.1.0
+ * @version   1.0.0
  * @copyright 2015-2018
- * @package EO_Framework\EO_Model\Class
+ * @package   EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -20,6 +20,7 @@ if ( ! class_exists( '\eoxia\User_Class' ) ) {
 	 * Gestion des utilisateurs (POST, PUT, GET, DELETE)
 	 */
 	class User_Class extends Object_Class {
+
 		/**
 		 * Le nom du modèle
 		 *
@@ -55,7 +56,7 @@ if ( ! class_exists( '\eoxia\User_Class' ) ) {
 		 * Utiles pour DigiRisk
 		 *
 		 * @todo Rien à faire ici
-		 * @var string
+		 * @var  string
 		 */
 		public $element_prefix = 'U';
 
@@ -81,10 +82,11 @@ if ( ! class_exists( '\eoxia\User_Class' ) ) {
 		/**
 		 * Récupères les données selon le modèle définis.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param array   $args Les paramètres de WP_User_Query @see https://codex.wordpress.org/Class_Reference/WP_User_Query.
+		 * @param array   $args   Les paramètres de WP_User_Query @see
+		 *                        https://codex.wordpress.org/Class_Reference/WP_User_Query.
 		 * @param boolean $single Si on veut récupérer un tableau, ou qu'une seule entrée.
 		 *
 		 * @return Comment_Model
@@ -123,7 +125,7 @@ if ( ! class_exists( '\eoxia\User_Class' ) ) {
 		/**
 		 * Insère ou met à jour les données dans la base de donnée.
 		 *
-		 * @since 0.1.0
+		 * @since   0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  Array $data Les données a insérer ou à mêttre à jour.
@@ -146,9 +148,11 @@ if ( ! class_exists( '\eoxia\User_Class' ) ) {
 			}
 
 			if ( ! empty( $data['id'] ) ) {
-				$current_data = $this->get( array(
-					'id' => $data['id'],
-				), true );
+				$current_data = $this->get(
+					array(
+						'id' => $data['id'],
+					), true
+				);
 				$data         = Array_Util::g()->recursive_wp_parse_args( $data, $current_data->data );
 			}
 
