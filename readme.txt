@@ -43,7 +43,7 @@ The installation of the plugin can be done in two ways:
 
 = Version 0.6.0 =
 
-* 34412 - Refonte graphique mineur sur le lien effectuer un contrôle et sur le design de la case contrôle.
+* 34412 - Refonte graphique mineur sur le lien effectuée un contrôle et sur le design de la case contrôle.
 * 34413	- Ajout du menu de navigation en fonction du statut de l'EPI.
 * 34414	- Remplacement du bouton charger plus par une pagination.
 * 34415	- Ajout de 2 onglets dans les réglages.
