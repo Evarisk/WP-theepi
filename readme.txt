@@ -5,7 +5,7 @@ Donate link: https://www.evarisk.com
 Requires at least: 4.5
 Tested up to: 4.9.7
 Requires PHP: 5.6.3
-Stable tag: 0.5.0
+Stable tag: 0.6.0
 License: GPLv3 or later
 
 TheEPI is the open source software for the daily management of your PPE. Ensure the traceability of the PPE, the monitoring of the maintenance operations and the state of the PPE
@@ -41,24 +41,38 @@ The installation of the plugin can be done in two ways:
 
 == Changelog ==
 
-= Version 0.5.0 =
+= Version 0.6.0 =
 
-* - Refonte graphique et fonctionnelle du plugin theEPI
+* - Refonte graphique mineur sur le lien effectuer un contrôle et sur le design de la case contrôle.
 * - Ajout de fonctionnabilité
-		- Effectuer un contrôle d'un EPI lié à un audit
-		- Exporter les informations de l'EPI en ODT
+		- Ajout du menu de navigation en fonction du statut de l'EPI.
+		- Remplacement du bouton charger plus par une pagination.
+		- Ajout de 2 onglets dans les réglages.
+			- Configuration de 2 données par défauts.
+			- Configuration des dates.
 
 * - Correction de bug diverse
-		- Sur les boutons nouveaux
+		- Sur la création/modification.
+		- Sur les données par défauts.
+
+= Version 0.5.0 =
+
+* - Refonte graphique et fonctionnelle du plugin theEPI.
+* - Ajout de fonctionnabilité
+		- Effectuer un contrôle d'un EPI lié à un audit.
+		- Exporter les informations de l'EPI en ODT.
+
+* - Correction de bug diverse
+		- Sur les boutons nouveaux.
 
 = Version 0.4.1 =
 
 * 22197 - Le bouton "Ajouter un EPI" est maintenant grisé par défaut. Les paramètres obligatoires doivent être remplis avant de pouvoir en ajouter un.
-* 22202 - Ajout de traduction
+* 22202 - Ajout de traduction.
 
 = Version 0.4.0 =
 
-* 13908 - Ajout de la recherche
+* 13908 - Ajout de la recherche.
 
 = Version 0.3.0 =
 

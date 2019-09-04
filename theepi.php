@@ -6,7 +6,7 @@
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -16,7 +16,7 @@ namespace theepi;
  * Plugin URI:  http://www.evarisk.com/document-unique-logiciel
  * Description: TheEPI is the open source software for the daily management of your PPE.
  * Ensure the traceability of the PPE, the monitoring of the maintenance operations and the state of the PPE.
- * Version:     0.5.0
+ * Version:     0.6.0
  * Author:      Evarisk
  * Author URI:  http://www.evarisk.com
  * License:     GPL2
