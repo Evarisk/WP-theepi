@@ -45,7 +45,7 @@ The installation of the plugin can be done in two ways:
 
 * 34412 - Refonte graphique mineur sur le lien effectuée un contrôle et sur le design de la case contrôle.
 * 34413	- Ajout du menu de navigation en fonction du statut de l'EPI.
-* 34414	- Remplacement du bouton charger plus par une pagination.
+* 34414	- Remplacement du bouton "Charger plus" par une pagination.
 * 34415	- Ajout de 2 onglets dans les réglages.
 * 34416	- Configuration des données par défauts.
 * 34417	- Configuration des dates.
