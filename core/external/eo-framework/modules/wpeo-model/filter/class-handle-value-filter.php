@@ -2,11 +2,11 @@
 /**
  * Gestion des filtres globaux concernant les dates dans EO_Framework.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\EO_Model\Filter
+ * @package EO_Framework\EO_Model\Filter
  */
 
 namespace eoxia;
@@ -19,7 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gestion des filtres globaux concernant les dates dans EO_Framework.
  */
 class Handle_Value_Filter {
-
 
 	/**
 	 * Initialisation et appel des différents filtres définis dans EO_Framework.
@@ -57,6 +56,7 @@ class Handle_Value_Filter {
 			if ( in_array( $req_method, array( 'PUT', 'POST' ), true ) && isset( $value['raw'] ) ) {
 				$value = $value['raw'];
 			}
+
 		}
 
 		// Traitement spécial pour les champs de type "float" on remplace systèmatiquement les "," par des "." obligatoires pour la base de données.

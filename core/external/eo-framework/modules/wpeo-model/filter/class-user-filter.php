@@ -2,11 +2,11 @@
 /**
  * Gestion des filtres globaux concernant les utilisateurs dans EO_Framework.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\EO_Model\Filter
+ * @package EO_Framework\EO_Model\Filter
  */
 
 namespace eoxia;
@@ -19,7 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gestion des filtres globaux concernant les champs de type "float" dans EO_Framework.
  */
 class User_Filter {
-
 
 	/**
 	 * Initialisation et appel des différents filtres définis dans EO_Framework.
@@ -36,7 +35,7 @@ class User_Filter {
 	/**
 	 * Construit les initiales des utilisateurs
 	 *
-	 * @since   0.1.0
+	 * @since 0.1.0
 	 * @version 1.0.0
 	 *
 	 * @param  User_class $user Les données de l'utilisateur.
@@ -65,10 +64,10 @@ class User_Filter {
 	/**
 	 * Construit la couleur de fond de l'avatar.
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
-	 * @param Array $user Les données de l'utilisateur.
+	 * @param  Array $user Les données de l'utilisateur.
 	 *
 	 * @return Array       Les données de l'utilisateur avec la couleur de fond de l'avatar.
 	 */
@@ -90,7 +89,7 @@ class User_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir mis à jour un objet de type "User"
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param User_Model $object L'objet qu'il faut "modifier".
@@ -108,7 +107,7 @@ class User_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir récupéré les métadonnées d'un objet de type "User"
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param User_Model $object L'objet qu'il faut "modifier".

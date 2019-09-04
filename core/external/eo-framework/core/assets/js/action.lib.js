@@ -87,7 +87,7 @@ if ( ! window.eoxiaJS.action ) {
 	 * @returns {void}
 	 */
 	window.eoxiaJS.action.execInput = function( event ) {
-		var element = jQuery( this ), parentElement = element, listInput = undefined, data = {}, i = 0, doAction = true, key = undefined, inputAlreadyIn = [];
+		var element = jQuery( this ), loaderElement = element, parentElement = element, listInput = undefined, data = {}, i = 0, doAction = true, key = undefined, inputAlreadyIn = [];
 		event.preventDefault();
 
 		if ( element.attr( 'data-parent' ) ) {
@@ -103,7 +103,11 @@ if ( ! window.eoxiaJS.action ) {
 		}
 
 		if ( doAction ) {
-			window.eoxiaJS.loader.display( element );
+			if ( element.attr( 'data-loader' ) ) {
+				loaderElement = element.closest( '.' + element.attr( 'data-loader' ) );
+			}
+
+			window.eoxiaJS.loader.display( loaderElement );
 
 			listInput = window.eoxiaJS.arrayForm.getInput( parentElement );
 			for ( i = 0; i < listInput.length; i++ ) {
@@ -118,7 +122,12 @@ if ( ! window.eoxiaJS.action ) {
 					data[key] = attrData[key];
 				}
 
-				window.eoxiaJS.request.send( element, data );
+				if ( element[0].request ) {
+					element[0].request.abort();
+				}
+
+
+				element[0].request = window.eoxiaJS.request.send( element, data );
 			} );
 		}
 	};
@@ -141,7 +150,7 @@ if ( ! window.eoxiaJS.action ) {
 	 * @returns {void}
 	 */
 	window.eoxiaJS.action.execAttribute = function( event ) {
-	  var element       = jQuery( this );
+	  	var element       = jQuery( this );
 		var loaderElement = element;
 		var doAction      = true;
 
@@ -151,6 +160,8 @@ if ( ! window.eoxiaJS.action ) {
 		if ( element.attr( 'data-module' ) && element.attr( 'data-before-method' ) ) {
 			doAction = false;
 			doAction = window.eoxiaJS[element.attr( 'data-namespace' )][element.attr( 'data-module' )][element.attr( 'data-before-method' )]( element );
+		} else {
+			doAction = window.eoxiaJS.action.checkBeforeCB(element);
 		}
 
 		if ( element.hasClass( '.grey' ) ) {
@@ -194,7 +205,9 @@ if ( ! window.eoxiaJS.action ) {
 	 */
 	window.eoxiaJS.action.execDelete = function( event ) {
 		var element = jQuery( this );
+		var loaderElement = element;
 		var doAction = true;
+
 
 		event.preventDefault();
 
@@ -206,6 +219,10 @@ if ( ! window.eoxiaJS.action ) {
 
 		if ( element.hasClass( '.grey' ) ) {
 			doAction = false;
+		}
+
+		if ( element.attr( 'data-loader' ) ) {
+			loaderElement = element.closest( '.' + element.attr( 'data-loader' ) );
 		}
 
 		if ( doAction ) {

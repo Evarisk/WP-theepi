@@ -99,6 +99,7 @@ window.eoxiaJS.upload.openMediaFrame = function() {
 			type: window.eoxiaJS.upload.currentButton.data( 'mime-type' )
 		}
 	}).open();
+	console.log(window.eoxiaJS.upload.mediaFrame );
 	window.eoxiaJS.upload.mediaFrame.on( 'insert', function() { window.eoxiaJS.upload.selectedFile(); } );
 };
 
@@ -170,10 +171,8 @@ window.eoxiaJS.upload.refreshButton = function( data ) {
 	jQuery( window.eoxiaJS.upload.currentButton ).removeClass( 'no-file loading wpeo-loader' );
 	if( window.eoxiaJS.upload.currentButton.is( 'a' ) ) {
 		window.eoxiaJS.loader.remove( window.eoxiaJS.upload.currentButton );
-
-		if ( ! data.id ) {
-			window.eoxiaJS.upload.currentButton.closest( 'div' ).find( 'ul' ).append( data.view );
-		}
+		window.eoxiaJS.upload.currentButton.closest( 'div' ).find( 'ul li.no-file-attached' ).remove();
+		window.eoxiaJS.upload.currentButton.closest( 'div' ).find( 'ul' ).append( data.view );
 	} else {
 		if ( data.view ) {
 			if ( window.eoxiaJS.upload.currentButton.data( 'custom-class' ) ) {
@@ -190,7 +189,7 @@ window.eoxiaJS.upload.refreshButton = function( data ) {
 					window.eoxiaJS.upload.currentButton[0].initialButton.find( 'img' ).replaceWith( data.media );
 				}
 				window.eoxiaJS.upload.currentButton.find( 'img' ).replaceWith( data.media );
-				window.eoxiaJS.upload.currentButton.find( 'svg.fa-image' ).hide();
+				window.eoxiaJS.upload.currentButton.find( '.default-image.fa-image' ).hide();
 
 				window.eoxiaJS.upload.currentButton.find( 'input[type="hidden"]' ).val( window.eoxiaJS.upload.selectedInfos.JSON.id );
 			}

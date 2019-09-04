@@ -4,11 +4,11 @@
  *
  * La "div.wpeo-modal.modal-active" englobant le contenant de la modal est généré par le fichier modal.lib.js.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\Core\View
+ * @package EO_Framework\Core\View
  */
 
 namespace digi;
@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<!-- Entête -->
 	<div class="modal-header">
 		<h2 class="modal-title">{{title}}</h2>
-		<div class="modal-close"><i class="fal fa-times"></i></div>
+		<div class="modal-close"><i class="fas fa-times"></i></div>
 	</div>
 
 	<!-- Corps -->

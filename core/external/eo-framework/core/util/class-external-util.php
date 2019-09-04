@@ -3,11 +3,11 @@
  * Gestion des externals.
  * Les externals doivent être placés dans core/externals/
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\Core\Util
+ * @package EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -22,23 +22,21 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 	 * Gestion des externals
 	 */
 	class External_Util extends \eoxia\Singleton_Util {
-
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return void
 		 */
-		protected function construct() {
-		}
+		protected function construct() {}
 
 		/**
 		 * Parcours le fichier digirisk.config.json pour récupérer les chemins vers tous les modules.
 		 * Initialise ensuite un par un, tous ses modules.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $path        Le chemin vers le module externe.
@@ -47,7 +45,7 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 		 * @return WP_Error|bool {
 		 *                            WP_Error Si le module n'existe pas dans le tableau externals du fichier principale de config.json.
 		 *                            bool     Si aucune erreur s'est produite.
-		 * }
+		 *}
 		 */
 		public function exec( $path, $plugin_slug ) {
 			if ( empty( \eoxia\Config_Util::$init[ $plugin_slug ]->externals ) ) {
@@ -67,7 +65,7 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 		/**
 		 * Appelle la méthode init_config de \eoxia\Config_Util pour initialiser les configs du module
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $plugin_slug      Le slug du module externe à initialiser.
@@ -82,7 +80,7 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 		/**
 		 * Inclus les dépendences du module (qui sont défini dans le config.json du module en question)
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $plugin_slug      Le slug du module externe à initialiser.
@@ -114,7 +112,7 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 		/**
 		 * Inclus les fichiers prioritaires qui se trouvent dans la clé "priority" dans le .config.json du module
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  string $path_to_module_and_dependence_folder Le chemin vers le module.
@@ -128,7 +126,7 @@ if ( ! class_exists( '\eoxia\External_Util' ) ) {
 					$path_file = realpath( $path_to_module_and_dependence_folder . $file_name . '.' . $dependence_folder . '.php' );
 
 					if ( file_exists( $path_file ) ) {
-						include_once $path_file;
+						require_once( $path_file );
 					}
 				}
 			}

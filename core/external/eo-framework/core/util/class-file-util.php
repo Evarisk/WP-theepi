@@ -2,11 +2,11 @@
 /**
  * Gestion des fichiers.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\Core\Util
+ * @package EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,29 +21,25 @@ if ( ! class_exists( '\eoxia\File_Util' ) ) {
 	 * Gestion des fichiers
 	 */
 	class File_Util extends \eoxia\Singleton_Util {
-
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return void
 		 */
-		protected function construct() {
-		}
+		protected function construct() {}
 
 		/**
 		 * Upload le fichier $file et créer les méta données de ce fichier.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param  mixed $file       Les données du
-		 *                           fichier.
-		 * @param  int   $element_id L'ID de l'élément pour l'attachement du
-		 *                           fichier.
-		 * @return int                    L'id de l'attachement
+		 * @param  mixed $file        Les données du fichier.
+		 * @param  int   $element_id  L'ID de l'élément pour l'attachement du fichier.
+		 * @return int            		L'id de l'attachement
 		 */
 		public static function move_file_and_attach( $file, $element_id ) {
 			if ( ! is_string( $file ) || ! is_int( $element_id ) || ! is_file( $file ) ) {
@@ -56,29 +52,21 @@ if ( ! class_exists( '\eoxia\File_Util' ) ) {
 			$upload_result = wp_upload_bits( basename( $file ), null, file_get_contents( $file ) );
 
 			$filetype = wp_check_filetype( basename( $upload_result['file'] ), null );
-			/**
-	* Set the default values for the current attachement
-*/
+			/**	Set the default values for the current attachement	*/
 			$attachment_default_args = array(
-				'guid'           => $wp_upload_dir['url'] . '/' . basename( $upload_result['file'] ),
-				'post_mime_type' => $filetype['type'],
-				'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $upload_result['file'] ) ),
-				'post_content'   => '',
-				'post_status'    => 'inherit',
+					'guid'           => $wp_upload_dir['url'] . '/' . basename( $upload_result['file'] ),
+					'post_mime_type' => $filetype['type'],
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', basename( $upload_result['file'] ) ),
+					'post_content'   => '',
+					'post_status'    => 'inherit',
 			);
 
-			/**
-	* Save new picture into database
-*/
+			/**	Save new picture into database	*/
 			$attach_id = wp_insert_attachment( $attachment_default_args, $upload_result['file'], $element_id );
 
-			/**
-	* Create the different size for the given picture and get metadatas for this picture
-*/
+			/**	Create the different size for the given picture and get metadatas for this picture	*/
 			$attach_data = wp_generate_attachment_metadata( $attach_id, $upload_result['file'] );
-			/**
-	* Finaly save pictures metadata
-*/
+			/**	Finaly save pictures metadata	*/
 			wp_update_attachment_metadata( $attach_id, $attach_data );
 
 			return $attach_id;

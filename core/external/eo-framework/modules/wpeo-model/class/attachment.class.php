@@ -2,11 +2,11 @@
 /**
  * Gestion des attachments (POST, PUT, GET, DELETE)
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Class
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -21,7 +21,6 @@ if ( ! class_exists( '\eoxia\Attachment_Class' ) ) {
 	 * Gestion des attachments (POST, PUT, GET, DELETE)
 	 */
 	class Attachment_Class extends Post_Class {
-
 
 		/**
 		 * Le nom du modèle

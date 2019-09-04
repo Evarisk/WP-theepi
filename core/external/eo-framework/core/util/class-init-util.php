@@ -2,11 +2,11 @@
 /**
  * Fichier boot d'un plugin made Eoxia.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\Core\Util
+ * @package EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,17 +21,15 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 	 * Cette classe initialise tous les fichiers config.json
 	 */
 	class Init_Util extends \eoxia\Singleton_Util {
-
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return void
 		 */
-		protected function construct() {
-		}
+		protected function construct() {}
 
 		/**
 		 * Appelles les méthodes read_core_util_file_and_include et init_main_config ainsi que init_module
@@ -45,7 +43,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 			self::read_core_util_file_and_include( $path, $plugin_slug );
 			self::init_main_config( $path, $plugin_slug );
 			self::init_external( $path, $plugin_slug );
-			Config_Util::$init['main']                   = new \stdClass();
+			Config_Util::$init['main'] = new \stdClass();
 			Config_Util::$init['main']->full_plugin_path = $path;
 			self::init_module( $path, $plugin_slug );
 		}
@@ -53,7 +51,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		/**
 		 * Listes la liste des fichiers ".utils" dans le dossier ./core/external/wpeo_util/
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $path        Le chemin du plugin.
@@ -63,7 +61,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		 *                            WP_Error Si le module n'existe pas dans le tableau externals du fichier principale de config.json.
 		 *                            WP_Error Si le fichier n'existe pas
 		 *                            bool     Si aucune erreur s'est produite.
-		 * }
+		 *}
 		 */
 		private function read_core_util_file_and_include( $path, $plugin_slug ) {
 			$path_to_core_folder_util = $path . 'core/util/';
@@ -85,7 +83,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 				foreach ( $list_file_name as $file_name ) {
 					if ( '.' !== $file_name && '..' !== $file_name && 'index.php' !== $file_name && '.git' !== $file_name && 'README.md' !== $file_name ) {
 						$file_path = realpath( $path_to_core_folder_util . $file_name );
-						include_once $file_path;
+						require_once( $file_path );
 					}
 				}
 			}
@@ -94,7 +92,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		/**
 		 * Appelle la méthode init_config avec le fichier digirisk.config.json
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $path        Le chemin du plugin.
@@ -104,7 +102,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		 */
 		private function init_main_config( $path, $plugin_slug ) {
 			$main_config_path = $plugin_slug . '.config.json';
-			$init_status      = \eoxia\Config_Util::g()->init_config( $path . $main_config_path );
+			$init_status = \eoxia\Config_Util::g()->init_config( $path . $main_config_path );
 
 			if ( \is_wp_error( $init_status ) ) {
 				exit( $init_status->errors['broke'][0] );
@@ -116,16 +114,16 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		}
 
 		/**
-		 * Appel la méthode 'exec' de l'objet 'External_Util' afin d'initialiser les externals.
-		 *
-		 * @since   0.1.0
-		 * @version 1.0.0
-		 *
-		 * @param string $path        Le chemin du plugin.
-		 * @param string $plugin_slug Le slug principale du plugin défini dans le fichier config.json principale.
-		 *
-		 * @return void
-		 */
+		* Appel la méthode 'exec' de l'objet 'External_Util' afin d'initialiser les externals.
+		*
+		* @since 0.1.0
+		* @version 1.0.0
+		*
+		* @param string $path        Le chemin du plugin.
+		* @param string $plugin_slug Le slug principale du plugin défini dans le fichier config.json principale.
+		*
+		* @return void
+		*/
 		private function init_external( $path, $plugin_slug ) {
 			if ( empty( Config_Util::$init['external'] ) ) {
 				Config_Util::$init['external'] = new \stdClass();
@@ -137,7 +135,7 @@ if ( ! class_exists( '\eoxia\Init_Util' ) ) {
 		/**
 		 * Appelle la méthode exec_module de \eoxia\Module_Util pour initialiser tous les modules
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param string $path        Le chemin du plugin.

@@ -106,7 +106,8 @@ if ( ! window.eoxiaJS.modal  ) {
 		jQuery( document ).on( 'click', '.wpeo-modal-event', window.eoxiaJS.modal.open );
 		jQuery( document ).on( 'click', '.wpeo-modal .modal-container', window.eoxiaJS.modal.stopPropagation );
 		jQuery( document ).on( 'click', '.wpeo-modal .modal-close', window.eoxiaJS.modal.close );
-		jQuery( document ).on( 'click', 'body', window.eoxiaJS.modal.close );
+		//  jQuery( document ).on( 'click', 'body', window.eoxiaJS.modal.close ); //09/07/2019
+		jQuery( document ).on( 'mousedown', '.modal-active:not(.modal-container)', window.eoxiaJS.modal.close );
 		jQuery( '#wpeo-task-metabox h2 span .wpeo-modal-event' ).click( window.eoxiaJS.modal.open );
 	};
 
@@ -160,10 +161,6 @@ if ( ! window.eoxiaJS.modal  ) {
 						el[0].typeModal = 'ajax';
 						triggeredElement[0].modalElement = el;
 
-						if ( triggeredElement.attr( 'data-title' ) ) {
-							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', triggeredElement.attr( 'data-title' ) );
-						}
-
 						if ( triggeredElement.attr( 'data-class' ) ) {
 							el[0].className += ' ' + triggeredElement.attr( 'data-class' );
 						}
@@ -178,9 +175,11 @@ if ( ! window.eoxiaJS.modal  ) {
 							el[0].innerHTML = el[0].innerHTML.replace( '{{buttons}}', window.eoxiaJS.modal.defaultButtons );
 						}
 
-						if ( typeof response.data.header_view !== 'undefined' ) {
-							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', response.data.header_view );
-						} else {
+						if ( triggeredElement.attr( 'data-title' ) ) {
+							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', triggeredElement.attr( 'data-title' ) );
+						} else if ( response.data.modal_title ) {
+							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', response.data.modal_title );
+						} else if ( ! triggeredElement.attr( 'data-title' ) ) {
 							el[0].innerHTML = el[0].innerHTML.replace( '{{title}}', window.eoxiaJS.modal.defaultTitle );
 						}
 
@@ -205,7 +204,7 @@ if ( ! window.eoxiaJS.modal  ) {
 			jQuery( target ).find( 'h2.modal-title' ).text( '{{title}}' );
 
 			if ( triggeredElement.attr( 'data-title' ) ) {
-				target[0].innerHTML = target[0].innerHTML.replace( '{{title}}', triggeredElement.attr( 'data-title' ) );
+				target[0].querySelector( '.modal-title' ).innerHTML = target[0].querySelector( '.modal-title' ).innerHTML.replace( '{{title}}', triggeredElement.attr( 'data-title' ) );
 			}
 
 			if ( triggeredElement.attr( 'data-class' ) ) {
@@ -244,7 +243,10 @@ if ( ! window.eoxiaJS.modal  ) {
 	 * @returns {void}       [description]
 	 */
 	window.eoxiaJS.modal.close = function( event ) {
-		jQuery( '.wpeo-modal.modal-active:not(.modal-force-display)' ).each( function() {
+		if( ! jQuery( event.target ).hasClass( "wpeo-modal" ) && event.type == "mousedown" ){ // Si le click se situe dans la modal
+			return;
+		}
+		jQuery( '.wpeo-modal.modal-active:last:not(.modal-force-display)' ).each( function() {
 			var popup = jQuery( this );
 			popup.removeClass( 'modal-active' );
 			if ( popup[0].typeModal && 'default' !== popup[0].typeModal ) {
@@ -252,6 +254,7 @@ if ( ! window.eoxiaJS.modal  ) {
 					popup.remove();
 				}, 200 );
 			}
+			popup.trigger( 'modal-closed', popup );
 		} );
 	};
 }

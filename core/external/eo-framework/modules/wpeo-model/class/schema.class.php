@@ -2,11 +2,11 @@
 /**
  * Handle schema.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Class
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -24,27 +24,25 @@ if ( ! class_exists( '\eoxia\Schema_Class' ) ) {
 
 
 
-
 		/**
 		 * Requried for Singleton_Util
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 */
-		protected function construct() {
-		}
+		protected function construct() {}
 
 		/**
 		 * Vérifie si les données sont bien typées. Cette méthode ne force pas le typage des données.
 		 * Renvoies des erreurs si une des données ne correspond pas au type attendu.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param array $data         Toutes les données y compris les meta.
-		 * @param array $model        Le schéma.
-		 * @param array $current_data Les données actuelles.
-		 * @param array $errors       Les erreurs de typages.
+		 * @param  array $data         Toutes les données y compris les meta.
+		 * @param  array $model        Le schéma.
+		 * @param  array $current_data Les données actuelles.
+		 * @param  array $errors       Les erreurs de typages.
 		 *
 		 * @return array               Les erreurs de typages.
 		 */
@@ -90,7 +88,7 @@ if ( ! class_exists( '\eoxia\Schema_Class' ) ) {
 		/**
 		 * Vérifie le type de la valeur courante.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param mixed  $value      N'importe quel type de valeur.

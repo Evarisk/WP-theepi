@@ -2,11 +2,11 @@
 /**
  * Gestion des commentaires (POST, PUT, GET, DELETE)
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Class
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -20,7 +20,6 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 	 * Gestion des commentaires (POST, PUT, GET, DELETE)
 	 */
 	class Comment_Class extends Object_Class {
-
 		/**
 		 * Le nom du modèle à utiliser.
 		 *
@@ -71,7 +70,7 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 		/**
 		 * Initialise pre_get_comments
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return void
@@ -87,10 +86,10 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 		/**
 		 * N'affiches pas les commentaires dans la liste des commentaires.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
-		 * @param WP_Comment_Query $query Query args.
+		 * @param  WP_Comment_Query $query Query args.
 		 *
 		 * @return void
 		 */
@@ -105,12 +104,11 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 		/**
 		 * Récupères les données selon le modèle définis.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param                                                        array   $args   Les paramètres de get_comments
-		 * @https://codex.wordpress.org/Function_Reference/get_comments.
-		 * @param                                                        boolean $single Si on veut récupérer un tableau, ou qu'une seule entrée.
+		 * @param array   $args Les paramètres de get_comments @https://codex.wordpress.org/Function_Reference/get_comments.
+		 * @param boolean $single Si on veut récupérer un tableau, ou qu'une seule entrée.
 		 *
 		 * @return Comment_Model
 		 */
@@ -168,10 +166,10 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 		/**
 		 * Insère ou met à jour les données dans la base de données.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
-		 * @param Array $data Les données a insérer ou à mettre à jour.
+		 * @param  Array $data Les données a insérer ou à mettre à jour.
 		 */
 		public function update( $data ) {
 			$model_name = $this->model_name;
@@ -226,11 +224,9 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 
 			if ( empty( $object->data['id'] ) ) {
 				add_filter( 'duplicate_comment_id', '__return_false' );
-				add_filter(
-					'pre_comment_approved', function ( $approved, $comment_data ) {
-						return $comment_data['comment_approved'];
-					}, 10, 2
-				);
+				add_filter( 'pre_comment_approved', function( $approved, $comment_data ) {
+					return $comment_data['comment_approved'];
+				}, 10, 2 );
 				$inserted_comment = wp_insert_comment( $object->convert_to_wordpress() );
 				if ( is_wp_error( $inserted_comment ) ) {
 					return $inserted_comment;
@@ -243,12 +239,10 @@ if ( ! class_exists( '\eoxia\Comment_Class' ) ) {
 
 			$object = apply_filters( 'eo_model_comment_after_' . $req_method, $object, $args_cb );
 
-			$object = $this->get(
-				array(
-					'id'     => $object->data['id'],
-					'status' => array( '1', 'trash' ),
-				), true
-			);
+			$object = $this->get( array(
+				'id'     => $object->data['id'],
+				'status' => array( '1', 'trash' ),
+			), true );
 
 			// Il ne faut pas lancer plusieurs fois pour ping.
 			if ( 'ping' !== $this->get_type() ) {

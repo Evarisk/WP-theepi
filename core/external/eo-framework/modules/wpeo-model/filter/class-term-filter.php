@@ -2,11 +2,11 @@
 /**
  * Gestion des filtres globaux concernant les dates dans EO_Framework.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\EO_Model\Filter
+ * @package EO_Framework\EO_Model\Filter
  */
 
 namespace eoxia;
@@ -19,7 +19,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gestion des filtres globaux concernant les dates dans EO_Framework.
  */
 class Term_Filter {
-
 
 	/**
 	 * Initialisation et appel des différents filtres définis dans EO_Framework.
@@ -34,7 +33,7 @@ class Term_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir mis à jour un objet de type "Term"
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param Term_Model $object L'objet qu'il faut "modifier".
@@ -52,7 +51,7 @@ class Term_Filter {
 	/**
 	 * Execute des actions complémentaire après avoir mis à jour un objet de type "Term"
 	 *
-	 * @since   1.0.0
+	 * @since 1.0.0
 	 * @version 1.0.0
 	 *
 	 * @param Term_Model $object L'objet qu'il faut "modifier".

@@ -2,11 +2,11 @@
 /**
  * Méthodes utilitaires pour les tableaux.
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018 Eoxia
- * @package   EO_Framework\Core\Util
+ * @package EO_Framework\Core\Util
  */
 
 namespace eoxia;
@@ -21,20 +21,18 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 	 * Gestion des tableaux
 	 */
 	class Array_Util extends \eoxia\Singleton_Util {
-
 		/**
 		 * Le constructeur obligatoirement pour utiliser la classe \eoxia\Singleton_Util
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 */
-		protected function construct() {
-		}
+		protected function construct() {}
 
 		/**
 		 * Compte le nombre de valeur dans un tableau avec récursivité en vérifiant que $match_element soit dans la valeur
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param  array   $array         Les données pour la moulinette.
@@ -67,7 +65,7 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 		/**
 		 * Forces à convertir les valeurs d'un tableau en integer.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param  array $array Le tableau à convertir en int.
@@ -85,12 +83,11 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 		/**
 		 * Déplaces l'index du tableau vers l'index $to_key.
 		 *
-		 * @since   0.5.0
+		 * @since 0.5.0
 		 * @version 1.0.0
 		 *
-		 * @param  Array   $array  Les valeurs contenu dans le tableau. Le tableau ne doit pas être
-		 *                         2D.
-		 * @param  mixed   $value  Tous types de valeurs.
+		 * @param  Array   $array Les valeurs contenu dans le tableau. Le tableau ne doit pas être 2D.
+		 * @param  mixed   $value Tous types de valeurs.
 		 * @param  integer $to_key La clé qui vas être déplacer. Defaut 0
 		 * @return Array   Le tableau.
 		 */
@@ -105,8 +102,8 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 				return $array;
 			}
 
-			$tmp_val                 = $array[ $to_key ];
-			$array[ $to_key ]        = $array[ $index_founded ];
+			$tmp_val = $array[ $to_key ];
+			$array[ $to_key ] = $array[ $index_founded ];
 			$array[ $index_founded ] = $tmp_val;
 
 			return $array;
@@ -115,7 +112,7 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 		/**
 		 * Récursive wp_parse_args de WordPress.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @param  mixed $a       Les données a mergées.
@@ -137,6 +134,5 @@ if ( ! class_exists( '\eoxia\Array_Util' ) ) {
 
 			return $result;
 		}
-
 	}
 } // End if().

@@ -2,7 +2,7 @@
 /**
  * Class define shortcode for search module.
  *
- * @author    Eoxia <dev@eoxia.com>
+ * @author Eoxia <dev@eoxia.com>
  * @copyright (c) 2015-2018 Eoxia <dev@eoxia.com>.
  *
  * @license GPLv3 <https://spdx.org/licenses/GPL-3.0-or-later.html>
@@ -21,7 +21,6 @@ defined( 'ABSPATH' ) || exit;
  */
 class Search_Shortcode {
 
-
 	/**
 	 * Constructor.
 	 *
@@ -39,18 +38,16 @@ class Search_Shortcode {
 	 * @since 1.1.0
 	 */
 	public function callback_wpeo_search( $atts ) {
-		$atts = shortcode_atts(
-			array(
-				'label' => '',
-				'slug'  => '',
-				'name'  => 'id',
-				'id'    => '',
-				'type'  => 'post',
-				'icon'  => '',
-				'value' => '',
-				'args'  => array(),
-			), $atts, 'wpeo_search'
-		);
+		$atts = shortcode_atts( array(
+			'label' => '',
+			'slug'  => '',
+			'name'  => 'id',
+			'id'    => '',
+			'type'  => 'post',
+			'icon'  => '',
+			'value' => '',
+			'args'  => array(),
+		), $atts, 'wpeo_search' );
 
 		Search_Class::g()->display( $atts );
 	}

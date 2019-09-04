@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2019-08-22 11:19+0200\n"
-"PO-Revision-Date: 2019-08-22 11:26+0200\n"
+"POT-Creation-Date: 2019-09-04 09:46+0200\n"
+"PO-Revision-Date: 2019-09-04 09:51+0200\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.7\n"
+"X-Generator: Poedit 2.0.2\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -40,29 +40,29 @@ msgstr "Nouveau"
 msgid "New from images"
 msgstr "Nouveau à partir d'images"
 
-#: modules/audit/action/class-audit-action.php:64
-#: modules/audit/action/class-audit-action.php:211
+#: modules/audit/action/class-audit-action.php:71
+#: modules/audit/action/class-audit-action.php:243
 msgid "New task"
 msgstr "Nouvelle Tâche"
 
-#: modules/audit/view/audit-epi.view.php:49
-msgid "No name Audit"
-msgstr "Audit sans nom"
+#: modules/audit/view/audit-epi.view.php:63 modules/epi/view/item.view.php:56
+msgid "Perform a control"
+msgstr "Effectuer un contrôle"
 
-#: modules/audit/view/modal-box-import.view.php:30
+#: modules/audit/view/modal-box-import.view.php:31
 msgid "Task"
 msgstr "Tâche"
 
-#: modules/audit/view/modal-box-import.view.php:35
+#: modules/audit/view/modal-box-import.view.php:36
 msgid "Point"
 msgstr "Point"
 
-#: modules/audit/view/modal-box-import.view.php:71
+#: modules/audit/view/modal-box-import.view.php:69
 #: modules/epi/view/item-link-edit.view.php:23
 msgid "Cancel"
 msgstr "Annuler"
 
-#: modules/audit/view/modal-box-import.view.php:76
+#: modules/audit/view/modal-box-import.view.php:74
 msgid "Import"
 msgstr "Importer"
 
@@ -80,31 +80,19 @@ msgstr "KO"
 msgid "OK"
 msgstr "OK"
 
-#: modules/epi/class/class-epi-comment.php:83
-msgid "Create new PPE"
-msgstr "Créer un nouveau EPI"
-
-#: modules/epi/class/class-epi-odt.php:137
+#: modules/epi/class/class-epi-odt.php:141
 #, php-format
 msgid "Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt"
 msgstr ""
 
-#: modules/epi/class/class-epi-odt.php:180
+#: modules/epi/class/class-epi-odt.php:184
 #, php-format
 msgid "Le modèle utilisé est: %1$s"
 msgstr ""
 
-#: modules/epi/class/class-epi.php:314
+#: modules/epi/class/class-epi.php:329
 msgid "EPI per page"
 msgstr "EPI par page"
-
-#: modules/epi/view/comment/item.view.php:25
-msgid "No user"
-msgstr "Pas d'utilisateur"
-
-#: modules/epi/view/comment/item.view.php:26
-msgid "No comment"
-msgstr "Pas de commentaire"
 
 #: modules/epi/view/item-control.view.php:21
 msgid "EXCEEDED"
@@ -124,7 +112,7 @@ msgid "STAYS"
 msgstr "RESTE"
 
 #: modules/epi/view/item-edit.view.php:25 modules/epi/view/item.view.php:34
-#: modules/epi/view/main-header.view.php:22 modules/epi/view/main.view.php:32
+#: modules/epi/view/main.view.php:32
 msgid "Title"
 msgstr "Titre"
 
@@ -134,28 +122,17 @@ msgid "Serial Number"
 msgstr "Numéro de Série"
 
 #: modules/epi/view/item-edit.view.php:53 modules/epi/view/item.view.php:48
-#: modules/epi/view/main.view.php:34 modules/service/view/main.view.php:157
+#: modules/epi/view/main.view.php:34
 msgid "Commissioning Date"
 msgstr "Date de Mise en Service"
 
-#: modules/epi/view/item-edit.view.php:73
-msgid "This field must be in numeric format and better than 0"
-msgstr "Ce champ doit être une valeur numérique supérieure à 0"
-
-#: modules/epi/view/item-edit.view.php:79
-#: modules/service/view/main.view.php:109
-#: modules/setting/view/default-data/main.view.php:28
-msgid "days"
-msgstr "jours"
-
-#: modules/epi/view/item-edit.view.php:88 modules/epi/view/item.view.php:54
-#: modules/epi/view/main-header.view.php:26 modules/epi/view/main.view.php:36
+#: modules/epi/view/item-edit.view.php:76 modules/epi/view/item.view.php:60
+#: modules/epi/view/main.view.php:36
 msgid "Status"
 msgstr "Statut"
 
-#: modules/epi/view/item-link-edit.view.php:37
+#: modules/epi/view/item-link-edit.view.php:32
 #: modules/setting/view/capability/main.view.php:33
-#: modules/setting/view/default-data/main.view.php:43
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -163,51 +140,39 @@ msgstr "Enregistrer"
 msgid "Edit"
 msgstr "Modifier"
 
-#: modules/epi/view/item-link.view.php:34
-msgid "Perform a control"
-msgstr "Effectuer un contrôle"
-
-#: modules/epi/view/item-link.view.php:42
+#: modules/epi/view/item-link.view.php:33
 msgid "Are you sure you want to remove this PPE ?"
 msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
 
-#: modules/epi/view/item-link.view.php:44
+#: modules/epi/view/item-link.view.php:35
 msgid "Delete"
 msgstr "Supprimer"
 
-#: modules/epi/view/item.view.php:23 modules/epi/view/main-header.view.php:21
-#: modules/epi/view/main.view.php:31
+#: modules/epi/view/item.view.php:23 modules/epi/view/main.view.php:31
+#, fuzzy
+#| msgid "Last Control"
+msgid "Next Control"
+msgstr "Dernier Contrôle"
+
+#: modules/epi/view/item.view.php:50 modules/epi/view/main.view.php:35
 msgid "Control"
 msgstr "Contrôle"
 
-#: modules/epi/view/item.view.php:50 modules/epi/view/main-header.view.php:25
-#: modules/epi/view/main.view.php:35
-msgid "Last Control"
-msgstr "Dernier Contrôle"
+#: modules/epi/view/item.view.php:70 modules/epi/view/main.view.php:37
+msgid "Life Sheet"
+msgstr "Fiche de Vie"
 
-#: modules/epi/view/main-footer.view.php:24 modules/epi/view/main.view.php:51
-msgid "Load more"
-msgstr "Charger plus"
-
-#: modules/epi/view/main-header.view.php:20 modules/epi/view/main.view.php:30
+#: modules/epi/view/main.view.php:30
 msgid "Image"
 msgstr "Image"
 
-#: modules/epi/view/main-header.view.php:23
-#: modules/service/view/main.view.php:85
-msgid "Reference"
-msgstr "Référence"
+#: modules/epi/view/pagination.view.php:29
+msgid "Previous"
+msgstr "Précédent"
 
-#: modules/epi/view/main-header.view.php:24
-#: modules/service/view/main.view.php:106
-#: modules/setting/view/default-data/main.view.php:25
-msgid "Periodicity"
-msgstr "Périodicité"
-
-#: modules/epi/view/pagination.view.php:27
-#: modules/setting/view/capability/list.view.php:53
-msgid "Page"
-msgstr "Page"
+#: modules/epi/view/pagination.view.php:62
+msgid "Next"
+msgstr "Suivant"
 
 #: modules/epi/view/search.view.php:23
 msgid "Search term"
@@ -217,63 +182,76 @@ msgstr "Critère de recherche"
 msgid "Search"
 msgstr "Rechercher"
 
-#: modules/service/action/class-service-menu-action.php:35
-msgid "Mise en Service"
-msgstr "Mise en Service"
-
 #: modules/service/view/main.view.php:20
 msgid "Commissioning"
 msgstr "Mise en Service"
 
-#: modules/service/view/main.view.php:57
+#: modules/service/view/main.view.php:25
 msgid "Maker"
 msgstr "Fabricant"
 
-#: modules/service/view/main.view.php:66
+#: modules/service/view/main.view.php:35
 msgid "Seller"
 msgstr "Vendeur"
 
-#: modules/service/view/main.view.php:75
+#: modules/service/view/main.view.php:45
 msgid "Manager"
 msgstr "Responsable"
 
-#: modules/service/view/main.view.php:95
+#: modules/service/view/main.view.php:55
+msgid "Reference"
+msgstr "Référence"
+
+#: modules/service/view/main.view.php:66
 #: modules/setting/view/default-data/main.view.php:34
 msgid "Lifetime"
 msgstr "Durée de Vie"
 
-#: modules/service/view/main.view.php:98
-#: modules/setting/view/date-management/main.view.php:41
-#: modules/setting/view/default-data/main.view.php:37
+#: modules/service/view/main.view.php:70
+#: modules/setting/view/date-management/main.view.php:42
+#: modules/setting/view/default-data/main.view.php:38
 msgid "years"
 msgstr "ans"
 
-#: modules/service/view/main.view.php:118
+#: modules/service/view/main.view.php:78
+#: modules/setting/view/default-data/main.view.php:25
+msgid "Periodicity"
+msgstr "Périodicité"
+
+#: modules/service/view/main.view.php:82
+#: modules/setting/view/default-data/main.view.php:29
+msgid "days"
+msgstr "jours"
+
+#: modules/service/view/main.view.php:91
 msgid "Manufacture Date"
 msgstr "Date de Fabrication"
 
-#: modules/service/view/main.view.php:138
+#: modules/service/view/main.view.php:111
 msgid "Purchase Date"
 msgstr "Date d'Achat"
 
-#: modules/service/view/main.view.php:174
-#: modules/service/view/main.view.php:216
+#: modules/service/view/main.view.php:128
+msgid "Control Date = Commissioning Date + Periodicity"
+msgstr "Date de Contrôle  = Date de Mise en Service + Périodicité"
+
+#: modules/service/view/main.view.php:128
 msgid "Control Date : "
 msgstr "Date de Contrôle :"
 
-#: modules/service/view/main.view.php:190
-msgid "End Life Date"
-msgstr "Date de Fin de Vie"
+#: modules/service/view/main.view.php:136
+msgid "End Life Date = Manufacture Date + Lifetime"
+msgstr "Date de fin de Vie = Date de fabrication + Durée de Vie"
 
-#: modules/service/view/main.view.php:201
-msgid "Disposal Date"
-msgstr "Date de Mise au Rebut"
-
-#: modules/service/view/main.view.php:222
+#: modules/service/view/main.view.php:136
 msgid "End Life Date : "
 msgstr "Date de Fin de Vie :"
 
-#: modules/service/view/main.view.php:226
+#: modules/service/view/main.view.php:144
+msgid "Disposal Date = End Life Date"
+msgstr "Date de Mise au Rebut = Date de Fin de Vie"
+
+#: modules/service/view/main.view.php:144
 msgid "Disposal Date : "
 msgstr "Date de Mise au Rebut :"
 
@@ -315,6 +293,10 @@ msgstr "A les droits sur TheEPI"
 msgid "Right to TheEPI"
 msgstr "Droit à TheEPI"
 
+#: modules/setting/view/capability/list.view.php:53
+msgid "Page"
+msgstr "Page"
+
 #: modules/setting/view/capability/main.view.php:22
 msgid "Handle role TheEPI"
 msgstr "Gestion des droits de TheEPI"
@@ -331,35 +313,43 @@ msgstr "Gestion des dates"
 msgid "Purchase Date Valued"
 msgstr "Date d'Achat estimée"
 
-#: modules/setting/view/date-management/main.view.php:32
-msgid "Purchase Date = Commissioning Date"
-msgstr "Date d'Achat = Date de Mise en Service"
-
-#: modules/setting/view/date-management/main.view.php:34
+#: modules/setting/view/date-management/main.view.php:26
+#, fuzzy
+#| msgid ""
+#| "Please indicate if you want your Purchase Date and your Commissioning "
+#| "Date are equal"
 msgid ""
 "Please indicate if you want your Purchase Date and your Commissioning Date "
-"are equal"
+"to be equal"
 msgstr ""
 "Veuillez indiquer si vous voulez que la Date d'Achat et la Date de Mise en "
 "Service sont égales"
+
+#: modules/setting/view/date-management/main.view.php:33
+msgid "Purchase Date = Commissioning Date"
+msgstr "Date d'Achat = Date de Mise en Service"
 
 #: modules/setting/view/date-management/main.view.php:38
 msgid "Manufacture Date Valued"
 msgstr "Date de Fabrication estimée"
 
-#: modules/setting/view/date-management/main.view.php:43
-msgid "Please indicate the Manufacture Date valued of your PPE"
-msgstr "Veuillez indiquer la date de Fabrication estimée de votre EPI"
+#: modules/setting/view/date-management/main.view.php:39
+msgid ""
+"Please indicate the number of years between Manufacture Date valued and "
+"Commissioning Date of your PPE"
+msgstr ""
+"Veuillez indiquer le nombre d'année entre la Date de Fabrication estimée et "
+"la Date de Mise en Service de vos EPI"
 
 #: modules/setting/view/default-data/main.view.php:22
 msgid "Handle default data"
 msgstr "Gestion des données par défaut"
 
-#: modules/setting/view/default-data/main.view.php:30
+#: modules/setting/view/default-data/main.view.php:26
 msgid "Please indicate the periodicity of control of your PPE"
 msgstr "Veuillez indiquer la périodicité de contrôle de votre EPI"
 
-#: modules/setting/view/default-data/main.view.php:39
+#: modules/setting/view/default-data/main.view.php:35
 msgid "Please indicate the lifetime of your PPE"
 msgstr "Veuillez indiquer la durée de vie de votre EPI"
 
@@ -378,6 +368,33 @@ msgstr "Donnée par Défaut"
 #: modules/setting/view/main.view.php:24
 msgid "Date Management"
 msgstr "Dates"
+
+#~ msgid "No name Audit"
+#~ msgstr "Audit sans nom"
+
+#~ msgid "Create new PPE"
+#~ msgstr "Créer un nouveau EPI"
+
+#~ msgid "No user"
+#~ msgstr "Pas d'utilisateur"
+
+#~ msgid "No comment"
+#~ msgstr "Pas de commentaire"
+
+#~ msgid "This field must be in numeric format and better than 0"
+#~ msgstr "Ce champ doit être une valeur numérique supérieure à 0"
+
+#~ msgid "Load more"
+#~ msgstr "Charger plus"
+
+#~ msgid "Mise en Service"
+#~ msgstr "Mise en Service"
+
+#~ msgid "End Life Date"
+#~ msgstr "Date de Fin de Vie"
+
+#~ msgid "Disposal Date"
+#~ msgstr "Date de Mise au Rebut"
 
 #~ msgid "Categorie"
 #~ msgstr "Catégorie"

@@ -2,11 +2,11 @@
 /**
  * Définition des données des utilisateurs
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Model
+ * @package EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -20,7 +20,6 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 	 * Définition des données des utilisateurs
 	 */
 	class User_Model extends Data_Class {
-
 
 		/**
 		 * Définition des différentes couleurs pour l'avatar
@@ -46,7 +45,7 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 		/**
 		 * Le constructeur
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data       Les données de l'objet.
@@ -64,17 +63,21 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 				'field'    => 'user_email',
 				'required' => true,
 				'default'  => '',
+				'show_in_rest' => false,
+
 			);
 
 			$this->schema['login'] = array(
-				'type'     => 'string',
-				'field'    => 'user_login',
-				'required' => true,
+				'type'         => 'string',
+				'field'        => 'user_login',
+				'required'     => true,
+				'show_in_rest' => false,
 			);
 
 			$this->schema['password'] = array(
-				'type'  => 'string',
-				'field' => 'user_pass',
+				'type'         => 'string',
+				'field'        => 'user_pass',
+				'show_in_rest' => false,
 			);
 
 			$this->schema['displayname'] = array(
@@ -109,17 +112,21 @@ if ( ! class_exists( '\eoxia\User_Model' ) ) {
 			);
 
 			$this->schema['firstname'] = array(
-				'type'      => 'string',
-				'meta_type' => 'single',
-				'field'     => 'first_name',
-				'default'   => '',
+				'type'         => 'string',
+				'meta_type'    => 'single',
+				'field'        => 'first_name',
+				'default'      => '',
+				'show_in_rest' => false,
+
 			);
 
 			$this->schema['lastname'] = array(
-				'type'      => 'string',
-				'meta_type' => 'single',
-				'field'     => 'last_name',
-				'default'   => '',
+				'type'         => 'string',
+				'meta_type'    => 'single',
+				'field'        => 'last_name',
+				'default'      => '',
+				'show_in_rest' => false,
+
 			);
 
 			parent::__construct( $data, $req_method );

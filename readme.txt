@@ -3,7 +3,7 @@ Contributors: Evarisk
 Tags: TRacking, PPE, Safety
 Donate link: https://www.evarisk.com
 Requires at least: 4.5
-Tested up to: 4.9.7
+Tested up to: 5.2.2
 Requires PHP: 5.6.3
 Stable tag: 0.6.0
 License: GPLv3 or later
@@ -43,27 +43,23 @@ The installation of the plugin can be done in two ways:
 
 = Version 0.6.0 =
 
-* - Refonte graphique mineur sur le lien effectuer un contrôle et sur le design de la case contrôle.
-* - Ajout de fonctionnabilité
-		- Ajout du menu de navigation en fonction du statut de l'EPI.
-		- Remplacement du bouton charger plus par une pagination.
-		- Ajout de 2 onglets dans les réglages.
-			- Configuration de 2 données par défauts.
-			- Configuration des dates.
+* 34412 - Refonte graphique mineur sur le lien effectuer un contrôle et sur le design de la case contrôle.
+* 34413	- Ajout du menu de navigation en fonction du statut de l'EPI.
+* 34414	- Remplacement du bouton charger plus par une pagination.
+* 34415	- Ajout de 2 onglets dans les réglages.
+* 34416	- Configuration des données par défauts.
+* 34417	- Configuration des dates.
 
-* - Correction de bug diverse
-		- Sur la création/modification.
-		- Sur les données par défauts.
+* 34418 - Correction de bug diverse sur la création/modification.
+* 34419 - Correction de bug diverse sur les données par défauts.
 
 = Version 0.5.0 =
 
-* - Refonte graphique et fonctionnelle du plugin theEPI.
-* - Ajout de fonctionnabilité
-		- Effectuer un contrôle d'un EPI lié à un audit.
-		- Exporter les informations de l'EPI en ODT.
+* 34406 - Refonte graphique et fonctionnelle du plugin theEPI.
+* 34409 - Effectuer un contrôle d'un EPI lié à un audit.
+* 34410	- Exporter les informations de l'EPI en ODT.
 
-* - Correction de bug diverse
-		- Sur les boutons nouveaux.
+* 34411 - Correction de bug diverse sur les boutons nouveaux.
 
 = Version 0.4.1 =
 

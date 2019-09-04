@@ -2,10 +2,10 @@
 /**
  * Gestion des ODT (POST, PUT, GET, DELETE)
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Class
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -20,7 +20,6 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 	 * Gestion des ODT (POST, PUT, GET, DELETE)
 	 */
 	class ODT_Class extends Attachment_Class {
-
 
 		/**
 		 * Le nom du modèle
@@ -69,7 +68,7 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 * Utiles pour récupérer la clé unique
 		 *
 		 * @todo Rien à faire ici
-		 * @var  string
+		 * @var string
 		 */
 		protected $identifier_helper = 'odt';
 
@@ -98,6 +97,9 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 */
 		protected $odt_name = '';
 
+		protected $path = '';
+		protected $url = '';
+
 		/**
 		 * Récupères le chemin vers le dossier frais-pro dans wp-content/uploads
 		 *
@@ -116,7 +118,7 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 *
 		 * @since 6.0.0
 		 *
-		 * @param array $model_type Le type du document.
+		 * @param  array $model_type Le type du document.
 		 *
 		 * @return array
 		 */
@@ -128,10 +130,10 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			$response = array(
 				'status'  => true,
 				'id'      => null,
-				'path'    => str_replace( '\\', '/', PLUGIN_DIGIRISK_PATH . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
-				'url'     => str_replace( '\\', '/', PLUGIN_DIGIRISK_URL . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
+				'path'    => str_replace( '\\', '/', $this->path . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
+				'url'     => str_replace( '\\', '/', $this->url . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
 				// translators: Pour exemple: Le modèle utilisé est: C:\wamp\www\wordpress\wp-content\plugins\digirisk-alpha\core\assets\document_template\document_unique.odt.
-				'message' => sprintf( __( 'Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt', 'digirisk' ), PLUGIN_DIGIRISK_PATH, $this->odt_name ),
+				'message' => sprintf( __( 'Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt', 'digirisk' ), $this->path, $this->odt_name ),
 			);
 
 			// Merge tous les types ensembles.
@@ -153,32 +155,30 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			}
 
 			// Lances la Query pour récupérer le document par défaut selon $model_type.
-			$query = new \WP_Query(
-				array(
-					'fields'         => 'ids',
-					'post_status'    => 'inherit',
-					'posts_per_page' => 1,
-					'tax_query'      => $tax_query,
-					'post_type'      => 'attachment',
-				)
-			);
+			$query = new \WP_Query( array(
+				'fields'         => 'ids',
+				'post_status'    => 'inherit',
+				'posts_per_page' => 1,
+				'tax_query'      => $tax_query,
+				'post_type'      => 'attachment',
+			) );
 
 			// Récupères le document
 			if ( $query->have_posts() ) {
 				$upload_dir = wp_upload_dir();
 
-				$model_id             = $query->posts[0];
-				$attachment_file_path = str_replace( '\\', '/', get_attached_file( $model_id ) );
-				$response['id']       = $model_id;
-				$response['path']     = str_replace( '\\', '/', $attachment_file_path );
-				$response['url']      = str_replace( str_replace( '\\', '/', $upload_dir['basedir'] ), str_replace( '\\', '/', $upload_dir['baseurl'] ), $attachment_file_path );
+				$model_id               = $query->posts[0];
+				$attachment_file_path   = str_replace( '\\', '/', get_attached_file( $model_id ) );
+				$response['id']   = $model_id;
+				$response['path'] = str_replace( '\\', '/', $attachment_file_path );
+				$response['url']  = str_replace( str_replace( '\\', '/', $upload_dir['basedir'] ), str_replace( '\\', '/', $upload_dir['baseurl'] ), $attachment_file_path );
 
 				// translators: Pour exemple: Le modèle utilisé est: C:\wamp\www\wordpress\wp-content\plugins\digirisk-alpha\core\assets\document_template\document_unique.odt.
 				$response['message'] = sprintf( __( 'Le modèle utilisé est: %1$s', 'digirisk' ), $attachment_file_path );
 			}
 
 			if ( ! is_file( $response['path'] ) ) {
-				$response['status']  = false;
+				$response['status'] = false;
 				$response['message'] = 'Le modèle ' . $response['path'] . ' est introuvable.';
 			}
 
@@ -202,13 +202,13 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			$today = getdate();
 
 			// Définition des paramètres de la requête de récupération des documents du type donné pour la date actuelle.
-			$args              = array(
+			$args = array(
 				'count'          => true,
 				'posts_per_page' => -1,
 				'post_parent'    => $element_id,
 				'post_type'      => $type,
 				'post_status'    => array( 'publish', 'inherit' ),
-				'date_query'     => array(
+				'date_query' => array(
 					array(
 						'year'  => $today['year'],
 						'month' => $today['mon'],
@@ -216,11 +216,8 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 					),
 				),
 			);
+
 			$document_revision = new \WP_Query( $args );
-			echo '<pre>';
-			print_r( $document_revision );
-			echo '</pre>';
-			exit;
 			return ( $document_revision->post_count + 1 );
 		}
 
@@ -229,9 +226,9 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 *
 		 * @since 1.1.0
 		 *
-		 * @param mixed $parent_id     L'ID où est attaché le document.
-		 * @param array $document_meta Les métadonnées du document.
-		 * @param array $args          Arguments supplémentaires.
+		 * @param  mixed $parent_id     L'ID où est attaché le document.
+		 * @param  array $document_meta Les métadonnées du document.
+		 * @param  array $args          Arguments supplémentaires.
 		 *
 		 * @return void
 		 */
@@ -271,8 +268,7 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param object $element       L'élément pour lequel il faut créer le
-		 *                              document
+		 * @param object $element      L'élément pour lequel il faut créer le document
 		 * @param array  $document_meta Les données a écrire dans le modèle de document
 		 *
 		 * @return object              Le résultat de la création du document
@@ -292,11 +288,13 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			if ( $file_info['exists'] ) {
 				$document->data['mime_type'] = $file_info['mime_type']['type'];
 			}
+
 			$document->data['file_generated'] = true;
 
 			$document = $this->update( $document->data );
 
 			$response['document'] = $document;
+
 			return $response;
 		}
 
@@ -361,10 +359,10 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 		 * @param array  $document_content Un tableau contenant le contenu du fichier à écrire selon l'élément en cours d'impression.
 		 * @param string $document_name    Le nom du document.
 		 *
-		 *                                 array['status']   boolean True si tout s'est bien passé sinon false.
-		 *                                 array['message']  string  Le message informatif de la méthode.
-		 *                                 array['path']     string  Le chemin absolu vers le fichier.
-		 *                                 array['url']      string  L'url vers le fichier.
+		 * array['status']   boolean True si tout s'est bien passé sinon false.
+		 * array['message']  string  Le message informatif de la méthode.
+		 * array['path']     string  Le chemin absolu vers le fichier.
+		 * array['url']      string  L'url vers le fichier.
 		 *
 		 * @return array                   (Voir au dessus).
 		 */
@@ -372,10 +370,10 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			$document = $this->get( array( 'id' => $document_id ), true );
 
 			$response = array(
-				'status'  => false,
-				'message' => '',
-				'path'    => '',
-				'url'     => '',
+				'status'   => false,
+				'message'  => '',
+				'path'     => '',
+				'url'      => '',
 			);
 
 			if ( empty( $document->data['path'] ) ) {
@@ -385,7 +383,8 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 
 			@ini_set( 'memory_limit', '256M' );
 
-			include_once PLUGIN_DIGIRISK_PATH . '/core/external/odtPhpLibrary/odf.php';
+
+			require_once $this->path . '/core/external/odtPhpLibrary/odf.php';
 
 			$upload_dir = wp_upload_dir();
 			$directory  = str_replace( '\\', '/', $upload_dir['basedir'] );
@@ -401,6 +400,7 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 				$response['message'] = $document->data['model_path'] . ' est introuvable';
 				return $response;
 			}
+
 
 			// On créé l'instance pour la génération du document odt.
 			$odf_php_lib = new \DigiOdf( $document->data['model_path'], $config );
@@ -448,28 +448,32 @@ if ( ! class_exists( '\eoxia\ODT_Class' ) ) {
 			// Dans le cas où la donnée a écrire est une valeur "simple" (texte).
 			if ( ! is_array( $data_value ) ) {
 				$current_odf->setVars( $data_key, stripslashes( $data_value ), true, 'UTF-8' );
-			} elseif ( is_array( $data_value ) && isset( $data_value['type'] ) && ! empty( $data_value['type'] ) ) {
-				switch ( $data_value['type'] ) {
+			} else if ( is_array( $data_value ) && isset( $data_value[ 'type' ] ) && !empty( $data_value[ 'type' ] ) ) {
+				switch ( $data_value[ 'type' ] ) {
 
 					case 'picture':
-						$current_odf->setImage( $data_key, $data_value['value'], ( ! empty( $data_value['option'] ) && ! empty( $data_value['option']['size'] ) ? $data_value['option']['size'] : 0 ) );
+						$current_odf->setImage( $data_key, $data_value[ 'value' ], ( !empty( $data_value[ 'option' ] ) && !empty( $data_value[ 'option' ][ 'size' ] ) ? $data_value[ 'option' ][ 'size' ] : 0 ) );
 						break;
 
 					case 'segment':
 						$segment = $current_odf->setdigiSegment( $data_key );
 
-						if ( $segment && is_array( $data_value['value'] ) ) {
-							foreach ( $data_value['value'] as $segment_detail ) {
+						if ( $segment && is_array( $data_value[ 'value' ] ) ) {
+							foreach ( $data_value[ 'value' ] as $segment_detail ) {
 								foreach ( $segment_detail as $segment_detail_key => $segment_detail_value ) {
-									if ( is_array( $segment_detail_value ) && array_key_exists( 'type', $segment_detail_value ) && ( 'sub_segment' == $segment_detail_value['type'] ) ) {
-										foreach ( $segment_detail_value['value'] as $sub_segment_data ) {
+									if ( is_array( $segment_detail_value ) && array_key_exists( 'type', $segment_detail_value ) && ( 'sub_segment' == $segment_detail_value[ 'type' ] ) ) {
+										foreach ( $segment_detail_value[ 'value' ] as $sub_segment_data ) {
 											foreach ( $sub_segment_data as $sub_segment_data_key => $sub_segment_data_value ) {
-												$segment->$segment_detail_key = $this->set_document_meta( $sub_segment_data_key, $sub_segment_data_value, $segment );
+												$segment->$segment_detail_key = $this->set_document_meta( $sub_segment_data_key, $sub_segment_data_value, $segment->$segment_detail_key );
 											}
+
+											$segment->$segment_detail_key->merge();
 										}
-									} else {
+									}
+									else {
 										$segment = $this->set_document_meta( $segment_detail_key, $segment_detail_value, $segment );
 									}
+
 								}
 
 								$segment->merge();

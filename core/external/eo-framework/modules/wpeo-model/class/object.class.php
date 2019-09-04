@@ -2,11 +2,11 @@
 /**
  * Gestion des objets ( posts / terms / comments / users )
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     1.0.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 1.0.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Class
+ * @package EO_Framework\EO_Model\Class
  */
 
 namespace eoxia;
@@ -21,7 +21,6 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 	 * Gestion des posts (POST, PUT, GET, DELETE)
 	 */
 	class Object_Class extends Rest_Class {
-
 
 		/**
 		 * Le nom du modèle pour l'objet actuel.
@@ -61,7 +60,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		/**
 		 * Utile uniquement pour DigiRisk.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string L'identifiant des commentaires pour DigiRisk.
@@ -73,7 +72,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		/**
 		 * Permet de récupérer le schéma avec les données du modèle par défault.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @return Object
@@ -89,7 +88,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		 *
 		 * @param string $model_name Le nom du modèle.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.3.6.0
 		 */
 		public function set_model( $model_name ) {
@@ -99,7 +98,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		/**
 		 * Retourne le post type.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string Le type de l'objet actuel
@@ -111,7 +110,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		/**
 		 * Retourne le nom de la méta générale de l'objet actuel.
 		 *
-		 * @since   1.0.0
+		 * @since 1.0.0
 		 * @version 1.0.0
 		 *
 		 * @return string Le nom de la méta de l'objet actuel
@@ -123,7 +122,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		/**
 		 * Appelle la méthode update puis renvoies l'objet mis à jour ou créé.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param Array $data Les données.
@@ -131,6 +130,7 @@ if ( ! class_exists( '\eoxia\Object_Class' ) ) {
 		 * @return Object     L'objet avec toutes ses données.
 		 */
 		public function create( $data ) {
+			$data['id'] = ! empty( $data['id'] ) ? (int) $data['id'] : 0;
 			$object = $this->update( $data );
 
 			$parent_class = get_parent_class( $object );

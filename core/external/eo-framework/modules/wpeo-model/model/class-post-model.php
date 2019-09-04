@@ -2,11 +2,11 @@
 /**
  * Définition des données des posts
  *
- * @author    Eoxia <dev@eoxia.com>
- * @since     0.1.0
- * @version   1.0.0
+ * @author Eoxia <dev@eoxia.com>
+ * @since 0.1.0
+ * @version 1.0.0
  * @copyright 2015-2018
- * @package   EO_Framework\EO_Model\Model
+ * @package EO_Framework\EO_Model\Model
  */
 
 namespace eoxia;
@@ -21,7 +21,6 @@ if ( ! class_exists( '\eoxia\Post_Model' ) ) {
 	 */
 	class Post_Model extends Data_Class {
 
-
 		/**
 		 * Définition du modèle principal des posts
 		 *
@@ -32,7 +31,7 @@ if ( ! class_exists( '\eoxia\Post_Model' ) ) {
 		/**
 		 * Défini le schéma de WP_Post.
 		 *
-		 * @since   0.1.0
+		 * @since 0.1.0
 		 * @version 1.0.0
 		 *
 		 * @param array $data       Data.
