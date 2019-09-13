@@ -6,7 +6,7 @@
  * @author    Evarisk <dev@evarisk.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -48,13 +48,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="table-cell table-250" style="text-align : center" data-title="<?php echo esc_attr_e( 'Commissioning Date', 'theepi' ); ?>"><?php echo esc_html( $epi->data['commissioning_date']['rendered']['date'] ); ?></div>
 
 	<div class="table-cell table-250 control_audit" style="text-align: center" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
-		<?php EPI_Class::g()->display_audit_epi( $epi->data['id'], false ) ?>
-			<a href="#" class="action-attribute epi-item-link-control"
-			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-			data-action="control_epi"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'control_epi' ) ); ?>">
-			<?php esc_html_e( 'Perform a control', 'theepi' ); ?>
-			</a>
+		<?php EPI_Class::g()->display_audit_epi( $epi->data['id'], false );
+			if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
+				<a href="#" class="action-attribute epi-item-link-control"
+				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+				data-action="control_epi"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'control_epi' ) ); ?>">
+				<?php esc_html_e( 'Perform a control', 'theepi' ); ?>
+				</a>
+			<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-200" style="text-align : center;" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
@@ -67,11 +69,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endif; ?>
 	</div>
 
-	<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>">
-		<div class="wpeo-button button-main button-square-40 action-attribute"
+	<div class="table-cell table-100" style="text-align : center" data-title="<?php echo esc_attr_e( 'QrCode', 'theepi' ); ?>">
+		<span class="qrcode action-attribute"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-			data-action="export_epi_odt"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'export_epi_odt' ) ); ?>"> <i class="fas fa-download"></i>
-		</div>
+			data-action="open_qrcode"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_qrcode' ) ); ?>"
+			data-url="<?php echo esc_attr( $epi->data['link'] ) ?>">
+			<?php  echo do_shortcode( '[qrcode text="' . $epi->data['link']  . '" eclevel=0  height=80 width=80 transparency=1]' ); ?>
+		</span>
+	</div>
+
+	<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>">
+		<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'read_theepi' ) ) ): ?>
+			<div class="wpeo-button button-main button-square-40 action-attribute"
+				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+				data-action="export_epi_odt"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'export_epi_odt' ) ); ?>"> <i class="fas fa-download"></i>
+			</div>
+		<?php endif; ?>
 	</div>
 </div>

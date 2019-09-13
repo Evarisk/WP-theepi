@@ -14,8 +14,8 @@ window.eoxiaJS.theEPI.EPI.event = function() {
 	jQuery( document ).on( 'keyup', '.wrap-theepi .wpeo-table.epi .epi-row input[name="periodicity"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .edit .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-tab.epi .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
-
 	jQuery( document ).on( 'click', '.wrap-theepi .action-request-edit-epi', window.eoxiaJS.theEPI.EPI.requestEpiEdit );
+
 };
 
 /**
@@ -32,12 +32,7 @@ window.eoxiaJS.theEPI.EPI.event = function() {
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
-	jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).addClass( 'button-disabled' );
-
-	if ( Number.isInteger( parseInt( jQuery( this ).val() ) ) ) {
-		jQuery( this ).closest( '.epi-row' ).find( '.action-input.add' ).removeClass( 'button-disabled' );
-		window.eoxiaJS.popover.remove( jQuery( this ).closest( '.epi-row' ).find( 'input.wpeo-popover-event' ) );
-	}
+	 
 };
 
 /**
@@ -110,12 +105,19 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
 window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response ) {
 	var parent_element = triggeredElement.closest( '.wpeo-table' ).find( '.service' );
 	var parent_element_edit = triggeredElement.closest( '.wpeo-table' ).find( '.edit' );
-	for ( i = 0; i < response.data.error.element.length; ++i ) {
-		var input_element = parent_element.find( '.form-field[name="' + response.data.error.element[i] + '"]');
-		input_element.closest( '.form-element' ).find( '.error' ).html( response.data.error.error[i] );
-		var input_element_edit = parent_element_edit.find( '.form-field[name="' + response.data.error.element[i] + '"]');
-		input_element_edit.closest( '.table-cell' ).find( '.error' ).html( response.data.error.error[i] );
-	}
+	// for ( i = 0; i < response.data.error.length; ++i ) {
+	// 	var input_element = parent_element.find( '.form-field[name="' + response.data.error.[i] + '"]');
+	// 	input_element.closest( '.form-element' ).find( '.error' ).html( response.data.error.error[i] );
+	// 	var input_element_edit = parent_element_edit.find( '.form-field[name="' + response.data.error.element[i] + '"]');
+	// 	input_element_edit.closest( '.table-cell' ).find( '.error' ).html( response.data.error.error[i] );
+	// }
+	//
+	jQuery.each( response.data.error, function( key, value ) {
+		var input_element = parent_element.find( '.form-field[name="' + value.element + '"]');
+	  	input_element.closest( '.form-element' ).find( '.error' ).html( value.error);
+	  	var input_element_edit = parent_element_edit.find( '.form-field[name="' + value.element + '"]');
+	  	input_element_edit.closest( '.table-cell' ).find( '.error' ).html( value.error );
+	});
 
 };
 
@@ -305,7 +307,7 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 
 	var title               = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="title"]' ).val();
 	var serial_number       = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="serial_number"]' ).val();
-	var commissioning_date  = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="commissioning-date"]' ).val();
+	var commissioning_date  = jQuery( this ).closest( '.table-row' ).find( '.mysql-date[name="commissioning-date"]' ).val();
 
 	var maker               = fieldset_element.find( '.form-field[name="maker"]' ).val();
 	var seller              = fieldset_element.find( '.form-field[name="seller"]' ).val();
@@ -313,8 +315,8 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 	var reference           = fieldset_element.find( '.form-field[name="reference"]' ).val();
 	var lifetime            = fieldset_element.find( '.form-field[name="lifetime"]' ).val();
 	var periodicity         = fieldset_element.find( '.form-field[name="periodicity"]' ).val();
-	var manufacture_date    = fieldset_element.find( '.form-field[name="manufacture-date"]' ).val();
-	var purchase_date       = fieldset_element.find( '.form-field[name="purchase-date"]' ).val();
+	var manufacture_date    = fieldset_element.find( '.mysql-date[name="manufacture-date"]' ).val();
+	var purchase_date       = fieldset_element.find( '.mysql-date[name="purchase-date"]' ).val();
 	var control_date        = fieldset_element.find( '.form-label[name="control-date"]' ).attr( 'value' );
 	var end_life_date       = fieldset_element.find( '.form-label[name="end-life-date"]' ).attr( 'value' );
 	var disposal_date       = fieldset_element.find( '.form-label[name="disposal-date"]' ).attr( 'value' );
@@ -410,4 +412,19 @@ window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
 		window.eoxiaJS.loader.display( jQuery( this ) );
 		window.eoxiaJS.request.send( jQuery( this ), data );
 	}
+};
+
+/**
+ * Ouvre le QrCode en grand
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {ClickEvent} event [qrcode]
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.EPI.openQrCode = function( triggeredElement, response ){
+	triggeredElement.closest( '.table-row' ).append( response.data.view );
+
 };

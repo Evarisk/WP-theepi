@@ -63,14 +63,6 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
-		$this->schema['status'] = array(
-			'type'    => 'string',
-			'default' => 'publish',
-			'since'   => '0.1.0',
-			'version' => '0.1.0',
-		);
-
-
 		$this->schema['reference'] = array(
 			'type'        => 'string',
 			'meta_type'   => 'single',

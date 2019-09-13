@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -25,7 +25,7 @@ class EPI_Action {
 	 * Le constructeur.
 	 *
 	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 */
 	public function __construct() {
 		add_action( 'wp_ajax_create_epi', array( $this, 'callback_create_epi' ) );
@@ -40,19 +40,24 @@ class EPI_Action {
 		add_action( 'wp_ajax_clear_search_epi', array( $this, 'callback_clear_search_epi' ) );
 
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'callback_create_mass_epi' ) );
-	}
 
+		add_action( 'wp_ajax_open_qrcode', array( $this, 'callback_open_qrcode' ) );
+	}
 
 	/**
 	 * Affiche un EPI lors de sa création.
 	 *
 	 * @since   0.5.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function callback_create_epi() {
 		check_ajax_referer('create_epi');
+
+		if ( ! EPI_Class::g()->check_capabilities( 'create_theepi' ) ) {
+			wp_send_json_error();
+		}
 
 		$close_epi_id = ! empty( $_POST['closeepi'] ) ? (int) $_POST['closeepi'] : 0;
 
@@ -75,6 +80,7 @@ class EPI_Action {
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item-edit', array(
 				'epi' => $epi,
+				'edit_mode' => false
 			)
 		);
 		$view_edit_epi = ob_get_clean();
@@ -83,7 +89,8 @@ class EPI_Action {
 		\eoxia\View_Util::exec(
 			'theepi', 'service', 'main', array(
 				'epi' => $epi,
-				'checked_purchase_date' => $checked_purchase_date,
+				'edit_mode' => false,
+				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued
 			)
 		);
@@ -96,8 +103,8 @@ class EPI_Action {
 				'callback_success'   => 'CreatedEpiSuccess',
 				'view_edit_epi'      => $view_edit_epi,
 				'view_edit_service'  => $view_edit_service,
-				'view_close'        => $close_view_epi,
-				'close_epi_id'      => $close_epi_id
+				'view_close'         => $close_view_epi,
+				'close_epi_id'       => $close_epi_id
 
 			)
 		);
@@ -136,20 +143,32 @@ class EPI_Action {
 		$end_life_date      = ! empty( $_POST['end_life_date'] ) ? sanitize_text_field( $_POST['end_life_date'] ) : '';
 		$disposal_date      = ! empty( $_POST['disposal_date'] ) ? sanitize_text_field( $_POST['disposal_date'] ) : '';
 
+		if ( empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) && empty( $lifetime ) ) {
+			$lifetime = 0;
+		}
+
+		if ( empty( get_option( EPI_Class::g()->option_name_default_data_periodicity ) ) && empty( $periodicity ) ) {
+			$periodicity = 0;
+		}
+
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
+
+		$manufacture_date = Service_Class::g()->check_date_if_empty( $manufacture_date );
+		$purchase_date = Service_Class::g()->check_date_if_empty( $purchase_date );
+		$commissioning_date = Service_Class::g()->check_date_if_empty( $commissioning_date );
 
 		if( $checked_purchase_date == 1 ) {
 			$purchase_date = $commissioning_date;
 		}
 
 		if( $manufacture_date_valued != "" ) {
-			$manufacture_date = Service_Class::g()->calcul_date_fabrication( $commissioning_date , $manufacture_date_valued );
+			$manufacture_date = Service_Class::g()->calcul_manufacture_date( $commissioning_date , $manufacture_date_valued );
 		}
 
-		$end_life_date = Service_Class::g()->calcul_date_fin_vie( $manufacture_date, $lifetime );
-		$control_date = Service_Class::g()->calcul_date_control( $purchase_date, $end_life_date, $commissioning_date, $periodicity );
-		$disposal_date = Service_Class::g()->calcul_date_mise_rebut( $end_life_date );
+		$end_life_date = Service_Class::g()->calcul_end_life_date( $manufacture_date, $lifetime );
+		$control_date = Service_Class::g()->calcul_control_date( $commissioning_date, $periodicity );
+		$disposal_date = Service_Class::g()->calcul_disposal_date( $end_life_date );
 
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 
@@ -157,7 +176,7 @@ class EPI_Action {
 			'image_id'                 => $image_id,
 			'title'                    => $title,
 			'serial_number'            => $serial_number,
-			'commissioning_date'       => Service_Class::g()->convert_date_to_sql( $commissioning_date ),
+			'commissioning_date'       => date ( 'Y-m-d' , $commissioning_date ),
 			'commissioning_date_valid' => $commissioning_date != "" ? 1 : 0,
 			'last_control'             => $last_control,
 			'status_epi'               => $status_epi,
@@ -168,13 +187,15 @@ class EPI_Action {
 			'reference'                => $reference,
 			'lifetime_epi'             => $lifetime,
 			'periodicity'              => $periodicity,
-			'manufacture_date'         => Service_Class::g()->convert_date_to_sql( $manufacture_date ),
+			'manufacture_date'         => date ( 'Y-m-d' , $manufacture_date ),
 			'manufacture_date_valid'   => $manufacture_date != "" ? 1 : 0,
-			'purchase_date'            => Service_Class::g()->convert_date_to_sql( $purchase_date ),
+			'purchase_date'            => date ( 'Y-m-d' , $purchase_date ),
 			'purchase_date_valid'      => $purchase_date != "" ? 1 : 0,
-			'control_date'             => Service_Class::g()->convert_date_to_sql( $control_date ),
-			'end_life_date'            => Service_Class::g()->convert_date_to_sql( $end_life_date ),
-			'disposal_date'            => Service_Class::g()->convert_date_to_sql( $disposal_date )
+			'control_date'             => date ( 'Y-m-d' , $control_date ),
+			'end_life_date'            => date ( 'Y-m-d' , $end_life_date ),
+			'disposal_date'            => date ( 'Y-m-d' , $disposal_date ),
+
+			'post_status'              => 'publish'
 		);
 
 		$date_valid = Service_Class::g()->check_date_epi( $update_epi );
@@ -195,7 +216,7 @@ class EPI_Action {
 				'module'            => 'EPI',
 				'callback_success'  => $callback_js,
 				'view'     		    => $view,
-				'error'             => $date_valid
+				'error'             => ! empty( $date_valid[ 'error' ] ) ? $date_valid[ 'error' ] : ''
 			)
 		);
 	}
@@ -210,6 +231,10 @@ class EPI_Action {
 	 */
 	public function callback_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
+
+		if ( ! EPI_Class::g()->check_capabilities( 'delete_theepi' ) ) {
+			wp_send_json_error();
+		}
 
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
 
@@ -248,6 +273,10 @@ class EPI_Action {
 	public function callback_edit_epi() {
 		check_ajax_referer( 'edit_epi' );
 
+		if ( ! EPI_Class::g()->check_capabilities( 'update_theepi' ) ) {
+			wp_send_json_error();
+		}
+
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
 		$close_epi_id = ! empty( $_POST['closeepi'] ) ? (int) $_POST['closeepi'] : 0;
 
@@ -271,6 +300,7 @@ class EPI_Action {
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item-edit', array(
 				'epi' => $epi,
+				'edit_mode' => true
 			)
 		);
 		$view_edit_epi = ob_get_clean();
@@ -279,6 +309,7 @@ class EPI_Action {
 		\eoxia\View_Util::exec(
 			'theepi', 'service', 'main', array(
 				'epi'                     => $epi,
+				'edit_mode' => true,
 				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued
 			)
@@ -362,6 +393,7 @@ class EPI_Action {
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item-edit', array(
 				'epi' => $epi,
+				'edit_mode' => true,
 			)
 		);
 
@@ -397,7 +429,7 @@ class EPI_Action {
 		$epis = $data_epis['epis'];
 
 		ob_start();
-		EPI_Class::g()->display_epi_list( $epis );
+		EPI_Class::g()->display_epi_list( $epis, false,  $page );
 		$view = ob_get_clean();
 
 		ob_start();
@@ -476,6 +508,11 @@ class EPI_Action {
 	 * @todo:  nonce
 	 */
 	public function callback_create_mass_epi() {
+
+		if ( ! EPI_Class::g()->check_capabilities( 'create_theepi' ) ) {
+			wp_send_json_error();
+		}
+
 		$files_id = ! empty( $_POST['files_id'] ) ? (array) $_POST['files_id'] : array();
 
 		if ( empty( $files_id ) ) {
@@ -484,7 +521,7 @@ class EPI_Action {
 
 		$epis = EPI_Class::g()->create_mass_epi( $files_id );
 
-		EPI_Class::g()->display_epi_list( $epis );
+		EPI_Class::g()->display_epi_list( $epis, false, '');
 		wp_die();
 	}
 
@@ -505,6 +542,40 @@ class EPI_Action {
 		ob_start();
 		EPI_Class::g()->display_epi_list( $epis );
 		return ob_get_clean();
+	}
+
+	/**
+	 * Met la recherche à 0.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
+	public function callback_open_qrcode() {
+		check_ajax_referer( 'open_qrcode' );
+
+		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+		$url = ! empty( $_POST['url'] ) ? sanitize_text_field( $_POST['url'] ) : "";
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ) , true );
+
+		ob_start();
+		\eoxia\View_Util::exec(
+			'theepi', 'epi', 'modal', array(
+				'epi' => $epi,
+				'url' => $url
+			)
+		);
+		$view = ob_get_clean();
+		wp_send_json_success(
+			array(
+				'namespace'        => 'theEPI',
+				'module'           => 'EPI',
+				'callback_success' => 'openQrCode',
+				'view'             => $view
+			)
+		);
 	}
 
 }

@@ -4,8 +4,8 @@
  *
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @since     0.5.0
- * @version   0.6.0
- * @copyright 209 Evarisk
+ * @version   0.7.0
+ * @copyright 2019 Evarisk
  * @package   TheEPI
  */
 
@@ -35,12 +35,17 @@ class EPI_ODT_Action {
 	 * Exporte la fiche de vie d'un EPI en focntion du modèle.
 	 *
 	 * @since   0.5.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function callback_export_epi_odt() {
 		check_ajax_referer( 'export_epi_odt' );
+
+		if ( ! EPI_Class::g()->check_capabilities( 'read_theepi' ) ) {
+			wp_send_json_error();
+		}
+
 		$upload_dir = wp_upload_dir();
 
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
@@ -129,11 +134,11 @@ class EPI_ODT_Action {
 			}
 
 			$default_data = array(
-				'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
-				'title_audit'  => $audit->data[ 'title' ],
-				'tasks_points' => $tasks_points,
-				'user'         => $user->data->display_name,
-				'status'       => $audit->data['status_audit'],
+			'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
+			'title_audit'  => $audit->data[ 'title' ],
+			'tasks_points' => $tasks_points,
+			'user'         => $user->data->display_name,
+			'status'       => $audit->data['status_audit'],
 			);
 
 			$document_meta['audits']['value'][] = $default_data;
@@ -155,20 +160,18 @@ class EPI_ODT_Action {
 		$filename = $response['document']->data['title'] . '.odt';
 
 		EPI_ODT_Class::g()->update( $response['document']->data );
+
 		$response = EPI_ODT_Class::g()->create_document( $response['document']->data['id'] );
 
-		wp_send_json_success(
-			array(
-				'namespace'        => 'theEPI',
-				'module'           => 'EPI',
-				'callback_success' => 'exportedEPISuccess',
-				'filename'         => $filename,
-				'link'             => $link,
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'EPI',
+			'callback_success' => 'exportedEPISuccess',
+			'filename'         => $filename,
+			'link'             => $link,
 			)
 		);
-
 	}
-
 }
 
 new EPI_ODT_Action();

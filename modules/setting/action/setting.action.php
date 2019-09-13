@@ -54,7 +54,7 @@ class Setting_Action {
 	 * Appelle la vue main du module setting.
 	 *
 	 * @since   0.2.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 * @todo:  nonce
@@ -85,7 +85,7 @@ class Setting_Action {
 	 * Rajoutes la capacité "manage_theepi" à tous les utilisateurs ou $have_capability est à true.
 	 *
 	 * @since   0.2.0
-	 * @version 0.2.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
@@ -103,6 +103,8 @@ class Setting_Action {
 				}
 			}
 		}
+
+		Setting_Class::g()->save_capability();
 
 		wp_send_json_success(
 			array(

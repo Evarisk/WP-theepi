@@ -1,0 +1,10 @@
+{
+	"name": "QrCode",
+	"slug": "qrcode",
+	"version": "0.7.0",
+	"description": "Handle QrCode EPI",
+	"path": "modules/qrcode/",
+	"dependencies": {
+		"shortcode": {}
+	}
+}

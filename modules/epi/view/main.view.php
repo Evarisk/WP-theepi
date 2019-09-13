@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -34,6 +34,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="table-cell table-250" style="text-align : center" data-title="<?php esc_attr_e( 'Commissioning Date', 'theepi' ); ?>"><span><?php esc_html_e( 'Commissioning Date', 'theepi' ); ?></span></div>
 			<div class="table-cell table-250" style="text-align : center" data-title="<?php esc_attr_e( 'Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Control', 'theepi' ); ?></span></div>
 			<div class="table-cell table-200" style="text-align : center;"data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></div>
+			<div class="table-cell table-100" style="text-align : center;"data-title="<?php esc_attr_e( 'QrCode', 'theepi' ); ?>"><span><?php esc_html_e( 'QrCode', 'theepi' ); ?></span></div>
 			<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>"><span><?php esc_html_e( 'Life Sheet', 'theepi' ); ?></span></div>
 		</div>
 

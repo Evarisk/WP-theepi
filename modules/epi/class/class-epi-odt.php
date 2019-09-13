@@ -138,7 +138,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 			'path'    => str_replace( '\\', '/', PLUGIN_THEEPI_PATH . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
 			'url'     => str_replace( '\\', '/', PLUGIN_THEEPI_URL . 'core/assets/document_template/' . $this->odt_name . '.odt' ),
 			// translators: Pour exemple: Le modèle utilisé est: C:\wamp\www\wordpress\wp-content\plugins\digirisk-alpha\core\assets\document_template\document_unique.odt.
-			'message' => sprintf( __( 'Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt', 'digirisk' ), PLUGIN_THEEPI_PATH, $this->odt_name ),
+			'message' => sprintf( __( 'Le modèle utilisé est: %1$score/assets/document_template/%2$s.odt', 'theepi' ), PLUGIN_THEEPI_PATH, $this->odt_name ),
 		);
 
 		// Merge tous les types ensembles.

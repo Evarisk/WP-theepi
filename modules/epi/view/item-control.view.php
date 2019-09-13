@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="epi-item-control-red">
 		<?php esc_html_e( 'STAYS', 'theepi' ); ?>
-			<div class="epi-item-control-white-text"><?php esc_html_e( abs( $number_days ) ); ?></div>
+			<div class="epi-item-control-white-text"><?= abs( $number_days ) ?></div>
 		<?php esc_html_e( 'DAYS', 'theepi' ); ?>
 	</div>
 

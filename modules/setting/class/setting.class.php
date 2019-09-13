@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -36,6 +36,10 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * @var string
 	 */
 	public $option_name = 'user_per_page';
+
+
+	public $capabilities = array();
+
 
 	/**
 	 * Le constructeur.
@@ -70,7 +74,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 * Récupères la liste des utilisateurs pour les afficher dans la vue "capability/list".
 	 *
 	 * @since   0.2.0
-	 * @version 0.2.0
+	 * @version 0.7.0
 	 *
 	 * @param array $list_user_id La liste des utilisateurs à afficher. Peut être vide pour récupérer tous les utilisateurs.
 	 *
@@ -111,7 +115,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 
 		if ( ! empty( $users ) ) {
 			foreach ( $users as &$user ) {
-				$user->wordpress_user = new \WP_User( $user->id );
+				$user->wordpress_user = new \WP_User( $user->data['id'] );
 			}
 		}
 
@@ -119,9 +123,6 @@ class Setting_Class extends \eoxia\Singleton_Util {
 			'theepi', 'setting', 'capability/list', array(
 				'users'                => $users,
 				'has_capacity_in_role' => $has_capacity_in_role,
-				'number_page'          => $number_page,
-				'count_user'           => $count_user,
-				'current_page'         => $current_page,
 			)
 		);
 	}
@@ -195,6 +196,34 @@ class Setting_Class extends \eoxia\Singleton_Util {
 
 		return true;
 	}
+
+	/**
+	 * Enregistres les données par défaut.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param integer $default_periodicity La périodicité de contrôle d'un EPI par défaut.
+	 * @param integer $default_lifetime    La durée de vie d'un EPI par défaut.
+	 *
+	 * @return bool  True si tout s'est bien passé.
+	 */
+	public function save_capability() {
+
+        if ( ! empty( $_POST['users'] ) ) {
+            foreach ( $_POST['users'] as $user_id => $data ) {
+                $user = new \WP_User( $user_id );
+
+                if ( 'true' == $data['capability'] ) {
+                    $user->add_cap( 'manage_digirisk' );
+                } else {
+                    $user->remove_cap( 'manage_digirisk' );
+                }
+            }
+        }
+
+		return true;
+    }
 }
 
 Setting_Class::g();

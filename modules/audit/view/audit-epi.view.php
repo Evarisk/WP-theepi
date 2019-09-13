@@ -6,7 +6,7 @@
  * @author    Nicolas Domenech <dev@eoxia.com>
  * @copyright 2019 Eoxia
  * @since     0.5.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -44,12 +44,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<?php echo date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ); ?></span>
 					</li>
 
-					<li class="wpeo-modal-event wpeo-button button-green button-square-40 action-attribute" style="margin-right : 0px"
-						data-epi-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-						data-audit-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
-						data-action="display_control_epi"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control_epi' ) ); ?>"> <i class="fas fa-pencil-alt" style="color: white"></i>
-					</li>
+					<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'update_theepi' ) ) ): ?>
+						<li class="wpeo-modal-event wpeo-button button-green button-square-40 action-attribute" style="margin-right : 0px"
+							data-epi-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+							data-audit-id="<?php echo esc_attr( $audit->data['id'] ); ?>"
+							data-action="display_control_epi"
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control_epi' ) ); ?>"> <i class="fas fa-pencil-alt" style="color: white"></i>
+						</li>
+					<?php endif; ?>
 				</div>
 			</ul>
 		</div>

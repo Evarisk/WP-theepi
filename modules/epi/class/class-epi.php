@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -156,11 +156,12 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Constructeur.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	protected function construct() {
+		parent::construct();
 		$this->default_data_periodicity = 365;
 		$this->default_data_lifetime = 10;
 		$this->default_data_purchase_date = true;
@@ -179,6 +180,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @return void
 	 */
 	public function display( $term = '' ) {
+
 		$page = isset ( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : "all";
 		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "rebut" ){
 			$page = "all";
@@ -369,7 +371,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function display_epi_pagination( $offset, $page, $pagination = 1 ) {
 
 		$pagination_data = $this->get_pagination_data( $offset );
-		$data_epis = $this->get_epis( $pagination_data, $term, $page );
+		$data_epis = $this->get_epis( $pagination_data, '', $page );
 		$epis = $data_epis['epis'];
 		$nbr_epis = $data_epis['nbr_epis'];
 
@@ -387,6 +389,8 @@ class EPI_Class extends \eoxia\Post_Class {
 			if( intval( $count_epi % $per_page ) > 0 ) {
 				$number_pages++;
 			}
+		}else {
+			$number_pages = 0;
 		}
 
 		\eoxia\View_Util::exec(
@@ -449,7 +453,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Supprimes un EPI.
 	 *
 	 * @since   0.3.0
-	 * @version 0.4.0
+	 * @version 0.7.0
 	 *
 	 * @param integer $id L'ID de l'EPI.
 	 *
@@ -458,7 +462,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function delete( $id ) {
 		$epi = self::g()->get( array( 'id' => $id ), true );
 
-		$epi->data['status'] = 'trash';
+		$epi['status'] = 'trash';
 
 		self::g()->update( $epi->data );
 		\eoxia\LOG_Util::g()->log( sprintf( ' EPI "%d" is now trashed, EPI data %s', $epi->data['id'], wp_json_encode( $epi ) ), 'theepi' );
@@ -470,7 +474,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Pour chaque ID de fichier reçu, créer un EPI.
 	 *
 	 * @since   0.3.0
-	 * @version 0.4.0
+	 * @version 0.7.0
 	 *
 	 * @param array  $files_id  Un tableau d'ID.
 	 *
@@ -479,13 +483,26 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function create_mass_epi( array $files_id ) {
 		$epis = array();
 
+		if ( get_option( $this->option_name_default_data_periodicity ) != "" ){
+			$periodicity =  (int) get_option( $this->option_name_default_data_periodicity );
+		}else {
+			$periodicity = $this->default_data_periodicity;
+		}
+
+		if ( get_option( $this->option_name_default_data_lifetime ) != "" ){
+			$lifetime =  (int) get_option( $this->option_name_default_data_lifetime );
+		}else {
+			$lifetime = $this->default_data_lifetime;
+		}
+
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				$epi     = self::g()->create(
+				$epi   = self::g()->create(
 					array(
-						'periodicity' => 365,
-						'status_epi'  => 'OK',
+						'periodicity'  => $periodicity,
+						'lifetime_epi' => $lifetime,
+						'status_epi'   => 'OK',
 					)
 				);
 
@@ -528,7 +545,6 @@ class EPI_Class extends \eoxia\Post_Class {
 
 	public function get_days( $epi ) {
 		$day_rest      = 0;
-
 		$control_date = $epi->data['control_date']['rendered']['mysql'];
 		$time = strtotime( $control_date) - strtotime( 'now' ); // seconde
 
@@ -540,6 +556,7 @@ class EPI_Class extends \eoxia\Post_Class {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
 			return $day_rest;
 		}
+		return $day_rest;
 	}
 
 	/**
@@ -622,6 +639,14 @@ class EPI_Class extends \eoxia\Post_Class {
 		);
 		return ob_get_clean();
 	}
+
+	public function check_capabilities( $capabilities ) {
+	    if ( user_can( get_current_user_id(), $capabilities ) ) {
+	        return true;
+	    }
+		return false;
+	}
+
 }
 
 EPI_Class::g();

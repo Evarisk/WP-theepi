@@ -4,9 +4,9 @@
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
- * @copyright 2018 Evarisk
+ * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.4.0
+ * @version   0.6.0
  */
 
 namespace theepi;
@@ -56,14 +56,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="form-element form-element-required group-date">
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
-						<input type="hidden" class="mysql-date" name="commissioning-date" />
-						<?php if( $epi->data['commissioning_date_valid'] ): ?>
-							<input class="form-field date" type="text" name="commissioning-date"
-							value="<?php echo esc_attr( $epi->data['commissioning_date']['rendered']['date'] ); ?>"/>
-						<?php else: ?>
-							<input class="form-field date" type="text" name="commissioning-date"
-							value=""/>
-						<?php endif; ?>
+					<?php if ( $edit_mode ): ?>
+						<input type="hidden" class="mysql-date" name="commissioning-date" value="<?php echo esc_attr( $epi->data['commissioning_date']['raw'] ); ?>"/>
+					<?php else: ?>
+						<input type="hidden" class="mysql-date" name="commissioning-date" value=""/>
+					<?php endif; ?>
+
+					<?php if( $epi->data['commissioning_date_valid'] ): ?>
+						<input class="form-field date" type="text" name="commissioning-date"
+						value="<?php echo esc_attr( $epi->data['commissioning_date']['rendered']['date'] ); ?>"/>
+					<?php else: ?>
+						<input class="form-field date" type="text" name="commissioning-date"
+						value=""/>
+					<?php endif; ?>
 				</label>
 			</div>
 		</div>

@@ -5,7 +5,7 @@
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.1.0
+ * @since     0.5.0
  * @version   0.6.0
  */
 

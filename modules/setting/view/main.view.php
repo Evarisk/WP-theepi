@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wpeo-tab setting">
 	<h1><?php esc_html_e( 'TheEPI settings', 'theepi' ); ?></h1>
 
-	<ul class="tab-list tab-redirect" data-message="Warning !!! You didn't save your data">
+	<ul class="tab-list tab-redirect" data-message="<?php echo esc_html_e( "Warning !!! You didn't save your data" ); ?>">
 		<li class="tab-element <?php echo $page == "capability" ? 'tab-active' : ''; ?>" data-tab="capability" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=capability' ) ); ?>"> <?php esc_html_e( 'Capability', 'theepi' ); ?></li>
 		<li class="tab-element <?php echo $page == "default-data" ? 'tab-active' : ''; ?>" data-tab="default-data" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=default-data' ) ); ?>"> <?php esc_html_e( 'Default Data', 'theepi' ); ?> </li>
 		<li class="tab-element <?php echo $page == "date-management" ? 'tab-active' : ''; ?>" data-tab="date-management" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=date-management' ) ); ?>"> <?php esc_html_e( 'Date Management', 'theepi' ); ?> </li>
@@ -27,7 +27,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="digirisk-wrap">
 
 		<div class="tab-content <?php echo $page == "capability" ? 'active' : 'hidden'; ?>">
-			<?php \eoxia\View_Util::exec( 'theepi', 'setting', 'capability/main' ); ?>
+			<?php
+			\eoxia\View_Util::exec(
+				'theepi', 'setting', 'capability/main', array(
+					'page' => $page
+				)
+			);
+			 ?>
 		</div>
 
 		<div class="tab-content <?php echo $page == "default-data" ? 'active' : 'hidden'; ?>">
@@ -46,7 +52,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<?php
 			\eoxia\View_Util::exec(
-				'theepi', 'setting', 'date-management/main' , array(
+				'theepi', 'setting', 'date-management/main', array(
 					'default_purchase_date'    => $default_purchase_date,
 					'default_manufacture_date' => $default_manufacture_date,
 					'page'                     => $page

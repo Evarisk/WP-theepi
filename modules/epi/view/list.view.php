@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2017 Evarisk
  * @since     0.1.0
- * @version   0.4.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -20,8 +20,8 @@ if ( ! empty( $epis ) ) :
 	foreach ( $epis as $epi ) :
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item', array(
-				'epi' => $epi,
-				'new' => $new,
+				'epi'    => $epi,
+				'new'    => $new,
 			)
 		);
 	endforeach;

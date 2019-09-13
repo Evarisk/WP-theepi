@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<?php if( $number_pages > 0 ): ?>
+<?php if( $number_pages > 1 ): ?>
 	<ul class="wpeo-pagination epi" data-page="<?php echo esc_html( $page ) ?>">
 		<?php if ( $pagination != 1 ) : ?>
 			<!-- Bouton précédent -->
@@ -48,7 +48,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</a>
 			</li>
 		<?php endfor; ?>
-		</li>
 
 		<?php if ( $number_pages != $pagination ) : ?>
 			<!-- Bouton suivant -->

@@ -6,7 +6,7 @@
  * @author    Evarisk <dev@evarisk.com>
  * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -25,7 +25,7 @@ class EPI_Filter {
 	 * Le constructeur.
 	 *
 	 * @since   0.1.0
-	 * @version 0.4.0
+	 * @version 0.7.0
 	 */
 	public function __construct() {
 		add_filter( 'set-screen-option', array( $this, 'callback_set_screen_option' ), 10, 3 );
@@ -33,6 +33,7 @@ class EPI_Filter {
 		$current_type = EPI_Class::g()->get_type();
 		add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
 		add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
+		add_filter( 'the_content', array( $this, 'callback_display_epi' ), 10, 2 );
 	}
 
 	/**
@@ -53,6 +54,35 @@ class EPI_Filter {
 		}
 
 		return $status;
+	}
+
+	/**
+	 * Sauvegardes les options de l'écran.
+	 *
+	 * @since   0.2.0
+	 * @version 0.3.0
+	 *
+	 * @param mixed  $status J'sais pas.
+	 * @param string $option Le nom de l'option.
+	 * @param string $value  La valeur de l'option.
+	 *
+	 * @return mixed $status J'sais pas.
+	 */
+	public function callback_display_epi( $content ) {
+
+		global $post;
+		if ( $post->post_type == 'theepi-epi'){
+			$id = $post->ID;
+			ob_start();
+			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+			\eoxia\View_Util::exec(
+				'theepi', 'epi', 'frontend/main', array(
+					'epi'    => $epi,
+				)
+			);
+			$content = ob_get_clean();
+		}
+		return $content;
 	}
 
 	/**

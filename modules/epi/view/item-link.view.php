@@ -5,8 +5,8 @@
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.1.0
- * @version   0.6.0
+ * @since     0.5.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -18,22 +18,26 @@ if ( ! defined( 'ABSPATH' ) ) {
 </br>
 
 <span>
-	<a href="#" class= "action-request-edit-epi epi-item-link-edit"
-		data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-		data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
-		data-action="edit_epi"
-		data-nonce="<?php echo esc_attr( wp_create_nonce( 'edit_epi' ) ); ?>">
-		<?php esc_html_e( 'Edit', 'theepi' ); ?>
-	</a>
-	 |
-	<a href="#" class="action-delete epi-item-link-delete"
-		data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-		data-action="delete_epi"
-		data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
-		data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this PPE ?', 'theepi' ); ?>"
-		data-loader="wpeo-table">
-	  <?php esc_html_e( 'Delete', 'theepi' ); ?>
-	</a>
+	<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'update_theepi' ) ) ): ?>
+		<a href="#" class= "action-request-edit-epi epi-item-link-edit"
+			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+			data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
+			data-action="edit_epi"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'edit_epi' ) ); ?>">
+			<?php esc_html_e( 'Edit', 'theepi' ); ?>
+		</a>
+	 	|
+	<?php endif; ?>
+	<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'delete_theepi' ) ) ): ?>
+		<a href="#" class="action-delete epi-item-link-delete"
+			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+			data-action="delete_epi"
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_epi' ) ); ?>"
+			data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this PPE ?', 'theepi' ); ?>"
+			data-loader="wpeo-table">
+		  <?php esc_html_e( 'Delete', 'theepi' ); ?>
+		</a>
+	<?php endif; ?>
 </span>
 
 <style>

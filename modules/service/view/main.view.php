@@ -6,7 +6,7 @@
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.6.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -91,7 +91,12 @@ if (! defined('ABSPATH') ) {
 				<span class="form-label"><?php esc_html_e( 'Manufacture Date', 'theepi' ); ?></span>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
-					<input type="hidden" class="mysql-date"  name="manufacture-date" />
+					<?php if ( $edit_mode ): ?>
+						<input type="hidden" class="mysql-date"  name="manufacture-date" value="<?php echo esc_attr( $epi->data['manufacture_date']['raw'] ); ?>"/>
+					<?php else: ?>
+						<input type="hidden" class="mysql-date"  name="manufacture-date" value=""/>
+					<?php endif; ?>
+
 					<?php if( $epi->data['manufacture_date_valid'] ): ?>
 						<input class="form-field date" type="text" name="manufacture-date"
 						value="<?php echo esc_attr( $epi->data['manufacture_date']['rendered']['date'] ); ?>"/>
@@ -111,14 +116,19 @@ if (! defined('ABSPATH') ) {
 				<span class="form-label"><?php esc_html_e( 'Purchase Date', 'theepi' ); ?> </span>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
-						<input type="hidden" class="mysql-date" name="purchase-date" />
-						<?php if( $epi->data['purchase_date_valid'] ):  ?>
-							<input class="form-field date" type="text"  name="purchase-date"
-							value="<?php echo esc_attr( $epi->data['purchase_date']['rendered']['date'] ); ?>"/>
-						<?php else: ?>
-							<input class="form-field date" type="text"  name="purchase-date"
-							value=""/>
-						<?php endif; ?>
+					<?php if ( $edit_mode ): ?>
+						<input type="hidden" class="mysql-date" name="purchase-date" value="<?php echo esc_attr( $epi->data['purchase_date']['raw'] ); ?>"/>
+					<?php else: ?>
+						<input type="hidden" class="mysql-date" name="purchase-date" value=""/>
+					<?php endif; ?>
+
+					<?php if( $epi->data['purchase_date_valid'] ):  ?>
+						<input class="form-field date" type="text" name="purchase-date"
+						value="<?php echo esc_attr( $epi->data['purchase_date']['rendered']['date'] ); ?>"/>
+					<?php else: ?>
+						<input class="form-field date" type="text" name="purchase-date"
+						value="" />
+					<?php endif; ?>
 				</label>
 			</div>
 			<?php endif; ?>
@@ -127,7 +137,7 @@ if (! defined('ABSPATH') ) {
 		<div class="form-element" style="margin-top : 50px">
 			<span class="wpeo-tooltip-event form-label" aria-label="<?php esc_html_e( 'Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>" style="width : 10%; float : left"><?php esc_html_e( 'Control Date : ', 'theepi' ); ?>
 				<?php if( $epi->data['commissioning_date_valid'] ): ?>
-					<span class="form-label" name="control-date" value="<?php echo esc_attr( $epi->data['control_date']['rendered']['date'] ); ?>"><?php echo esc_attr( $epi->data['control_date']['rendered']['date'] ); ?></span>
+					<span class="form-label" name="control-date" value="<?php echo esc_attr( $epi->data['control_date']['raw'] ); ?>"><?php echo esc_attr( $epi->data['control_date']['rendered']['date'] ); ?></span>
 				<?php else: ?>
 					<span class="form-label" name="control-date" value=""></span>
 				<?php endif; ?>
@@ -135,7 +145,7 @@ if (! defined('ABSPATH') ) {
 
 			<span class="wpeo-tooltip-event form-label" aria-label="<?php esc_html_e( 'End Life Date = Manufacture Date + Lifetime', 'theepi' ); ?>" style="width : 10%; float : left"  ><?php esc_html_e( 'End Life Date : ', 'theepi' ); ?>
 				<?php if( $epi->data['manufacture_date_valid'] ): ?>
-					<span class="form-label" name="end-life-date" value="<?php echo esc_attr( $epi->data['end_life_date']['rendered']['date'] ); ?>"><?php echo esc_attr( $epi->data['end_life_date']['rendered']['date'] ); ?></span>
+					<span class="form-label" name="end-life-date" value="<?php echo esc_attr( $epi->data['end_life_date']['raw'] ); ?>"><?php echo esc_attr( $epi->data['end_life_date']['rendered']['date'] ); ?></span>
 				<?php else: ?>
 					<span class="form-label" name="end-life-date" value=""></span>
 				<?php endif; ?>
@@ -143,7 +153,7 @@ if (! defined('ABSPATH') ) {
 
 			<span class="wpeo-tooltip-event form-label" aria-label="<?php esc_html_e( 'Disposal Date = End Life Date', 'theepi' ); ?>" style="width : 10%; float : left" ><?php esc_html_e( 'Disposal Date : ', 'theepi' ); ?>
 				<?php if( $epi->data['manufacture_date_valid'] ): ?>
-					<span class="form-label" name="disposal-date" value="<?php echo esc_attr( $epi->data['disposal_date']['rendered']['date'] ); ?>"><?php echo esc_attr( $epi->data['disposal_date']['rendered']['date'] ); ?></span>
+					<span class="form-label" name="disposal-date" value="<?php echo esc_attr( $epi->data['disposal_date']['raw'] ); ?>"><?php echo esc_attr( $epi->data['disposal_date']['rendered']['date'] ); ?></span>
 				<?php else: ?>
 					<span class="form-label" name="disposal-date" value=""></span>
 				<?php endif; ?>
