@@ -42,6 +42,8 @@ class EPI_Action {
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'callback_create_mass_epi' ) );
 
 		add_action( 'wp_ajax_open_qrcode', array( $this, 'callback_open_qrcode' ) );
+		add_action( 'wp_ajax_control_epi_without_task_manager', array( $this, 'callback_control_epi_without_task_manager' ) );
+
 	}
 
 	/**
@@ -576,6 +578,15 @@ class EPI_Action {
 				'view'             => $view
 			)
 		);
+	}
+
+	public function callback_control_epi_without_task_manager() {
+		check_ajax_referer( 'control_epi_without_task_manager' );
+
+		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+		$epi = EPI_Class::g()->get( array( 'id' => $id ) , true );
+
+		do_shortcode( '[theepi_comment id="' . $epi->data['id'] . '" namespace="theepi" type="EPI_Comment" display="view"]' );
 	}
 
 }

@@ -34,6 +34,8 @@ class EPI_Filter {
 		add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
 		add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
 		add_filter( 'the_content', array( $this, 'callback_display_epi' ), 10, 2 );
+		add_filter( "eo_model_{$current_type}_register_post_type_args", array( $this, 'custom_init_post_type'), 20, 2 );
+
 	}
 
 	/**
@@ -128,6 +130,15 @@ class EPI_Filter {
 		}
 
 		return $object;
+	}
+
+	public function custom_init_post_type( $args ) {
+		$current_type = EPI_Class::g()->get_type();
+		$new_args = array( 'public' => true, 'show_in_menu' => false );
+		$args = wp_parse_args( $new_args, $args );
+		$return = register_post_type( $current_type , $args );
+
+		return $return;
 	}
 
 }

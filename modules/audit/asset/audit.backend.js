@@ -173,6 +173,10 @@ window.eoxiaJS.theEPI.Audit.DisplayControlEPISuccess = function( triggeredElemen
  */
 window.eoxiaJS.theEPI.Audit.ValidAuditSuccess = function( triggeredElement, response ) {
 	jQuery( '.wrap .container-content .epi .epi-row[ data-id="' + response.data.id + '"]' ).replaceWith( response.data.view );
+	jQuery( '.wrap .container-content').before( response.data.notice );
+	setTimeout( function() {
+		jQuery( '.wrap.wpeo-wrap.wrap-theepi' ).find( '.wpeo-notice.notice-success' ).remove();
+	}, 10000 );
 };
 
 /**
@@ -208,13 +212,12 @@ window.eoxiaJS.theEPI.Audit.GetContentFromUrlAuditSuccess = function( triggeredE
 window.eoxiaJS.theEPI.Audit.DisplayAllAuditSuccess = function( triggeredElement, response ) {
 	var toggleChevron = triggeredElement.find( '.icon' ).hasClass( 'fa-chevron-right' );
 
-	if (toggleChevron) {
-		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
-		triggeredElement.closest( '.control_audit').html( response.data.view );
-		console.log(triggeredElement.closest( '.control_audit .tm-audit .audit-container' ));
-		triggeredElement.closest( '.control_audit .tm-audit .audit-container' ).find( '.epi-item-link-control' ).remove();
+	if ( toggleChevron ) {
+	 	triggeredElement.closest( '.display_all_audit' ).find( '.icon' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
+		triggeredElement.closest( '.epi-row .view' ).find( '.control_audit' ).html( response.data.view );
+		//triggeredElement.closest( '.control_audit .tm-audit .audit-container' ).find( '.epi-item-link-control' ).remove();
 	} else {
-		triggeredElement.closest( '.control_audit').html( response.data.view ).find( '.icon' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );
+		triggeredElement.closest( '.display_all_audit' ).find( '.icon' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );
 		jQuery( '.wrap .container-content .epi .epi-row[ data-id="' + response.data.id + '"]' ).find( '.control_audit').html( response.data.single_view_audit );
 
 	}

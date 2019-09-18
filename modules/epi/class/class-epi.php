@@ -348,10 +348,19 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @return void
 	 */
 	public function display_epi_list( $epis, $new = false , $page ) {
+
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		 if ( is_plugin_active('task-manager/task-manager.php') ) {
+			$task_manager = true;
+		} else {
+			$task_manager = false;
+		}
+
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'list', array(
 				'epis' => $epis,
 				'new'  => $new,
+				'task_manager' => $task_manager
 			)
 		);
 	}
@@ -575,7 +584,10 @@ class EPI_Class extends \eoxia\Post_Class {
 			return false;
 		}
 
-		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+		if ( class_exists( '\task_manager\Audit_Class' ) ) {
+			$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+		} else {
+		}
 
 		$audit = $this->last_control_audit( $audits );
 
@@ -591,7 +603,7 @@ class EPI_Class extends \eoxia\Post_Class {
 					'epi'        => $epi,
 					'audit'      => $audit,
 					'user'       => $user,
-					'edit_audit' => $edit_audit
+					'edit_audit' => $edit_audit,
 				)
 			);
 			return true;

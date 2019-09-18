@@ -96,6 +96,14 @@ class Audit_Class extends \eoxia\Post_Class {
 		return false;
 	}
 
+	public function get_numbers_audits( $id ) {
+
+		$epi    = EPI_Class::g()->get( array( 'id' => $id ), true );
+		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+		$numbers_audits = count( $audits );
+		return $numbers_audits;
+	}
+
 }
 
 Audit_Class::g();

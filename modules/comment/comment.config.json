@@ -1,0 +1,12 @@
+{
+	"name": "Comments",
+	"slug": "comment",
+	"version": "0.7.0",
+	"description": "Handle Comments",
+	"path": "modules/comment/",
+	"dependencies": {
+		"class": {},
+		"action": {},
+		"shortcode": {}
+	}
+}
