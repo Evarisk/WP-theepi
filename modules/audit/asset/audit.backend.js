@@ -214,7 +214,7 @@ window.eoxiaJS.theEPI.Audit.DisplayAllAuditSuccess = function( triggeredElement,
 
 	if ( toggleChevron ) {
 	 	triggeredElement.closest( '.display_all_audit' ).find( '.icon' ).removeClass( "fa-chevron-right" ).addClass( "fa-chevron-down" );
-		triggeredElement.closest( '.epi-row .view' ).find( '.control_audit' ).html( response.data.view );
+		triggeredElement.closest( '.epi-row.view' ).find( '.control_audit' ).html( response.data.view );
 		//triggeredElement.closest( '.control_audit .tm-audit .audit-container' ).find( '.epi-item-link-control' ).remove();
 	} else {
 		triggeredElement.closest( '.display_all_audit' ).find( '.icon' ).removeClass( "fa-chevron-down" ).addClass( "fa-chevron-right" );

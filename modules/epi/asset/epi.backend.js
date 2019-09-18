@@ -32,7 +32,7 @@ window.eoxiaJS.theEPI.EPI.event = function() {
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
-	 
+
 };
 
 /**
@@ -307,8 +307,8 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 
 	var title               = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="title"]' ).val();
 	var serial_number       = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="serial_number"]' ).val();
-	var commissioning_date  = jQuery( this ).closest( '.table-row' ).find( '.mysql-date[name="commissioning-date"]' ).val();
 
+	var commissioning_date  = fieldset_element.find( '.mysql-date[name="commissioning-date"]' ).val();
 	var maker               = fieldset_element.find( '.form-field[name="maker"]' ).val();
 	var seller              = fieldset_element.find( '.form-field[name="seller"]' ).val();
 	var manager             = fieldset_element.find( '.form-field[name="manager"]' ).val();
