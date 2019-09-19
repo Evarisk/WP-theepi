@@ -44,6 +44,7 @@ class Qrcode_Shortcode {
 		$uploads = wp_upload_dir();
 
 		extract ( shortcode_atts( array(
+			'id'       => '',
 			'text'     => '',
 			'eclevel'  => 3,
 			'height'   => 60,
@@ -55,17 +56,33 @@ class Qrcode_Shortcode {
 			return;
 		}
 
-		$filename = sha1( $text.$eclevel.$height.$width.$transparency ).'.png';
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 
-		if ( file_exists($uploads['basedir'].'/'.$filename) ) {
-			return '<img src="'.esc_attr($uploads['baseurl'].'/'.$filename).'" style="height:'.esc_attr($height).'px; width:'.esc_attr($width).'px" alt="'.esc_attr($text).'" />';
+		$filename = sha1( $text.$eclevel.$height.$width.$transparency ).'.png';
+		$path = $uploads['basedir']. '/theepi/'. $epi->data['type'] . '/' . $epi->data['id'] . '/' . $filename;
+		$guid = $uploads['baseurl']. '/theepi/'. $epi->data['type'] . '/' . $epi->data['id'] . '/' . $filename;
+		$wp_attached_file = '/theepi/'. $epi->data['type'] . '/' . $epi->data['id'] . '/' . $filename;
+
+		$epi->data['qrcode']['filename'] = $filename;
+	 	$epi->data['qrcode']['path'] = $path;
+		$epi->data['qrcode']['guid'] = $guid;
+		$epi->data['qrcode']['wp_attached_file'] = $wp_attached_file;
+
+		$epi = EPI_Class::g()->update( $epi->data );
+
+		if ( ! is_dir( dirname( $path ) ) ) {
+			wp_mkdir_p( dirname( $path ) );
+		}
+
+		if ( file_exists( $path ) ) {
+			return '<img src="'.esc_attr($guid).'" style="height:'.esc_attr($height).'px; width:'.esc_attr($width).'px" alt="'.esc_attr($text).'" />';
 		}
 
 		require_once PLUGIN_THEEPI_PATH . "/core/external/phpqrcode/phpqrcode.php";
 
-		\QRcode::png( $text, $uploads['basedir'].'/'.$filename, 3, 3, 4, false, 0xFFFFFF, 0x000000, $height, $width, $transparency );
+		\QRcode::png( $text, $path, 3, 3, 4, false, 0xFFFFFF, 0x000000, $height, $width, $transparency );
 
-		return '<img src="'.esc_attr($uploads['baseurl'].'/'.$filename).'" style="height:'.esc_attr($height).'px; width:'.esc_attr($width).'px" alt="'.esc_attr($text).'" />';
+		return '<img src="'.esc_attr($guid).'" style="height:'.esc_attr($height).'px; width:'.esc_attr($width).'px" alt="'.esc_attr($text).'" />';
 	}
 }
 

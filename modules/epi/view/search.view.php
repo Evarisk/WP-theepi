@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="form-field-label-prev"><i class="fas fa-search"></i></span>
 			<input type="text" name="term" class="form-field" placeholder="<?php esc_attr_e( 'Search term', 'theepi' ); ?>" />
 			<div>
-				<span class="wpeo-button button-main action-input"
+				<span class="wpeo-button button-blue action-input"
 					data-parent="wpeo-form"
 					data-action="search_epi"
 					data-nonce="<?php echo esc_attr( wp_create_nonce( 'search_epi' ) ); ?>">

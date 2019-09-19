@@ -199,7 +199,7 @@ class Service_Class extends \eoxia\Singleton_Util {
 		$manufacture_date = 0;
 
 		if ( $commissioning_date > 0 ) {
-			$manufacture_date = strtotime( '-' . $manufacture_date_valued . ' years', $commissioning_date );
+			$manufacture_date = strtotime( '-' . $manufacture_date_valued . ' days', $commissioning_date );
 		}
 
 		return $manufacture_date;

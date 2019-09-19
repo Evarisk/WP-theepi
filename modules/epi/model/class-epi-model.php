@@ -225,6 +225,29 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.6.0',
 		);
 
+		$this->schema['qrcode'] = array(
+		   'type'      => 'array',
+		   'meta_type' => 'multiple',
+		   'child'     => array(
+			   'filename' => array(
+				   'type' => 'string',
+			   ),
+			   'path'     => array(
+				   'type' => 'string',
+			   ),
+			   'guid'     => array(
+				   'type' => 'string',
+			   ),
+			   'wp_attached_file' => array(
+				   'type' => 'string',
+			   ),
+		   ),
+	   );
+
+
+
+
+
 		parent::__construct( $object, $req_method );
 	}
 

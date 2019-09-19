@@ -55,27 +55,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-50 display_all_audit" style="color: grey; text-align: right; margin-top: 10px">
-		<?php if ( Audit_Class::g()->get_numbers_audits( $epi->data['id'] ) != 0 ): ?>
-			<span style="font-size: 20px; font-weight: bold;"> <?php echo ( Audit_Class::g()->get_numbers_audits( $epi->data['id'] ) ); ?> </span></br>
-			<span class="button-display-audit action-attribute"
-				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-				data-action="display_all_audits"
-				data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_all_audits' ) ); ?>">
-				<i class="icon fas fa-chevron-right "></i>
-			</span>
+		<?php if ( $task_manager ): ?>
+			<?php if ( Audit_Class::g()->get_numbers_audits( $epi->data['id'] ) != 0 ): ?>
+				<span style="font-size: 20px; font-weight: bold;"> <?php echo ( Audit_Class::g()->get_numbers_audits( $epi->data['id'] ) ); ?> </span></br>
+				<span class="button-display-audit action-attribute"
+					data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+					data-action="display_all_audits"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_all_audits' ) ); ?>">
+					<i class="icon fas fa-chevron-right "></i>
+				</span>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-250 control_audit" style="text-align: center" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
-		<?php if ( ! EPI_Class::g()->display_audit_epi( $epi->data['id'], false ) ): ?>
-			<span style="color: grey; font-style: italic"> <?php esc_html_e( 'No Control Yet', 'theepi' ); ?> </span>
+		<?php if ( $task_manager ): ?>
+			<?php if ( ! EPI_Class::g()->display_audit_epi( $epi->data['id'], false ) ): ?>
+				<span style="color: grey; font-style: italic"> <?php esc_html_e( 'No Control Yet', 'theepi' ); ?> </span>
+			<?php endif; ?>
+		<?php else: ?>
+			<?php do_shortcode( '[theepi_comment id="' . $epi->data['id'] . '" namespace="theepi" type="EPI_Comment" display="edit"]' ); ?>
 		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-100">
-		<?php if ( $task_manager = true): ?>
+		<?php if ( $task_manager ): ?>
 			<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
-				<div class="wpeo-button wpeo-tooltip-event button-main button-square-50  action-attribute epi-item-link-control"
+				<div class="wpeo-button wpeo-tooltip-event button-blue button-square-50  action-attribute epi-item-link-control"
 					aria-label="<?php esc_html_e( 'Perform a PPE Check', 'theepi' ); ?>"
 					data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 					data-action="control_epi"
@@ -85,7 +91,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		<?php else: ?>
 			<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
-				<div class="wpeo-button wpeo-tooltip-event button-main button-square-50 action-attribute epi-item-link-control"
+				<div class="wpeo-button wpeo-tooltip-event button-blue button-square-50 action-attribute epi-item-link-control"
 					aria-label="<?php esc_html_e( 'Perform PPE Check', 'theepi' ); ?>"
 					data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 					data-action="control_epi_without_task_manager"
@@ -108,18 +114,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-150" style="text-align : center" data-title="<?php echo esc_attr_e( 'QrCode', 'theepi' ); ?>">
-		<span class="qrcode action-attribute"
+		<span class="wpeo-tooltip-event qrcode action-attribute"
+			aria-label="<?php esc_html_e( 'Click to enlarge the QrCode', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 			data-action="open_qrcode"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_qrcode' ) ); ?>"
 			data-url="<?php echo esc_attr( $epi->data['link'] ) ?>">
-			<?php  echo do_shortcode( '[qrcode text="' . $epi->data['link']  . '" eclevel=0  height=80 width=80 transparency=1]' ); ?>
+			<?php  echo do_shortcode( '[qrcode id="'. $epi->data['id'] .'" text="' . $epi->data['link']  . '" eclevel=0  height=80 width=80 transparency=1]' ); ?>
 		</span>
 	</div>
 
 	<div class="table-cell table-150" style="text-align : center" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>">
 		<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'read_theepi' ) ) ): ?>
-			<div class="wpeo-button wpeo-tooltip-event button-main button-square-50 action-attribute"
+			<div class="wpeo-button wpeo-tooltip-event button-blue button-square-50 action-attribute"
 				aria-label="<?php esc_html_e( 'Download PPE Life Sheet', 'theepi' ); ?>"
 				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 				data-action="export_epi_odt"
@@ -130,7 +137,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="table-cell table-end">
 		<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'update_theepi' ) ) ): ?>
-			<div class="wpeo-button wpeo-tooltip-event button-main button-square-50 action-request-edit-epi epi-item-link-edit"
+			<div class="wpeo-button wpeo-tooltip-event button-blue button-square-50 action-request-edit-epi epi-item-link-edit"
 				aria-label="<?php esc_html_e( 'Edit PPE', 'theepi' ); ?>"
 				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 				data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"

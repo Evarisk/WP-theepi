@@ -37,10 +37,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Manufacture Date Valued', 'theepi' ); ?></span>
-			<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the number of years between Manufacture Date valued and Commissioning Date of your PPE" ,'theepi' ); ?> </span>
+			<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the number of days between Manufacture Date valued and Commissioning Date of your PPE" ,'theepi' ); ?> </span>
 			<label class="form-field-container">
 				<input type="number" class="form-field" name="default-manufacture-date" value="<?php echo esc_attr( $default_manufacture_date ); ?>"/>
-				<span class="form-field-label-next"><?php echo esc_html_e( 'years', 'theepi' ); ?></span>
+				<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 			</label>
 		</div>
 

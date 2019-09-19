@@ -68,7 +68,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="table-cell table-150"></div>
 
 	<div class="table-cell table-end">
-		<div class="wpeo-button button-green button-progress button-square-50 edit button-save-epi"
+		<div class="wpeo-button wpeo-tooltip-event button-green button-progress button-square-50 edit button-save-epi"
+			aria-label="<?php esc_html_e( 'Save EPI', 'theepi' ); ?>"
 			data-parent="epi-row"
 			data-action="save_epi"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'save_epi' ) ); ?>"
@@ -76,7 +77,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="button-icon fas fa-save"></span>
 		</div>
 
-		<div class="wpeo-button button-grey button-square-50 epi-item-link-cancel action-attribute"
+		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 epi-item-link-cancel action-attribute"
+			aria-label="<?php esc_html_e( 'Cancel EPI', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 			data-action="cancel_edit_epi"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'cancel_edit_epi' ) ); ?>">

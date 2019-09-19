@@ -58,6 +58,7 @@ class EPI_ODT_Action {
 		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
 
 		$picture = array();
+		$qrcode = array();
 
 		$site_id = get_current_blog_id();
 
@@ -76,6 +77,7 @@ class EPI_ODT_Action {
 		);
 
 		$picture_definition = wp_get_attachment_image_src( $epi->data['thumbnail_id'], 'medium' );
+
 		if ( ! empty( $picture_definition ) ) {
 			$picture_final_path = str_replace( '\\', '/', str_replace( site_url( '/', 'http' ), ABSPATH, $picture_definition[0] ) );
 			$picture_final_path = str_replace( '\\', '/', str_replace( site_url( '/', 'https' ), ABSPATH, $picture_final_path ) );
@@ -89,14 +91,25 @@ class EPI_ODT_Action {
 			);
 		}
 
+		$qrcode_final_path = $upload_dir['basedir'] . $epi->data['qrcode']['wp_attached_file'];
+		$qrcode = array(
+			'type'   => 'picture',
+			'value'  => $qrcode_final_path,
+			'option' => array(
+				'size' => 4.5,
+			),
+		);
+
 		$document_meta = array(
 			'photo'         => $picture,
 			'reference'     => $epi->data['reference'],
 			'status'        => $status_epi,
 			'control'       => $control,
 			'serial_number' => $epi->data['serial_number'],
-			'manager'       => $epi->data['manager'],
 			'id'            => $epi->data['id'],
+			'qrcode'        => $qrcode,
+			'url_epi'       => $epi->data['link'],
+			'manager'       => $epi->data['manager'],
 			'title'         => $epi->data['title'],
 
 			'maker'         => $epi->data['maker'],

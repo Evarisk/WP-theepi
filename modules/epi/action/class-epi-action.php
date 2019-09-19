@@ -160,11 +160,11 @@ class EPI_Action {
 		$purchase_date = Service_Class::g()->check_date_if_empty( $purchase_date );
 		$commissioning_date = Service_Class::g()->check_date_if_empty( $commissioning_date );
 
-		if( $checked_purchase_date == 1 ) {
+		if( $checked_purchase_date == 1 && empty( $purchase_date ) ) {
 			$purchase_date = $commissioning_date;
 		}
 
-		if( $manufacture_date_valued != "" ) {
+		if( $manufacture_date_valued != "" && empty ( $manufacture_date ) ) {
 			$manufacture_date = Service_Class::g()->calcul_manufacture_date( $commissioning_date , $manufacture_date_valued );
 		}
 

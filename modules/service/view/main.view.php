@@ -100,7 +100,11 @@ if (! defined('ABSPATH') ) {
 		<form class="wpeo-grid grid-3 grid-padding-1 wpeo-form">
 			<div>
 				<div class="form-element form-element-required group-date">
-					<span class="error" style="color : red ; float : right"></span>
+					<?php if ( $manufacture_date_valued != "" && $edit_mode == false ): ?>
+						<span class="info" style="color: #47e58e; float : right; font-size: 13px"> <?php esc_html_e( 'Manufacture Date is defined in the TheEPI Settings, This field can be empty', 'theepi' ); ?> </span>
+					<?php else: ?>
+						<span class="error" style="color : red ; float : right"></span>
+					<?php endif; ?>
 					<span class="form-label"><?php esc_html_e( 'Manufacture Date', 'theepi' ); ?></span>
 					<label class="form-field-container">
 						<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
@@ -123,7 +127,11 @@ if (! defined('ABSPATH') ) {
 
 			<div>
 				<div class="form-element form-element-required group-date">
-					<span class="error" style="color : red ; float : right"></span>
+					<?php if ( $checked_purchase_date == 1 && $edit_mode == false ): ?>
+						<span class="info" style="color: #47e58e; float : right"> <?php esc_html_e( 'Purchase Date is defined in the TheEPI Settings, This field can be empty', 'theepi' ); ?> </span>
+					<?php else: ?>
+						<span class="error" style="color : red ; float : right"></span>
+					<?php endif; ?>
 					<span class="form-label"><?php esc_html_e( 'Purchase Date', 'theepi' ); ?> </span>
 					<label class="form-field-container">
 						<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
@@ -191,6 +199,18 @@ if (! defined('ABSPATH') ) {
 						<span class="form-label" name="disposal-date" value=""><i class="fas fa-calendar-alt"></i> </span>
 					<?php endif; ?>
 				</span>
+
+				<a class="wpeo-button wpeo-tooltip-event button-main button-square-50"
+					href="<?php echo esc_attr( admin_url( "options-general.php?page=theepi-setting&tab=default-data" ) ) ?>"
+					aria-label="<?php esc_html_e( 'See Setting EPI Default Data', 'theepi' ); ?>">
+					<i class="fas fa-cog"></i>
+				</a>
+
+				<a class="wpeo-button wpeo-tooltip-event button-main button-square-50"
+					href="<?php echo esc_attr( admin_url( "options-general.php?page=theepi-setting&tab=date-management" ) ) ?>"
+					aria-label="<?php esc_html_e( 'See Setting EPI Date Management', 'theepi' ); ?>">
+					<i class="fas fa-cog"></i>
+				</a>
 			</div>
 		</form>
 	</fieldset>

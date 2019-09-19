@@ -48,7 +48,9 @@ class Comment_Class extends \eoxia\Singleton_Util {
 		$display_user = ! empty( $param['display_user'] ) ? filter_var( $param['display_user'], FILTER_VALIDATE_BOOLEAN ) : true;
 
 		$comments = array();
-		
+
+		echo "<pre>"; print_r('test'); echo "</pre>";exit;
+
 		if ( 0 !== $id ) {
 			$comments = $model_name::g()->get( array(
 				'post_id' => $id,

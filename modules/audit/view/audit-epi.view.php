@@ -51,11 +51,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 </div>
 
-<?php if( $edit_audit ): ?>
+<!-- <?php if( $edit_audit ): ?>
 	<a href="#" class="action-attribute epi-item-link-control"
 	data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 	data-action="control_epi"
 	data-nonce="<?php echo esc_attr( wp_create_nonce( 'control_epi' ) ); ?>">
 	<?php esc_html_e( 'Perform a control', 'theepi' ); ?>
 	</a>
-<?php endif; ?>
+<?php endif; ?> -->
