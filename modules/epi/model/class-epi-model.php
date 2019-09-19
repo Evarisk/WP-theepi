@@ -121,7 +121,7 @@ class EPI_Model extends \eoxia\Post_Model {
 			'type'        => 'string',
 			'meta_type'   => 'single',
 			'field'       => '_theepi_status_epi',
-			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
+			'description' => 'Is the status of the EPI. Value can be "OK" or "KO" or "REPAIR" or "TRASH".',
 			'since'       => '0.5.0',
 			'version'     => '0.5.0',
 		);
