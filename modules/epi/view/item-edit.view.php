@@ -54,9 +54,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="table-cell table-100"></div>
 
 	<div class="table-cell table-150" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
-		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( Audit_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
+		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
 			<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
-		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( Audit_Class::g()->get_status( $epi ) == "rebut" ) ) : ?>
+		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "rebut" ) ) : ?>
 			<i class="fas fa-trash fa-4x" style="color: blue;"></i>
 		<?php else : ?>
 			<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>

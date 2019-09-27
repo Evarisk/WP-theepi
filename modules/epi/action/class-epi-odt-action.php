@@ -51,12 +51,11 @@ class EPI_ODT_Action {
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
 
 		$epi        = EPI_Class::g()->get( array( 'id' => $id ), true );
-		$status_epi = Audit_Class::g()->get_status( $epi ) ? 'OK' : 'KO';
+		$status_epi = EPI_Class::g()->get_status( $epi ) ? 'OK' : 'KO';
 		$control    = EPI_Class::g()->get_days( $epi );
 		$args       = array( 'parent' => $epi );
 
-		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
-
+		//$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
 		$picture = array();
 		$qrcode = array();
 
@@ -99,7 +98,7 @@ class EPI_ODT_Action {
 				'size' => 4.5,
 			),
 		);
-
+		
 		$document_meta = array(
 			'photo'         => $picture,
 			'reference'     => $epi->data['reference'],
@@ -122,41 +121,41 @@ class EPI_ODT_Action {
 			'commissioning' => $epi->data['commissioning_date']['rendered']['date'],
 			'disposal'      => $epi->data['disposal_date']['rendered']['date'],
 
-			'audits'        => array( 'type' => 'segment', 'value' => array() ),
+			//'audits'        => array( 'type' => 'segment', 'value' => array() ),
 		);
 
-		foreach ( $audits as $key => $audit ) {
-			$user = get_user_by( 'id', $audit->data['author_id'] );
-			$tasks  = \task_manager\Task_Class::g()->get( array( 'post_parent' => $audit->data['id'] ) );
-
-			$temp_tasks = array();
-			$tasks_points = "";
-			foreach ($tasks as $key => $task ) {
-				$points = \task_manager\Point_Class::g()->get( array( 'post_id' => $task->data['id'] ) );
-
-				$nbr_point = "(" . count( $points ) . " points définis)";
-				$tasks_points .= "\n -> " . $task->data[ 'title' ] . " " . $nbr_point . " <- \n";
-				if( empty( $points ) ){
-					$tasks_points .= "Aucun point défini \n";
-				}else{
-					foreach ($points as $key => $point) {
-						$tasks_points .= '- ' . $point->data[ 'content' ] . "\n";
-					}
-				}
-
-			}
-
-			$default_data = array(
-			'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
-			'title_audit'  => $audit->data[ 'title' ],
-			'tasks_points' => $tasks_points,
-			'user'         => $user->data->display_name,
-			'status'       => $audit->data['status_audit'],
-			);
-
-			$document_meta['audits']['value'][] = $default_data;
-
-		}
+		// foreach ( $audits as $key => $audit ) {
+		// 	$user = get_user_by( 'id', $audit->data['author_id'] );
+		// 	$tasks  = \task_manager\Task_Class::g()->get( array( 'post_parent' => $audit->data['id'] ) );
+		//
+		// 	$temp_tasks = array();
+		// 	$tasks_points = "";
+		// 	foreach ($tasks as $key => $task ) {
+		// 		$points = \task_manager\Point_Class::g()->get( array( 'post_id' => $task->data['id'] ) );
+		//
+		// 		$nbr_point = "(" . count( $points ) . " points définis)";
+		// 		$tasks_points .= "\n -> " . $task->data[ 'title' ] . " " . $nbr_point . " <- \n";
+		// 		if( empty( $points ) ){
+		// 			$tasks_points .= "Aucun point défini \n";
+		// 		}else{
+		// 			foreach ($points as $key => $point) {
+		// 				$tasks_points .= '- ' . $point->data[ 'content' ] . "\n";
+		// 			}
+		// 		}
+		//
+		// 	}
+		//
+		// 	$default_data = array(
+		// 	'date_control' => date( 'd/m/Y', strtotime( $audit->data['date']['rendered']['mysql'] ) ),
+		// 	'title_audit'  => $audit->data[ 'title' ],
+		// 	'tasks_points' => $tasks_points,
+		// 	'user'         => $user->data->display_name,
+		// 	'status'       => $audit->data['status_audit'],
+		// 	);
+		//
+		// 	$document_meta['audits']['value'][] = $default_data;
+		//
+		// }
 		$response = EPI_ODT_Class::g()->save_document_data( $id, $document_meta, $args );
 
 		$response['document']->data['title']             = current_time( 'Ymd' ) . '_';

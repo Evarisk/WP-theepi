@@ -177,8 +177,8 @@ window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, respons
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.canceledEditEpiSuccess = function( triggeredElement, response ) {
+	triggeredElement.closest( '.tab-container' ).find( '.epi-row.edit' ).replaceWith( response.data.view );
 	triggeredElement.closest('.wpeo-table').find('.service').remove();
-	triggeredElement.closest( '.epi-row' ).replaceWith( response.data.view );
 };
 
 /**
@@ -426,5 +426,52 @@ window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
  */
 window.eoxiaJS.theEPI.EPI.openQrCode = function( triggeredElement, response ){
 	triggeredElement.closest( '.table-row' ).append( response.data.view );
+
+};
+
+/**
+ * Récupère l'état du bouton toggle.
+ *
+ * @since 0.5.0
+ * @version 0.5.0
+ *
+ * @param  {ClickEvent} event [t]
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.control.buttonToggle = function( event ) {
+
+	var toggleON = jQuery( this ).hasClass( 'fa-toggle-on' );
+	var nextStep = '';
+	if (toggleON) {
+
+		nextStep = 'KO';
+		jQuery( this ).removeClass( "fa-toggle-on" ).addClass( "fa-toggle-off" );
+		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'KO' );
+		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
+		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : black; font-weight : bold' });
+
+	} else {
+
+		nextStep = 'OK';
+		jQuery( this ).removeClass( "fa-toggle-off" ).addClass( "fa-toggle-on" );
+		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'OK' );
+		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
+		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
+
+	}
+
+	var id = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-id' );
+	var action = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-action' );
+	var nonce = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-nonce' );
+	var data = {
+		action: action,
+		_wpnonce: nonce,
+		id: id,
+		next_step: nextStep
+	};
+
+	window.eoxiaJS.loader.display( jQuery( this ).closest( '.button-toggle-modal-headear' ) );
+	window.eoxiaJS.request.send( jQuery( this ), data );
 
 };

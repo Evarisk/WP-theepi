@@ -29,18 +29,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="table-row table-header" style="background-color : #0084ff">
 			<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></div>
 			<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'Image', 'theepi' ); ?>"><span><?php esc_html_e( 'Image', 'theepi' ); ?></span></div>
-			<div class="table-cell table-250" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></div>
 			<div class="table-cell table-200" style="text-align : center;" data-title="<?php esc_attr_e( 'Serial Number', 'theepi' ); ?>"><i class="fas fa-barcode"></i> <?php esc_html_e( 'Serial Number', 'theepi' ); ?></span></div>
-			<div class="table-cell table-150" style="text-align : center;" data-title="<?php esc_attr_e( 'Next Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Next Control', 'theepi' ); ?></span></div>
-			<div class="table-cell table-50"></div>
+			<div class="table-cell table-150" style="text-align : center;" data-title="<?php esc_attr_e( 'QrCode', 'theepi' ); ?>"><span><?php esc_html_e( 'QrCode', 'theepi' ); ?></span></div>
+			<div class="table-cell table-250" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></div>
 			<div class="table-cell table-250" style="text-align : center;" data-title="<?php esc_attr_e( 'Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Control', 'theepi' ); ?></span></div>
-			<div class="table-cell table-100"></div>
-			<div class="table-cell table-150" style="text-align : center;"data-title="<?php esc_attr_e( 'Status EPI', 'theepi' ); ?>"><span><?php esc_html_e( 'Status EPI', 'theepi' ); ?></span></div>
-			<div class="table-cell table-150" style="text-align : center;"data-title="<?php esc_attr_e( 'QrCode', 'theepi' ); ?>"><span><?php esc_html_e( 'QrCode', 'theepi' ); ?></span></div>
-			<div class="table-cell table-150" style="text-align : center;" data-title="<?php esc_attr_e( 'Life Sheet', 'theepi' ); ?>"><span><?php esc_html_e( 'Life Sheet', 'theepi' ); ?></span></div>
-			<div class="table-cell table-end"></div>
+			<div class="table-cell table-150" style="text-align : center;" data-title="<?php esc_attr_e( 'Next Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Next Control', 'theepi' ); ?></span></div>
+			<div class="table-cell table-150" style="text-align : center;" data-title="<?php esc_attr_e( 'Status EPI', 'theepi' ); ?>"><span><?php esc_html_e( 'Status EPI', 'theepi' ); ?></span></div>
+			<div class="table-cell table-end" style="text-align : center;" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>"><span><?php esc_html_e( 'Actions', 'theepi' ); ?></span></div>
 		</div>
-
 
 		<div class="tab-container">
 			<?php EPI_Class::g()->display_epi_list( $epis, false, $page ); ?>

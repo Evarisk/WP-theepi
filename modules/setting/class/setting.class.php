@@ -111,7 +111,7 @@ class Setting_Class extends \eoxia\Singleton_Util {
 		$number_page = ceil( $count_user / $per_page );
 
 		$role_subscriber      = get_role( 'subscriber' );
-		$has_capacity_in_role = ! empty( $role_subscriber->capabilities['manage_theepi'] ) ? true : false;
+		$has_capacity_in_role = ! empty( $role_subscriber->capabilities['read_theepi'] ) ? true : false;
 
 		if ( ! empty( $users ) ) {
 			foreach ( $users as &$user ) {

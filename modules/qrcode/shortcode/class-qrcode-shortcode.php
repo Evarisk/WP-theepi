@@ -56,8 +56,8 @@ class Qrcode_Shortcode {
 			return;
 		}
 
-		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 		$filename = sha1( $text.$eclevel.$height.$width.$transparency ).'.png';
 		$path = $uploads['basedir']. '/theepi/'. $epi->data['type'] . '/' . $epi->data['id'] . '/' . $filename;
 		$guid = $uploads['baseurl']. '/theepi/'. $epi->data['type'] . '/' . $epi->data['id'] . '/' . $filename;

@@ -29,8 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			foreach ( $users as $user ) :
 				\eoxia\View_Util::exec(
 					'theepi', 'setting', 'capability/list-item', array(
-						'user'                 => $user,
-						'has_capacity_in_role' => $has_capacity_in_role,
+						'user' => $user,
 					)
 				);
 			endforeach;

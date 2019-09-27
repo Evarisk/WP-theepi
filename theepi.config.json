@@ -14,8 +14,8 @@
 	"externals": [],
 	"modules": [
 		"core/core.config.json",
-		"modules/audit/audit.config.json",
-		"modules/comment/comment.config.json",
+		"modules/avatar/avatar.config.json",
+		"modules/control/control.config.json",
 		"modules/epi/epi.config.json",
 		"modules/qrcode/qrcode.config.json",
 		"modules/service/service.config.json",

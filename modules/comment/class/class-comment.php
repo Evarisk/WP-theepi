@@ -49,8 +49,6 @@ class Comment_Class extends \eoxia\Singleton_Util {
 
 		$comments = array();
 
-		echo "<pre>"; print_r('test'); echo "</pre>";exit;
-
 		if ( 0 !== $id ) {
 			$comments = $model_name::g()->get( array(
 				'post_id' => $id,

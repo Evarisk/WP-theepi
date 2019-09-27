@@ -1,0 +1,11 @@
+{
+	"name": "Les avatars",
+	"slug": "avatar",
+	"version": "0.7.0",
+	"description": "Le module gérant les avatars",
+	"path": "modules/avatar/",
+	"dependencies": {
+		"class": {},
+		"shortcode": {}
+	}
+}

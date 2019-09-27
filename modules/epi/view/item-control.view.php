@@ -17,43 +17,42 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php if ( ( $number_days < 0 ) ) : ?>
 
-	<div class="epi-item-control-black">
-		<?php esc_html_e( 'EXCEEDED', 'theepi' ); ?>
-			<div class="epi-item-control-white-text"><?php esc_html_e( abs( $number_days ) ); ?></div>
-		<?php esc_html_e( 'DAYS', 'theepi' ); ?>
+	<div class="epi-item-control-red">
+		<div class="epi-item-control-white-text">- <?php esc_html_e( abs( $number_days ) ); ?></div>
 	</div>
 
 <?php elseif ( ( $number_days >= 0 ) && ( $number_days <= 15 ) ) : ?>
 
-	<div class="epi-item-control-red">
-		<?php esc_html_e( 'STAYS', 'theepi' ); ?>
-			<div class="epi-item-control-white-text"><?= abs( $number_days ) ?></div>
-		<?php esc_html_e( 'DAYS', 'theepi' ); ?>
+	<div class="epi-item-control-orange">
+		<div class="epi-item-control-black-text"><?= $number_days ?></div>
 	</div>
 
 <?php elseif ( ( $number_days > 15 ) && ( $number_days <= 30 ) ) : ?>
 
-	<div class="epi-item-control-orange">
-		<?php esc_html_e( 'STAYS', 'theepi' ); ?>
-			<div class="epi-item-control-white-text"><?php esc_html_e( abs( $number_days ) ); ?></div>
-		<?php esc_html_e( 'DAYS', 'theepi' ); ?>
+	<div class="epi-item-control-yellow">
+		<div class="epi-item-control-white-text"><?php esc_html_e( $number_days ); ?></div>
 	</div>
 
 <?php else : ?>
 
-	<div class="epi-item-control-white">
-		<?php esc_html_e( 'STAYS', 'theepi' ); ?>
-			<div class="epi-item-control-black-text"><?php esc_html_e( abs( $number_days ) ); ?></div>
-		<?php esc_html_e( 'DAYS', 'theepi' ); ?>
+	<div class="epi-item-control-green">
+		<div class="epi-item-control-black-text"><?php esc_html_e(  $number_days ); ?></div>
 	</div>
 
 <?php endif; ?>
 
 <style>
 
-.epi-item-control-black {
+.epi-item-control-green {
 	text-align: center;
-	background-color: black;
+	background-color: green;
+	color : white;
+
+}
+
+.epi-item-control-yellow {
+	text-align: center;
+	background-color: yellow;
 	color : white;
 
 }

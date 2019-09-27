@@ -22,7 +22,7 @@ if ( ! empty( $epis ) ) :
 			'theepi', 'epi', 'item', array(
 				'epi'    => $epi,
 				'new'    => $new,
-				'task_manager' => $task_manager
+				//'task_manager' => $task_manager
 			)
 		);
 	endforeach;

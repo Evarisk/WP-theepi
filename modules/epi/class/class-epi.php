@@ -349,18 +349,19 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function display_epi_list( $epis, $new = false , $page ) {
 
-		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		 if ( is_plugin_active('task-manager/task-manager.php') ) {
-			$task_manager = true;
-		} else {
-			$task_manager = false;
-		}
+		//VERSION 2
+		// include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		//  if ( is_plugin_active('task-manager/task-manager.php') ) {
+		// 	$task_manager = true;
+		// } else {
+		// 	$task_manager = false;
+		// }
 
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'list', array(
 				'epis' => $epis,
 				'new'  => $new,
-				'task_manager' => $task_manager
+				//'task_manager' => $task_manager
 			)
 		);
 	}
@@ -568,80 +569,81 @@ class EPI_Class extends \eoxia\Post_Class {
 		return $day_rest;
 	}
 
-	/**
-	 * Affiche les données des audits lié à un EPI.
-	 *
-	 * @since   0.5.0
-	 * @version 0.6.0
-	 *
-	 * @param integer $id  L'id de l'EPI.
-	 *
-	 * @return bool   True si tout s'est bien passé.
-	 */
-
-	public function display_audit_epi( $id = 0 , $edit_audit = false ) {
-		if ( $id == 0 ) {
-			return false;
-		}
-
-		if ( class_exists( '\task_manager\Audit_Class' ) ) {
-			$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
-		} else {
-		}
-
-		$audit = $this->last_control_audit( $audits );
-
-		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
-		if ( ! empty( $audit ) ) {
-
-			$user = get_user_by( 'id', $audit->data['author_id'] );
-			\eoxia\View_Util::exec(
-				'theepi',
-				'audit',
-				'audit-epi',
-				array(
-					'epi'        => $epi,
-					'audit'      => $audit,
-					'user'       => $user,
-					'edit_audit' => $edit_audit,
-				)
-			);
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	/**
-	 * Récupère le dernier audit lié à un EPI.
-	 *
-	 * @since   0.5.0
-	 * @version 0.5.0
-	 *
-	 * @param array  $audits       Les données des audits.
-	 *
-	 * @return array $audits[key]  retourne l'audit le plus récent.
-	 */
-
-	public function last_control_audit( $audits ) {
-
-		if ( empty( $audits ) ) {
-			return array();
-		}
-
-		$date_start        = 0;
-		$date_last_control = 0;
-		$key_last_control  = 0;
-		foreach ( $audits as $key => $audit ) {
-			$date_start = strtotime( $audit->data['date']['rendered']['mysql'] );
-			if ( $date_last_control < $date_start ) {
-				$date_last_control = $date_start;
-				$key_last_control  = $key;
-			}
-		}
-		return $audits[ $key_last_control ];
-	}
-
+	//SI TASK MANAGER ACTIVEE.
+	// /**
+	//  * Affiche les données des audits lié à un EPI.
+	//  *
+	//  * @since   0.5.0
+	//  * @version 0.6.0
+	//  *
+	//  * @param integer $id  L'id de l'EPI.
+	//  *
+	//  * @return bool   True si tout s'est bien passé.
+	//  */
+	//
+	// public function display_audit_epi( $id = 0 , $edit_audit = false ) {
+	// 	if ( $id == 0 ) {
+	// 		return false;
+	// 	}
+	//
+	// 	if ( class_exists( '\task_manager\Audit_Class' ) ) {
+	// 		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+	// 	} else {
+	// 	}
+	//
+	// 	$audit = $this->last_control_audit( $audits );
+	//
+	// 	$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+	// 	if ( ! empty( $audit ) ) {
+	//
+	// 		$user = get_user_by( 'id', $audit->data['author_id'] );
+	// 		\eoxia\View_Util::exec(
+	// 			'theepi',
+	// 			'audit',
+	// 			'audit-epi',
+	// 			array(
+	// 				'epi'        => $epi,
+	// 				'audit'      => $audit,
+	// 				'user'       => $user,
+	// 				'edit_audit' => $edit_audit,
+	// 			)
+	// 		);
+	// 		return true;
+	// 	} else {
+	// 		return false;
+	// 	}
+	// }
+	//
+	// /**
+	//  * Récupère le dernier audit lié à un EPI.
+	//  *
+	//  * @since   0.5.0
+	//  * @version 0.5.0
+	//  *
+	//  * @param array  $audits       Les données des audits.
+	//  *
+	//  * @return array $audits[key]  retourne l'audit le plus récent.
+	//  */
+	//
+	// public function last_control_audit( $audits ) {
+	//
+	// 	if ( empty( $audits ) ) {
+	// 		return array();
+	// 	}
+	//
+	// 	$date_start        = 0;
+	// 	$date_last_control = 0;
+	// 	$key_last_control  = 0;
+	// 	foreach ( $audits as $key => $audit ) {
+	// 		$date_start = strtotime( $audit->data['date']['rendered']['mysql'] );
+	// 		if ( $date_last_control < $date_start ) {
+	// 			$date_last_control = $date_start;
+	// 			$key_last_control  = $key;
+	// 		}
+	// 	}
+	// 	return $audits[ $key_last_control ];
+	// }
+	//
 	public function reload_single_epi( $epi ) {
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -656,6 +658,25 @@ class EPI_Class extends \eoxia\Post_Class {
 	    if ( user_can( get_current_user_id(), $capabilities ) ) {
 	        return true;
 	    }
+		return false;
+	}
+
+	/**
+	 * Récupère le statut d'un EPI.
+	 *
+	 * @since   0.5.0
+	 * @version 0.5.0
+	 *
+	 * @param object $epi Les donnée d'un EPI.
+	 *
+	 * @return void
+	 */
+	public function get_status( $epi ) {
+
+		if ( $epi->data['status_epi'] == 'OK' ) {
+			return true;
+		}
+
 		return false;
 	}
 

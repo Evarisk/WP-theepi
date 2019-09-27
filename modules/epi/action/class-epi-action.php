@@ -78,6 +78,8 @@ class EPI_Action {
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
 
+		$control = Control_Class::g()->get( array( 'schema' => true ), true );
+
 		ob_start();
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item-edit', array(
@@ -92,6 +94,7 @@ class EPI_Action {
 			'theepi', 'service', 'main', array(
 				'epi' => $epi,
 				'edit_mode' => false,
+				'control' => $control,
 				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued
 			)
@@ -173,6 +176,7 @@ class EPI_Action {
 		$disposal_date = Service_Class::g()->calcul_disposal_date( $end_life_date );
 
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+		unset( $epi->data['author_id'] );
 
 		$update_epi = array(
 			'image_id'                 => $image_id,
@@ -197,7 +201,7 @@ class EPI_Action {
 			'end_life_date'            => date ( 'Y-m-d' , $end_life_date ),
 			'disposal_date'            => date ( 'Y-m-d' , $disposal_date ),
 
-			'post_status'              => 'publish'
+			'post_status'              => 'publish',
 		);
 
 		$date_valid = Service_Class::g()->check_date_epi( $update_epi );
@@ -245,15 +249,17 @@ class EPI_Action {
 		}
 
 		EPI_Class::g()->delete( $id );
-		$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
-		foreach ( $audits as $audit ) {
-			\task_manager\Audit_Class::g()->update(
-				array(
-					'id'     => $audit->data['id'],
-					'status' => 'trash',
-				)
-			);
-		}
+
+		//Version 2
+		// $audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+		// foreach ( $audits as $audit ) {
+		// 	\task_manager\Audit_Class::g()->update(
+		// 		array(
+		// 			'id'     => $audit->data['id'],
+		// 			'status' => 'trash',
+		// 		)
+		// 	);
+		// }
 
 		wp_send_json_success(
 			array(
@@ -298,6 +304,9 @@ class EPI_Action {
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
 
+		$controls = Control_Class::g()->get( array( 'post_parent' => $id ) );
+		$control = Control_Class::g()->last_control_epi( $controls );
+
 		ob_start();
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'item-edit', array(
@@ -312,6 +321,7 @@ class EPI_Action {
 			'theepi', 'service', 'main', array(
 				'epi'                     => $epi,
 				'edit_mode' => true,
+				'control' => $control,
 				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued
 			)
@@ -570,6 +580,7 @@ class EPI_Action {
 			)
 		);
 		$view = ob_get_clean();
+
 		wp_send_json_success(
 			array(
 				'namespace'        => 'theEPI',

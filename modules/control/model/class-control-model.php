@@ -53,7 +53,7 @@ class Control_Model extends \eoxia\Post_Model {
 			'type'        => 'array',
 			'meta_type'   => 'multiple',
 			'child'       => array(
-				'image' => array(
+				'media' => array(
 					'type'      => 'array',
 					'meta_type' => 'multiple',
 				),
@@ -63,63 +63,40 @@ class Control_Model extends \eoxia\Post_Model {
 			'version'     => '0.1.0',
 		);
 
-
-		$this->schema['status_epi'] = array(
-			'type'        => 'string',
-			'meta_type'   => 'single',
-			'field'       => '_theepi_status_epi',
-			'description' => 'Is the status of the EPI. Value can be "OK" or "KO" or "REPAIR" or "TRASH".',
-			'since'       => '0.5.0',
-			'version'     => '0.5.0',
-		);
-
-
 		$this->schema['control_date'] = array(
 			'type'        => 'wpeo_date',
 			'context'     => array( 'GET' ),
 			'meta_type'   => 'multiple',
 			'description' => 'Is the control date of the EPI.',
-			'since'       => '0.6.0',
-			'version'     => '0.6.0',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
 		);
 
-		$this->schema['commissioning_date'] = array(
-			'type'        => 'wpeo_date',
-			'context'     => array( 'GET' ),
-			'meta_type'   => 'single',
-			'field'       => '_theepi_commissioning_date',
-			'description' => 'Is the commissioning date of the EPI.',
-			'since'       => '0.1.0',
-			'version'     => '0.1.0',
+		$this->schema['comment'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'multiple',
+			'field'       => '_theepi_comment',
+			'description' => 'Is the comment of the EPI.',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
 		);
 
-		$this->schema['commissioning_date_valid'] = array(
-			'type'        => 'integer',
+		$this->schema['url'] = array(
+			'type'        => 'string',
 			'meta_type'   => 'single',
-			'field'       => '_theepi_commissioning_date_valid',
-			'description' => 'Check if commissioning date is update',
-			'since'       => '0.6.0',
-			'version'     => '0.6.0',
-			'default'     => 0,
+			'field'       => '_theepi_url',
+			'description' => 'Is the status of the EPI. Value can be "OK" or "KO" or "REPAIR" or "TRASH".',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
 		);
 
-		$this->schema['disposal_date'] = array(
-			'type'        => 'wpeo_date',
-			'context'     => array( 'GET' ),
+		$this->schema['status_control'] = array(
+			'type'        => 'string',
 			'meta_type'   => 'single',
-			'field'       => '_theepi_disposal_date',
-			'description' => 'Is the disposal date of the EPI.',
-			'since'       => '0.6.0',
-			'version'     => '0.6.0',
-		);
-
-		$this->schema['lifetime_epi'] = array(
-			'type'        => 'integer',
-			'meta_type'   => 'single',
-			'field'       => '_theepi_lifetime_epi',
-			'description' => 'Is the lifetime of the EPI.',
-			'since'       => '0.6.0',
-			'version'     => '0.6.0',
+			'field'       => '_theepi_status_control',
+			'description' => 'Is the status of the Control. Value can be "OK" or "KO" or "REPAIR" or "TRASH".',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
 		);
 
 		parent::__construct( $object, $req_method );

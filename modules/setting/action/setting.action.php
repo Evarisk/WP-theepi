@@ -96,15 +96,17 @@ class Setting_Action {
 			foreach ( $_POST['users'] as $user_id => $data ) {
 				$user = new \WP_User( $user_id );
 
-				if ( 'true' == $data['capability'] ) {
-					$user->add_cap( 'manage_theepi' );
-				} else {
-					$user->remove_cap( 'manage_theepi' );
+				$capabilities = array( 'create_theepi', 'read_theepi', 'update_theepi', 'delete_theepi' );
+
+				foreach ($capabilities as $value ) {
+					if ( $data[$value] == 'true' ) {
+						$user->add_cap( $value );
+					} else {
+						$user->remove_cap( $value );
+					}
 				}
 			}
 		}
-
-		Setting_Class::g()->save_capability();
 
 		wp_send_json_success(
 			array(

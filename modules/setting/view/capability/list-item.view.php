@@ -29,37 +29,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell" data-title="<?php echo esc_attr_e( 'Has the right on TheEPI', 'theepi' ); ?>">
-		<div class="form-element">
-			<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?> <?php echo ( $user->wordpress_user->has_cap( 'manage_theepi' ) ) ? 'checked' : ''; ?>
-				name="users[<?php echo esc_attr( $user->data['id'] ); ?>][capability]"
-				id="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"
-				type="checkbox" />
-			<label for="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Right to TheEPI', 'theepi' ); ?></label>
+		<div>
+			<input type="checkbox" name="users[<?php echo esc_attr( $user->data['id'] ); ?>][create_theepi]"
+			id="create_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"
+			<?php  echo  ( $user->wordpress_user->has_cap( 'create_theepi' ) ) ? 'checked' : ""; ?> >
+			<label for="create_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Create', 'theepi' ); ?></label>
+			</input>
+		</div>
 
-			<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?>
-				name="users[<?php echo esc_attr( $user->data['id'] ); ?>][capability]" id="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"
-				type="checkbox" checked/>
-				<label for="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Create', 'theepi' ); ?></label>
+		<div>
+			<input type="checkbox" name="users[<?php echo esc_attr( $user->data['id'] ); ?>][read_theepi]"
+			id="read_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"
+			<?php  echo  ( $user->wordpress_user->has_cap( 'read_theepi' ) ) ? 'checked' : ""; ?> />
+			<label for="read_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Read', 'theepi' ); ?></label>
+		</div>
 
-			<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?>
-				name="users[<?php echo esc_attr( $user->data['id'] ); ?>][capability]"
-				id="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"
-				type="checkbox" />
-				<label for="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Read', 'theepi' ); ?></label>
+		<div>
+			<input type="checkbox" name="users[<?php echo esc_attr( $user->data['id'] ); ?>][update_theepi]"
+			id="update_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"
+			<?php  echo  ( $user->wordpress_user->has_cap( 'update_theepi' ) ) ? 'checked' : ""; ?> />
+			<label for="update_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Update', 'theepi' ); ?></label>
+		</div>
 
-					<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?>
-						<?php echo ( $user->wordpress_user->has_cap( 'manage_theepi' ) ) ? 'checked' : ''; ?>
-						name="users[<?php echo esc_attr( $user->data['id'] ); ?>][capability]"
-						id="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"
-						type="checkbox" />
-						<label for="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Update', 'theepi' ); ?></label>
-
-						<input <?php echo ( $has_capacity_in_role ) ? 'disabled' : ''; ?>
-							<?php echo ( $user->wordpress_user->has_cap( 'manage_theepi' ) ) ? 'checked' : ''; ?>
-							name="users[<?php echo esc_attr( $user->data['id'] ); ?>][capability]"
-							id="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"
-							type="checkbox" />
-							<label for="have_capability_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Delete', 'theepi' ); ?></label>
+		<div>
+			<input type="checkbox" name="users[<?php echo esc_attr( $user->data['id'] ); ?>][delete_theepi]"
+			id="delete_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"
+			<?php  echo  ( $user->wordpress_user->has_cap( 'delete_theepi' ) ) ? 'checked' : ""; ?> />
+			<label for="delete_theepi_<?php echo esc_attr( $user->data['id'] ); ?>"><?php esc_html_e( 'Delete', 'theepi' ); ?></label>
 		</div>
 	</div>
 </div>
