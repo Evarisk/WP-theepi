@@ -20,7 +20,7 @@ if (! defined('ABSPATH') ) {
     <h1 style="margin-bottom : 20px">
     <?php esc_html_e('List of PPE', 'theepi'); ?>
 	<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
-        <div class="wpeo-button button-blue button-radius-3 action-request-edit-epi" style="margin-left : 15px"
+        <div class="wpeo-button button-blue button-radius-3 action-request-edit-epi event-keybord" style="margin-left : 15px"
 			data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
             data-action="create_epi"
             data-nonce="<?php echo esc_attr(wp_create_nonce('create_epi')); ?>">

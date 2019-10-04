@@ -1,10 +1,12 @@
 <?php
 /**
- * Gestion des avatars
+ * Gestion des avatars.
  *
- * @since 1.3.4
- * @version 1.6.0
- * @package Task_Manager
+ * @package   TheEPI
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.7.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -14,27 +16,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gestion des avatars
+ * Gestion des avatars.
  */
 class Avatar_Class extends \eoxia\Singleton_Util {
 
 	/**
-	 * Obligatoire pour Singleton_Util
+	 * Obligatoire pour Singleton_Util.
 	 *
-	 * @since 1.3.4
-	 * @version 1.6.0
+	 * @since    0.7.0
+	 * @version  0.7.0
 	 *
 	 * @return void
 	 */
 	protected function construct() {}
 
 	/**
-	 * Récupères l'url de l'avatar
+	 * Récupères l'url de l'avatar.
 	 *
-	 * @since 1.3.4
-	 * @version 1.6.0
+	 * @since    0.7.0
+	 * @version  0.7.0
 	 *
-	 * @param  array $param (Voir plus haut).
+	 * @param  array $param.
+	 *
 	 * @return array
 	 */
 	public function get_avatars( $param ) {

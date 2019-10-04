@@ -41,8 +41,11 @@ class TheEPI_Core_Action {
 		}
 
 		add_action( 'init', array( $this, 'callback_plugins_loaded' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'callback_enqueue_scripts_js_frontend' ) );
 		add_action( 'admin_init', array( $this, 'callback_admin_init' ) );
 		add_action( 'admin_menu', array( $this, 'callback_admin_menu' ), 20 );
+		add_action( 'wp_print_scripts', array( $this, 'callback_wp_print_scripts' ) );
+
 	}
 
 	/**
@@ -85,6 +88,19 @@ class TheEPI_Core_Action {
 	public function callback_admin_enqueue_scripts_js() {
 		wp_enqueue_script( 'digi-epi-datetimepicker-script', PLUGIN_THEEPI_URL . 'core/assets/js/jquery.datetimepicker.full.js', array(), \eoxia\Config_Util::$init['theepi']->version );
 		wp_enqueue_script( 'digi-epi-script', PLUGIN_THEEPI_URL . 'core/assets/js/backend.min.js', array(), \eoxia\Config_Util::$init['theepi']->version, false );
+	}
+
+	/**
+	 * Initialise le fichier frontend.min.js du plugin.
+	 *
+	 * @since   0.1.0
+	 * @version 0.1.0
+	 *
+	 * @return void
+	 */
+	public function callback_enqueue_scripts_js_frontend() {
+		wp_register_style( 'theepi-style', PLUGIN_THEEPI_URL . 'core/assets/css/style.min.css', array(), \eoxia\Config_Util::$init['theepi']->version );
+		wp_enqueue_script( 'digi-epi-script-frontend', PLUGIN_THEEPI_URL . 'core/assets/js/frontend.min.js', array(), \eoxia\Config_Util::$init['theepi']->version, false );
 	}
 
 	/**
@@ -154,6 +170,20 @@ class TheEPI_Core_Action {
 		add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );
 
 
+	}
+
+	/**
+	 * Initialise ajaxurl.
+	 *
+	 * @since 0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
+	public function callback_wp_print_scripts() {
+		?>
+		<script>var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>";</script>
+		<?php
 	}
 }
 

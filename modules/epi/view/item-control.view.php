@@ -6,7 +6,7 @@
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.5.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -24,13 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 <?php elseif ( ( $number_days >= 0 ) && ( $number_days <= 15 ) ) : ?>
 
 	<div class="epi-item-control-orange">
-		<div class="epi-item-control-black-text"><?= $number_days ?></div>
+		<div class="epi-item-control-white-text"><?= $number_days ?></div>
 	</div>
 
 <?php elseif ( ( $number_days > 15 ) && ( $number_days <= 30 ) ) : ?>
 
 	<div class="epi-item-control-yellow">
-		<div class="epi-item-control-white-text"><?php esc_html_e( $number_days ); ?></div>
+		<div class="epi-item-control-black-text"><?php esc_html_e( $number_days ); ?></div>
 	</div>
 
 <?php else : ?>
@@ -53,7 +53,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 .epi-item-control-yellow {
 	text-align: center;
 	background-color: yellow;
-	color : white;
+	color : black;
 
 }
 

@@ -93,7 +93,7 @@ class Service_Class extends \eoxia\Singleton_Util {
 	}
 
 	/**
-	 * Vérifie si les champs dates, lifetime et peridicity sont remplies et valides.
+	 * Vérifie si les champs dates, lifetime et peridicity sont corrects.
 	 *
 	 * @since   0.6.0
 	 * @version 0.7.0
@@ -156,6 +156,18 @@ class Service_Class extends \eoxia\Singleton_Util {
 		return $data;
 	}
 
+	/**
+	 * Vérifie si les champs dates, lifetime et peridicity sont remplies et valides.
+	 *
+	 * @since   0.6.0
+	 * @version 0.7.0
+	 *
+	 * @param object $data       les données à vérifiées.
+	 *
+	 * @return array ['error']   (array) le message d'erreur.
+	 *               ['element'] (array) le champ invalide.
+	 *
+	 */
 	public function check_error( $data, $type, $temp_error ){
 		if( $data == "" ){
 			$error = esc_html__( 'This field ' . $type . ' is empty', 'theepi' );
@@ -171,6 +183,16 @@ class Service_Class extends \eoxia\Singleton_Util {
 		return $temp_error;
 	}
 
+	/**
+	 * Vérifie si une date est vide.
+	 *
+	 * @since   0.6.0
+	 * @version 0.7.0
+	 *
+	 * @param object $date la date à vérifié.
+	 *
+	 * @return array ['date'] la date vérifié.
+	 */
 	public function check_date_if_empty( $date ) {
 
 		if ( empty( $date ) ) {

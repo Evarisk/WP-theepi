@@ -1,12 +1,12 @@
 <?php
 /**
- * Define EPI Model.
+ * Define Control Model.
  *
  * @package   TheEPI
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com> && Laurent Magnin <laurent@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.1.0
- * @version   0.6.0
+ * @since     0.7.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Define EPI Model.
+ * Define Control Model.
  */
 class Control_Model extends \eoxia\Post_Model {
 
@@ -24,10 +24,10 @@ class Control_Model extends \eoxia\Post_Model {
 	/**
 	 * Construct
 	 *
-	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @since   0.7.0
+	 * @version 0.7.0
 	 *
-	 * @param EPI_Class $object     Les données du controle de l'EPI.
+	 * @param Control_Class $object     Les données du controle de l'EPI.
 	 * @param string    $req_method La méthode de la requête.
 	 */
 	public function __construct( $object, $req_method = null ) {

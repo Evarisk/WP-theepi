@@ -31,14 +31,14 @@ class Qrcode_Shortcode {
 	}
 
 	/**
-	 * Le shortcode pour afficher les tâches
+	 * Le shortcode pour afficher le qrcode
 	 *
 	 * @since 0.7.0
 	 * @version 0.7.0
 	 *
 	 * @param  array $param Les paramètres du shortcode.
 	 *
-	 * @return HTML Le code HTML permettant d'afficher une tâche.
+	 * @return HTML Le code HTML permettant d'afficher un qrcode.
 	 */
 	public function callback_qrcode( $param ) {
 		$uploads = wp_upload_dir();

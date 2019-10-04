@@ -1,11 +1,11 @@
 <?php
 /**
- * La vue principale de la page "EPI".
+ * La vue pour lister les contrôles.
  *
  * @package   TheEPI
- * @author    Jimmy Latour <jimmy@evarisk.com>
- * @copyright 2017 Evarisk
- * @since     0.1.0
+ * @author    Evarisk <dev@evarisk.com>
+ * @copyright 2019 Evarisk
+ * @since     0.7.0
  * @version   0.7.0
  */
 
@@ -21,6 +21,7 @@ if ( ! empty( $controls ) ) :
 		\eoxia\View_Util::exec(
 			'theepi', 'control', 'item', array(
 				'control'    => $control,
+				'frontend'   => $frontend,
 			)
 		);
 	endforeach;

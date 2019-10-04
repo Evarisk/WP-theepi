@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2019-09-24 14:51+0200\n"
-"PO-Revision-Date: 2019-09-24 15:04+0200\n"
+"POT-Creation-Date: 2019-10-03 14:58+0200\n"
+"PO-Revision-Date: 2019-10-03 14:59+0200\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: test\n"
 "X-Poedit-SearchPathExcluded-2: core/external\n"
 
-#: core/action/class-theepi-core-action.php:143
+#: core/action/class-theepi-core-action.php:159
 #: modules/setting/action/setting.action.php:49
 msgid "TheEPI"
 msgstr "TheEPI"
@@ -28,8 +28,8 @@ msgstr "TheEPI"
 msgid "List of PPE"
 msgstr "Liste des EPI"
 
-#: core/view/main.view.php:24 modules/control/view/item.view.php:84
-#: modules/control/view/modal.view.php:56 modules/epi/view/item.view.php:99
+#: core/view/main.view.php:24 modules/control/view/item.view.php:79
+#: modules/control/view/modal.view.php:56 modules/epi/view/item.view.php:103
 msgid "Do you want to exit edit mode"
 msgstr "Voulez vous quitter le mode édition"
 
@@ -54,8 +54,8 @@ msgstr "Modifier le contrôle de l'EPI"
 msgid "Perform a control"
 msgstr "Effectuer un contrôle"
 
-#: modules/audit/view/index.php:14 modules/epi/view/item.view.php:64
-#: modules/epi/view/main.view.php:35
+#: modules/audit/view/index.php:14 modules/epi/view/frontend/main.view.php:28
+#: modules/epi/view/frontend/main.view.php:35 modules/epi/view/item.view.php:66
 msgid "Control"
 msgstr "Contrôle"
 
@@ -72,7 +72,7 @@ msgid "Point"
 msgstr "Point"
 
 #: modules/audit/view/modal-box-import.view.php:69
-#: modules/service/view/main.view.php:263
+#: modules/service/view/main.view.php:342
 msgid "Cancel"
 msgstr "Annuler"
 
@@ -91,116 +91,126 @@ msgstr "KO"
 
 #: modules/audit/view/modal-header.view.php:42
 #: modules/audit/view/modal-header.view.php:46
+#: modules/epi/action/class-epi-action.php:136
 msgid "OK"
 msgstr "OK"
 
 #: modules/audit/view/notice.view.php:20
 msgid "PPE check performed successfully"
-msgstr "L'EPI a été contrôlé avec succès "
+msgstr "L'EPI a été contrôlé avec succès"
 
-#: modules/comment/view/item-edit.view.php:40
-msgid "N/A"
-msgstr ""
-
-#: modules/comment/view/item-edit.view.php:67
-msgid "Êtes-vous sûr(e) de vouloir supprimer ce commentaire ?"
-msgstr ""
+#: modules/control/class/class-control.php:238
+msgid "No file attached"
+msgstr "Aucun fichier joint"
 
 #: modules/control/view/item-edit.view.php:20
-#: modules/control/view/item.view.php:18 modules/control/view/modal.view.php:70
+#: modules/control/view/item.view.php:18
+#: modules/control/view/modal-content.view.php:21
 #: modules/epi/view/item-edit.view.php:19 modules/epi/view/item.view.php:19
-#: modules/epi/view/main.view.php:30
+#: modules/epi/view/main.view.php:31
 #: modules/setting/view/capability/list-item.view.php:19
 #: modules/setting/view/capability/list.view.php:20
 msgid "ID"
 msgstr "ID"
 
 #: modules/control/view/item-edit.view.php:24
-#: modules/control/view/item.view.php:22 modules/control/view/modal.view.php:71
+#: modules/control/view/item.view.php:22
+#: modules/control/view/modal-content.view.php:22
 msgid "Avatar"
 msgstr "Avatar"
 
 #: modules/control/view/item-edit.view.php:28
-#: modules/control/view/item.view.php:26 modules/control/view/modal.view.php:72
+#: modules/control/view/item.view.php:26
+#: modules/control/view/modal-content.view.php:23
 msgid "Date"
 msgstr "Date"
 
-#: modules/control/view/item-edit.view.php:51
-#: modules/control/view/item.view.php:30 modules/control/view/modal.view.php:73
+#: modules/control/view/item-edit.view.php:32
+#: modules/control/view/item.view.php:30
+#: modules/control/view/modal-content.view.php:24
 msgid "Comment"
 msgstr "Commentaire"
 
-#: modules/control/view/item-edit.view.php:61
-#: modules/control/view/item.view.php:40 modules/control/view/modal.view.php:74
+#: modules/control/view/item-edit.view.php:42
+#: modules/control/view/item.view.php:34
+#: modules/control/view/modal-content.view.php:25
 msgid "URL"
 msgstr "URL"
 
-#: modules/control/view/item-edit.view.php:71
-#: modules/control/view/item.view.php:50 modules/control/view/modal.view.php:75
+#: modules/control/view/item-edit.view.php:52
+#: modules/control/view/item.view.php:48
+#: modules/control/view/modal-content.view.php:26
 msgid "Attached File"
 msgstr "Fichier joint"
 
-#: modules/control/view/item-edit.view.php:73
+#: modules/control/view/item-edit.view.php:58
 #: modules/control/view/item.view.php:52
-#: modules/control/view/single-view-control.view.php:71
-msgid "Add Attached File"
-msgstr "Ajouter un fichier joint"
-
-#: modules/control/view/item-edit.view.php:81
-#: modules/control/view/item.view.php:60 modules/control/view/modal.view.php:76
+#: modules/control/view/modal-content.view.php:27
 #: modules/epi/view/frontend/main.view.php:18
 msgid "Status"
 msgstr "Statut"
 
-#: modules/control/view/item-edit.view.php:87
+#: modules/control/view/item-edit.view.php:64
 msgid "Status OK"
 msgstr "Statut OK"
 
-#: modules/control/view/item-edit.view.php:95
+#: modules/control/view/item-edit.view.php:72
 msgid "Status KO"
 msgstr "Statut KO"
 
-#: modules/control/view/item-edit.view.php:103
+#: modules/control/view/item-edit.view.php:80
 msgid "Status Repair"
 msgstr "Statut réparer"
 
-#: modules/control/view/item-edit.view.php:111
+#: modules/control/view/item-edit.view.php:88
 msgid "Status Trash"
 msgstr "Statut poubelle"
 
-#: modules/control/view/item-edit.view.php:121
-#: modules/control/view/item.view.php:80 modules/control/view/modal.view.php:77
-#: modules/epi/view/item.view.php:94 modules/epi/view/main.view.php:38
+#: modules/control/view/item-edit.view.php:98
+#: modules/control/view/item.view.php:73
+#: modules/control/view/modal-content.view.php:28
+#: modules/epi/view/item-edit.view.php:89 modules/epi/view/item.view.php:98
+#: modules/epi/view/main.view.php:40
 msgid "Actions"
 msgstr "Actions"
 
-#: modules/control/view/item-edit.view.php:123
+#: modules/control/view/item-edit.view.php:100
 msgid "Save Control"
 msgstr "Sauvegarder le Contrôle"
 
-#: modules/control/view/item-edit.view.php:132
+#: modules/control/view/item-edit.view.php:109
 msgid "Cancel Control"
 msgstr "Annuler le Contrôle"
 
-#: modules/control/view/item.view.php:82
+#: modules/control/view/item.view.php:40
+#: modules/control/view/single-view-control.view.php:59
+#: modules/service/view/main.view.php:301
+msgid "Display Url File"
+msgstr "Aller vers le lien Web"
+
+#: modules/control/view/item.view.php:76
 msgid "Edit Control"
 msgstr "Modifier le Contrôle"
 
-#: modules/control/view/item.view.php:91
+#: modules/control/view/item.view.php:86
 msgid "Delete Control"
 msgstr "Supprimer le Contrôle"
 
-#: modules/control/view/item.view.php:95 modules/epi/view/item.view.php:123
-msgid "Are you sure you want to remove this PPE ?"
-msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
+#: modules/control/view/item.view.php:90
+msgid "Are you sure you want to remove this Control ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer ce Contrôle ?"
 
 #: modules/control/view/modal.view.php:24
 msgid "Controls lists PPE"
 msgstr "Liste des contrôle de l'EPI"
 
-#: modules/control/view/modal.view.php:92
+#: modules/control/view/modal.view.php:73
 msgid "Close"
 msgstr "Fermer"
+
+#: modules/epi/action/class-epi-action.php:133
+msgid "New PPE"
+msgstr "Nouvel EPI"
 
 #: modules/epi/class/class-epi-odt.php:141
 #, php-format
@@ -212,70 +222,71 @@ msgstr ""
 msgid "Le modèle utilisé est: %1$s"
 msgstr ""
 
-#: modules/epi/class/class-epi.php:331
+#: modules/epi/class/class-epi.php:337
 msgid "EPI per page"
 msgstr "EPI par page"
 
-#: modules/epi/view/item-edit.view.php:27 modules/epi/view/item.view.php:53
-#: modules/epi/view/main.view.php:34
-msgid "Title"
-msgstr "Titre"
+#: modules/epi/view/item-edit.view.php:40 modules/epi/view/item.view.php:40
+#: modules/epi/view/main.view.php:33
+msgid "Number"
+msgstr "Nombre"
 
-#: modules/epi/view/item-edit.view.php:37 modules/epi/view/item.view.php:40
-#: modules/epi/view/main.view.php:32
+#: modules/epi/view/item-edit.view.php:50 modules/epi/view/item.view.php:42
+#: modules/epi/view/main.view.php:34
 msgid "Serial Number"
 msgstr "Numéro de Série"
 
-#: modules/epi/view/item-edit.view.php:56 modules/epi/view/item.view.php:84
-#: modules/epi/view/main.view.php:37
+#: modules/epi/view/item-edit.view.php:63 modules/epi/view/item.view.php:55
+#: modules/epi/view/main.view.php:36
+msgid "Title"
+msgstr "Titre"
+
+#: modules/epi/view/item-edit.view.php:77 modules/epi/view/item.view.php:86
+#: modules/epi/view/main.view.php:39
 msgid "Status EPI"
 msgstr "Statut EPI"
 
-#: modules/epi/view/item-edit.view.php:72
-#: modules/service/view/main.view.php:267
+#: modules/epi/view/item-edit.view.php:91
+#: modules/service/view/main.view.php:346
 msgid "Save EPI"
 msgstr "Enregistrer EPI"
 
-#: modules/epi/view/item-edit.view.php:81
-#: modules/service/view/main.view.php:259
-msgid "Cancel EPI"
-msgstr "Annuler l'EPI"
-
-#: modules/epi/view/item.view.php:42
+#: modules/epi/view/item.view.php:44 modules/epi/view/main.view.php:35
 msgid "Code QrCode"
 msgstr "Code QR"
 
-#: modules/epi/view/item.view.php:44
+#: modules/epi/view/item.view.php:46
 msgid "Click to enlarge the QrCode"
 msgstr "Cliquer pour agrandir le QRCode"
 
-#: modules/epi/view/item.view.php:57
-msgid "Last Control Date"
+#: modules/epi/view/item.view.php:59 modules/epi/view/main.view.php:37
+#: modules/service/view/main.view.php:324
+msgid "Last Control"
 msgstr "Dernier Contrôle"
 
-#: modules/epi/view/item.view.php:73 modules/epi/view/main.view.php:36
+#: modules/epi/view/item.view.php:75 modules/epi/view/main.view.php:38
 msgid "Next Control"
 msgstr "Prochain Contrôle"
 
-#: modules/epi/view/item.view.php:97
+#: modules/epi/view/item.view.php:101
 msgid "Edit PPE"
 msgstr "Modifier EPI"
 
-#: modules/epi/view/item.view.php:110
+#: modules/epi/view/item.view.php:114
 msgid "Download PPE Life Sheet"
 msgstr "Télecharger la Fiche de Vie de l'EPI"
 
-#: modules/epi/view/item.view.php:119
+#: modules/epi/view/item.view.php:123
 msgid "Delete PPE"
 msgstr "Supprimer EPI"
 
-#: modules/epi/view/main.view.php:31
+#: modules/epi/view/item.view.php:127
+msgid "Are you sure you want to remove this PPE ?"
+msgstr "Êtes-vous sûr(e) de vouloir supprimer cet EPI ?"
+
+#: modules/epi/view/main.view.php:32
 msgid "Image"
 msgstr "Image"
-
-#: modules/epi/view/main.view.php:33
-msgid "QrCode"
-msgstr "QrcodeS"
 
 #: modules/epi/view/pagination.view.php:29
 msgid "Previous"
@@ -299,17 +310,18 @@ msgstr "Dates de l'EPI"
 
 #: modules/service/view/main.view.php:23
 msgid "Does the PPE have a lifetime"
-msgstr "L'EPI possède-t-il une durée de vie ?"
+msgstr "L'EPI possède-t-il une durée de vie"
 
-#: modules/service/view/main.view.php:29 modules/service/view/main.view.php:33
+#: modules/service/view/main.view.php:26 modules/service/view/main.view.php:30
 msgid "NO"
 msgstr "NON"
 
-#: modules/service/view/main.view.php:31 modules/service/view/main.view.php:35
+#: modules/service/view/main.view.php:28 modules/service/view/main.view.php:32
 msgid "YES"
 msgstr "OUI"
 
-#: modules/service/view/main.view.php:43 modules/service/view/main.view.php:82
+#: modules/service/view/main.view.php:41 modules/service/view/main.view.php:85
+#: modules/service/view/main.view.php:112
 msgid ""
 "Manufacture Date is defined in the TheEPI Settings, This field can be empty"
 msgstr ""
@@ -317,94 +329,109 @@ msgstr ""
 "peut être vide"
 
 #: modules/service/view/main.view.php:47
+msgid "Setting Date activated (Manufacture Date)"
+msgstr "Réglage Date activé (Date de Fabrication)"
+
+#: modules/service/view/main.view.php:47 modules/service/view/main.view.php:49
 msgid "Manufacture Date"
 msgstr "Date de Fabrication"
 
-#: modules/service/view/main.view.php:70
+#: modules/service/view/main.view.php:73
 #: modules/setting/view/default-data/main.view.php:35
 msgid "Lifetime"
 msgstr "Durée de Vie"
 
-#: modules/service/view/main.view.php:74
+#: modules/service/view/main.view.php:77
 #: modules/setting/view/default-data/main.view.php:39
 msgid "years"
 msgstr "ans"
 
-#: modules/service/view/main.view.php:86
+#: modules/service/view/main.view.php:89
 msgid "End Life Date"
 msgstr "Date de Fin de Vie"
 
-#: modules/service/view/main.view.php:110
-#, fuzzy
-#| msgid "Life Sheet"
-msgid "PPE Life Sheet"
-msgstr "Fiche de Vie"
+#: modules/service/view/main.view.php:116
+msgid "Disposal Date = End Life Date"
+msgstr "Date de Mise au Rebut = Date de Fin de Vie"
 
-#: modules/service/view/main.view.php:117
+#: modules/service/view/main.view.php:116
+msgid "Disposal Date"
+msgstr "Date de Mise au Rebut"
+
+#: modules/service/view/main.view.php:140
+msgid "PPE Life Sheet"
+msgstr "Fiche de Vie de l'EPI"
+
+#: modules/service/view/main.view.php:147
 msgid ""
 "Purchase Date is defined in the TheEPI Settings, This field can be empty"
 msgstr ""
 "La date d'Achat est définie dans les réglages de TheEPI, Ce champ peut être "
 "vide"
 
-#: modules/service/view/main.view.php:121
+#: modules/service/view/main.view.php:153
+msgid "Setting Date activated (Purchase Date)"
+msgstr "Réglage Date activé (Date d'Achat)"
+
+#: modules/service/view/main.view.php:153
+#: modules/service/view/main.view.php:155
 msgid "Purchase Date"
 msgstr "Date d'Achat"
 
-#: modules/service/view/main.view.php:144
+#: modules/service/view/main.view.php:187
 msgid "Commissioning Date"
 msgstr "Date de Mise en Service"
 
-#: modules/service/view/main.view.php:167
+#: modules/service/view/main.view.php:210
 #: modules/setting/view/default-data/main.view.php:26
 msgid "Periodicity"
 msgstr "Périodicité"
 
-#: modules/service/view/main.view.php:171
+#: modules/service/view/main.view.php:214
 #: modules/setting/view/date-management/main.view.php:43
 #: modules/setting/view/default-data/main.view.php:30
 msgid "days"
 msgstr "jours"
 
-#: modules/service/view/main.view.php:177
+#: modules/service/view/main.view.php:222
 msgid "Control Date = Commissioning Date + Periodicity"
 msgstr "Date de Contrôle  = Date de Mise en Service + Périodicité"
 
-#: modules/service/view/main.view.php:177
-msgid "Control Date : "
-msgstr "Date de Contrôle :"
+#: modules/service/view/main.view.php:222
+msgid "Control Date"
+msgstr "Date de Contrôle"
 
-#: modules/service/view/main.view.php:185
-msgid "Disposal Date = End Life Date"
-msgstr "Date de Mise au Rebut = Date de Fin de Vie"
-
-#: modules/service/view/main.view.php:185
-msgid "Disposal Date : "
-msgstr "Date de Mise au Rebut :"
-
-#: modules/service/view/main.view.php:198
+#: modules/service/view/main.view.php:246
 msgid "Additional Information"
 msgstr "Informations Additionnelles"
 
-#: modules/service/view/main.view.php:204
+#: modules/service/view/main.view.php:252
 msgid "Maker"
 msgstr "Fabricant"
 
-#: modules/service/view/main.view.php:214
+#: modules/service/view/main.view.php:262
 msgid "Seller"
 msgstr "Vendeur"
 
-#: modules/service/view/main.view.php:224
+#: modules/service/view/main.view.php:272
 msgid "Manager"
 msgstr "Responsable"
 
-#: modules/service/view/main.view.php:234
+#: modules/service/view/main.view.php:282
 msgid "Reference"
 msgstr "Référence"
 
-#: modules/service/view/main.view.php:246
-msgid "Last Control"
-msgstr "Dernier Contrôle"
+#: modules/service/view/main.view.php:292
+msgid "URL Notice"
+msgstr "Lien Web Notice"
+
+#: modules/service/view/main.view.php:311
+msgid "File"
+msgstr "Fichier"
+
+#: modules/service/view/main.view.php:338
+msgid "Cancel EPI"
+msgstr "Annuler l'EPI"
 
 #: modules/setting/class/setting.class.php:142
 msgid "User per page"
@@ -484,15 +511,11 @@ msgid "Manufacture Date Valued"
 msgstr "Date de Fabrication estimée"
 
 #: modules/setting/view/date-management/main.view.php:40
-#, fuzzy
-#| msgid ""
-#| "Please indicate the number of years between Manufacture Date valued and "
-#| "Commissioning Date of your PPE"
 msgid ""
 "Please indicate the number of days between Manufacture Date valued and "
 "Commissioning Date of your PPE"
 msgstr ""
-"Veuillez indiquer le nombre d'année entre la Date de Fabrication estimée et "
+"Veuillez indiquer le nombre de jours entre la Date de Fabrication estimée et "
 "la Date de Mise en Service de vos EPI"
 
 #: modules/setting/view/default-data/main.view.php:23
@@ -526,6 +549,18 @@ msgstr "Donnée par Défaut"
 #: modules/setting/view/main.view.php:24
 msgid "Date Management"
 msgstr "Dates"
+
+#~ msgid "Add Attached File"
+#~ msgstr "Ajouter un fichier joint"
+
+#~ msgid "Last Control Date"
+#~ msgstr "Dernier Contrôle"
+
+#~ msgid "QrCode"
+#~ msgstr "QrcodeS"
+
+#~ msgid "Disposal Date : "
+#~ msgstr "Date de Mise au Rebut :"
 
 #~ msgid "EXCEEDED"
 #~ msgstr "DEPASSE"
@@ -565,9 +600,6 @@ msgstr "Dates"
 
 #~ msgid "Mise en Service"
 #~ msgstr "Mise en Service"
-
-#~ msgid "Disposal Date"
-#~ msgstr "Date de Mise au Rebut"
 
 #~ msgid "Categorie"
 #~ msgstr "Catégorie"

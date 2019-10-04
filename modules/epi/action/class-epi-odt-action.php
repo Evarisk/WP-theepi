@@ -51,11 +51,13 @@ class EPI_ODT_Action {
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : '';
 
 		$epi        = EPI_Class::g()->get( array( 'id' => $id ), true );
-		$status_epi = EPI_Class::g()->get_status( $epi ) ? 'OK' : 'KO';
+		$status_epi = EPI_Class::g()->get_status( $epi );
 		$control    = EPI_Class::g()->get_days( $epi );
 		$args       = array( 'parent' => $epi );
 
 		//$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
+		$controls= Control_Class::g()->get( array( 'post_parent' => $id ) );
+
 		$picture = array();
 		$qrcode = array();
 
@@ -98,7 +100,7 @@ class EPI_ODT_Action {
 				'size' => 4.5,
 			),
 		);
-		
+
 		$document_meta = array(
 			'photo'         => $picture,
 			'reference'     => $epi->data['reference'],
@@ -122,6 +124,7 @@ class EPI_ODT_Action {
 			'disposal'      => $epi->data['disposal_date']['rendered']['date'],
 
 			//'audits'        => array( 'type' => 'segment', 'value' => array() ),
+			'controls'      => array( 'type' => 'segment', 'value' => array() ),
 		);
 
 		// foreach ( $audits as $key => $audit ) {
@@ -156,6 +159,19 @@ class EPI_ODT_Action {
 		// 	$document_meta['audits']['value'][] = $default_data;
 		//
 		// }
+
+		foreach ( $controls as $key => $control ) {
+
+			$user = get_user_by( 'id', $control->data['author_id'] );
+
+			$document_meta['controls']['value'][] = array (
+				'date_control' 	  => date( 'd/m/Y', strtotime( $control->data['date']['rendered']['mysql'] ) ),
+				'control_comment' => $control->data['comment'],
+				'user'            => $user->data->display_name,
+				'status_control'  => $control->data['status_control'],
+			);
+		}
+
 		$response = EPI_ODT_Class::g()->save_document_data( $id, $document_meta, $args );
 
 		$response['document']->data['title']             = current_time( 'Ymd' ) . '_';

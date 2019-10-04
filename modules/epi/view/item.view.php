@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
-	<div class="table-cell table-100" style="text-align: center;" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
+	<div class="table-cell table-75" style="text-align: center;" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<span style="color: grey;"><i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?></span></br>
 	</div>
 
@@ -37,9 +37,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</style>
 	</div>
 
+	<div class="table-cell table-75" style="text-align : center" data-title="<?php echo esc_attr_e( 'Quantity', 'theepi' ); ?>"><?php echo esc_html( $epi->data['quantity'] ); ?></div>
+
 	<div class="table-cell table-200" style="text-align : center" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></div>
 
-	<div class="table-cell table-150" style="text-align : center" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
+	<div class="table-cell table-75" style="text-align : center" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
 		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded qrcode action-attribute"
 			aria-label="<?php esc_html_e( 'Click to enlarge the QrCode', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
@@ -50,19 +52,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
+	<div class="table-cell" style="max-width: 375px;" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
 		<span style="font-size: 25px"><?php echo esc_html( $epi->data['title'] ); ?></span>
 	</div>
 
-	<div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
+	<div class="table-cell table-200" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php if( $epi->data['commissioning_date_valid'] ): ?>
-			<span class="form-label" name="control-date" value="<?php echo esc_attr( $epi->data['control_date']['raw'] ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $epi->data['control_date']['rendered']['date'] ); ?></span>
+			<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?></span>
 		<?php else: ?>
 			<span class="form-label" name="control-date" value=""><i class="fas fa-calendar-alt"></i> </span>
 		<?php endif; ?>
 		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded action-attribute"
 			aria-label="<?php esc_html_e( 'Control', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
+			data-frontend="fasle"
 			data-action="display_control"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
 			<i class="fas fa-eye"></i>
@@ -83,7 +86,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="table-cell table-150" style="text-align : center;" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
 		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
 			<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
-		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "rebut" ) ) : ?>
+		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "repair" ) ) : ?>
+			<i class="fas fa-tools fa-4x" style="color: orange;"></i>
+		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "trash" ) ) : ?>
 			<i class="fas fa-trash fa-4x" style="color: black;"></i>
 		<?php else : ?>
 			<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>

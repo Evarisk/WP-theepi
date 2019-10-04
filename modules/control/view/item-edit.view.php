@@ -1,6 +1,6 @@
 <?php
 /**
- * La vue Edition du module EPI.
+ * La vue Edition du module Control.
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
@@ -26,21 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Date', 'theepi' ); ?>">
-		<div class="wpeo-form">
-			<div class="form-element group-date">
-				<label class="form-field-container">
-					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
-					<?php if ( $edit_mode ): ?>
-						<input type="hidden" class="mysql-date"  name="control-date" value="<?php echo esc_attr( $control->data['control_date']['raw'] ); ?>"/>
-					<?php else: ?>
-						<input type="hidden" class="mysql-date"  name="control-date" value=""/>
-					<?php endif; ?>
-
-					<input class="form-field date" type="text" name="control-date"
-					value="<?php echo esc_attr( $control->data['control_date']['rendered']['date'] ); ?>"/>
-				</label>
-			</div>
-		</div>
+		<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['date']['rendered']['date'] ); ?>
 	</div>
 
 	<div class="table-cell table-300" data-title="<?php echo esc_attr_e( 'Comment', 'theepi' ); ?>">
@@ -63,17 +49,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-100" data-title="<?php echo esc_attr_e( 'Attached File', 'theepi' ); ?>"> </br>
-		<!-- <div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded"
-			aria-label="<?php esc_html_e( 'Add Attached File', 'theepi' ); ?>">
-			<i class="fas fa-paperclip"></i>
-		</div> -->
-		<!-- <?php if( $control->data[ 'thumbnail_id' ] != 0 ): ?>
-			<input type="hidden" name="thumbnail_id" value="<?php echo esc_attr_e( $control->data[ 'thumbnail_id' ] ); ?>">
-		<?php endif; ?> -->
-
-		<?php echo do_shortcode( '[wpeo_upload id="' . $control->data['id'] . '" model_name="/theepi/Control_Class" single="false" mime_type="" display_type="list" field_name="media"]' ); ?>
-		<?php echo Control_Class::g()->get_media( $control->data['id'] ) ?>
+	<div class="table-cell table-100" data-title="<?php echo esc_attr_e( 'Attached File', 'theepi' ); ?>">
+		<?php if (  $control->data['id'] != 0 ): ?>
+			<?php echo do_shortcode( '[wpeo_upload id="' . $control->data['id'] . '" model_name="/theepi/Control_Class" single="false" mime_type="" display_type="list" field_name="media"]' ); ?>
+		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-100 table-status-control" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">

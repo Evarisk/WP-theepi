@@ -1,5 +1,7 @@
 window.eoxiaJS.theEPI = {};
 
+window.eoxiaJS.theEPIFrontEnd = {};
+
 window.eoxiaJS.theEPI.core = {};
 
 /**

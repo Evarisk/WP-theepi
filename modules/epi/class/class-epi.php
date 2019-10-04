@@ -173,7 +173,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Appel la vue principale pour afficher le tableau HTML contenant les EPI.
 	 *
 	 * @since   0.2.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param string $term Terme de la recherche. Défault ''.
 	 *
@@ -182,7 +182,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function display( $term = '' ) {
 
 		$page = isset ( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : "all";
-		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "rebut" ){
+		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "repair" && $page != "trash" ){
 			$page = "all";
 		}
 
@@ -214,7 +214,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Récupères la liste des EPI.
 	 *
 	 * @since   0.4.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 *
 	 * @param array  ['offset']    		(integer) Le nombre d'EPI à sauter.
 	 * 				 ['posts_per_page'] (integer) le nombre d'EPI par page.
@@ -246,10 +246,16 @@ class EPI_Class extends \eoxia\Post_Class {
 				'meta_value' => 'KO'
 			);
 			break;
-			case 'REBUT':
+			case 'REPAIR':
 			$temp_args = array(
 				'meta_key' => '_theepi_status_epi',
-				'meta_value' => 'REBUT'
+				'meta_value' => 'repair'
+			);
+			break;
+			case 'TRASH':
+			$temp_args = array(
+				'meta_key' => '_theepi_status_epi',
+				'meta_value' => 'trash'
 			);
 			break;
 			default:
@@ -261,7 +267,6 @@ class EPI_Class extends \eoxia\Post_Class {
 
 		$epis = self::g()->get( $args );
 		$nbr_epis = count( self::g()->get( $temp_args ) );
-
 		$data_epis = array( 'epis' => $epis, 'nbr_epis' => $nbr_epis );
 
 		return $data_epis;
@@ -339,7 +344,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Affiches la liste des EPI.
 	 *
 	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param array  $epis La liste des EPI.
 	 * @param bool   $new  L'état de l'EPI - nouvel EPI = true.
@@ -370,7 +375,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Affiches la vue pagination des EPI.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param integer  $offset     Le nombre d'EPI à sauter.
 	 * @param string   $page       La page de l'EPI.
@@ -385,7 +390,7 @@ class EPI_Class extends \eoxia\Post_Class {
 		$epis = $data_epis['epis'];
 		$nbr_epis = $data_epis['nbr_epis'];
 
-		if ( ( $page == 'ok') || ( $page == 'ko') || ( $page == 'rebut' ) ) {
+		if ( ( $page == 'ok') || ( $page == 'ko') || ( $page == 'trash' ) || ( $page == 'repair' ) ) {
 			$count_epi = $nbr_epis;
 		}else {
 			$count_epi = $pagination_data['count_epi'];
@@ -512,7 +517,8 @@ class EPI_Class extends \eoxia\Post_Class {
 					array(
 						'periodicity'  => $periodicity,
 						'lifetime_epi' => $lifetime,
-						'status_epi'   => 'OK',
+						'status_epi'   => 'KO',
+						'disposal_date' => '01/01/1970'
 					)
 				);
 
@@ -546,17 +552,27 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Récupère le nombre de jour restant avant le prochain contrôle de l'EPI.
 	 *
 	 * @since   0.5.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param array    $epi        Les données de l'EPI.
 	 *
 	 * @return integer $day_rest   retourne le nombre de jour.
 	 */
-
 	public function get_days( $epi ) {
+
 		$day_rest      = 0;
-		$control_date = $epi->data['control_date']['rendered']['mysql'];
-		$time = strtotime( $control_date) - strtotime( 'now' ); // seconde
+		$now = date( 'Y-m-d' );
+		$periodicity = $epi->data['periodicity'];
+		$control_date_epi = $epi->data['control_date']['rendered']['mysql'];
+		$last_control_date = $this->get_last_control_date( $epi );
+
+		if ( $control_date_epi != $last_control_date ) {
+			$control_date_timestamp = strtotime( $last_control_date );
+			$last_control_date = date( 'Y-m-d',  strtotime( '+' . $periodicity . ' days' , $control_date_timestamp ));
+			$time = strtotime( $last_control_date ) - strtotime( $now ); // seconde
+		}else {
+			$time = strtotime( $control_date_epi ) - strtotime( $now ); // seconde
+		}
 
 		if ( $time > 0 ) {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
@@ -643,7 +659,17 @@ class EPI_Class extends \eoxia\Post_Class {
 	// 	}
 	// 	return $audits[ $key_last_control ];
 	// }
-	//
+
+	/**
+	 * Recharge un EPI.
+	 *
+	 * @since   0.6.0
+	 * @version 0.6.0
+	 *
+	 * @param EPI_Model $epi  Les données de l'EPI.
+	 *
+	 * @return view  $view    La vue d'un EPI.
+	 */
 	public function reload_single_epi( $epi ) {
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -654,6 +680,16 @@ class EPI_Class extends \eoxia\Post_Class {
 		return ob_get_clean();
 	}
 
+	/**
+	 * Vérifie les capacitées des utilisateurs.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param string $capabilities  la capacitée à vérifié.
+	 *
+	 * @return bool  True si l'utilisateur possède la capacitée.
+	 */
 	public function check_capabilities( $capabilities ) {
 	    if ( user_can( get_current_user_id(), $capabilities ) ) {
 	        return true;
@@ -665,19 +701,51 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * Récupère le statut d'un EPI.
 	 *
 	 * @since   0.5.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 *
 	 * @param object $epi Les donnée d'un EPI.
 	 *
-	 * @return void
+	 * @return array ['status_epi] le statut de l'EPI.
 	 */
 	public function get_status( $epi ) {
-
-		if ( $epi->data['status_epi'] == 'OK' ) {
-			return true;
+		if ( $epi->data['id'] != 0 ) {
+			if ( $epi->data['disposal_date']['rendered']['date'] == '01/01/1970' ) {
+				$controls = Control_Class::g()->get_controls( $epi );
+				$last_control = Control_Class::g()->last_control_epi( $controls );
+				if ( ! empty( $last_control ) ) {
+					$epi->data['status_epi'] = $last_control->data['status_control'];
+					$epi = $this->update( $epi->data );
+					return $last_control->data['status_control'];
+				}
+				return $epi->data['status_epi'];
+			}else {
+				$epi->data['status_epi'] = 'trash';
+				$epi = $this->update( $epi->data );
+				return $epi->data['status_epi'];
+			}
 		}
+	}
 
-		return false;
+	/**
+	 * Récupère la dernière date de contrôle d'un EPI.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param object $epi Les donnée d'un EPI.
+	 *
+	 * @return array ['control_date] La date de contrôle.
+	 */
+	public function get_last_control_date( $epi ) {
+
+		$controls = Control_Class::g()->get_controls( $epi );
+		if ( ! empty( $controls ) ) {
+			$last_control = Control_Class::g()->last_control_epi( $controls );
+			$last_control_date = date( 'Y-m-d' , strtotime( $last_control->data['date']['rendered']['mysql'] ));
+		}else {
+			$last_control_date = $epi->data['control_date']['rendered']['mysql'];
+		}
+		return $last_control_date;
 	}
 
 }

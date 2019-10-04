@@ -6,7 +6,7 @@
  * @author    Evarisk <dev@evarisk.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -16,19 +16,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="table-row epi-row edit" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
-	<div class="table-cell table-100" style="text-align: center;" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
+	<div class="table-cell table-75" style="text-align: center;" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<span style="color: grey;"><i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?></span></br>
 	</div>
 
 	<div class="table-cell table-100">
 		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
+		<style>
+		.media {
+			width: 80px;
+			height: 80px;
+		}
+		.default-icon-container {
+			height: 80px;
+		}
+		.default-image{
+			margin-top: 25px;
+			font-size: 25px;
+		}
+		</style>
 	</div>
 
-	<div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>"> </br>
-		<div class="wpeo-form" style="margin-bottom: 20px;">
+	<div class="table-cell table-75" style="text-align: center;" data-title="<?php echo esc_attr_e( 'Quantity', 'theepi' ); ?>">
+		<div class="wpeo-form">
 			<div class="form-element">
 				<label class="form-field-container">
-					<input class="form-field" type="text" name="title" value="<?php echo esc_attr( $epi->data['title'] ); ?>" />
+					<input class="form-field" type="number" name="quantity" value="<?php echo esc_attr( $epi->data['quantity'] ); ?>" />
 				</label>
 			</div>
 		</div>
@@ -45,29 +58,35 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-50"></div>
+	<div class="table-cell table-75"></div>
+
+	<div class="table-cell" style="max-width:375px;" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>"> </br>
+		<div class="wpeo-form" style="margin-bottom: 20px;">
+			<div class="form-element">
+				<label class="form-field-container">
+					<input class="form-field" type="text" name="title" value="<?php echo esc_attr( $epi->data['title'] ); ?>" />
+				</label>
+			</div>
+		</div>
+	</div>
+
+	<div class="table-cell table-200"></div>
 
 	<div class="table-cell table-150"></div>
-
-	<div class="table-cell table-250"></div>
-
-	<div class="table-cell table-100"></div>
 
 	<div class="table-cell table-150" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
 		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
 			<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
-		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "rebut" ) ) : ?>
-			<i class="fas fa-trash fa-4x" style="color: blue;"></i>
+		<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "repair" ) ) : ?>
+			<i class="fas fa-tools fa-4x" style="color: orange;"></i>
+		<?php elseif ( ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "trash" ) ) ) : ?>
+			<i class="fas fa-trash fa-4x" style="color: black;"></i>
 		<?php else : ?>
 			<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>
 		<?php endif; ?>
 	</div>
 
-	<div class="table-cell table-150"></div>
-
-	<div class="table-cell table-150"></div>
-
-	<div class="table-cell table-end">
+	<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>">
 		<div class="wpeo-button wpeo-tooltip-event button-green button-progress button-square-50 edit button-save-epi"
 			aria-label="<?php esc_html_e( 'Save EPI', 'theepi' ); ?>"
 			data-parent="epi-row"
@@ -76,13 +95,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 			<span class="button-icon fas fa-save"></span>
 		</div>
-
-		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 epi-item-link-cancel action-attribute"
-			aria-label="<?php esc_html_e( 'Cancel EPI', 'theepi' ); ?>"
-			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-			data-action="cancel_edit_epi"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'cancel_edit_epi' ) ); ?>">
-			<i class="fas fa-undo-alt"></i>
-	  	</div>
 	</div>
 </div>

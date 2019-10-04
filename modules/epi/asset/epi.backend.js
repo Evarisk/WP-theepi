@@ -11,28 +11,45 @@ window.eoxiaJS.theEPI.EPI.init = function() {
 };
 
 window.eoxiaJS.theEPI.EPI.event = function() {
-	jQuery( document ).on( 'keyup', '.wrap-theepi .wpeo-table.epi .epi-row input[name="periodicity"]', window.eoxiaJS.theEPI.EPI.activeSaveButton );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .edit .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-tab.epi .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
 	jQuery( document ).on( 'click', '.wrap-theepi .action-request-edit-epi', window.eoxiaJS.theEPI.EPI.requestEpiEdit );
+	jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.addEpiWithKeybord );
+	jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord );
 
 };
 
 /**
- * Vérifie si le format du champ est bien numérique.
- * Si c'est le cas:
- * -Et que la popover est ouverte, la supprimes.
- * -Et rend le bouton ".add" active.
+ * Ajout d'un EPI en appuyant sur ctrl + enter.
  *
- * @since 0.1.0
- * @version 0.4.0
+ * @since 0.7.0
+ * @version 0.7.0
  *
- * @param  {KeyboardEvent} event L'état du clavier.
+ * @param  {KeyboardEvent} event L'état du clavier [ctrl+enter].
  *
  * @return {void}
  */
-window.eoxiaJS.theEPI.EPI.activeSaveButton = function( event ) {
+window.eoxiaJS.theEPI.EPI.addEpiWithKeybord = function( event ) {
+	if ( event.ctrlKey && 13 === event.keyCode ) {
+		jQuery( this ).find( '.wrap-theepi' ).find( '.event-keybord' ).click();
+	}
+};
 
+/**
+ * Annule la création ou la modification d'un EPI en appuyant sur la touche echap.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {KeyboardEvent} event L'état du clavier [echap].
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord = function( event ) {
+	if ( 27 === event.keyCode ) {
+		jQuery( this ).find('.table-row.epi-row.edit').remove();
+		jQuery( this ).find('.epi-row.service.main').remove();
+	}
 };
 
 /**
@@ -105,13 +122,7 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
 window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response ) {
 	var parent_element = triggeredElement.closest( '.wpeo-table' ).find( '.service' );
 	var parent_element_edit = triggeredElement.closest( '.wpeo-table' ).find( '.edit' );
-	// for ( i = 0; i < response.data.error.length; ++i ) {
-	// 	var input_element = parent_element.find( '.form-field[name="' + response.data.error.[i] + '"]');
-	// 	input_element.closest( '.form-element' ).find( '.error' ).html( response.data.error.error[i] );
-	// 	var input_element_edit = parent_element_edit.find( '.form-field[name="' + response.data.error.element[i] + '"]');
-	// 	input_element_edit.closest( '.table-cell' ).find( '.error' ).html( response.data.error.error[i] );
-	// }
-	//
+
 	jQuery.each( response.data.error, function( key, value ) {
 		var input_element = parent_element.find( '.form-field[name="' + value.element + '"]');
 	  	input_element.closest( '.form-element' ).find( '.error' ).html( value.error);
@@ -197,7 +208,6 @@ window.eoxiaJS.theEPI.EPI.loadedMoreEPISuccess = function( triggeredElement, res
 	var element   = jQuery( response.data.view );
 	jQuery( '.wrap-theepi .wpeo-table.table-flex.epi .tab-container' ).html(element);
 	var page = triggeredElement.closest( '.wpeo-pagination.epi' ).replaceWith( response.data.view_pagination );
-
 };
 
 /**
@@ -293,7 +303,7 @@ window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, resp
  * Récupère les données d'un EPI et déclenche l'action AJAX save_epi.
  *
  * @since 0.6.0
- * @version 0.6.0
+ * @version 0.7.0
  *
  * @param  {ClickEvent} event [save]
  *
@@ -301,47 +311,54 @@ window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, resp
  */
 window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 	var id = jQuery( this ).attr( 'data-id' );
-	var fieldset_element    = jQuery( this ).closest( '.wpeo-table' ).find( '.service[ data-id="' + id + '"]' );
+	var service_element    = jQuery( this ).closest( '.wpeo-table' ).find( '.service[ data-id="' + id + '"]' );
 	var action              = jQuery( this ).attr( 'data-action' );
 	var nonce               = jQuery( this ).attr( 'data-nonce' );
 
-	var title               = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="title"]' ).val();
 	var serial_number       = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="serial_number"]' ).val();
+	var title               = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="title"]' ).val();
 
-	var commissioning_date  = fieldset_element.find( '.mysql-date[name="commissioning-date"]' ).val();
-	var maker               = fieldset_element.find( '.form-field[name="maker"]' ).val();
-	var seller              = fieldset_element.find( '.form-field[name="seller"]' ).val();
-	var manager             = fieldset_element.find( '.form-field[name="manager"]' ).val();
-	var reference           = fieldset_element.find( '.form-field[name="reference"]' ).val();
-	var lifetime            = fieldset_element.find( '.form-field[name="lifetime"]' ).val();
-	var periodicity         = fieldset_element.find( '.form-field[name="periodicity"]' ).val();
-	var manufacture_date    = fieldset_element.find( '.mysql-date[name="manufacture-date"]' ).val();
-	var purchase_date       = fieldset_element.find( '.mysql-date[name="purchase-date"]' ).val();
-	var control_date        = fieldset_element.find( '.form-label[name="control-date"]' ).attr( 'value' );
-	var end_life_date       = fieldset_element.find( '.form-label[name="end-life-date"]' ).attr( 'value' );
-	var disposal_date       = fieldset_element.find( '.form-label[name="disposal-date"]' ).attr( 'value' );
+	var toggle_lifetime     = service_element.find( '.button-toggle-lifetime' ).attr( 'data-value' );
+	var manufacture_date    = service_element.find( '.mysql-date[name="manufacture-date"]' ).val();
+	var lifetime            = service_element.find( '.form-field[name="lifetime"]' ).val();
+	var end_life_date       = service_element.find( '.mysql-date[name="end-life-date"]' ).val();
+	var disposal_date       = service_element.find( '.mysql-date[name="disposal-date"]' ).val();
 
+	var purchase_date       = service_element.find( '.mysql-date[name="purchase-date"]' ).val();
+	var commissioning_date  = service_element.find( '.mysql-date[name="commissioning-date"]' ).val();
+	var periodicity         = service_element.find( '.form-field[name="periodicity"]' ).val();
+	var control_date        = service_element.find( '.mysql-date[name="control-date"]' ).val();
+
+	var maker               = service_element.find( '.form-field[name="maker"]' ).val();
+	var seller              = service_element.find( '.form-field[name="seller"]' ).val();
+	var manager             = service_element.find( '.form-field[name="manager"]' ).val();
+	var reference           = service_element.find( '.form-field[name="reference"]' ).val();
+	var url_notice          = service_element.find( '.form-field[name="url-notice"]' ).val();
 
 	var data = {
 		action: action,
 		_wpnonce: nonce,
 		id: id,
 
-		title: title,
 		serial_number: serial_number,
+		title: title,
+
+		toggle_lifetime: toggle_lifetime,
+		manufacture_date: manufacture_date,
+		lifetime: lifetime,
+		end_life_date: end_life_date,
+		disposal_date: disposal_date,
+
+		purchase_date: purchase_date,
 		commissioning_date: commissioning_date,
+		periodicity: periodicity,
+		control_date: control_date,
 
 		maker: maker,
 		seller: seller,
 		manager: manager,
 		reference: reference,
-		lifetime: lifetime,
-		periodicity: periodicity,
-		manufacture_date: manufacture_date,
-		purchase_date: purchase_date,
-		control_date: control_date,
-		end_life_date: end_life_date,
-		disposal_date: disposal_date
+		url_notice: url_notice,
 
 	};
 
@@ -426,52 +443,4 @@ window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
  */
 window.eoxiaJS.theEPI.EPI.openQrCode = function( triggeredElement, response ){
 	triggeredElement.closest( '.table-row' ).append( response.data.view );
-
-};
-
-/**
- * Récupère l'état du bouton toggle.
- *
- * @since 0.5.0
- * @version 0.5.0
- *
- * @param  {ClickEvent} event [t]
- *
- * @return {void}
- */
-window.eoxiaJS.theEPI.control.buttonToggle = function( event ) {
-
-	var toggleON = jQuery( this ).hasClass( 'fa-toggle-on' );
-	var nextStep = '';
-	if (toggleON) {
-
-		nextStep = 'KO';
-		jQuery( this ).removeClass( "fa-toggle-on" ).addClass( "fa-toggle-off" );
-		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'KO' );
-		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
-		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : black; font-weight : bold' });
-
-	} else {
-
-		nextStep = 'OK';
-		jQuery( this ).removeClass( "fa-toggle-off" ).addClass( "fa-toggle-on" );
-		jQuery( this ).closest( '.modal-container' ).find( '.modal-footer' ).find( '.wpeo-button' ).attr('data-status-epi', 'OK' );
-		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
-		jQuery( this ).closest( ".button-toggle-modal-headear" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
-
-	}
-
-	var id = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-id' );
-	var action = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-action' );
-	var nonce = jQuery( this ).closest( '.button-toggle-modal-headear' ).attr( 'data-nonce' );
-	var data = {
-		action: action,
-		_wpnonce: nonce,
-		id: id,
-		next_step: nextStep
-	};
-
-	window.eoxiaJS.loader.display( jQuery( this ).closest( '.button-toggle-modal-headear' ) );
-	window.eoxiaJS.request.send( jQuery( this ), data );
-
 };

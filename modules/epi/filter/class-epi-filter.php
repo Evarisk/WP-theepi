@@ -35,7 +35,6 @@ class EPI_Filter {
 		add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
 		add_filter( 'the_content', array( $this, 'callback_display_epi' ), 10, 2 );
 		add_filter( "eo_model_{$current_type}_register_post_type_args", array( $this, 'custom_init_post_type'), 20, 2 );
-
 	}
 
 	/**
@@ -61,17 +60,14 @@ class EPI_Filter {
 	/**
 	 * Sauvegardes les options de l'écran.
 	 *
-	 * @since   0.2.0
-	 * @version 0.3.0
+	 * @since   0.7.0
+	 * @version 0.7.0
 	 *
-	 * @param mixed  $status J'sais pas.
-	 * @param string $option Le nom de l'option.
-	 * @param string $value  La valeur de l'option.
+	 * @param view  Le contenu da la page en frontend.
 	 *
-	 * @return mixed $status J'sais pas.
+	 * @return view $content Le nouveau contenu da la page en frontend.
 	 */
 	public function callback_display_epi( $content ) {
-
 		global $post;
 		if ( $post->post_type == 'theepi-epi'){
 			$id = $post->ID;
@@ -132,6 +128,16 @@ class EPI_Filter {
 		return $object;
 	}
 
+	/**
+	 * Filtre pour accéder au post de l'EPI grâce au qrcode.
+	 *
+	 * @since   0.6.0
+	 * @version 0.6.0
+	 *
+	 * @param array  $args les données d'un Post.
+	 *
+	 * @return array $return Les données du Post EPI modifié.
+	 */
 	public function custom_init_post_type( $args ) {
 		$current_type = EPI_Class::g()->get_type();
 		$new_args = array( 'public' => true, 'show_in_menu' => false );

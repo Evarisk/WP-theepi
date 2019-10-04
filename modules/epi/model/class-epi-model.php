@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -25,7 +25,7 @@ class EPI_Model extends \eoxia\Post_Model {
 	 * Construct
 	 *
 	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param EPI_Class $object     Les données  de l'epi.
 	 * @param string    $req_method La méthode de la requête.
@@ -244,9 +244,34 @@ class EPI_Model extends \eoxia\Post_Model {
 		   ),
 	   );
 
+	   $this->schema['url_notice'] = array(
+		   'type'        => 'string',
+		   'meta_type'   => 'single',
+		   'field'       => '_theepi_url_notice',
+		   'description' => 'Is the url notice of the EPI.',
+		   'since'       => '0.7.0',
+		   'version'     => '0.7.0',
+	   );
 
+	   $this->schema['toggle_lifetime'] = array(
+		   'type'        => 'string',
+		   'meta_type'   => 'single',
+		   'field'       => '_theepi_toggle_lifetime',
+		   'description' => 'Is the toggle button lifetime of the EPI. Value can be "YES" or "NO".',
+		   'since'       => '0.7.0',
+		   'version'     => '0.7.0',
+		   'default'     => 'YES'
+	   );
 
-
+	   $this->schema['quantity'] = array(
+		   'type'        => 'integer',
+		   'meta_type'   => 'single',
+		   'field'       => '_theepi_quantity',
+		   'description' => 'Is the quantity of the EPI.',
+		   'since'       => '0.7.0',
+		   'version'     => '0.7.0',
+		   'default'     => 1
+	   );
 
 		parent::__construct( $object, $req_method );
 	}

@@ -1,28 +1,11 @@
 <?php
 /**
- * La vue principale de la page "EPI".
+ * La vue single d'un contrôle.
  *
  * @package   TheEPI
- * @author    Jimmy Latour <jimmy@evarisk.com>
- * @copyright 2017 Evarisk
- * @since     0.1.0
- * @version   0.7.0
- */
-
-namespace theepi;
-
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-} ?>
-
-<?php
-/**
- * La vue principale de la page "EPI".
- *
- * @package   TheEPI
- * @author    Evarisk <dev@evarisk.com>
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.1.0
+ * @since     0.7.0
  * @version   0.7.0
  */
 
@@ -35,23 +18,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="table-row epi-single-control-row view" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<ul style="display : flex">
 		<li>
-			<span>#<?php echo esc_attr( $control->data['id'] ); ?></span> </br>
+			<span style="text-align: center;">#<?php echo esc_attr( $control->data['id'] ); ?></span> </br>
 		</li>
 
 		<li>
-			<span> <?php echo do_shortcode( '[theepi_avatar ids="' . $control->data['author_id'] . '" size="40"]' ); ?> </span>
+			<span> <?php echo do_shortcode( '[theepi_avatar ids="' . $control->data['author_id'] . '" size="60"]' ); ?> </span>
 		</li>
 
 		<li>
-			<span> <i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['control_date']['rendered']['date'] ); ?> </span>
+			<span style="text-align: center;" > <i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['control_date']['rendered']['date'] ); ?> </span>
 		</li>
 
 		<li>
-			<?php echo esc_attr( $control->data['comment'] ); ?>
+			<span style="text-align: center;" > <?php echo esc_attr( $control->data['comment'] ); ?> </span>
 		</li>
 
 		<li>
-			<?php if ( esc_attr( $control->data['url'] ) != "" ): ?>
+			<?php if ( esc_attr( $control->data['url'] ) != "No url" ): ?>
 				<?php echo esc_attr( $control->data['url'] ); ?>
 				<a class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded"
 					href="<?php echo esc_attr( $control->data['url'] ); ?>"
@@ -59,13 +42,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 					aria-label="<?php esc_html_e( 'Display Url File', 'theepi' ); ?>">
 					<i class="fas fa-copy"></i>
 				</a>
+			<?php else: ?>
+				<?php echo esc_attr( $control->data['url'] ); ?>
 			<?php endif; ?>
 		</li>
 
 		<li>
-			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded action-attribute">
-				<?php echo Control_Class::g()->get_media( $control->data['id'] ) ?>
-			</div>
+			<span> <?php echo Control_Class::g()->get_media( $control->data['id'] ) ?> </span>
 		</li>
 
 		<li>

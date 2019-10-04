@@ -119,34 +119,41 @@ class EPI_Action {
 	 * Sauvegardes un EPI.
 	 *
 	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function callback_save_epi() {
 		check_ajax_referer( 'save_epi' );
 
-		//DONNEE EPI
+		//DONNEES EPI
 		$id                 = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		$image_id           = ! empty( $_POST['image'] ) ? (int) $_POST['image'] : 0;
+		$quantity         	= ! empty( $_POST['quantity'] ) ? (int) $_POST['quantity'] : 1;
 		$title              = ! empty( $_POST['title'] ) ? sanitize_text_field( $_POST['title'] ) : esc_html__( 'New PPE', 'theepi' );
-		$serial_number      = ! empty( $_POST['serial_number'] ) ? sanitize_text_field( $_POST['serial_number'] ) : esc_html__( 'undefined', 'theepi' );
-		$commissioning_date = ! empty( $_POST['commissioning_date'] ) ? sanitize_text_field( $_POST['commissioning_date'] ) : esc_html__( '', 'theepi' );
-		$last_control       = ! empty( $_POST['last_control'] ) ? sanitize_text_field( $_POST['last_control'] ) : esc_html__( 'No control', 'theepi' );
-		$status_epi         = ! empty( $_POST['status_epi'] ) ? sanitize_text_field( $_POST['status_epi'] ) : esc_html__( 'OK', 'theepi' );
+		$serial_number      = ! empty( $_POST['serial_number'] ) ? sanitize_text_field( $_POST['serial_number'] ) : '';
+		//$last_control       = ! empty( $_POST['last_control'] ) ? sanitize_text_field( $_POST['last_control'] ) : esc_html__( 'No control', 'theepi' );
+		$status_epi         = ! empty( $_POST['status_epi'] ) ? sanitize_text_field( $_POST['status_epi'] ) : 'OK';
 
-		//DONNEE MISE EN SERVICE EPI
-		$maker              = ! empty( $_POST['maker'] ) ? sanitize_text_field( $_POST['maker'] ) : esc_html__( 'undefined', 'theepi' );
-		$seller             = ! empty( $_POST['seller'] ) ? sanitize_text_field( $_POST['seller'] ) : esc_html__( 'undefined', 'theepi' );
-		$manager            = ! empty( $_POST['manager'] ) ? sanitize_text_field( $_POST['manager'] ) : esc_html__( 'undefined', 'theepi' );
-		$reference          = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : esc_html__( 'undefined', 'theepi' );
-		$lifetime           = ! empty( $_POST['lifetime'] ) ? (int)( $_POST['lifetime'] ) : get_option( EPI_Class::g()->option_name_default_data_lifetime );
-		$periodicity        = ! empty( $_POST['periodicity'] ) ? (int)( $_POST['periodicity'] ) : get_option( EPI_Class::g()->option_name_default_data_periodicity );
+		//DONNEES DATES EPI
+		$toggle_lifetime    = ! empty( $_POST['toggle_lifetime'] ) ? sanitize_text_field( $_POST['toggle_lifetime'] ) : 'YES';
 		$manufacture_date   = ! empty( $_POST['manufacture_date'] ) ? sanitize_text_field( $_POST['manufacture_date'] ) : '';
-		$purchase_date      = ! empty( $_POST['purchase_date'] ) ? sanitize_text_field( $_POST['purchase_date'] ) : '';
-		$control_date       = ! empty( $_POST['control_date'] ) ? sanitize_text_field( $_POST['control_date'] ) : '';
+		$lifetime           = ! empty( $_POST['lifetime'] ) ? (int)( $_POST['lifetime'] ) : get_option( EPI_Class::g()->option_name_default_data_lifetime );
 		$end_life_date      = ! empty( $_POST['end_life_date'] ) ? sanitize_text_field( $_POST['end_life_date'] ) : '';
 		$disposal_date      = ! empty( $_POST['disposal_date'] ) ? sanitize_text_field( $_POST['disposal_date'] ) : '';
+
+		//DONNEES FICHE DE VIE EPI
+		$purchase_date      = ! empty( $_POST['purchase_date'] ) ? sanitize_text_field( $_POST['purchase_date'] ) : '';
+		$commissioning_date = ! empty( $_POST['commissioning_date'] ) ? sanitize_text_field( $_POST['commissioning_date'] ) : '';
+		$periodicity        = ! empty( $_POST['periodicity'] ) ? (int)( $_POST['periodicity'] ) : get_option( EPI_Class::g()->option_name_default_data_periodicity );
+		$control_date       = ! empty( $_POST['control_date'] ) ? sanitize_text_field( $_POST['control_date'] ) : '';
+
+		//DONNEES ADDITIONNELLES
+		$maker              = ! empty( $_POST['maker'] ) ? sanitize_text_field( $_POST['maker'] ) : '';
+		$seller             = ! empty( $_POST['seller'] ) ? sanitize_text_field( $_POST['seller'] ) : '';
+		$manager            = ! empty( $_POST['manager'] ) ? sanitize_text_field( $_POST['manager'] ) : '';
+		$reference          = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : '';
+		$url_notice         = ! empty( $_POST['url_notice'] ) ? sanitize_text_field( $_POST['url_notice'] ) : '';
 
 		if ( empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) && empty( $lifetime ) ) {
 			$lifetime = 0;
@@ -173,38 +180,56 @@ class EPI_Action {
 
 		$end_life_date = Service_Class::g()->calcul_end_life_date( $manufacture_date, $lifetime );
 		$control_date = Service_Class::g()->calcul_control_date( $commissioning_date, $periodicity );
-		$disposal_date = Service_Class::g()->calcul_disposal_date( $end_life_date );
+		//$disposal_date = Service_Class::g()->calcul_disposal_date( $end_life_date );
 
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 		unset( $epi->data['author_id'] );
 
+
 		$update_epi = array(
+			'post_status'              => 'publish',
+
 			'image_id'                 => $image_id,
 			'title'                    => $title,
+			'quantity'                   => $quantity,
 			'serial_number'            => $serial_number,
+			//'last_control'             => $last_control,
+			'status_epi'               => $status_epi,
+
+			'toggle_lifetime'          => $toggle_lifetime,
+			'manufacture_date'         => date ( 'Y-m-d' , $manufacture_date ),
+			'manufacture_date_valid'   => $manufacture_date != "" ? 1 : 0,
+			'lifetime_epi'             => $lifetime,
+			'end_life_date'            => date ( 'Y-m-d' , $end_life_date ),
+
+			'purchase_date'            => date ( 'Y-m-d' , $purchase_date ),
+			'purchase_date_valid'      => $purchase_date != "" ? 1 : 0,
 			'commissioning_date'       => date ( 'Y-m-d' , $commissioning_date ),
 			'commissioning_date_valid' => $commissioning_date != "" ? 1 : 0,
-			'last_control'             => $last_control,
-			'status_epi'               => $status_epi,
+			'periodicity'              => $periodicity,
+			'control_date'             => date ( 'Y-m-d' , $control_date ),
 
 			'maker'                    => $maker,
 			'seller'                   => $seller,
 			'manager'                  => $manager,
 			'reference'                => $reference,
-			'lifetime_epi'             => $lifetime,
-			'periodicity'              => $periodicity,
-			'manufacture_date'         => date ( 'Y-m-d' , $manufacture_date ),
-			'manufacture_date_valid'   => $manufacture_date != "" ? 1 : 0,
-			'purchase_date'            => date ( 'Y-m-d' , $purchase_date ),
-			'purchase_date_valid'      => $purchase_date != "" ? 1 : 0,
-			'control_date'             => date ( 'Y-m-d' , $control_date ),
-			'end_life_date'            => date ( 'Y-m-d' , $end_life_date ),
-			'disposal_date'            => date ( 'Y-m-d' , $disposal_date ),
-
-			'post_status'              => 'publish',
+			'url_notice'               => $url_notice,
 		);
 
-		$date_valid = Service_Class::g()->check_date_epi( $update_epi );
+		if ( ! empty( $disposal_date ) || $disposal_date != "" ) {
+			$update_epi['disposal_date'] = $disposal_date;
+		}else {
+			$update_epi['disposal_date'] = date( 'Y-m-d', strtotime( 0 ) );
+		}
+
+		if ( $toggle_lifetime == 'NO') {
+			unset( $update_epi['lifetime_epi'] );
+			unset( $update_epi['end_life_date'] );
+			$date_valid['success'] = true;
+		} else {
+			$date_valid = Service_Class::g()->check_date_epi( $update_epi );
+		}
+
 		$view = "";
 
 		if( $date_valid['success'] ){
@@ -233,7 +258,7 @@ class EPI_Action {
 	 * @return void
 	 *
 	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 */
 	public function callback_delete_epi() {
 		check_ajax_referer( 'delete_epi' );
@@ -276,7 +301,7 @@ class EPI_Action {
 	 * @return void
 	 *
 	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 */
 	public function callback_edit_epi() {
 		check_ajax_referer( 'edit_epi' );
@@ -557,7 +582,7 @@ class EPI_Action {
 	}
 
 	/**
-	 * Met la recherche à 0.
+	 * Affiche la vue modal du qrcode.
 	 *
 	 * @since   0.7.0
 	 * @version 0.7.0
@@ -591,14 +616,15 @@ class EPI_Action {
 		);
 	}
 
-	public function callback_control_epi_without_task_manager() {
-		check_ajax_referer( 'control_epi_without_task_manager' );
-
-		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
-		$epi = EPI_Class::g()->get( array( 'id' => $id ) , true );
-
-		do_shortcode( '[theepi_comment id="' . $epi->data['id'] . '" namespace="theepi" type="EPI_Comment" display="view"]' );
-	}
+	//VERSION 2 TASK-MANAGER
+	// public function callback_control_epi_without_task_manager() {
+	// 	check_ajax_referer( 'control_epi_without_task_manager' );
+	//
+	// 	$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
+	// 	$epi = EPI_Class::g()->get( array( 'id' => $id ) , true );
+	//
+	// 	do_shortcode( '[theepi_comment id="' . $epi->data['id'] . '" namespace="theepi" type="EPI_Comment" display="view"]' );
+	// }
 
 }
 

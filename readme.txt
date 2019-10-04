@@ -41,6 +41,28 @@ The installation of the plugin can be done in two ways:
 
 == Changelog ==
 
+= Version 0.7.0 =
+
+* 13873 - CTRL + entrée pour ajouter un EPI.
+* 13917	- Ajout du trie des EPIS par statut.
+* 35453	- Mise à jour du framework.
+* 35456	- Première version Gestion des lots.
+* 35458-  Refonte du système de contrôle sans task-manager.
+* 35459	- ajout de champs en mode édition d'un EPI (lien vers la notice d'un EPI, date de mise au rebut).
+* 35460	- Calcul instantanée des dates.
+* 35461	- Refonte graphique mineur de l'affichage des EPIS.
+* 35463	- Ajout d'une page de front des EPIS.
+* 35462 - Ajout bouton toggle durée de vie + fonctionnement.
+* 35509	- Gestion du champ date de mise au rebut.
+* 35511	- Calcul du prochain contrôle.
+* 35546	- Echap pour annuler la création ou la modification d'un EPI.
+* 35547	- Résolu Bug Actualisation sur l'EPI après la saisie d'un contrôle.
+* 35570	- Ajout de fonctionnalité dans les réglages de theEPI.
+
+
+* 34418 - Correction de bug diverse sur la création/modification.
+* 34419 - Correction de bug diverse sur les données par défauts.
+
 = Version 0.6.0 =
 
 * 34412 - Refonte graphique mineur sur le lien effectuée un contrôle et sur le design de la case contrôle.

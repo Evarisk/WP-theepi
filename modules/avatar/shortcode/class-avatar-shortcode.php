@@ -1,11 +1,12 @@
 <?php
 /**
- * Gestion des shortcodes des avatars
+ * Gestion des shortcodes des avatars.
  *
- * @since 1.3.4
- * @version 1.6.0
- * @package Task_Manager
- * @subpackage avatar
+ * @package   TheEPI
+ * @author    Nicolas Domenech <nicolas@eoxia.com>
+ * @copyright 2019 Evarisk
+ * @since     0.7.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -15,23 +16,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gestion des avatars
+ * Gestion des avatars.
  */
 class Avatar_Shortcode {
 
 	/**
-	 * Déclaration des shortcodes pour les avatars des utilisateurs
+	 * Déclaration des shortcodes pour les avatars des utilisateurs.
 	 */
 	public function __construct() {
 		add_shortcode( 'theepi_avatar', array( $this, 'callback_theepi_avatar' ), 10, 1 );
 	}
 
 	/**
-	 * Définition du callback pour l'affichage des avatars des utilisateurs
+	 * Définition du callback pour l'affichage des avatars des utilisateurs.
 	 *
-	 * @param  array $param Les paramètres passés au shortcode.
+	 * @param  array   $param Les paramètres passés au shortcode.
 	 *
-	 * @return string       L'affichage de l'avater correspondant aux paramètres demandés.
+	 * @return string  L'affichage de l'avater correspondant aux paramètres demandés.
 	 */
 	public function callback_theepi_avatar( $param ) {
 		$param = shortcode_atts(

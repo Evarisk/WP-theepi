@@ -1,11 +1,11 @@
 <?php
 /**
- * Handle EPI Actions like save, delete, create_mass_epi.
+ * Handle Contrôle EPI : Actions - Display, Edit, Save, Delete etc.
  *
  * @package   TheEPI
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.1.0
+ * @since     0.7.0
  * @version   0.7.0
  */
 
@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Gères toutes les actions des EPI.
+ * Gères toutes les actions des Contrôle d'un EPI.
  */
 class Control_Action {
 
@@ -24,7 +24,7 @@ class Control_Action {
 	/**
 	 * Le constructeur.
 	 *
-	 * @since   0.1.0
+	 * @since   0.7.0
 	 * @version 0.7.0
 	 */
 	public function __construct() {
@@ -37,11 +37,19 @@ class Control_Action {
 
 	}
 
+	/**
+	 * Affiche la liste des contrôles d'un EPI.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
 	public function callback_display_control() {
 		check_ajax_referer( 'display_control' );
-
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+		$frontend = ( isset( $_POST['frontend'] ) && ( $_POST['frontend']  == "true" ) ) ? $_POST['frontend'] == true : false;
 
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -50,13 +58,16 @@ class Control_Action {
 			'modal',
 			array(
 				'epi' => $epi,
+				'frontend' => $frontend,
 			)
 		);
 		$view = ob_get_clean();
 
+		$namespace = Control_Class::g()->frontend( $frontend );
+
 		wp_send_json_success(
 			array(
-				'namespace'          => 'theEPI',
+				'namespace'          => $namespace,
 				'module'             => 'control',
 				'callback_success'   => 'displayControlSuccess',
 				'view'               => $view
@@ -66,9 +77,9 @@ class Control_Action {
 	}
 
 	/**
-	 * Affiche un EPI lors de sa création.
+	 * Affiche la vue Edition d'un contrôle.
 	 *
-	 * @since   0.5.0
+	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
 	 * @return void
@@ -80,7 +91,7 @@ class Control_Action {
 		$parent_id = ! empty( $_POST['parent_id'] ) ? (int) $_POST['parent_id'] : 0;
 
 		if( ! $parent_id && ! $id ){
-			wp_send_json_error( 'Nico la vie de ma mere tu pues la mort ' );
+			wp_send_json_error();
 		}
 
 		if ( $id == 0 ) {
@@ -114,12 +125,19 @@ class Control_Action {
 		);
 	}
 
+	/**
+	 * Sauvegarde les données du contrôle.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
 	public function callback_save_control_epi() {
 		check_ajax_referer('save_control_epi');
 
 		$id             = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		$parent_id      = ! empty( $_POST['parent-id'] ) ? (int) $_POST['parent-id'] : 0;
-		$media_id       = ! empty( $_POST['thumbnail_id'] ) ? (int) $_POST['thumbnail_id'] : 0;
 		$control_date   = ! empty( $_POST['control-date'] ) ? sanitize_text_field( $_POST['control-date'] ) : esc_html__( '', 'theepi' );
 		$comment        = ! empty( $_POST['comment'] ) ? sanitize_text_field( $_POST['comment'] ) : esc_html__( 'No comment', 'theepi' );
 		$url            = ! empty( $_POST['url'] ) ? sanitize_text_field( $_POST['url'] ) : 'No url';
@@ -140,36 +158,36 @@ class Control_Action {
 
 		);
 
-		//$date_valid = Service_Class::g()->check_date_epi( $update_control );
-		$view = "";
-		$control->data[ 'associated_document_id' ][ 'media' ][] = $media_id;
 		$control->data = wp_parse_args( $update_control, $control->data );
 		$control = Control_Class::g()->update( $control->data );
-
 		$epi = EPI_Class::g()->get( array( 'id' => $control->data[ 'parent_id' ] ) , true );
 
 		ob_start();
-		Control_Class::g()->display_modal_content( $epi );
+		Control_Class::g()->display_modal_content( $epi, $frontend = false );
 		$view = ob_get_clean();
+
+		$view_epi = EPI_Class::g()->reload_single_epi( $epi );
 
 		wp_send_json_success(
 			array(
 				'namespace'         => 'theEPI',
 				'module'            => 'control',
 				'callback_success'  => 'savedControlSuccess',
+				'parent_id'         => $parent_id,
 				'view'     		    => $view,
+				'view_epi'          => $view_epi,
 			)
 		);
 
 	}
 
 	/**
-	 * Annule le mode édition d'un EPI.
+	 * Annule le mode édition d'un contrôle.
 	 *
 	 * @return void
 	 *
-	 * @since   0.1.0
-	 * @version 0.5.0
+	 * @since   0.7.0
+	 * @version 0.7.0
 	 */
 	public function callback_cancel_edit_control_epi() {
 		check_ajax_referer( 'cancel_edit_control_epi' );
@@ -185,6 +203,7 @@ class Control_Action {
 			\eoxia\View_Util::exec(
 				'theepi', 'control', 'item', array(
 					'control' => $control,
+					'frontend' => false,
 				)
 			);
 		}
@@ -199,6 +218,14 @@ class Control_Action {
 		);
 	}
 
+	/**
+	 * Supprime un contrôle.
+	 *
+	 * @return void
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 */
 	public function callback_delete_control_epi() {
 		check_ajax_referer( 'delete_control_epi' );
 
@@ -210,27 +237,26 @@ class Control_Action {
 
 		$epi = Control_Class::g()->delete( $id );
 
-		// wp_send_json_success(
-		// 	array(
-		// 		'namespace'        => 'theEPI',
-		// 		'module'           => 'control',
-		// 		'callback_success' => 'deletedControlEpiSuccess',
-		// 	)
-		// );
-
-
-		ob_start();
-		Control_Class::g()->display_modal_content( $epi );
-		$view = ob_get_clean();
-
 		wp_send_json_success(
 			array(
-				'namespace'         => 'theEPI',
-				'module'            => 'control',
-				'callback_success'  => 'savedControlSuccess',
-				'view'     		    => $view,
+				'namespace'        => 'theEPI',
+				'module'           => 'control',
+				'callback_success' => 'deletedControlEpiSuccess',
 			)
 		);
+
+		// ob_start();
+		// Control_Class::g()->display_modal_content( $epi, $frontend = false );
+		// $view = ob_get_clean();
+		//
+		// wp_send_json_success(
+		// 	array(
+		// 		'namespace'         => 'theEPI',
+		// 		'module'            => 'control',
+		// 		'callback_success'  => 'savedControlSuccess',
+		// 		'view'     		    => $view,
+		// 	)
+		// );
 
 	}
 }

@@ -198,13 +198,10 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	}
 
 	/**
-	 * Enregistres les données par défaut.
+	 * Enregistres les données par défaut de la gestion des capacités.
 	 *
 	 * @since   0.7.0
 	 * @version 0.7.0
-	 *
-	 * @param integer $default_periodicity La périodicité de contrôle d'un EPI par défaut.
-	 * @param integer $default_lifetime    La durée de vie d'un EPI par défaut.
 	 *
 	 * @return bool  True si tout s'est bien passé.
 	 */

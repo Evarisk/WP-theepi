@@ -1,12 +1,12 @@
 <?php
 /**
- * La vue template déclarant le modal audit.
+ * La vue principale déclarant le modal contrôle.
  *
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
- * @since     0.5.0
- * @version   0.5.0
+ * @since     0.7.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -43,15 +43,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</li>
 
 					<li>
-						<span> <?php if ( EPI_Class::g()->get_status( $epi ) ) : ?>
-							<i class="fas fa-check-circle fa-2x" style="color: mediumspringgreen;"></i>
-					<?php else : ?>
-							<i class="fas fa-exclamation-circle fa-2x" style="color: red;"></i>
-					<?php endif; ?> </span>
+						<span>
+							<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
+								<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
+							<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "repair" ) ) : ?>
+								<i class="fas fa-tools fa-4x" style="color: orange;"></i>
+							<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "trash" ) ) : ?>
+								<i class="fas fa-trash fa-4x" style="color: black;"></i>
+							<?php else : ?>
+								<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>
+							<?php endif; ?>
+						</span>
 					</li>
 				</ul>
 
-				<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
+				<?php if ( $frontend == false ): ?>
 			        <div class="wpeo-button button-blue button-radius-3 action-attribute" style="margin-left : 15px"
 						data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
 						data-parent_id="<?php echo esc_attr( $epi->data['id'] ); ?>"
@@ -65,7 +71,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<!-- Corps -->
 			<div class="modal-content">
-				<?php Control_Class::g()->display_modal_content( $epi ); ?>
+				<?php Control_Class::g()->display_modal_content( $epi, $frontend ); ?>
 			</div>
 
 			<!-- Footer -->

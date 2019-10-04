@@ -8,7 +8,7 @@ var rename = require('gulp-rename');
 
 var paths = {
 	scss_backend: [ 'core/assets/css/scss/**/*.scss', 'core/assets/css/' ],
-	frontend_js: ['core/assets/js/init.js', 'core/assets/js/lib/*.js', '**/*.frontend.js'],
+	frontend_js: ['core/assets/js/init.js', '**/*.frontend.js'],
 	all_js: ['core/assets/js/init.js', '**/*.backend.js'],
 };
 
@@ -44,5 +44,5 @@ gulp.task('default', function () {
 	gulp.watch(paths.scss_backend[0], gulp.series("build_scss_backend"));
 	// gulp.watch(paths.scss_backend[0], gulp.series("build_scss_backend_min"));
 	gulp.watch(paths.all_js, gulp.series("js"));
-	// gulp.watch(paths.frontend_js, ["js_frontend"]);
+	gulp.watch(paths.frontend_js, gulp.series("js_frontend"));
 });
