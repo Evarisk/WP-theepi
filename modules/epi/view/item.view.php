@@ -1,6 +1,6 @@
 <?php
 /**
- * La vue principale de la page "EPI".
+ * La vue d'une ligne de la page "EPI".
  *
  * @package   TheEPI
  * @author    Evarisk <dev@evarisk.com>
