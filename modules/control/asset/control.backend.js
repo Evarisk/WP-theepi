@@ -99,6 +99,16 @@ window.eoxiaJS.theEPI.control.displayStatusControl = function ( event ) {
 
 	var this_html = jQuery( this ).html();
 	parent_element.find( '.dropdown-toggle' ).html( this_html );
+
+	if ( status == 'OK' ){
+		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : mediumspringgreen; border-color : mediumspringgreen' });
+	} else if ( status == 'KO' ) {
+		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : red; border-color : red' });
+	} else if ( status == 'repair' ) {
+		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : orange; border-color : orange' });
+	} else {
+		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : black; border-color : black' });
+	}
 };
 
 /**

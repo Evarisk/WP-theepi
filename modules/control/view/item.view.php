@@ -72,25 +72,29 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>">
 		<?php if ( $frontend == false ): ?>
-			<div class="wpeo-button wpeo-tooltip-event button-transparent button-square-50 action-input"
-				aria-label="<?php esc_html_e( 'Edit Control', 'theepi' ); ?>"
-				data-parent_id="<?php echo esc_attr( $control->data['parent_id'] ); ?>"
-				data-id="<?php echo esc_attr( $control->data['id'] ); ?>"
-				data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
-				data-action="edit_control_epi"
-				data-nonce="<?php echo esc_attr( wp_create_nonce( 'edit_control_epi' ) ); ?>">
-				<i class="fas fa-pencil-alt"></i>
-			</div>
+			<?php if ( user_can( get_current_user_id(), 'update_theepi' ) ): ?>
+				<div class="wpeo-button wpeo-tooltip-event button-transparent button-square-50 action-input"
+					aria-label="<?php esc_html_e( 'Edit Control', 'theepi' ); ?>"
+					data-parent_id="<?php echo esc_attr( $control->data['parent_id'] ); ?>"
+					data-id="<?php echo esc_attr( $control->data['id'] ); ?>"
+					data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
+					data-action="edit_control_epi"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'edit_control_epi' ) ); ?>">
+					<i class="fas fa-pencil-alt"></i>
+				</div>
+			<?php endif; ?>
 
-			<div class="dropdown-item wpeo-button wpeo-tooltip-event button-transparent button-square-50 action-delete"
-				aria-label="<?php esc_html_e( 'Delete Control', 'theepi' ); ?>"
-				data-id="<?php echo esc_attr( $control->data['id'] ); ?>"
-				data-action="delete_control_epi"
-				data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_control_epi' ) ); ?>"
-				data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this Control ?', 'theepi' ); ?>"
-				data-loader="wpeo-table">
-				<i class="fas fa-times"></i>
-			</div>
+			<?php if ( user_can( get_current_user_id(), 'delete_theepi' ) ): ?>
+				<div class="dropdown-item wpeo-button wpeo-tooltip-event button-transparent button-square-50 action-delete"
+					aria-label="<?php esc_html_e( 'Delete Control', 'theepi' ); ?>"
+					data-id="<?php echo esc_attr( $control->data['id'] ); ?>"
+					data-action="delete_control_epi"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'delete_control_epi' ) ); ?>"
+					data-message-delete="<?php echo esc_attr_e( 'Are you sure you want to remove this Control ?', 'theepi' ); ?>"
+					data-loader="wpeo-table">
+					<i class="fas fa-times"></i>
+				</div>
+			<?php endif; ?>
 		<?php endif; ?>
 	</div>
 </div>

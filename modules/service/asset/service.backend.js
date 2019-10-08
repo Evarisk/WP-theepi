@@ -16,6 +16,7 @@ window.eoxiaJS.theEPI.service.event = function() {
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-control-date-epi', window.eoxiaJS.theEPI.service.updateControlDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-purchase-date-epi', window.eoxiaJS.theEPI.service.updatePurchaseDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.main .update-manufacture-date-epi', window.eoxiaJS.theEPI.service.updateManufactureDateEPI );
+	jQuery( document ).on( 'hover', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
 
 };
 
@@ -189,4 +190,25 @@ window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
 	end_life_date_element_sql.val( end_life_date_sql );
 	end_life_date_element.val(end_life_date_display);
 
+};
+
+/**
+ * Cacul le champ Date de fabrication instantanément et l'affiche.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {ClickEvent} event [champ Date de fabrication]
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI  = function( event ) {
+	// console.log('test');
+	// var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	// var delete_icon = '<span class="form-field-label-next"><i class="fas fa-times"></i></span>';
+	// function () {
+	// 	parent_element.find( '.empty-date-epi').append( delete_icon );
+	// } , function() {
+	// 	parent_element.find( '.empty-date-epi').last().remove();
+	// }
 };

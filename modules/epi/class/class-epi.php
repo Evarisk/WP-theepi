@@ -709,7 +709,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function get_status( $epi ) {
 		if ( $epi->data['id'] != 0 ) {
-			if ( $epi->data['disposal_date']['rendered']['date'] == '01/01/1970' ) {
+			if ( $epi->data['disposal_date']['raw'] == '1970-01-01' ) {
 				$controls = Control_Class::g()->get_controls( $epi );
 				$last_control = Control_Class::g()->last_control_epi( $controls );
 				if ( ! empty( $last_control ) ) {

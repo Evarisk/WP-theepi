@@ -116,9 +116,9 @@ if (! defined('ABSPATH') ) {
 			<div>
 				<div class="form-element group-date disposal-date">
 					<span class="form-label"> <?php esc_html_e( 'Disposal Date', 'theepi' ); ?></span>
-					<label class="form-field-container">
+					<label class="form-field-container empty-date-epi">
 						<span class="form-field-icon-prev"><i class="fas fa-trash-alt"></i></span>
-						<?php if( $edit_mode == true && ( $epi->data['disposal_date']['rendered']['date'] != '01/01/1970' ) ): ?>
+						<?php if( $edit_mode == true && ( ( esc_attr ( $epi->data['disposal_date']['raw'] ) != '1970-01-01' ) ) ): ?>
 							<input type="hidden" class="mysql-date"  name="disposal-date" value="<?php echo esc_attr( $epi->data['disposal_date']['raw'] ); ?>"/>
 							<input class="form-field date" type="text" name="disposal-date"
 							value="<?php echo esc_attr( $epi->data['disposal_date']['rendered']['date'] ); ?>"/>
@@ -334,7 +334,7 @@ if (! defined('ABSPATH') ) {
 	<?php endif; ?>
 
 	<div class="epi-row service button-edit">
-		<div class="wpeo-button wpeo-tooltip-event button-grey action-attribute"
+		<div class="wpeo-button wpeo-tooltip-event button-grey action-attribute event-keybord-cancel"
 			aria-label="<?php esc_html_e( 'Cancel EPI', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 			data-action="cancel_edit_epi"

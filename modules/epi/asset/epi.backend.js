@@ -11,7 +11,7 @@ window.eoxiaJS.theEPI.EPI.init = function() {
 };
 
 window.eoxiaJS.theEPI.EPI.event = function() {
-	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .edit .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
+	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-tab.epi .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
 	jQuery( document ).on( 'click', '.wrap-theepi .action-request-edit-epi', window.eoxiaJS.theEPI.EPI.requestEpiEdit );
 	jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.addEpiWithKeybord );
@@ -47,8 +47,8 @@ window.eoxiaJS.theEPI.EPI.addEpiWithKeybord = function( event ) {
  */
 window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord = function( event ) {
 	if ( 27 === event.keyCode ) {
-		jQuery( this ).find('.table-row.epi-row.edit').remove();
-		jQuery( this ).find('.epi-row.service.main').remove();
+		console.log('zdasd');
+		jQuery( this ).find( '.button-edit' ).find( '.event-keybord-cancel' ).click();
 	}
 };
 
@@ -95,7 +95,7 @@ window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, respons
  * Enregistre les données d'un EPI.
  *
  * @since 0.1.0
- * @version 0.6.0
+ * @version 0.7.0
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
@@ -103,7 +103,8 @@ window.eoxiaJS.theEPI.EPI.loadedEpiSuccess = function( triggeredElement, respons
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response ) {
-	triggeredElement.closest( '.table-row' ).replaceWith( response.data.view );
+	var id = triggeredElement.attr( 'data-id' );
+	triggeredElement.closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' ).replaceWith( response.data.view );
 	jQuery( '.wpeo-table.epi .epi-row.service' ).remove();
 };
 
@@ -112,7 +113,7 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
  * Affiche l'erreur sur le champ en mode Edition.
  *
  * @since 0.1.0
- * @version 0.6.0
+ * @version 0.7.0
  *
  * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  * @param  {Object}         response          Les données renvoyées par la requête Ajax.
@@ -120,15 +121,18 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response ) {
-	var parent_element = triggeredElement.closest( '.wpeo-table' ).find( '.service' );
-	var parent_element_edit = triggeredElement.closest( '.wpeo-table' ).find( '.edit' );
+	var id = triggeredElement.attr( 'data-id' );
+	//var parent_element_edit = triggeredElement.closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' );
+	var parent_element = triggeredElement.closest( '.tab-container' ).find( '.service[ data-id="' + id + '"]' );
 
 	jQuery.each( response.data.error, function( key, value ) {
 		var input_element = parent_element.find( '.form-field[name="' + value.element + '"]');
 	  	input_element.closest( '.form-element' ).find( '.error' ).html( value.error);
-	  	var input_element_edit = parent_element_edit.find( '.form-field[name="' + value.element + '"]');
-	  	input_element_edit.closest( '.table-cell' ).find( '.error' ).html( value.error );
+	  	// var input_element_edit = parent_element_edit.find( '.form-field[name="' + value.element + '"]');
+	  	// input_element_edit.closest( '.table-cell' ).find( '.error' ).html( value.error );
 	});
+
+	window.eoxiaJS.loader.remove( triggeredElement.closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' ) );
 
 };
 
@@ -311,12 +315,15 @@ window.eoxiaJS.theEPI.EPI.exportedEPISuccess = function ( triggeredElement, resp
  */
 window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 	var id = jQuery( this ).attr( 'data-id' );
-	var service_element    = jQuery( this ).closest( '.wpeo-table' ).find( '.service[ data-id="' + id + '"]' );
+
+	var service_element     = jQuery( this ).closest( '.wpeo-table' ).find( '.service[ data-id="' + id + '"]' );
+	var edit_element        = jQuery( this ).closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' );
 	var action              = jQuery( this ).attr( 'data-action' );
 	var nonce               = jQuery( this ).attr( 'data-nonce' );
 
-	var serial_number       = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="serial_number"]' ).val();
-	var title               = jQuery( this ).closest( '.table-row' ).find( '.form-field[name="title"]' ).val();
+	var quantity            = edit_element.find( '.form-field[name="quantity"]' ).val();
+	var serial_number       = edit_element.find( '.form-field[name="serial_number"]' ).val();
+	var title               = edit_element.find( '.form-field[name="title"]' ).val();
 
 	var toggle_lifetime     = service_element.find( '.button-toggle-lifetime' ).attr( 'data-value' );
 	var manufacture_date    = service_element.find( '.mysql-date[name="manufacture-date"]' ).val();
@@ -340,6 +347,7 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 		_wpnonce: nonce,
 		id: id,
 
+		quantity: quantity,
 		serial_number: serial_number,
 		title: title,
 
@@ -362,8 +370,10 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 
 	};
 
-	window.eoxiaJS.loader.display( jQuery( this ).closest( '.table-row' ) );
+	window.eoxiaJS.loader.display( jQuery( this ).closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' ) );
+
 	window.eoxiaJS.request.send( jQuery( this ), data );
+
 };
 
 /**

@@ -169,7 +169,6 @@ class TheEPI_Core_Action {
 	 );
 		add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );
 
-
 	}
 
 	/**

@@ -56,43 +56,91 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-100 table-status-control" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
-		<div class="wpeo-dropdown">
-			<div class="dropdown-toggle wpeo-button" style="background-color : white; border-color : white;"><i class="fas fa-caret-down" style="color: grey;"></i></div>
-			<input type="hidden" name="status-control" value="">
-			<ul class="dropdown-content" style="width : auto;">
-				<li class="dropdown-item wpeo-tooltip-event"
-					aria-label="<?php esc_html_e( 'Status OK', 'theepi' ); ?>"
-					data-status="OK">
-					<div class="wpeo-button button-green button-square-50">
-						<i class="fas fa-check"></i>
-					</div>
-				</li>
+		<?php if ( $edit_mode == false ): ?>
+			<div class="wpeo-dropdown">
+				<div class="dropdown-toggle wpeo-button" style="background-color : white; border-color : white;"><i class="fas fa-caret-down" style="color: grey;"></i></div>
+				<input type="hidden" name="status-control" value="">
+				<ul class="dropdown-content" style="width : auto;">
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status OK', 'theepi' ); ?>"
+						data-status="OK">
+						<div class="wpeo-button button-green button-square-50">
+							<i class="fas fa-check"></i>
+						</div>
+					</li>
 
-				<li class="dropdown-item wpeo-tooltip-event"
-					aria-label="<?php esc_html_e( 'Status KO', 'theepi' ); ?>"
-					data-status="KO">
-					<div class="wpeo-button button-red button-square-50">
-						<i class="fas fa-exclamation"></i>
-					</div>
-				</li>
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status KO', 'theepi' ); ?>"
+						data-status="KO">
+						<div class="wpeo-button button-red button-square-50">
+							<i class="fas fa-exclamation"></i>
+						</div>
+					</li>
 
-				<li class="dropdown-item wpeo-tooltip-event"
-					aria-label="<?php esc_html_e( 'Status Repair', 'theepi' ); ?>"
-					data-status="repair">
-					<div class="wpeo-button button-square-50" style="background-color : orange; border-color : orange;">
-						<i class="fas fa-tools"></i>
-					</div>
-				</li>
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status Repair', 'theepi' ); ?>"
+						data-status="repair">
+						<div class="wpeo-button button-square-50" style="background-color : orange; border-color : orange;">
+							<i class="fas fa-tools"></i>
+						</div>
+					</li>
 
-				<li class="dropdown-item wpeo-tooltip-event"
-					aria-label="<?php esc_html_e( 'Status Trash', 'theepi' ); ?>"
-					data-status="trash">
-					<div class="wpeo-button button-square-50" style="background-color : black; border-color : black;">
-						<i class="fas fa-trash-alt"></i>
-					</div>
-				</li>
-			</ul>
-		</div>
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status Trash', 'theepi' ); ?>"
+						data-status="trash">
+						<div class="wpeo-button button-square-50" style="background-color : black; border-color : black;">
+							<i class="fas fa-trash-alt"></i>
+						</div>
+					</li>
+				</ul>
+			</div>
+		<?php else: ?>
+			<div class="wpeo-dropdown">
+			<?php if ( $control->data['status_control'] == 'OK' ): ?>
+				<div class="dropdown-toggle wpeo-button button-square-50" style="background-color : mediumspringgreen; border-color : mediumspringgreen;"><i class="fas fa-check"></i></div>
+			<?php elseif ( $control->data['status_control'] == 'KO' ): ?>
+				<div class="dropdown-toggle wpeo-button button-square-50" style="background-color : red; border-color : red;"><i class="fas fa-exclamation"></i></div>
+			<?php elseif ( $control->data['status_control'] == 'repair' ): ?>
+				<div class="dropdown-toggle wpeo-button button-square-50" style="background-color : orange; border-color : orange;"><i class="fas fa-tools"></i></div>
+			<?php elseif ( $control->data['status_control'] == 'trash' ): ?>
+				<div class="dropdown-toggle wpeo-button button-square-50" style="background-color : black; border-color : black;"><i class="fas fa-trash-alt"></i></div>
+			<?php endif; ?>
+				<input type="hidden" name="status-control" value="">
+				<ul class="dropdown-content" style="width : auto;">
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status OK', 'theepi' ); ?>"
+						data-status="OK">
+						<div class="wpeo-button button-square-50" style="background-color : mediumspringgreen; border-color : mediumspringgreen;">
+							<i class="fas fa-check"></i>
+						</div>
+					</li>
+
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status KO', 'theepi' ); ?>"
+						data-status="KO">
+						<div class="wpeo-button button-red button-square-50" style="background-color : red; border-color : red;">
+							<i class="fas fa-exclamation"></i>
+						</div>
+					</li>
+
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status Repair', 'theepi' ); ?>"
+						data-status="repair">
+						<div class="wpeo-button button-square-50" style="background-color : orange; border-color : orange;">
+							<i class="fas fa-tools"></i>
+						</div>
+					</li>
+
+					<li class="dropdown-item wpeo-tooltip-event"
+						aria-label="<?php esc_html_e( 'Status Trash', 'theepi' ); ?>"
+						data-status="trash">
+						<div class="wpeo-button button-square-50" style="background-color : black; border-color : black;">
+							<i class="fas fa-trash-alt"></i>
+						</div>
+					</li>
+				</ul>
+			</div>
+		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-end" style="text-align : center" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>">

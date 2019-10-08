@@ -97,9 +97,11 @@ class Control_Action {
 		if ( $id == 0 ) {
 			$control = Control_Class::g()->get( array( 'schema' => true ), true );
 			$callback = 'createdControlSuccess';
+			$edit_mode = false;
 		}else {
 			$control =  Control_Class::g()->get( array( 'id' => $id ), true );
 			$callback = 'editedControlSuccess';
+			$edit_mode = true;
 		}
 
 		$epi = EPI_Class::g()->get( array( 'id' => $parent_id ), true );
@@ -109,7 +111,7 @@ class Control_Action {
 			'theepi', 'control', 'item-edit', array(
 				'epi' => $epi,
 				'control' => $control,
-				'edit_mode' => false
+				'edit_mode' => $edit_mode
 			)
 		);
 		$view = ob_get_clean();
@@ -142,7 +144,7 @@ class Control_Action {
 		$comment        = ! empty( $_POST['comment'] ) ? sanitize_text_field( $_POST['comment'] ) : esc_html__( 'No comment', 'theepi' );
 		$url            = ! empty( $_POST['url'] ) ? sanitize_text_field( $_POST['url'] ) : 'No url';
 		$attached_file  = ! empty( $_POST['attached-file'] ) ? sanitize_text_field( $_POST['attached-file'] ) : esc_html__( 'No attached file', 'theepi' );
-		$status_control = ! empty( $_POST['status-control'] ) ? sanitize_text_field( $_POST['status-control'] ) : esc_html__( 'OK', 'theepi' );
+		$status_control = ! empty( $_POST['status-control'] ) ? sanitize_text_field( $_POST['status-control'] ) : '';
 
 		$control = Control_Class::g()->get( array( 'id' => $id ), true );
 
@@ -153,10 +155,13 @@ class Control_Action {
 			'comment'        => $comment,
 			'url'            => $url,
 			'attached_file'  => $attached_file,
-			'status_control' => $status_control,
 			'parent_id'      => $parent_id
 
 		);
+
+		if ( $status_control != "" ) {
+			$update_control['status_control'] = $status_control;
+		}
 
 		$control->data = wp_parse_args( $update_control, $control->data );
 		$control = Control_Class::g()->update( $control->data );
