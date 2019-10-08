@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<!-- Footer -->
 		<div class="modal-footer">
-			<span style="float: left"> <?php echo esc_html( "QrCode link " . $epi->data['link'] ); ?> </span>
+			<span style="float: left"> <?php echo esc_html( "QrCode link :   " . $url ); ?> </span>
 			<a class="wpeo-button button-grey button-uppercase modal-close"><span><?php echo esc_html( "Close" ); ?></span></a>
 		</div>
 	</div>

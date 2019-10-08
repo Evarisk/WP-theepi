@@ -16,7 +16,9 @@ window.eoxiaJS.theEPI.service.event = function() {
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-control-date-epi', window.eoxiaJS.theEPI.service.updateControlDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-purchase-date-epi', window.eoxiaJS.theEPI.service.updatePurchaseDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.main .update-manufacture-date-epi', window.eoxiaJS.theEPI.service.updateManufactureDateEPI );
-	jQuery( document ).on( 'hover', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
+	jQuery( document ).on( 'mouseenter', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
+	jQuery( document ).on( 'mouseleave', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI );
+	jQuery( document ).on( 'click', '.epi-row.service.main .empty-date-epi .form-field-label-next', window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI );
 
 };
 
@@ -81,9 +83,10 @@ window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
 	end_life_date_sql = end_life_date.getFullYear() + '-' + month + '-' + day;
 	end_life_date_display = day + '/' + month + '/' + end_life_date.getFullYear();
 
-
-	end_life_date_element_sql.val( end_life_date_sql );
-	end_life_date_element.val(end_life_date_display);
+	if ( end_life_date_sql != 'NaN/NaN/NaN' && end_life_date_display != 'NaN/NaN/NaN') {
+		end_life_date_element_sql.val( end_life_date_sql );
+		end_life_date_element.val(end_life_date_display);
+	}
 };
 
 /**
@@ -112,9 +115,10 @@ window.eoxiaJS.theEPI.service.updateControlDateEPI = function( event ) {
 	control_date_sql = control_date.getFullYear() + '-' + month + '-' + day;
 	control_date_display = day + '/' + month + '/' + control_date.getFullYear();
 
-
-	control_date_element_sql.val( control_date_sql );
-	control_date_element.val(control_date_display);
+ 	if ( control_date_sql != 'NaN/NaN/NaN' && control_date_display != 'NaN/NaN/NaN') {
+		control_date_element_sql.val( control_date_sql );
+		control_date_element.val(control_date_display);
+	}
 };
 
 /**
@@ -203,12 +207,45 @@ window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI  = function( event ) {
-	// console.log('test');
-	// var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
-	// var delete_icon = '<span class="form-field-label-next"><i class="fas fa-times"></i></span>';
-	// function () {
-	// 	parent_element.find( '.empty-date-epi').append( delete_icon );
-	// } , function() {
-	// 	parent_element.find( '.empty-date-epi').last().remove();
-	// }
+	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	var myqsl_element = parent_element.find( '.empty-date-epi').find( '.mysql-date').val();
+	var date_element = parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val();
+	if ( myqsl_element != '' && date_element != '' ) {
+		var delete_icon = '<span class="form-field-label-next"><i class="fas fa-times"></i></span>';
+		parent_element.find( '.empty-date-epi').append( delete_icon );
+	}
+
+};
+
+/**
+ * Cacul le champ Date de fabrication instantanément et l'affiche.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {ClickEvent} event [champ Date de fabrication]
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI  = function( event ) {
+	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	parent_element.find( '.empty-date-epi').find( '.form-field-label-next' ).remove();
+
+};
+
+/**
+ * Cacul le champ Date de fabrication instantanément et l'affiche.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {ClickEvent} event [champ Date de fabrication]
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI  = function( event ) {
+	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	parent_element.find( '.empty-date-epi').find( '.mysql-date').val( '' );
+	parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val( '' );
+
 };

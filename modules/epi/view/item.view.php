@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 			data-action="open_qrcode"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_qrcode' ) ); ?>"
-			data-url="<?php echo esc_attr( $epi->data['link'] ) ?>">
+			data-url="<?php echo esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) ?>">
 			<i class="fas fa-qrcode"></i>
 		</div>
 	</div>
