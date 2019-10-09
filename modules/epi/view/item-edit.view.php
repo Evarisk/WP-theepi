@@ -58,7 +58,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-75"></div>
+	<div class="table-cell table-75" style="text-align : center" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
+		<?php if ( $edit_mode ): ?>
+			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded qrcode action-attribute"
+				aria-label="<?php esc_html_e( 'Click to enlarge the QrCode', 'theepi' ); ?>"
+				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+				data-action="open_qrcode"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_qrcode' ) ); ?>"
+				data-url="<?php echo esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) ?>">
+				<i class="fas fa-qrcode"></i>
+			</div>
+		<?php endif; ?>
+	</div>
 
 	<div class="table-cell" style="max-width:375px;" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>"> </br>
 		<div class="wpeo-form" style="margin-bottom: 20px;">
@@ -70,9 +81,28 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-200"></div>
+	<div class="table-cell table-200" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+		<?php if ( $edit_mode ): ?>
+			<?php if( $epi->data['commissioning_date_valid'] ): ?>
+				<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?></span>
+			<?php else: ?>
+				<span class="form-label" name="control-date" value=""><i class="fas fa-calendar-alt"></i> </span>
+			<?php endif; ?>
+		<?php endif; ?>
+	</div>
 
-	<div class="table-cell table-150"></div>
+	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">
+		<?php if ( $edit_mode ): ?>
+			<?php
+			\eoxia\View_Util::exec(
+				'theepi', 'epi', 'item-control', array(
+					'epi'         => $epi,
+					'number_days' => EPI_Class::g()->get_days( $epi ),
+				)
+			);
+			?>
+		<?php endif; ?>
+	</div>
 
 	<div class="table-cell table-150" style="text-align : center" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
 		<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>

@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
 	<?php if( $epi->data['commissioning_date_valid'] ): ?>
-		<span class="form-label" name="control-date" value="<?php echo esc_attr( $epi->data['control_date']['raw'] ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $epi->data['control_date']['rendered']['date'] ); ?></span>
+		<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?></span>
 	<?php else: ?>
 		<span class="form-label" name="control-date" value=""><i class="fas fa-calendar-alt"></i> </span>
 	<?php endif; ?>

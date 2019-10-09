@@ -477,7 +477,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function delete( $id ) {
 		$epi = self::g()->get( array( 'id' => $id ), true );
 
-		$epi['status'] = 'trash';
+		$epi->data['status'] = 'trash';
 
 		self::g()->update( $epi->data );
 		\eoxia\LOG_Util::g()->log( sprintf( ' EPI "%d" is now trashed, EPI data %s', $epi->data['id'], wp_json_encode( $epi ) ), 'theepi' );

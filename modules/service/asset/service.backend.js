@@ -19,6 +19,7 @@ window.eoxiaJS.theEPI.service.event = function() {
 	jQuery( document ).on( 'mouseenter', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
 	jQuery( document ).on( 'mouseleave', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI );
 	jQuery( document ).on( 'click', '.epi-row.service.main .empty-date-epi .form-field-label-next', window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI );
+	jQuery( document ).on( 'keyup', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.actionKeybordEmptyOptionDateEPI );
 
 };
 
@@ -197,12 +198,12 @@ window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
 };
 
 /**
- * Cacul le champ Date de fabrication instantanément et l'affiche.
+ * Ajoute au survol une croix.
  *
  * @since 0.7.0
  * @version 0.7.0
  *
- * @param  {ClickEvent} event [champ Date de fabrication]
+ * @param  {MouseEvent} event [champ Date]
  *
  * @return {void}
  */
@@ -218,12 +219,12 @@ window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI  = function( event ) {
 };
 
 /**
- * Cacul le champ Date de fabrication instantanément et l'affiche.
+ * Enlève la croix lorsque qu'on quitte le survol du champ date.
  *
  * @since 0.7.0
  * @version 0.7.0
  *
- * @param  {ClickEvent} event [champ Date de fabrication]
+ * @param  {MouseEvent} event [champ Date]
  *
  * @return {void}
  */
@@ -234,12 +235,12 @@ window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI  = function( event ) {
 };
 
 /**
- * Cacul le champ Date de fabrication instantanément et l'affiche.
+ * Vide le champ date en cliquant sur la croix.
  *
  * @since 0.7.0
  * @version 0.7.0
  *
- * @param  {ClickEvent} event [champ Date de fabrication]
+ * @param  {ClickEvent} event [champ Date]
  *
  * @return {void}
  */
@@ -248,4 +249,22 @@ window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI  = function( event ) {
 	parent_element.find( '.empty-date-epi').find( '.mysql-date').val( '' );
 	parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val( '' );
 
+};
+
+/**
+ * Vide le champ date en appuyant sur la touche effacé.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {KeyboardEvent} event L'état du clavier [effacer].
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.service.actionKeybordEmptyOptionDateEPI = function( event ) {
+	if ( 8 === event.keyCode ) {
+		var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+		parent_element.find( '.empty-date-epi').find( '.mysql-date').val( '' );
+		parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val( '' );
+	}
 };
