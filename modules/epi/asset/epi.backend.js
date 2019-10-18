@@ -65,12 +65,16 @@ window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.CreatedEpiSuccess = function( triggeredElement, response ) {
-
 	jQuery( '.wpeo-table.epi .epi-row.edit[data-id="' + response.data.close_epi_id + '"]' ).replaceWith( response.data.view_close );
 	jQuery( '.wpeo-table.epi .epi-row.service[data-id="' + response.data.close_epi_id + '"]' ).remove();
-	jQuery( '.wpeo-table.epi .tab-container' ).prepend( response.data.view_edit_epi );
-	jQuery( '.wpeo-table.epi .table-row.epi-row.edit' ).after( response.data.view_edit_service );
 
+	var rowContent = jQuery( '<div>', {
+		class: 'table-row epi-row edit',
+		html: response.data.view_edit_epi + response.data.view_edit_service
+	});
+	rowContent.attr( 'data-id', '0' );
+
+	jQuery( '.wpeo-table.epi .tab-container' ).prepend( rowContent );
 };
 
 /**
@@ -167,6 +171,7 @@ window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( triggeredElement, respon
  */
 window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, response ) {
 	triggeredElement.closest( '.tab-container').find( '.epi-row.service' ).remove();
+	var idElement = triggeredElement.attr( 'data-id' );
 
 	if( response.data.close_epi_id == 0 ){
 		triggeredElement.closest( '.wrap-theepi' ).find( '.wpeo-table.epi .epi-row[data-id="0"]' ).remove();
@@ -174,8 +179,13 @@ window.eoxiaJS.theEPI.EPI.editedEpiSuccess = function( triggeredElement, respons
 		triggeredElement.closest( '.wrap-theepi' ).find( '.wpeo-table.epi .epi-row[data-id="' + response.data.close_epi_id + '"]' ).replaceWith( response.data.view_close );
 	}
 
-	triggeredElement.closest( '.epi-row' ).after( response.data.view_edit_service );
-	triggeredElement.closest( '.epi-row' ).before( response.data.view_edit_epi );
+	var rowContent = jQuery( '<div>', {
+		class: 'table-row epi-row edit',
+		html: response.data.view_edit_epi + response.data.view_edit_service
+	});
+	rowContent.attr( 'data-id', idElement );
+
+	triggeredElement.closest( '.epi-row' ).before( rowContent );
 	triggeredElement.closest( '.epi-row' ).remove();
 };
 

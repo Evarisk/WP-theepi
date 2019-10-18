@@ -285,6 +285,18 @@ class EPI_Class extends \eoxia\Post_Class {
 	}
 
 	/**
+	 * Appel la vue pour afficher les filtres des EPI
+	 *
+	 * @since   0.4.0
+	 * @version 0.4.0
+	 *
+	 * @return void
+	 */
+	public function display_filters() {
+		\eoxia\View_Util::exec( 'theepi', 'epi', 'filters' );
+	}
+
+	/**
 	 * Récupères les données liée à la pagination des EPI.
 	 *
 	 * @since   0.4.0

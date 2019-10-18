@@ -17,25 +17,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <!-- Corps -->
 <div class="wpeo-table table-flex control-epi">
-	<div class="table-row table-header" style="background-color : #0084ff">
-		<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></div>
-		<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'Avatar', 'theepi' ); ?>"><span><?php esc_html_e( 'Avatar', 'theepi' ); ?></span></div>
-		<div class="table-cell table-150" data-title="<?php esc_attr_e( 'Date', 'theepi' ); ?>"><span><?php esc_html_e( 'Date', 'theepi' ); ?></span></div>
-		<div class="table-cell table-300" data-title="<?php esc_attr_e( 'Comment', 'theepi' ); ?>"> <span> <?php esc_html_e( 'Comment', 'theepi' ); ?></span></div>
-		<div class="table-cell table-300" data-title="<?php esc_attr_e( 'URL', 'theepi' ); ?>"><span><?php esc_html_e( 'URL', 'theepi' ); ?></span></div>
-		<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'Attached File', 'theepi' ); ?>"><span><?php esc_html_e( 'Attached File', 'theepi' ); ?></span></div>
-		<div class="table-cell table-100" style="text-align : center;" data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></div>
-		<div class="table-cell table-end" style="text-align : center;" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>"><span><?php esc_html_e( 'Actions', 'theepi' ); ?></span></div>
+	<div class="table-row table-header">
+		<div class="table-cell table-75" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><?php esc_html_e( 'ID', 'theepi' ); ?></div>
+		<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Avatar', 'theepi' ); ?>"><?php esc_html_e( 'Avatar', 'theepi' ); ?></div>
+		<div class="table-cell table-125" data-title="<?php esc_attr_e( 'Date', 'theepi' ); ?>"><?php esc_html_e( 'Date', 'theepi' ); ?></div>
+		<div class="table-cell" data-title="<?php esc_attr_e( 'Comment', 'theepi' ); ?>">  <?php esc_html_e( 'Comment', 'theepi' ); ?></div>
+		<div class="table-cell table-200" data-title="<?php esc_attr_e( 'URL', 'theepi' ); ?>"><?php esc_html_e( 'URL', 'theepi' ); ?></div>
+		<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Attached File', 'theepi' ); ?>"><?php esc_html_e( 'Attached File', 'theepi' ); ?></div>
+		<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><?php esc_html_e( 'Status', 'theepi' ); ?></div>
+		<div class="table-cell table-125 table-end" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>"><?php esc_html_e( 'Actions', 'theepi' ); ?></div>
 	</div>
 
 	<div class="tab-container control-epi">
-		<div class="new-row-control-epi">
-
-		</div>
 		<?php Control_Class::g()->display_control_list( $epi, $frontend ) ?>
 	</div>
 
-	<!-- <div clas="pagination epi-control" style="margin-top: 20px"> //v0.8.0 
+	<!-- <div clas="pagination epi-control" style="margin-top: 20px"> //v0.8.0
 		<?php // Control_Class::g()->display_epi_pagination( $offset, $page ); ?>
 	</div> -->
 </div>

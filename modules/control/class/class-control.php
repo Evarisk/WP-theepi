@@ -255,7 +255,7 @@ class Control_Class extends \eoxia\Post_Class {
 			$view = ob_get_clean();
 			return $view;
 		}else {
-			return esc_html_e( 'No file attached', 'wpeo-upload' );
+			// return esc_html_e( 'No file attached', 'wpeo-upload' );
 		}
 
 	}

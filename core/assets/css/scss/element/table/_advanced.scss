@@ -1,0 +1,15 @@
+.wpeo-table .table-row.edit {
+	flex-direction: column;
+}
+
+.wpeo-table .table-row.edit .row-resume {
+	display: flex;
+}
+
+.wpeo-table .table-row.edit .row-advanced {
+	padding: 1em;
+
+	.footer {
+		text-align: right;
+	}
+}

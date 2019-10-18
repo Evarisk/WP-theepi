@@ -15,24 +15,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>
 
-<div class="wpeo-form" style="float: right; width: 50%;">
+<div class="epi-search wpeo-form form-light">
 	<div class="form-element">
-		<span class="form-label"></span>
 		<label class="form-field-container">
-			<span class="form-field-label-prev"><i class="fas fa-search"></i></span>
+			<span class="form-field-icon-prev"><i class="fas fa-search"></i></span>
 			<input type="text" name="term" class="form-field" placeholder="<?php esc_attr_e( 'Search term', 'theepi' ); ?>" />
-			<div>
-				<span class="wpeo-button button-blue action-input"
-					data-parent="wpeo-form"
-					data-action="search_epi"
-					data-nonce="<?php echo esc_attr( wp_create_nonce( 'search_epi' ) ); ?>">
-					<?php esc_html_e( 'Search', 'theepi' ); ?>
-				</span>
-			</div>
-			<!--<div><span class="wpeo-button button-main action-attribute button-square-50"
-						data-parent="wpeo-form"
-						data-action="clear_search_epi"
-						data-nonce="<?php echo esc_attr( wp_create_nonce( 'clear_search_epi' ) ); ?>"><i class="fal fa-times"></i></span></div>-->
 		</label>
+	</div>
+	<div class="wpeo-button button-grey action-input"
+		data-parent="wpeo-form"
+		data-action="search_epi"
+		data-nonce="<?php echo esc_attr( wp_create_nonce( 'search_epi' ) ); ?>">
+
+		<?php esc_html_e( 'Search', 'theepi' ); ?>
 	</div>
 </div>

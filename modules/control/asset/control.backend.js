@@ -45,7 +45,8 @@ window.eoxiaJS.theEPI.control.displayControlSuccess = function( triggeredElement
  * @return {void}
  */
 window.eoxiaJS.theEPI.control.createdControlSuccess = function( triggeredElement, response ) {
-	triggeredElement.closest( '.modal-control-epi' ).find( '.tab-container .new-row-control-epi' ).html( response.data.view );
+	// triggeredElement.closest( '.modal-control-epi' ).find( '.tab-container .new-row-control-epi' ).html( response.data.view );
+	triggeredElement.closest( '.modal-control-epi' ).find( '.tab-container' ).prepend( response.data.view );
 };
 
 /**
@@ -100,15 +101,8 @@ window.eoxiaJS.theEPI.control.displayStatusControl = function ( event ) {
 	var this_html = jQuery( this ).html();
 	parent_element.find( '.dropdown-toggle' ).html( this_html );
 
-	if ( status == 'OK' ){
-		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : mediumspringgreen; border-color : mediumspringgreen' });
-	} else if ( status == 'KO' ) {
-		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : red; border-color : red' });
-	} else if ( status == 'repair' ) {
-		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : orange; border-color : orange' });
-	} else {
-		parent_element.find( '.dropdown-toggle' ).attr({ 'style' : 'background-color : black; border-color : black' });
-	}
+  parent_element.find( '.dropdown-toggle' ).removeClass( 'OK KO repair trash' );
+  parent_element.find( '.dropdown-toggle' ).addClass( status );
 };
 
 /**

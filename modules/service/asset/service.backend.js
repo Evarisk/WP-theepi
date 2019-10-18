@@ -11,7 +11,7 @@ window.eoxiaJS.theEPI.service.init = function() {
 };
 
 window.eoxiaJS.theEPI.service.event = function() {
-	jQuery( document ).on( 'click', '.epi-row.service.date .button-toggle', window.eoxiaJS.theEPI.service.buttonToggle );
+	jQuery( document ).on( 'click', '.row-advanced.service .advanced-service.date .button-toggle', window.eoxiaJS.theEPI.service.buttonToggle );
 	jQuery( document ).on( 'change', '.epi-row.service.date .update-end-life-date-epi', window.eoxiaJS.theEPI.service.updateEndLifeDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-control-date-epi', window.eoxiaJS.theEPI.service.updateControlDateEPI );
 	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-purchase-date-epi', window.eoxiaJS.theEPI.service.updatePurchaseDateEPI );
@@ -41,21 +41,21 @@ window.eoxiaJS.theEPI.service.buttonToggle = function( event ) {
 
 		nextStep = 'NO';
 		jQuery( this ).removeClass( "fa-toggle-on" ).addClass( "fa-toggle-off" );
-		jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
-		jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : black; font-weight : bold' });
-		jQuery( this ).closest( ".epi-row.service.date" ).find( '.button-toggle-lifetime-display' ).addClass( 'hidden' );
+		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
+		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : black; font-weight : bold' });
+		jQuery( this ).closest( ".advanced-service.date" ).find( '.button-toggle-lifetime-display' ).addClass( 'hidden' );
 
 	} else {
 
 		nextStep = 'YES';
 		jQuery( this ).removeClass( "fa-toggle-off" ).addClass( "fa-toggle-on" );
-		jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
-		jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
-		jQuery( this ).closest( ".epi-row.service.date" ).find( '.button-toggle-lifetime-display' ).removeClass( 'hidden' );
+		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
+		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
+		jQuery( this ).closest( ".advanced-service.date" ).find( '.button-toggle-lifetime-display' ).removeClass( 'hidden' );
 
 
 	}
-	jQuery( this ).closest( '.epi-row.service.date' ).find( '.button-toggle-lifetime' ).attr( 'data-value' , nextStep );
+	jQuery( this ).closest( '.advanced-service.date' ).find( '.button-toggle-lifetime' ).attr( 'data-value' , nextStep );
 };
 
 /**

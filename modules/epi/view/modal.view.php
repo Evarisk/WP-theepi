@@ -16,19 +16,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <!-- Structure -->
-<div class="wpeo-modal modal-active">
+<div class="wpeo-modal modal-qr-code modal-active">
 
-	<div class="modal-container" style="text-align : center; max-width : 1200px; max-height: 800px">
+	<div class="modal-container">
 		<!-- Entête -->
 		<div class="modal-header">
 			<h2 class="modal-title"><?php echo esc_html( "QrCode EPI " . $epi->data['id'] ); ?></h2>
+			<div class="modal-close"><i class="fas fa-times"></i></div>
 		</div>
 
-		<?php echo do_shortcode( '[qrcode text="' . $url . '" id="'. $epi->data['id'] .'" eclevel=0  height=600 width=600 transparency=1]' ); ?>
+		<div class="modal-content">
+			<?php echo do_shortcode( '[qrcode text="' . $url . '" id="'. $epi->data['id'] .'" eclevel=0  height=500 width=500 transparency=1]' ); ?>
+		</div>
 
 		<!-- Footer -->
 		<div class="modal-footer">
-			<span style="float: left"> <?php echo esc_html( "QrCode link :   " . $url ); ?> </span>
+			<span> <?php echo esc_html( "QrCode link :   " . $url ); ?> </span>
 			<a class="wpeo-button button-grey button-uppercase modal-close"><span><?php echo esc_html( "Close" ); ?></span></a>
 		</div>
 	</div>

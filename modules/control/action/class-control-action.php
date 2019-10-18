@@ -96,6 +96,7 @@ class Control_Action {
 
 		if ( $id == 0 ) {
 			$control = Control_Class::g()->get( array( 'schema' => true ), true );
+			$control->data['author_id'] = get_current_user_ID();
 			$callback = 'createdControlSuccess';
 			$edit_mode = false;
 		}else {

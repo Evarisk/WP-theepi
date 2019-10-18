@@ -1,0 +1,32 @@
+.button-toggle-lifetime {
+	display: inline-flex;
+	margin-left: 0.6em;
+
+	.button-toggle-no, .button-toggle-yes {
+		margin: auto;
+	}
+	.button-toggle {
+		font-size: 26px;
+		margin: 0 0.3em;
+
+		&:hover {
+			cursor: pointer;
+		}
+	}
+	&[data-value="YES"] {
+		.button-toggle-yes {
+			font-weight: 700;
+		}
+		.button-toggle {
+			color: $color__green;
+		}
+	}
+	&[data-value="NO"] {
+		.button-toggle-no {
+			font-weight: 700;
+		}
+		.button-toggle {
+			color: $color__black;
+		}
+	}
+}
