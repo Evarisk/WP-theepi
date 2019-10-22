@@ -1,0 +1,117 @@
+@media ( max-width: $media__large ) {
+  .wpeo-table.table-flex.epi {
+    .table-cell {
+      min-width: 0;
+    }
+    .table-cell.action-end .wpeo-button {
+      width: 100%;
+      min-width: 30px;
+    }
+  }
+}
+
+@media ( max-width: $media__medium ) {
+  .wpeo-table.table-flex.epi {
+    .table-row.table-header {
+      display: none;
+    }
+    .table-row {
+      flex-wrap: wrap;
+      flex-direction: row !important;
+      padding: 1em;
+      border-bottom: 2px solid rgba(0,0,0,0.1);
+
+      &:last-child {
+        border: 0;
+      }
+      .row-resume {
+        flex-wrap: wrap;
+        flex-direction: row !important;
+      }
+    }
+    .table-cell {
+      max-width: none;
+      min-width: 0;
+      margin: 0;
+
+      &.id {
+        order: 2;
+        width: 15%;
+        padding-top: 1.5em;
+      }
+      &.thumbnail {
+        order: 1;
+        width: 15%;
+      }
+      &.quantity {
+        order: 5;
+        width: 33.333333%;
+        text-align: center;
+      }
+      &.code-qr {
+        order: 6;
+        width: 33.333333%;
+        text-align: center;
+      }
+      &.serial-number {
+        order: 7;
+        width: 33.333333%;
+        text-align: center;
+      }
+      &.title {
+        order: 3;
+        width: 45%;
+        padding-top: 1.5em;
+      }
+      &.last-control {
+        order: 8;
+        width: 50%;
+        text-align: center;
+      }
+      &.next-control {
+        order: 9;
+        width: 50%;
+        text-align: center;
+
+        .epi-item-control {
+          display: inline-block;
+        }
+      }
+      &.status {
+        order: 10;
+        text-align: center;
+
+        .epi-status-icon {
+          display: inline-block;
+        }
+      }
+      &.action-end {
+        order: 4;
+        width: 25%;
+      }
+
+      /** Affichage des before */
+      &.quantity, &.code-qr, &.serial-number, &.last-control, &.next-control, &.status {
+        &::before {
+          display: block;
+          content: attr(data-title);
+          margin: 1em 0;
+          color: rgba(0,0,0,0.4);
+        }
+      }
+    }
+  }
+}
+
+@media ( max-width: $media__small ) {
+  .wpeo-table.table-flex.epi {
+    .table-cell {
+      &.id {
+        width: 20%;
+      }
+      &.title {
+        width: 40%;
+      }
+    }
+  }
+}

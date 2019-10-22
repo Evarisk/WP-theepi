@@ -16,15 +16,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="row-resume wpeo-form">
-	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
+	<div class="table-cell table-75 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?>
 	</div>
 
-	<div class="table-cell table-75">
+	<div class="table-cell table-75 thumbnail">
 		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
 	</div>
 
-	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Quantity', 'theepi' ); ?>">
+	<div class="table-cell table-75 quantity" data-title="<?php echo esc_attr_e( 'Quantity', 'theepi' ); ?>">
 		<div class="form-element">
 			<label class="form-field-container">
 				<input class="form-field" type="number" name="quantity" value="<?php echo esc_attr( $epi->data['quantity'] ); ?>" />
@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
+	<div class="table-cell table-75 code-qr" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
 		<?php if ( $edit_mode ): ?>
 			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-size-small button-rounded qrcode action-attribute"
 				aria-label="<?php esc_html_e( 'Click to enlarge the QrCode', 'theepi' ); ?>"
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endif; ?>
 	</div>
 
-	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>">
+	<div class="table-cell table-150 serial-number" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>">
 		<div class="form-element">
 			<label class="form-field-container">
 				<span class="form-field-icon-prev"><i class="fas fa-barcode"></i></span>
@@ -54,7 +54,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
+	<div class="table-cell title" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
 		<div class="form-element">
 			<label class="form-field-container">
 				<input class="form-field" type="text" name="title" value="<?php echo esc_attr( $epi->data['title'] ); ?>" />
@@ -62,7 +62,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php if ( $edit_mode ): ?>
 			<?php if( $epi->data['commissioning_date_valid'] ): ?>
 				<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>">
@@ -72,7 +72,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endif; ?>
 	</div>
 
-	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">
+	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">
 		<?php if ( $edit_mode ): ?>
 			<?php
 			\eoxia\View_Util::exec(
@@ -85,7 +85,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endif; ?>
 	</div>
 
-	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
+	<div class="table-cell table-75 status" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
 		<span class="epi-status-icon fas <?php echo esc_attr( EPI_Class::g()->get_status( $epi ) ); ?>"></span>
 	</div>
 
