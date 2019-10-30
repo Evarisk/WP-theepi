@@ -33,7 +33,7 @@ if (! defined('ABSPATH') ) {
 		<div class="wpeo-gridlayout grid-4 grid-padding-1">
 			<div class="form-element form-element-required group-date update-end-life-date-epi">
 				<input type="hidden" class="manufacture-date-valued" name="manufacture-date-valued" value="<?php echo esc_attr( $manufacture_date_valued ) ?>"/>
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( $manufacture_date_valued ) ? esc_html__( 'Setting Date activated (Manufacture Date)', 'theepi' ) : ''; ?>">
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( $manufacture_date_valued ) ? esc_html_e( 'Setting Date activated (Manufacture Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Manufacture Date)', 'theepi' ) ; ?>">
 					<?php esc_html_e( 'Manufacture Date', 'theepi' ); ?>
 				</span>
 				<label class="form-field-container">
@@ -47,7 +47,7 @@ if (! defined('ABSPATH') ) {
 			</div>
 
 			<div class="form-element form-element-required button-toggle-lifetime-display lifetime update-end-life-date-epi <?php echo ( $epi->data['toggle_lifetime'] == 'NO' ) ? 'hidden' : ''; ?>">
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) ? esc_html__( 'Setting Data activated (Lifetime)', 'theepi' ) : ''; ?>">
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) ? esc_html_e( 'Setting Data activated (Lifetime)', 'theepi' ) : esc_html_e( 'Setting Data disable (Lifetime)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Lifetime', 'theepi' ); ?>
 				</span>
 				<div class="form-error"></div>
@@ -93,7 +93,7 @@ if (! defined('ABSPATH') ) {
 
 		<div class="wpeo-gridlayout grid-4 grid-padding-1">
 			<div class="form-element form-element-required group-date">
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( $checked_purchase_date == 1 ) ? esc_html__( 'Setting Date activated (Purchase Date)', 'theepi' ) : ''; ?>">
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( $checked_purchase_date == 1 ) ? esc_html_e( 'Setting Date activated (Purchase Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Purchase Date)', 'theepi' ); ?>">
           <?php esc_html_e( 'Purchase Date', 'theepi' ); ?>
         </span>
 				<label class="form-field-container">
@@ -128,7 +128,7 @@ if (! defined('ABSPATH') ) {
       </div>
 
 			<div class="form-element form-element-required update-control-date-epi">
-        <span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( get_option( EPI_Class::g()->option_name_default_data_periodicity ) != "" ) ? esc_html__( 'Setting Data activated (Periodicity)', 'theepi' ) : ''; ?>">
+        <span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( get_option( EPI_Class::g()->option_name_default_data_periodicity ) != "" ) ? esc_html_e( 'Setting Data activated (Periodicity)', 'theepi' ) : esc_html_e( 'Setting Date disable (Periodicity)', 'theepi' ); ?>">
           <?php esc_html_e( 'Periodicity', 'theepi' ); ?>
         </span>
         <div class="form-error"></div>

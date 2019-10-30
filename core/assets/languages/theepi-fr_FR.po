@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
-"POT-Creation-Date: 2019-10-29 17:26+0100\n"
-"PO-Revision-Date: 2019-10-29 17:27+0100\n"
+"POT-Creation-Date: 2019-10-30 11:54+0100\n"
+"PO-Revision-Date: 2019-10-30 11:58+0100\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -40,6 +40,10 @@ msgstr "Nouveau"
 #: core/view/main.view.php:33
 msgid "New from images"
 msgstr "Nouveau à partir d'images"
+
+#: core/view/main.view.php:38
+msgid "Go to the TheEPI Setting Page"
+msgstr "Aller sur la page Réglages de TheEPI"
 
 #: modules/audit/action/class-audit-action.php:75
 #: modules/audit/action/class-audit-action.php:252
@@ -339,6 +343,14 @@ msgstr "NON"
 msgid "YES"
 msgstr "OUI"
 
+#: modules/service/view/main.view.php:36
+msgid "Setting Date activated (Manufacture Date)"
+msgstr "Réglage Date activé (Date de Fabrication)"
+
+#: modules/service/view/main.view.php:36
+msgid "Setting Date disable (Manufacture Date)"
+msgstr "Réglage Date désactivé (Date de Fabrication)"
+
 #: modules/service/view/main.view.php:37
 msgid "Manufacture Date"
 msgstr "Date de Fabrication"
@@ -349,6 +361,14 @@ msgid ""
 msgstr ""
 "La date de Fabrication est définie dans les réglages de TheEPI, Ce champ "
 "peut être vide"
+
+#: modules/service/view/main.view.php:50
+msgid "Setting Data activated (Lifetime)"
+msgstr "Réglage Date activé (Durée de Vie)"
+
+#: modules/service/view/main.view.php:50
+msgid "Setting Data disable (Lifetime)"
+msgstr "Réglage Donnée désactivé (Durée de Vie)"
 
 #: modules/service/view/main.view.php:51
 #: modules/setting/view/default-data/main.view.php:35
@@ -371,6 +391,14 @@ msgstr "Date de Mise au Rebut"
 msgid "PPE Life Sheet"
 msgstr "Fiche de Vie de l'EPI"
 
+#: modules/service/view/main.view.php:96
+msgid "Setting Date activated (Purchase Date)"
+msgstr "Réglage Date activé (Date d'Achat)"
+
+#: modules/service/view/main.view.php:96
+msgid "Setting Date disable (Purchase Date)"
+msgstr "Réglage Date désactivé (Date d'Achat)"
+
 #: modules/service/view/main.view.php:97
 msgid "Purchase Date"
 msgstr "Date d'Achat"
@@ -385,6 +413,14 @@ msgstr ""
 #: modules/service/view/main.view.php:121
 msgid "Commissioning Date"
 msgstr "Date de Mise en Service"
+
+#: modules/service/view/main.view.php:131
+msgid "Setting Data activated (Periodicity)"
+msgstr "Réglage Donnée activé (Périodicité)"
+
+#: modules/service/view/main.view.php:131
+msgid "Setting Date disable (Periodicity)"
+msgstr "Réglage Donnée désactivé (Périodicité)"
 
 #: modules/service/view/main.view.php:132
 #: modules/setting/view/default-data/main.view.php:26
@@ -557,17 +593,11 @@ msgstr "Dates"
 #~ msgid "Number"
 #~ msgstr "Nombre"
 
-#~ msgid "Setting Date activated (Manufacture Date)"
-#~ msgstr "Réglage Date activé (Date de Fabrication)"
-
 #~ msgid "years"
 #~ msgstr "ans"
 
 #~ msgid "Disposal Date = End Life Date"
 #~ msgstr "Date de Mise au Rebut = Date de Fin de Vie"
-
-#~ msgid "Setting Date activated (Purchase Date)"
-#~ msgstr "Réglage Date activé (Date d'Achat)"
 
 #~ msgid "Add Attached File"
 #~ msgstr "Ajouter un fichier joint"

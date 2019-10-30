@@ -163,7 +163,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	protected function construct() {
 		parent::construct();
 		$this->default_data_periodicity = 365;
-		$this->default_data_lifetime = 10;
+		$this->default_data_lifetime = 365;
 		$this->default_data_purchase_date = true;
 		$this->default_data_manufacture_date = 1;
 
