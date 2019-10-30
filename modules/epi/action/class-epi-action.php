@@ -38,11 +38,13 @@ class EPI_Action {
 
 		add_action( 'wp_ajax_search_epi', array( $this, 'callback_search_epi' ) );
 		add_action( 'wp_ajax_clear_search_epi', array( $this, 'callback_clear_search_epi' ) );
+		add_action( 'wp_ajax_filter_epi', array( $this, 'callback_filter_epi' ) );
+
 
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'callback_create_mass_epi' ) );
 
 		add_action( 'wp_ajax_open_qrcode', array( $this, 'callback_open_qrcode' ) );
-		add_action( 'wp_ajax_control_epi_without_task_manager', array( $this, 'callback_control_epi_without_task_manager' ) );
+		//add_action( 'wp_ajax_control_epi_without_task_manager', array( $this, 'callback_control_epi_without_task_manager' ) );
 
 	}
 
@@ -70,15 +72,14 @@ class EPI_Action {
 			$close_view_epi = "";
 		}
 
-		$epi = EPI_Class::g()->get( array( 'schema' => true ), true );
-
-		$epi->data['periodicity'] = get_option( EPI_Class::g()->option_name_default_data_periodicity );
-		$epi->data['lifetime_epi'] = get_option( EPI_Class::g()->option_name_default_data_lifetime );
+		$epi = EPI_Class::g()->draft();
+		$epi->data['periodicity'] = intval(get_option( EPI_Class::g()->option_name_default_data_periodicity ) );
+		$epi->data['lifetime_epi'] = intval( get_option( EPI_Class::g()->option_name_default_data_lifetime ) );
+		$epi->data['disposal_date']['raw'] = '1970-01-01';
+		$epi = EPI_Class::g()->update( $epi->data );
 
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
-
-		$control = Control_Class::g()->get( array( 'schema' => true ), true );
 
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -94,7 +95,7 @@ class EPI_Action {
 			'theepi', 'service', 'main', array(
 				'epi' => $epi,
 				'edit_mode' => false,
-				'control' => $control,
+				'control' => "",
 				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued
 			)
@@ -106,6 +107,7 @@ class EPI_Action {
 				'namespace'          => 'theEPI',
 				'module'             => 'EPI',
 				'callback_success'   => 'CreatedEpiSuccess',
+				'epi_id'             => $epi->data['id'],
 				'view_edit_epi'      => $view_edit_epi,
 				'view_edit_service'  => $view_edit_service,
 				'view_close'         => $close_view_epi,
@@ -185,13 +187,11 @@ class EPI_Action {
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 		unset( $epi->data['author_id'] );
 
-
 		$update_epi = array(
 			'post_status'              => 'publish',
 
-			'image_id'                 => $image_id,
 			'title'                    => $title,
-			'quantity'                   => $quantity,
+			'quantity'                 => $quantity,
 			'serial_number'            => $serial_number,
 			//'last_control'             => $last_control,
 			'status_epi'               => $status_epi,
@@ -384,21 +384,28 @@ class EPI_Action {
 			$epi = array();
 		} else {
 			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
-
-			ob_start();
-			\eoxia\View_Util::exec(
-				'theepi', 'epi', 'item', array(
-					'epi' => $epi,
-				)
-			);
+			if ( $epi->data['status'] == 'draft' ) {
+				EPI_Class::g()->delete( $id );
+				$callback = 'deletedEpiSuccess';
+				$view = "";
+			}else {
+				ob_start();
+				\eoxia\View_Util::exec(
+					'theepi', 'epi', 'item', array(
+						'epi' => $epi,
+					)
+				);
+				$view = ob_get_clean();
+				$callback = 'canceledEditEpiSuccess';
+			}
 		}
 
 		wp_send_json_success(
 			array(
 				'namespace'        => 'theEPI',
 				'module'           => 'EPI',
-				'callback_success' => 'canceledEditEpiSuccess',
-				'view'             => ob_get_clean(),
+				'callback_success' => $callback,
+				'view'             => $view,
 			)
 		);
 	}
@@ -533,6 +540,34 @@ class EPI_Action {
 				'view'             => ob_get_clean(),
 			)
 		);
+	}
+
+	/**
+	 * Filtre les EPIS en fonction du statut.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
+	public function callback_filter_epi() {
+		check_ajax_referer( 'filter_epi' );
+
+		$filters = ! empty( $_POST['filters'] ) ? sanitize_text_field( $_POST['filters'] ) : 'all';
+		$url = admin_url( 'admin.php?page=theepi&tab='. $filters );
+
+		wp_send_json_success(
+			array(
+				'namespace'        => 'theEPI',
+				'module'           => 'EPI',
+				'callback_success' => 'filterEPISuccess',
+				'url'              => $url,
+				'filters'          => $filters,
+			)
+		);
+
+
+
 	}
 
 	/**

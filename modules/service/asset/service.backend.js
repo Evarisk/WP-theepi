@@ -12,14 +12,14 @@ window.eoxiaJS.theEPI.service.init = function() {
 
 window.eoxiaJS.theEPI.service.event = function() {
 	jQuery( document ).on( 'click', '.row-advanced.service .advanced-service.date .button-toggle', window.eoxiaJS.theEPI.service.buttonToggle );
-	jQuery( document ).on( 'change', '.epi-row.service.date .update-end-life-date-epi', window.eoxiaJS.theEPI.service.updateEndLifeDateEPI );
-	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-control-date-epi', window.eoxiaJS.theEPI.service.updateControlDateEPI );
-	jQuery( document ).on( 'change', '.epi-row.service.life-sheet .update-purchase-date-epi', window.eoxiaJS.theEPI.service.updatePurchaseDateEPI );
-	jQuery( document ).on( 'change', '.epi-row.service.main .update-manufacture-date-epi', window.eoxiaJS.theEPI.service.updateManufactureDateEPI );
-	jQuery( document ).on( 'mouseenter', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
-	jQuery( document ).on( 'mouseleave', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI );
-	jQuery( document ).on( 'click', '.epi-row.service.main .empty-date-epi .form-field-label-next', window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI );
-	jQuery( document ).on( 'keyup', '.epi-row.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.actionKeybordEmptyOptionDateEPI );
+	jQuery( document ).on( 'change', '.advanced-service.date .update-end-life-date-epi', window.eoxiaJS.theEPI.service.updateEndLifeDateEPI );
+	jQuery( document ).on( 'change', '.advanced-service.life-sheet .update-control-date-epi', window.eoxiaJS.theEPI.service.updateControlDateEPI );
+	jQuery( document ).on( 'change', '.advanced-service.life-sheet .update-purchase-date-epi', window.eoxiaJS.theEPI.service.updatePurchaseDateEPI );
+	jQuery( document ).on( 'change', '.row-advanced.service.main .update-manufacture-date-epi', window.eoxiaJS.theEPI.service.updateManufactureDateEPI );
+	jQuery( document ).on( 'mouseenter', '.row-advanced.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI );
+	jQuery( document ).on( 'mouseleave', '.row-advanced.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI );
+	jQuery( document ).on( 'click', '.row-advanced.service.main .empty-date-epi .form-field-label-next', window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI );
+	jQuery( document ).on( 'keyup', '.row-advanced.service.main .empty-date-epi', window.eoxiaJS.theEPI.service.actionKeybordEmptyOptionDateEPI );
 
 };
 
@@ -69,7 +69,7 @@ window.eoxiaJS.theEPI.service.buttonToggle = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.date" );
+	var parent_element = jQuery( this ).closest( ".advanced-service.date" );
 	var manufacture_date_old = parent_element.find( '.mysql-date[name="manufacture-date"]' ).val();
 	var lifetime_old = parent_element.find( '.form-field[name="lifetime"]' ).val();
 
@@ -77,7 +77,7 @@ window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
 	var end_life_date_element = parent_element.find( '.form-field[name="end-life-date"]');
 
 	var end_life_date = new Date( manufacture_date_old );
-	end_life_date.setFullYear( end_life_date.getFullYear() + parseInt(lifetime_old) );
+	end_life_date.setDate( end_life_date.getDate() + parseInt(lifetime_old) );
 	month = end_life_date.getMonth() + 1;
 	month   = month < 10 ? '0' + month : month;
 	day     = end_life_date.getDate()  < 10 ? '0' + end_life_date.getDate()  : end_life_date.getDate();
@@ -101,7 +101,7 @@ window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.updateControlDateEPI = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.life-sheet" );
+	var parent_element = jQuery( this ).closest( ".advanced-service.life-sheet" );
 	var commissioning_date_old = parent_element.find( '.mysql-date[name="commissioning-date"]' ).val();
 	var periodicity_old = parent_element.find( '.form-field[name="periodicity"]' ).val();
 
@@ -133,7 +133,7 @@ window.eoxiaJS.theEPI.service.updateControlDateEPI = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.updatePurchaseDateEPI = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.life-sheet" );
+	var parent_element = jQuery( this ).closest( ".advanced-service.life-sheet" );
 	var commissioning_date = parent_element.find( '.mysql-date[name="commissioning-date"]' ).val();
 
 	var purchase_date_element_sql = parent_element.find( '.mysql-date[name="purchase-date"]');
@@ -160,7 +160,7 @@ window.eoxiaJS.theEPI.service.updatePurchaseDateEPI = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	var parent_element = jQuery( this ).closest( ".row-advanced.service.main" );
 	var commissioning_date = parent_element.find( '.mysql-date[name="commissioning-date"]' ).val();
 	var manufacture_date_valued = parent_element.find( '.manufacture-date-valued[name="manufacture-date-valued"]' ).val();
 
@@ -185,7 +185,7 @@ window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
 	var end_life_date_element = parent_element.find( '.form-field[name="end-life-date"]');
 
 	var end_life_date = new Date( manufacture_date_old );
-	end_life_date.setFullYear( end_life_date.getFullYear() + parseInt(lifetime_old) );
+	end_life_date.setDate( end_life_date.getDate() + parseInt(lifetime_old) );
 	month = end_life_date.getMonth() + 1;
 	month   = month < 10 ? '0' + month : month;
 	day     = end_life_date.getDate()  < 10 ? '0' + end_life_date.getDate()  : end_life_date.getDate();
@@ -208,7 +208,7 @@ window.eoxiaJS.theEPI.service.updateManufactureDateEPI = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI  = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	var parent_element = jQuery( this ).closest( ".row-advanced.service.main" );
 	var myqsl_element = parent_element.find( '.empty-date-epi').find( '.mysql-date').val();
 	var date_element = parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val();
 	if ( myqsl_element != '' && date_element != '' ) {
@@ -229,7 +229,7 @@ window.eoxiaJS.theEPI.service.addEmptyOptionDateEPI  = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI  = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	var parent_element = jQuery( this ).closest( ".row-advanced.service.main" );
 	parent_element.find( '.empty-date-epi').find( '.form-field-label-next' ).remove();
 
 };
@@ -245,7 +245,7 @@ window.eoxiaJS.theEPI.service.removeEmptyOptionDateEPI  = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI  = function( event ) {
-	var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+	var parent_element = jQuery( this ).closest( ".row-advanced.service.main" );
 	parent_element.find( '.empty-date-epi').find( '.mysql-date').val( '' );
 	parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val( '' );
 
@@ -263,7 +263,7 @@ window.eoxiaJS.theEPI.service.actionEmptyOptionDateEPI  = function( event ) {
  */
 window.eoxiaJS.theEPI.service.actionKeybordEmptyOptionDateEPI = function( event ) {
 	if ( 8 === event.keyCode ) {
-		var parent_element = jQuery( this ).closest( ".epi-row.service.main" );
+		var parent_element = jQuery( this ).closest( ".row-advanced.service.main" );
 		parent_element.find( '.empty-date-epi').find( '.mysql-date').val( '' );
 		parent_element.find( '.empty-date-epi').find( '.form-field.date' ).val( '' );
 	}

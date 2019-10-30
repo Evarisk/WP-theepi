@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-75 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?>
+		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -35,6 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-url="<?php echo esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) ?>">
 			<i class="fas fa-qrcode"></i>
 		</div>
+		<?php do_shortcode( '[qrcode text="' . esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) . '" id="'. $epi->data['id'] .'" height=500 width=500 transparency=1]' ); ?>
 	</div>
 
 	<div class="table-cell table-150 serial-number" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></div>
@@ -44,11 +45,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
-		<?php if( $epi->data['commissioning_date_valid'] ): ?>
-			<span class="epi-last-control-date" name="control-date">
+		<span class="epi-last-control-date" name="control-date">
+			<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
 				<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
-			</span>
-		<?php endif; ?>
+			<?php endif; ?>
+		</span>
 		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
 			aria-label="<?php esc_html_e( 'Control', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"

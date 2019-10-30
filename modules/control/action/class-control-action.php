@@ -94,9 +94,14 @@ class Control_Action {
 			wp_send_json_error();
 		}
 
+		$epi = EPI_Class::g()->get( array( 'id' => $parent_id ), true );
+		$unique_identifier = Control_Class::g()->unique_identifier( $epi );
+
 		if ( $id == 0 ) {
-			$control = Control_Class::g()->get( array( 'schema' => true ), true );
+			$control = Control_Class::g()->draft();
 			$control->data['author_id'] = get_current_user_ID();
+			$control->data['unique_identifier'] = $unique_identifier;
+			$control = Control_Class::g()->update( $control->data );
 			$callback = 'createdControlSuccess';
 			$edit_mode = false;
 		}else {
@@ -105,7 +110,6 @@ class Control_Action {
 			$edit_mode = true;
 		}
 
-		$epi = EPI_Class::g()->get( array( 'id' => $parent_id ), true );
 
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -152,6 +156,9 @@ class Control_Action {
 		unset( $control->data['author_id'] );
 
 		$update_control = array(
+
+			'post_status'    => 'publish',
+
 			'control_date'   => $control_date,
 			'comment'        => $comment,
 			'url'            => $url,
@@ -204,22 +211,29 @@ class Control_Action {
 			$control = array();
 		} else {
 			$control = Control_Class::g()->get( array( 'id' => $id ), true );
-
-			ob_start();
-			\eoxia\View_Util::exec(
-				'theepi', 'control', 'item', array(
-					'control' => $control,
-					'frontend' => false,
-				)
-			);
+			if ( $control->data['status'] == 'draft' ) {
+				Control_Class::g()->delete( $id );
+				$callback = 'deletedControlEpiSuccess';
+				$view = "";
+			}else {
+				$callback = 'canceledEditControlEpiSuccess';
+				ob_start();
+				\eoxia\View_Util::exec(
+					'theepi', 'control', 'item', array(
+						'control' => $control,
+						'frontend' => false,
+					)
+				);
+				$view = ob_get_clean();
+			}
 		}
 
 		wp_send_json_success(
 			array(
 				'namespace'        => 'theEPI',
 				'module'           => 'control',
-				'callback_success' => 'canceledEditControlEpiSuccess',
-				'view'             => ob_get_clean(),
+				'callback_success' => $callback,
+				'view'             => $view,
 			)
 		);
 	}

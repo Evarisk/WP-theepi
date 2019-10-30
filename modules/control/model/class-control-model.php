@@ -44,7 +44,7 @@ class Control_Model extends \eoxia\Post_Model {
 			'type'        => 'string',
 			'meta_type'   => 'single',
 			'field'       => '_theepi_unique_identifier',
-			'description' => 'Is the Unique identifier + Unique key of this object. Ex: EPI1 or EPI10 or EPI99',
+			'description' => 'Is the Unique identifier + Unique key of this object. Ex: CTRL1 or CTRL10 or CTRL99',
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
 		);

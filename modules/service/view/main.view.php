@@ -54,7 +54,7 @@ if (! defined('ABSPATH') ) {
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-heart"></i></span>
 					<input class="form-field" type="number" name="lifetime" value="<?php echo esc_attr( $epi->data['lifetime_epi'] ); ?>"/>
-					<span class="form-field-label-next"><?php echo esc_html_e( 'years', 'theepi' ); ?></span>
+					<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 				</label>
 			</div>
 
@@ -108,7 +108,7 @@ if (! defined('ABSPATH') ) {
 
       <?php
       if ( ( $checked_purchase_date == 1 ) && ( $manufacture_date_valued  != "" ) ) :
-        $update_control_class = 'update-manufacture-date-epi';
+        $update_control_class = 'update-purchase-date-epi update-manufacture-date-epi';
       elseif ( ( $checked_purchase_date == 0 ) && ( $manufacture_date_valued  != "" ) ) :
         $update_control_class = 'update-manufacture-date-epi';
       elseif ( ( $checked_purchase_date == 1 ) && ( $manufacture_date_valued  == "" ) ) :
@@ -237,6 +237,7 @@ if (! defined('ABSPATH') ) {
 			aria-label="<?php esc_html_e( 'Cancel EPI', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 			data-action="cancel_edit_epi"
+			data-message="Are you sure you want to leave the PPE Edit Mode"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'cancel_edit_epi' ) ); ?>">
 			<?php esc_html_e( 'Cancel', 'theepi' ); ?>
 		</div>

@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="row-resume wpeo-form">
 	<div class="table-cell table-75 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['id'] ); ?>
+		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -64,7 +64,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php if ( $edit_mode ): ?>
-			<?php if( $epi->data['commissioning_date_valid'] ): ?>
+			<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
 				<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>">
 					<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
 				</span>

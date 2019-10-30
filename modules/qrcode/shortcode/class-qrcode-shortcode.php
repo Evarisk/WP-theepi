@@ -47,8 +47,8 @@ class Qrcode_Shortcode {
 			'id'       => '',
 			'text'     => '',
 			'eclevel'  => 3,
-			'height'   => 60,
-			'width'    => 60,
+			'height'   => 120,
+			'width'    => 120,
 			'transparency' => 1,
 		), $param ) );
 
@@ -79,7 +79,7 @@ class Qrcode_Shortcode {
 
 		require_once PLUGIN_THEEPI_PATH . "/core/external/phpqrcode/phpqrcode.php";
 
-		\QRcode::png( $text, $path, 3, 3, 4, false, 0xFFFFFF, 0x000000, $height, $width, $transparency );
+		\QRcode::png( $text, $path, 3, 12, 4, false, 0xFFFFFF, 0x000000, $height, $width, $transparency );
 
 		return '<img src="'.esc_attr($guid).'" style="height:'.esc_attr($height).'px; width:'.esc_attr($width).'px" alt="'.esc_attr($text).'" />';
 	}

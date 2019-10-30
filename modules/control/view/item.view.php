@@ -16,7 +16,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 <div class="table-row epi-control-row view" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $control->data['id'] ); ?>
+		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $control->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Avatar', 'theepi' ); ?>">

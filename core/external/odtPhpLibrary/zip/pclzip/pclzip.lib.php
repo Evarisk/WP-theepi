@@ -212,7 +212,7 @@ class digiPclZip
     //   Note that no real action is taken, if the archive does not exist it is not
     //   created. Use create() for that.
     // --------------------------------------------------------------------------------
-    function digiPclZip($p_zipname)
+    function __construct($p_zipname)
     {
 
         // ----- Tests the zlib
@@ -1863,7 +1863,7 @@ class digiPclZip
         if($last == 'm') {
             //$v_memory_limit = $v_memory_limit*1024*1024;
             $v_memory_limit = (int)$v_memory_limit*1048576;
-    
+
         }
         if($last == 'k') {
             $v_memory_limit = $v_memory_limit*1024;
@@ -2672,7 +2672,7 @@ class digiPclZip
                 if ((!isset($p_options[PCLZIP_OPT_TEMP_FILE_OFF]))
                     && (isset($p_options[PCLZIP_OPT_TEMP_FILE_ON])
                     || (isset($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD])
-                    && ($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] <= $p_header['size'])) ) 
+                    && ($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] <= $p_header['size'])) )
                 ) {
                     $v_result = $this->privAddFileUsingTempFile($p_filedescr, $p_header, $p_options);
                     if ($v_result < PCLZIP_ERR_NO_ERROR) {
@@ -3906,7 +3906,7 @@ class digiPclZip
                     if ((!isset($p_options[PCLZIP_OPT_TEMP_FILE_OFF]))
                         && (isset($p_options[PCLZIP_OPT_TEMP_FILE_ON])
                         || (isset($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD])
-                        && ($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] <= $p_entry['size'])) ) 
+                        && ($p_options[PCLZIP_OPT_TEMP_FILE_THRESHOLD] <= $p_entry['size'])) )
                     ) {
                         $v_result = $this->privExtractFileUsingTempFile($p_entry, $p_options);
                         if ($v_result < PCLZIP_ERR_NO_ERROR) {

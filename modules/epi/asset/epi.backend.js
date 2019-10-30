@@ -12,10 +12,9 @@ window.eoxiaJS.theEPI.EPI.init = function() {
 
 window.eoxiaJS.theEPI.EPI.event = function() {
 	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-table .button-save-epi', window.eoxiaJS.theEPI.EPI.saveEPIAjax );
-	jQuery( document ).on( 'click', '.wrap-theepi .wpeo-tab.epi .tab-redirect .tab-element', window.eoxiaJS.theEPI.EPI.tabRedirect );
 	jQuery( document ).on( 'click', '.wrap-theepi .action-request-edit-epi', window.eoxiaJS.theEPI.EPI.requestEpiEdit );
 	jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.addEpiWithKeybord );
-	jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord );
+	//jQuery( document ).on( 'keyup', 'body', window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord );
 
 };
 
@@ -35,22 +34,25 @@ window.eoxiaJS.theEPI.EPI.addEpiWithKeybord = function( event ) {
 	}
 };
 
-/**
- * Annule la création ou la modification d'un EPI en appuyant sur la touche echap.
- *
- * @since 0.7.0
- * @version 0.7.0
- *
- * @param  {KeyboardEvent} event L'état du clavier [echap].
- *
- * @return {void}
- */
-window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord = function( event ) {
-	if ( 27 === event.keyCode ) {
-		console.log('zdasd');
-		jQuery( this ).find( '.button-edit' ).find( '.event-keybord-cancel' ).click();
-	}
-};
+// /**
+//  * Annule la création ou la modification d'un EPI en appuyant sur la touche echap.
+//  *
+//  * @since 0.7.0
+//  * @version 0.7.0
+//  *
+//  * @param  {KeyboardEvent} event L'état du clavier [echap].
+//  *
+//  * @return {void}
+//  */
+// window.eoxiaJS.theEPI.EPI.cancelEpiWithKeybord = function( event ) {
+// 	console.log('zdzdz');
+// 	if ( 27 === event.keyCode ) {
+// 		var text = jQuery( this ).find( '.advanced-service.footer' ).find( '.event-keybord-cancel' ).attr( 'data-message' );
+// 		if ( confirm( text ) ) {
+// 			jQuery( this ).find( '.advanced-service.footer' ).find( '.event-keybord-cancel' ).click();
+// 		}
+// 	}
+// };
 
 /**
  * Le callback en cas de réussite à la requête Ajax "create_epi".
@@ -72,7 +74,7 @@ window.eoxiaJS.theEPI.EPI.CreatedEpiSuccess = function( triggeredElement, respon
 		class: 'table-row epi-row edit',
 		html: response.data.view_edit_epi + response.data.view_edit_service
 	});
-	rowContent.attr( 'data-id', '0' );
+	rowContent.attr( 'data-id', response.data.epi_id );
 
 	jQuery( '.wpeo-table.epi .tab-container' ).prepend( rowContent );
 };
@@ -154,7 +156,7 @@ window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response )
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.deletedEpiSuccess = function( triggeredElement, response ) {
-	triggeredElement.closest( '.table-row' ).fadeOut();
+	triggeredElement.closest( '.table-row' ).remove();
 };
 
 /**
@@ -387,22 +389,7 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 };
 
 /**
- * change l'onglet.
- *
- * @since 0.6.0
- * @version 0.6.0
- *
- * @param  {ClickEvent} event [tab]
- *
- * @return {void}
- */
-window.eoxiaJS.theEPI.EPI.tabRedirect = function( event ){
-    var url = jQuery( this ).attr( 'data-url' );
-    window.location.href = url;
-};
-
-/**
- * Verifie si la vue EDITION est ouverte
+ * Verifie si la vue EDITION est ouverte.
  *
  * @since 0.6.0
  * @version 0.6.0
@@ -452,15 +439,39 @@ window.eoxiaJS.theEPI.EPI.requestEpiEdit = function( event ){
 };
 
 /**
- * Ouvre le QrCode en grand
+ * Ouvre le QrCode en grand.
  *
  * @since 0.7.0
  * @version 0.7.0
  *
- * @param  {ClickEvent} event [qrcode]
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
  *
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.openQrCode = function( triggeredElement, response ){
 	triggeredElement.closest( '.table-row' ).append( response.data.view );
+};
+
+/**
+ *  Filtre pour les EPIS.
+ *
+ * @since 0.7.0
+ * @version 0.7.0
+ *
+ * @param  {HTMLDivElement} triggeredElement  L'élement HTML déclenchant la requête Ajax.
+ *
+ * @return {void}
+ */
+window.eoxiaJS.theEPI.EPI.filterEPISuccess = function( triggeredElement, response ){
+	window.location.assign(response.data.url);
+	console.log('eerere');
+	setTimeout(function(){
+		var filter = response.data.filters;
+		console.log(filter);
+		console.log(response.data.url);
+	}, 10000);
+
+	// var element = triggeredElement.closest( '.wrap-theepi' ).find( '.epi-filter-bar' ).find( 'option[value="' + filter + '"]' );
+	// element.attr( 'selected', 'selected' );
+
 };

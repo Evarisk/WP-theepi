@@ -50,6 +50,13 @@ class Control_Class extends \eoxia\Post_Class {
 	protected $base = 'epi-control';
 
 	/**
+	 * Le préfixe de l'objet dans TheEPI pour les contrôles.
+	 *
+	 * @var string
+	 */
+	public $element_prefix = 'CTRL';
+
+	/**
 	 * La version de l'objet.
 	 *
 	 * @var string
@@ -277,6 +284,43 @@ class Control_Class extends \eoxia\Post_Class {
 			return 'theEPI';
 		}
 	}
+
+	/**
+	 * Crée un post en status draft.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return POST $post les données du post.
+	 */
+	public function draft() {
+		$post = $this->get( array( 'post_status' => 'draft' ), true );
+		if ( ! empty ( $post ) ) {
+			$post = $this->delete( $post->data['id'] );
+		}
+		$post = $this->get( array( 'schema' => true ), true );
+		$post->data['post_status'] = 'draft';
+		$post = $this->update( $post->data );
+		$post = $this->get( array( 'post_status' => 'draft' ), true );
+		return $post;
+	}
+
+	/**
+	 * Crée un identifiant unique pour les contrôles.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return integer $unique_identifier l'identifiant unique.
+	 */
+	public function unique_identifier( $epi ) {
+		$controls = $this->get_controls( $epi );
+		$nb_controls = count( $controls ) + 1;
+		$unique_identifier = 'CTRL' . $nb_controls;
+		return $unique_identifier;
+	}
+
+
 }
 
 Control_Class::g();

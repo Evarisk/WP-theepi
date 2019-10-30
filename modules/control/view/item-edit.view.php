@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="table-row epi-control-row edit wpeo-form" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<input type="hidden" name="parent-id" value="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $control->data['id'] ); ?>
+		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $control->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Avatar', 'theepi' ); ?>">
@@ -63,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-125 table-end action-end" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>">
-		<div class="wpeo-button wpeo-tooltip-event button-green button-progress button-square-50 edit action-input"
+		<div class="wpeo-button wpeo-tooltip-event button-green button-progress button-square-50 edit action-input <?php echo ( $control->data['status_control'] == "" ) ? 'button-disable' : ''; ?>"
 			aria-label="<?php esc_html_e( 'Save Control', 'theepi' ); ?>"
 			data-parent="epi-control-row"
 			data-id="<?php echo esc_attr( $control->data['id'] ); ?>"

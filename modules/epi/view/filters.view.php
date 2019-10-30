@@ -19,8 +19,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="form-element">
 		<label class="form-field-container">
 			<span class="form-field-icon-prev"><i class="fas fa-filter"></i></span>
-			<select id="filters" class="form-field">
-				<option value="all" selected><?php esc_html_e( 'All', 'theepi' ); ?></option>
+			<select id="filters" name="filters" class="form-field">
+				<option value="all"><?php esc_html_e( 'All', 'theepi' ); ?></option>
 				<option value="ok"><?php esc_html_e( 'OK', 'theepi' ); ?></option>
 				<option value="ko"><?php esc_html_e( 'KO', 'theepi' ); ?></option>
 				<option value="repair"><?php esc_html_e( 'To fix', 'theepi' ); ?></option>

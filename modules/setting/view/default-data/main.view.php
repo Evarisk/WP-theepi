@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the lifetime of your PPE" ,'theepi' ); ?> </span>
 			<label class="form-field-container">
 				<input type="number" class="form-field" name="default-lifetime" value="<?php echo esc_attr( $default_lifetime ); ?>"/>
-				<span class="form-field-label-next"><?php echo esc_html_e( 'years', 'theepi' ); ?></span>
+				<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 			</label>
 		</div>
 

@@ -78,7 +78,6 @@ class EPI_ODT_Action {
 		);
 
 		$picture_definition = wp_get_attachment_image_src( $epi->data['thumbnail_id'], 'medium' );
-
 		if ( ! empty( $picture_definition ) ) {
 			$picture_final_path = str_replace( '\\', '/', str_replace( site_url( '/', 'http' ), ABSPATH, $picture_definition[0] ) );
 			$picture_final_path = str_replace( '\\', '/', str_replace( site_url( '/', 'https' ), ABSPATH, $picture_final_path ) );
@@ -92,14 +91,16 @@ class EPI_ODT_Action {
 			);
 		}
 
-		$qrcode_final_path = $upload_dir['basedir'] . $epi->data['qrcode']['wp_attached_file'];
-		$qrcode = array(
-			'type'   => 'picture',
-			'value'  => $qrcode_final_path,
-			'option' => array(
+		if ( ! empty ( $epi->data['qrcode']['wp_attached_file'] )) {
+			$qrcode_final_path = $upload_dir['basedir'] . $epi->data['qrcode']['wp_attached_file'];
+			$qrcode = array(
+				'type'   => 'picture',
+				'value'  => $qrcode_final_path,
+				'option' => array(
 				'size' => 4.5,
-			),
-		);
+				),
+			);
+		}
 
 		$document_meta = array(
 			'photo'         => $picture,
@@ -107,9 +108,9 @@ class EPI_ODT_Action {
 			'status'        => $status_epi,
 			'control'       => $control,
 			'serial_number' => $epi->data['serial_number'],
-			'id'            => $epi->data['id'],
+			'id'            => $epi->data['unique_identifier'],
 			'qrcode'        => $qrcode,
-			'url_epi'       => $epi->data['link'],
+			'url_epi'       => get_option( 'siteurl' ) . '/?p=' . $epi->data['id'],
 			'manager'       => $epi->data['manager'],
 			'title'         => $epi->data['title'],
 
@@ -126,6 +127,14 @@ class EPI_ODT_Action {
 			//'audits'        => array( 'type' => 'segment', 'value' => array() ),
 			'controls'      => array( 'type' => 'segment', 'value' => array() ),
 		);
+
+		if ( empty( $picture ) ) {
+			unset( $document_meta['photo'] );
+		}
+
+		if ( empty( $qrcode ) ) {
+			unset( $document_meta['qrcode'] );
+		}
 
 		// foreach ( $audits as $key => $audit ) {
 		// 	$user = get_user_by( 'id', $audit->data['author_id'] );

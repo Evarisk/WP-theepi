@@ -103,6 +103,10 @@ window.eoxiaJS.theEPI.control.displayStatusControl = function ( event ) {
 
   parent_element.find( '.dropdown-toggle' ).removeClass( 'OK KO repair trash' );
   parent_element.find( '.dropdown-toggle' ).addClass( status );
+  if ( parent_element.find( '.dropdown-toggle' ).hasClass( 'OK KO repair trash' ) );
+  {
+	 jQuery( this ).closest( '.epi-control-row' ).find( '.wpeo-button' ).removeClass( 'button-disable' );
+  }
 };
 
 /**
@@ -134,5 +138,5 @@ window.eoxiaJS.theEPI.control.canceledEditControlEpiSuccess = function( triggere
  * @return {void}
  */
 window.eoxiaJS.theEPI.control.deletedControlEpiSuccess = function( triggeredElement, response ) {
-	triggeredElement.closest( '.table-row' ).fadeOut();
+	triggeredElement.closest( '.table-row' ).remove();
 };

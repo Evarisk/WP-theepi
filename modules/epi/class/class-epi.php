@@ -530,7 +530,7 @@ class EPI_Class extends \eoxia\Post_Class {
 						'periodicity'  => $periodicity,
 						'lifetime_epi' => $lifetime,
 						'status_epi'   => 'KO',
-						'disposal_date' => '01/01/1970'
+						'disposal_date' => '1970-01-01'
 					)
 				);
 
@@ -578,7 +578,7 @@ class EPI_Class extends \eoxia\Post_Class {
 		$control_date_epi = $epi->data['control_date']['rendered']['mysql'];
 		$last_control_date = $this->get_last_control_date( $epi );
 
-		if ( $control_date_epi != $last_control_date ) {
+		if ( $last_control_date != "" ) {
 			$control_date_timestamp = strtotime( $last_control_date );
 			$last_control_date = date( 'Y-m-d',  strtotime( '+' . $periodicity . ' days' , $control_date_timestamp ));
 			$time = strtotime( $last_control_date ) - strtotime( $now ); // seconde
@@ -755,9 +755,29 @@ class EPI_Class extends \eoxia\Post_Class {
 			$last_control = Control_Class::g()->last_control_epi( $controls );
 			$last_control_date = date( 'Y-m-d' , strtotime( $last_control->data['date']['rendered']['mysql'] ));
 		}else {
-			$last_control_date = $epi->data['control_date']['rendered']['mysql'];
+			$last_control_date = "";
 		}
 		return $last_control_date;
+	}
+
+	/**
+	 * Crée un post en status draft.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return POST $post les données du post.
+	 */
+	public function draft() {
+		$post = $this->get( array( 'post_status' => 'draft' ), true );
+		if ( ! empty ( $post ) ) {
+			$post = $this->delete( $post->data['id'] );
+		}
+		$post = $this->get( array( 'schema' => true ), true );
+		$post->data['post_status'] = 'draft';
+		$post = $this->update( $post->data );
+		$post = $this->get( array( 'post_status' => 'draft' ), true );
+		return $post;
 	}
 
 }

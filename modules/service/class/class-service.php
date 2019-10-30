@@ -39,7 +39,7 @@ class Service_Class extends \eoxia\Singleton_Util {
 		$end_life_date = 0;
 
 		if( $manufacture_date > 0 && $lifetime > 0 ) {
-			$end_life_date = strtotime( '+' . $lifetime . ' years', $manufacture_date );
+			$end_life_date = strtotime( '+' . $lifetime . ' days', $manufacture_date );
 		}
 
 		return $end_life_date;
