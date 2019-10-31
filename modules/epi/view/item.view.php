@@ -44,20 +44,39 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<strong><?php echo esc_html( $epi->data['title'] ); ?></strong>
 	</div>
 
-	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
-		<span class="epi-last-control-date" name="control-date">
-			<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
-				<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
-			<?php endif; ?>
-		</span>
+	<div class="table-cell table-75 manager" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>">
+		<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['author_id'] . '" size="50"]' ); ?>
+	</div>
+
+	<div class="table-cell table-75 add-control" data-title="<?php echo esc_attr_e( 'Add Control', 'theepi' ); ?>">
 		<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
-			aria-label="<?php esc_html_e( 'Control', 'theepi' ); ?>"
+			aria-label="<?php esc_html_e( 'Add Control', 'theepi' ); ?>"
 			data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
 			data-frontend="fasle"
 			data-action="display_control"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
-			<i class="fas fa-eye"></i>
+			<i class="fas fa-plus"></i>
 		</div>
+	</div>
+
+	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+		<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
+			<span class="epi-last-control-date" name="control-date">
+				<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
+			</span>
+			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
+				aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
+				data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
+				data-frontend="fasle"
+				data-action="display_control"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
+				<i class="fas fa-eye"></i>
+			</div>
+		<?php else: ?>
+			<span class="epi-last-control-date" name="control-date">
+				<?php esc_html_e( 'No Control Yet', 'theepi' ); ?>
+			</span>
+		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">

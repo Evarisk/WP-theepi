@@ -102,6 +102,12 @@ class EPI_ODT_Action {
 			);
 		}
 
+		if ( $epi->data['disposal_date']['raw'] == '1970-01-01' ){
+			$disposal = "";
+		}else {
+			$disposal = $epi->data['disposal_date']['rendered']['date'];
+		}
+
 		$document_meta = array(
 			'photo'         => $picture,
 			'reference'     => $epi->data['reference'],
@@ -122,7 +128,9 @@ class EPI_ODT_Action {
 			'end_life'      => $epi->data['end_life_date']['rendered']['date'],
 			'periodicity'   => $epi->data['periodicity'],
 			'commissioning' => $epi->data['commissioning_date']['rendered']['date'],
-			'disposal'      => $epi->data['disposal_date']['rendered']['date'],
+			'disposal'      => $disposal,
+
+			'url_notice'    => $epi->data['url_notice'],
 
 			//'audits'        => array( 'type' => 'segment', 'value' => array() ),
 			'controls'      => array( 'type' => 'segment', 'value' => array() ),
@@ -135,6 +143,7 @@ class EPI_ODT_Action {
 		if ( empty( $qrcode ) ) {
 			unset( $document_meta['qrcode'] );
 		}
+
 
 		// foreach ( $audits as $key => $audit ) {
 		// 	$user = get_user_by( 'id', $audit->data['author_id'] );

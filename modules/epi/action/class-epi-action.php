@@ -189,6 +189,7 @@ class EPI_Action {
 
 		$update_epi = array(
 			'post_status'              => 'publish',
+			'author_id'                => get_current_user_id(),
 
 			'title'                    => $title,
 			'quantity'                 => $quantity,

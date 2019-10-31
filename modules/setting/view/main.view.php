@@ -20,8 +20,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<ul class="tab-list tab-redirect" data-message="<?php echo esc_html_e( "Warning !!! You didn't save your data" ); ?>">
 		<li class="tab-element <?php echo $page == "capability" ? 'tab-active' : ''; ?>" data-tab="capability" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=capability' ) ); ?>"> <?php esc_html_e( 'Capability', 'theepi' ); ?></li>
-		<li class="tab-element <?php echo $page == "default-data" ? 'tab-active' : ''; ?>" data-tab="default-data" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=default-data' ) ); ?>"> <?php esc_html_e( 'Default Data', 'theepi' ); ?> </li>
-		<li class="tab-element <?php echo $page == "date-management" ? 'tab-active' : ''; ?>" data-tab="date-management" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=date-management' ) ); ?>"> <?php esc_html_e( 'Date Management', 'theepi' ); ?> </li>
+		<li class="tab-element <?php echo $page == "default-data" ? 'tab-active' : ''; ?>" data-tab="default-data" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=default-data' ) ); ?>"> <?php esc_html_e( 'Default Data', 'theepi' ); ?></li>
+		<li class="tab-element <?php echo $page == "date-management" ? 'tab-active' : ''; ?>" data-tab="date-management" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=date-management' ) ); ?>"> <?php esc_html_e( 'Date Management', 'theepi' ); ?></li>
+		<li class="tab-element <?php echo $page == "acronym" ? 'tab-active' : ''; ?>" data-tab="acronym" data-url="<?php echo esc_attr( admin_url( 'options-general.php?page=theepi-setting&tab=acronym' ) ); ?>"> <?php esc_html_e( 'Acronym', 'theepi' ); ?></li>
 	</ul>
 
 	<div class="digirisk-wrap">
@@ -49,12 +50,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="tab-content <?php echo $page == "date-management" ? 'active' : 'hidden'; ?>">
-
 			<?php
 			\eoxia\View_Util::exec(
 				'theepi', 'setting', 'date-management/main', array(
 					'default_purchase_date'    => $default_purchase_date,
 					'default_manufacture_date' => $default_manufacture_date,
+					'page'                     => $page
+
+				)
+			);
+			?>
+		</div>
+
+		<div class="tab-content <?php echo $page == "acronym" ? 'active' : 'hidden'; ?>">
+			<?php
+			\eoxia\View_Util::exec(
+				'theepi', 'setting', 'acronym/main', array(
 					'page'                     => $page
 
 				)
