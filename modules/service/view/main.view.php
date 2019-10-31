@@ -140,7 +140,7 @@ if (! defined('ABSPATH') ) {
 			</div>
 
 			<div class="form-element form-element-unboxed group-date">
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php esc_html_e( 'Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'Control Date', 'theepi' ); ?> </span>
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php esc_html_e( 'First Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'First Control Date', 'theepi' ); ?> </span>
         <div class="form-error"></div>
       	<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-check"></i></span>
@@ -217,7 +217,7 @@ if (! defined('ABSPATH') ) {
 		</div>
 	</div>
 
-	<?php if( ! empty( $control )  && ( $control->data['id'] != 0) ): ?>
+	<!-- <?php if( ! empty( $control )  && ( $control->data['id'] != 0) ): ?>
 		<div class="advanced-service control">
 			<h2>
 				<?php esc_html_e( 'Last Control', 'theepi' ); ?>
@@ -230,7 +230,7 @@ if (! defined('ABSPATH') ) {
 				);
 			?>
 		</div>
-	<?php endif; ?>
+	<?php endif; ?> -->
 
 	<div class="advanced-service footer">
 		<div class="wpeo-button wpeo-tooltip-event button-grey action-attribute event-keybord-cancel"

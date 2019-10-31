@@ -31,7 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="wpeo-table table-flex epi">
 		<div class="table-row table-header">
-			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></div>
+			<div class="table-cell table-100" data-title="<?php esc_attr_e( 'ID', 'theepi' ); ?>"><span><?php esc_html_e( 'ID', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Image', 'theepi' ); ?>"><span><?php esc_html_e( 'Image', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Quantity', 'theepi' ); ?>"><span><?php esc_html_e( 'Quantity', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Code QrCode', 'theepi' ); ?>"><span><?php esc_html_e( 'Code QrCode', 'theepi' ); ?></span></div>

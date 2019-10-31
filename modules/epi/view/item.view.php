@@ -16,8 +16,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 } ?>
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
-	<div class="table-cell table-75 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
+	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
+		<?php echo esc_attr( 'S' . get_current_blog_id() . ' - ' . $epi->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">

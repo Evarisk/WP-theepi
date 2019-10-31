@@ -20,7 +20,8 @@ if (! defined('ABSPATH') ) {
     <h1>
     <?php esc_html_e('List of PPE', 'theepi'); ?>
 	<?php if ( ( user_can( get_current_user_id(), 'manage_theepi' ) ) || ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
-        <div class="wpeo-button button-blue button-radius-3 button-size-small action-request-edit-epi event-keybord"
+        <div class="wpeo-button button-blue button-radius-3 button-size-small action-request-edit-epi event-keybord wpeo-tooltip-event"
+			aria-label="<?php esc_html_e( 'Shortcut CTRL + ENTER', 'theepi' ); ?>"
 			data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
             data-action="create_epi"
             data-nonce="<?php echo esc_attr(wp_create_nonce('create_epi')); ?>">
@@ -33,12 +34,12 @@ if (! defined('ABSPATH') ) {
             <span><?php esc_html_e('New from images', 'theepi'); ?></span>
         </div>
 
-		<a href="<?php echo esc_attr ( admin_url( 'options-general.php?page=theepi-setting' ) ); ?>">
+		<!-- <a href="<?php echo esc_attr ( admin_url( 'options-general.php?page=theepi-setting' ) ); ?>">
 			<div class="wpeo-button button-blue button-radius-3 button-size-small wpeo-tooltip-event"
 				aria-label="<?php esc_html_e ( 'Go to the TheEPI Setting Page', 'theepi' ); ?>">
 				<i class="fas fa-cog"></i>
 			</div>
-		</a>
+		</a> -->
 	<?php endif; ?>
     </h1>
 

@@ -45,42 +45,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<!-- Footer -->
 			<div class="modal-footer">
-
-				<!-- <ul style="display : flex">
-					<li>
-							<i class="fas fa-link" style="color : LightSlateGrey"></i>
-					</li>
-
-					<li>
-						<span> #<?php echo esc_attr( $epi->data['id'] ); ?></span> </br>
-						<span style="color : gray"> <i class="fas fa-plug" style="color : gray"></i> EPI </span>
-					</li>
-
-					<li>
-						<span> <?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" mode="view" ]' ); ?></span>
-					</li>
-
-					<li>
-						<span style="color : rgb(0,132,255)"> <?php echo esc_attr( $epi->data['title'] ); ?></span> </br>
-						<span style="color : gray"> <i class="fas fa-barcode"></i> <?php echo esc_attr( $epi->data['reference'] ); ?></span>
-					</li>
-
-					<li>
-						<span>
-							<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
-								<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
-							<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "repair" ) ) : ?>
-								<i class="fas fa-tools fa-4x" style="color: orange;"></i>
-							<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "trash" ) ) : ?>
-								<i class="fas fa-trash fa-4x" style="color: black;"></i>
-							<?php else : ?>
-								<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>
-							<?php endif; ?>
-						</span>
-					</li>
-				</ul> -->
-
-
 				<a class="wpeo-button button-grey button-uppercase modal-close"><span><?php esc_html_e( 'Close', 'theepi' ); ?></span></a>
 			</div>
 		</div>

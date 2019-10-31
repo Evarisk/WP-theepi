@@ -316,7 +316,9 @@ class Control_Class extends \eoxia\Post_Class {
 	public function unique_identifier( $epi ) {
 		$controls = $this->get_controls( $epi );
 		$nb_controls = count( $controls ) + 1;
-		$unique_identifier = 'CTRL' . $nb_controls;
+		$site_id = 'S' . get_current_blog_id() . ' - ';
+		$epi_unique_identifier = $epi->data['unique_identifier'] . ' - ';
+		$unique_identifier =  $site_id . $epi_unique_identifier . 'CTRL' . $nb_controls;
 		return $unique_identifier;
 	}
 

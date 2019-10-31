@@ -108,7 +108,7 @@ class EPI_ODT_Action {
 			'status'        => $status_epi,
 			'control'       => $control,
 			'serial_number' => $epi->data['serial_number'],
-			'id'            => $epi->data['unique_identifier'],
+			'id'            => 'S' . $site_id . ' - ' . $epi->data['unique_identifier'],
 			'qrcode'        => $qrcode,
 			'url_epi'       => get_option( 'siteurl' ) . '/?p=' . $epi->data['id'],
 			'manager'       => $epi->data['manager'],

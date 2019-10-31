@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="table-row epi-control-row edit wpeo-form" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<input type="hidden" name="parent-id" value="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<i class="fas fa-hashtag"></i> <?php echo esc_attr( $control->data['unique_identifier'] ); ?>
+		<?php echo esc_attr( $control->data['unique_identifier'] ); ?>
 	</div>
 
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'Avatar', 'theepi' ); ?>">
