@@ -56,7 +56,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'default_purchase_date'    => $default_purchase_date,
 					'default_manufacture_date' => $default_manufacture_date,
 					'page'                     => $page
-
 				)
 			);
 			?>
@@ -66,8 +65,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php
 			\eoxia\View_Util::exec(
 				'theepi', 'setting', 'acronym/main', array(
-					'page'                     => $page
-
+					'page'                    => $page,
+					'default_acronym_site'    => $default_acronym_site,
+					'default_acronym_epi'     => $default_acronym_epi,
+					'default_acronym_control' => $default_acronym_control,
 				)
 			);
 			?>

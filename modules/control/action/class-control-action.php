@@ -47,9 +47,12 @@ class Control_Action {
 	 */
 	public function callback_display_control() {
 		check_ajax_referer( 'display_control' );
-		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
-		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+
+		$id       = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		$frontend = ( isset( $_POST['frontend'] ) && ( $_POST['frontend']  == "true" ) ) ? $_POST['frontend'] == true : false;
+		$type     = ! empty( $_POST['type'] ) ? sanitize_text_field( $_POST['type'] ) : 'see_control';
+
+		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 
 		ob_start();
 		\eoxia\View_Util::exec(
@@ -57,8 +60,9 @@ class Control_Action {
 			'control',
 			'modal',
 			array(
-				'epi' => $epi,
+				'epi'      => $epi,
 				'frontend' => $frontend,
+				'type'     => $type
 			)
 		);
 		$view = ob_get_clean();
@@ -146,9 +150,9 @@ class Control_Action {
 		$id             = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 		$parent_id      = ! empty( $_POST['parent-id'] ) ? (int) $_POST['parent-id'] : 0;
 		$control_date   = ! empty( $_POST['control-date'] ) ? sanitize_text_field( $_POST['control-date'] ) : esc_html__( '', 'theepi' );
-		$comment        = ! empty( $_POST['comment'] ) ? sanitize_text_field( $_POST['comment'] ) : esc_html__( 'No comment', 'theepi' );
+		$comment        = ! empty( $_POST['comment'] ) ? sanitize_text_field( $_POST['comment'] ) : esc_html_e( 'No comment', 'theepi' );
 		$url            = ! empty( $_POST['url'] ) ? sanitize_text_field( $_POST['url'] ) : 'No url';
-		$attached_file  = ! empty( $_POST['attached-file'] ) ? sanitize_text_field( $_POST['attached-file'] ) : esc_html__( 'No attached file', 'theepi' );
+		$attached_file  = ! empty( $_POST['attached-file'] ) ? sanitize_text_field( $_POST['attached-file'] ) : esc_html_e( 'No attached file', 'theepi' );
 		$status_control = ! empty( $_POST['status-control'] ) ? sanitize_text_field( $_POST['status-control'] ) : '';
 
 		$control = Control_Class::g()->get( array( 'id' => $id ), true );

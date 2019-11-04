@@ -22,6 +22,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<h3><?php esc_html_e( 'Handle acronym', 'theepi' ); ?></h3>
 
+		<div class="form-element" style="width : 20%">
+			<span class="form-label"><?php esc_html_e( 'Site', 'theepi' ); ?></span>
+			<label class="form-field-container">
+				<input type="text" class="form-field" name="default-acronym-site" value="<?php echo esc_attr( $default_acronym_site ) ?>"/>
+			</label>
+		</div>
+
+		<div class="form-element" style="width : 20%">
+			<span class="form-label"><?php esc_html_e( 'Personal Protective Equipment', 'theepi' ); ?></span>
+			<label class="form-field-container">
+				<input type="text" class="form-field" name="default-acronym-epi" value="<?php echo esc_attr( $default_acronym_epi ) ?>"/>
+			</label>
+		</div>
+
+		<div class="form-element" style="width : 20%">
+			<span class="form-label"><?php esc_html_e( 'Control', 'theepi' ); ?></span>
+			<label class="form-field-container">
+				<input type="text" class="form-field" name="default-acronym-control" value="<?php echo esc_attr( $default_acronym_control ) ?>"/>
+			</label>
+		</div>
+
 		<div class="wpeo-button button-green button-progress button-disable action-input" data-parent="wpeo-form" style="margin-top : 20px">
 			<span class="button-icon fas fa-save"></span>
 		</div>

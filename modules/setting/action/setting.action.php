@@ -32,6 +32,7 @@ class Setting_Action {
 		add_action( 'wp_ajax_save_capability_theepi', array( $this, 'callback_save_capability_theepi' ) );
 		add_action( 'wp_ajax_save_default_data', array( $this, 'callback_save_default_data' ) );
 		add_action( 'wp_ajax_save_date_management', array( $this, 'callback_save_date_management' ) );
+		add_action( 'wp_ajax_save_acronym', array( $this, 'callback_save_acronym' ) );
 
 		add_action( 'display_setting_user_theepi', array( $this, 'callback_display_setting_user_theepi' ), 10, 2 );
 		add_action( 'wp_ajax_paginate_setting_theepi_page_user', array( $this, 'callback_paginate_setting_theepi_page_user' ) );
@@ -70,13 +71,22 @@ class Setting_Action {
 		$default_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$default_manufacture_date = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
 
+		//acronym
+		$default_acronym_site = get_option( EPI_Class::g()->option_name_acronym_site );
+		$default_acronym_epi = get_option( EPI_Class::g()->option_name_acronym_epi );
+		$default_acronym_control = get_option( Control_Class::g()->option_name_acronym_control );
+
+
 		\eoxia\View_Util::exec(
 				'theepi', 'setting', 'main', array(
 				'page'                     => $page,
 				'default_periodicity'      => $default_periodicity,
 				'default_lifetime'         => $default_lifetime,
 				'default_purchase_date'    => $default_purchase_date,
-				'default_manufacture_date' => $default_manufacture_date
+				'default_manufacture_date' => $default_manufacture_date,
+				'default_acronym_site'     => $default_acronym_site,
+				'default_acronym_epi'      => $default_acronym_epi,
+				'default_acronym_control'  => $default_acronym_control
 			)
 		);
 	}
@@ -166,6 +176,35 @@ class Setting_Action {
 			)
 		);
 	}
+
+	/**
+	 * Enregistres les données par défaut de la gestion des acronymes.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
+	public function callback_save_acronym() {
+		check_ajax_referer( 'save_acronym' );
+
+		$default_acronym_site = ! empty( $_POST['default-acronym-site'] ) ? sanitize_text_field( $_POST['default-acronym-site'] ) : '';
+		$default_acronym_epi = ! empty( $_POST['default-acronym-epi'] ) ? sanitize_text_field( $_POST['default-acronym-epi'] ) : '';
+		$default_acronym_control = ! empty( $_POST['default-acronym-control'] ) ? sanitize_text_field( $_POST['default-acronym-control'] ) : '';
+
+		update_option( EPI_Class::g()->option_name_acronym_site, $default_acronym_site );
+		update_option( EPI_Class::g()->option_name_acronym_epi, $default_acronym_epi );
+		update_option( Control_Class::g()->option_name_acronym_control, $default_acronym_control );
+
+		wp_send_json_success(
+			array(
+				'namespace'        => 'theEPI',
+				'module'           => 'setting',
+				'callback_success' => 'savedAcronym',
+			)
+		);
+	}
+
 
 	/**
 	 * Méthode appelé par le champs de recherche dans la page "theepi".

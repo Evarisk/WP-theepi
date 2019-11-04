@@ -78,6 +78,13 @@ class Control_Class extends \eoxia\Post_Class {
 	public $option_name_per_page = 'control_per_page';
 
 	/**
+	 * le nom de l'option pour enregistrer l'acronym d'un contrôle (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_acronym_control = 'theepi_acronym_control';
+
+	/**
 	 * Le nom pour le register post type.
 	 *
 	 * @var string
@@ -311,17 +318,17 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @return integer $unique_identifier l'identifiant unique.
+	 * @param EPI_Model $epi Les données d'un EPI.
+	 *
+	 * @return integer $unique_identifier l'identifiant unique du contrôle.
 	 */
 	public function unique_identifier( $epi ) {
+		$prefix_control = get_option( $this->option_name_acronym_control );
 		$controls = $this->get_controls( $epi );
 		$nb_controls = count( $controls ) + 1;
-		$site_id = 'S' . get_current_blog_id() . ' - ';
-		$epi_unique_identifier = $epi->data['unique_identifier'] . ' - ';
-		$unique_identifier =  $site_id . $epi_unique_identifier . 'CTRL' . $nb_controls;
+		$unique_identifier =  $epi->data['unique_identifier'] . ' - ' . $prefix_control . $nb_controls;
 		return $unique_identifier;
 	}
-
 
 }
 

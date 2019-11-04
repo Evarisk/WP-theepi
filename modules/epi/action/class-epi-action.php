@@ -44,6 +44,7 @@ class EPI_Action {
 		add_action( 'wp_ajax_create_mass_epi', array( $this, 'callback_create_mass_epi' ) );
 
 		add_action( 'wp_ajax_open_qrcode', array( $this, 'callback_open_qrcode' ) );
+		add_action( 'wp_ajax_search_users', array( $this, 'callback_search_users' ) );
 		//add_action( 'wp_ajax_control_epi_without_task_manager', array( $this, 'callback_control_epi_without_task_manager' ) );
 
 	}
@@ -650,6 +651,47 @@ class EPI_Action {
 				'view'             => $view
 			)
 		);
+	}
+
+	/**
+	 * Cherche dans la BDD tous les users.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @return void
+	 */
+	public function callback_search_users() {
+		$term = ! empty( $_POST['term'] ) ? sanitize_text_field( $_POST['term'] ) : '';
+        if ( empty( $term ) ) {
+            wp_send_json_error();
+        }
+        $user_query = new \WP_User_Query( array(
+            'role'           => '',
+            'search'         => '' . $s . '',
+            'search_columns' => array(
+                'user_login',
+                'user_nicename',
+                'user_email',
+            ),
+        ) );
+        $users = $user_query->results;
+
+        ob_start();
+        foreach ( $users as $user ) :
+            ?>
+            <li data-id="<?php echo esc_attr( $user->ID ); ?>" data-result="<?php echo esc_html( $user->display_name ); ?>" class="autocomplete-result">
+                <?php echo get_avatar( $user->ID, 32, '', '', array( 'class' => 'autocomplete-result-image autocomplete-image-rounded' ) ); ?>
+                <div class="autocomplete-result-container">
+                    <span class="autocomplete-result-title"><?php echo esc_html( $user->display_name ); ?></span>
+                    <span class="autocomplete-result-subtitle"><?php echo esc_html( $user->user_email ); ?></span>
+                </div>
+            </li>
+            <?php
+        endforeach;
+        wp_send_json_success( array(
+            'view' => ob_get_clean(),
+        ) );
 	}
 
 	//VERSION 2 TASK-MANAGER

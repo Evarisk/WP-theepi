@@ -23,10 +23,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="modal-header">
 				<h2 class="modal-title">
 					<?php esc_html_e( 'Controls lists PPE', 'theepi' ); ?>
-					<span> #<?php echo esc_attr( $epi->data['id'] ); ?></span>
+					<span> <?php echo esc_attr( $epi->data['unique_identifier'] ); ?></span>
 					<span> <?php echo esc_attr( $epi->data['title'] ); ?></span>
 				</h2>
-				<?php if ( $frontend == false && ( user_can( get_current_user_id(), 'create_theepi' ) ) ): ?>
+				<?php if ( $frontend == false && ( user_can( get_current_user_id(), 'create_theepi' ) ) && $type == 'add_control' ): ?>
 					<div class="wpeo-button button-blue button-radius-3 button-size-small action-attribute"
 						data-message = "<?php esc_html_e( 'Do you want to exit edit mode', 'theepi' ); ?>"
 						data-parent_id="<?php echo esc_attr( $epi->data['id'] ); ?>"

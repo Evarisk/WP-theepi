@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<?php echo esc_attr( 'S' . get_current_blog_id() . ' - ' . $epi->data['unique_identifier'] ); ?>
+		<?php echo esc_attr( EPI_Class::g()->unique_identifier( $epi->data['id'] ) ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -54,7 +54,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
 			data-frontend="fasle"
 			data-action="display_control"
-			data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
+			data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
+			data-type="add_control" >
 			<i class="fas fa-plus"></i>
 		</div>
 	</div>
@@ -69,7 +70,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
 				data-frontend="fasle"
 				data-action="display_control"
-				data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
+				data-type="see_control" >
 				<i class="fas fa-eye"></i>
 			</div>
 		<?php else: ?>

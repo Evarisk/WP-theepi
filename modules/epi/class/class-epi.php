@@ -107,6 +107,20 @@ class EPI_Class extends \eoxia\Post_Class {
 	public $option_name_date_management_manufacture_date = 'theepi_date_management_manufacture_date';
 
 	/**
+	 * le nom de l'option pour enregistrer l'acronym du site (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_acronym_site = 'theepi_acronym_site';
+
+	/**
+	 * le nom de l'option pour enregistrer l'acronym d'un epi (défault).
+	 *
+	 * @var string
+	 */
+	public $option_name_acronym_epi = 'theepi_acronym_epi';
+
+	/**
 	 * La donnée par défaut de la périodicité.
 	 * Initialisé dans le constructeur.
 	 *
@@ -778,6 +792,25 @@ class EPI_Class extends \eoxia\Post_Class {
 		$post = $this->update( $post->data );
 		$post = $this->get( array( 'post_status' => 'draft' ), true );
 		return $post;
+	}
+
+	/**
+	 * Crée un ID unique personnalisé pour les EPIS.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param integer $id L'ID d'un EPI.
+	 *
+	 * @return string $epi->data['unique_identifier'] L'ID unique personnalisé de l'EPI.
+	 */
+	public function unique_identifier( $id ) {
+		$prefix_site = get_option( $this->option_name_acronym_site );
+		$prefix_epi = get_option( $this->option_name_acronym_epi );
+		$epi = $this->get( array( 'id' => $id ), true );
+		$epi->data['unique_identifier'] = $prefix_site . get_current_blog_id() . ' - ' . $prefix_epi . $epi->data['unique_key'];
+		$epi = $this->update( $epi->data );
+		return $epi->data['unique_identifier'];
 	}
 
 }
