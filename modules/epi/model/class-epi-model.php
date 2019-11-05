@@ -109,7 +109,7 @@ class EPI_Model extends \eoxia\Post_Model {
 		);
 
 		$this->schema['manager'] = array(
-			'type'        => 'string',
+			'type'        => 'integer',
 			'meta_type'   => 'single',
 			'field'       => '_theepi_manager',
 			'description' => 'Is the manager of the EPI.',

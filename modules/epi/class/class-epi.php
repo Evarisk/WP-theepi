@@ -541,6 +541,7 @@ class EPI_Class extends \eoxia\Post_Class {
 				$file_id = (int) $file_id;
 				$epi   = self::g()->create(
 					array(
+						'unique_identifier' => $this->unique_identifier( $epi->data['id'] ),
 						'periodicity'  => $periodicity,
 						'lifetime_epi' => $lifetime,
 						'status_epi'   => 'KO',
@@ -805,14 +806,16 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @return string $epi->data['unique_identifier'] L'ID unique personnalisé de l'EPI.
 	 */
 	public function unique_identifier( $id ) {
-		$prefix_site = get_option( $this->option_name_acronym_site );
-		$prefix_epi = get_option( $this->option_name_acronym_epi );
+		$prefix_site = ! empty( get_option( $this->option_name_acronym_site ) ) ? get_option( $this->option_name_acronym_site ) : 'S';
+		$prefix_epi = ! empty ( get_option( $this->option_name_acronym_epi ) ) ? get_option( $this->option_name_acronym_epi ) : 'EPI';
 		$epi = $this->get( array( 'id' => $id ), true );
-		$epi->data['unique_identifier'] = $prefix_site . get_current_blog_id() . ' - ' . $prefix_epi . $epi->data['unique_key'];
+
+		$epis = $this->get( array( 'post_type' => 'theepi-epi') );
+		$nb_epis = count( $epis ) + 1;
+		$epi->data['unique_identifier'] = $prefix_site . get_current_blog_id() . ' - ' . $prefix_epi . $nb_epis;
 		$epi = $this->update( $epi->data );
 		return $epi->data['unique_identifier'];
 	}
-
 }
 
 EPI_Class::g();

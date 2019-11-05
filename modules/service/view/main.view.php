@@ -53,7 +53,7 @@ if (! defined('ABSPATH') ) {
 				<div class="form-error"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-heart"></i></span>
-					<input class="form-field" type="number" name="lifetime" value="<?php echo esc_attr( $epi->data['lifetime_epi'] ); ?>"/>
+					<input class="form-field" type="number" name="lifetime" value="<?php $epi->data['lifetime_epi'] != 0 ? esc_attr_e( $epi->data['lifetime_epi'] ) : ''; ?>"/>
 					<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 				</label>
 			</div>
@@ -134,7 +134,7 @@ if (! defined('ABSPATH') ) {
         <div class="form-error"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-history"></i></span>
-					<input class="form-field" type="number" name="periodicity" value="<?php echo esc_attr( $epi->data['periodicity'] ); ?>"/>
+					<input class="form-field" type="number" name="periodicity" value="<?php $epi->data['periodicity'] != 0 ? esc_attr_e( $epi->data['periodicity'] ) : ''; ?>"/>
 					<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 				</label>
 			</div>
@@ -173,7 +173,7 @@ if (! defined('ABSPATH') ) {
 				</label>
 			</div>
 
-			<div class="form-element wpeo-autocomplete autocomplete-light" data-action="search_users">
+			<!-- <div class="form-element wpeo-autocomplete autocomplete-light" data-action="search_users">
 				<span class="form-label"><?php esc_html_e( 'Manager', 'theepi' ); ?></span>
 				<label class="form-field-container autocomplete-label">
 					<i class="autocomplete-icon-before fas fa-user-tie"></i>
@@ -181,7 +181,7 @@ if (! defined('ABSPATH') ) {
 					<span class="autocomplete-icon-after"><i class="fas fa-times"></i></span>
 				</label>
 				<ul class="autocomplete-search-list"></ul>
-			</div>
+			</div> -->
 
 			<!-- <div class="form-element">
 				<label class="form-field-container">
@@ -189,6 +189,10 @@ if (! defined('ABSPATH') ) {
 					<input type="text" class="form-field" name="manager" value="<?php echo esc_attr( $epi->data['manager'] ); ?>"/>
 				</label>
 			</div> -->
+
+			<?php
+				Service_Class::g()->display_form_owner( $epi );
+			?>
 
 			<div class="form-element">
 				<span class="form-label"><?php esc_html_e( 'Reference', 'theepi' ); ?></span>

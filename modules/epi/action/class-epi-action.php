@@ -77,6 +77,7 @@ class EPI_Action {
 		$epi->data['periodicity'] = intval(get_option( EPI_Class::g()->option_name_default_data_periodicity ) );
 		$epi->data['lifetime_epi'] = intval( get_option( EPI_Class::g()->option_name_default_data_lifetime ) );
 		$epi->data['disposal_date']['raw'] = '1970-01-01';
+		$epi->data['unique_identifier'] = EPI_Class::g()->unique_identifier( $epi->data['id'] );
 		$epi = EPI_Class::g()->update( $epi->data );
 
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
@@ -154,7 +155,7 @@ class EPI_Action {
 		//DONNEES ADDITIONNELLES
 		$maker              = ! empty( $_POST['maker'] ) ? sanitize_text_field( $_POST['maker'] ) : '';
 		$seller             = ! empty( $_POST['seller'] ) ? sanitize_text_field( $_POST['seller'] ) : '';
-		$manager            = ! empty( $_POST['manager'] ) ? sanitize_text_field( $_POST['manager'] ) : '';
+		$manager            = ! empty( $_POST['manager'] ) ? (int) ( $_POST['manager'] ) : 0;
 		$reference          = ! empty( $_POST['reference'] ) ? sanitize_text_field( $_POST['reference'] ) : '';
 		$url_notice         = ! empty( $_POST['url_notice'] ) ? sanitize_text_field( $_POST['url_notice'] ) : '';
 

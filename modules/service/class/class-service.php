@@ -227,6 +227,25 @@ class Service_Class extends \eoxia\Singleton_Util {
 		return $manufacture_date;
 	}
 
+	public function display_form_owner( $epi ){
+		global $eo_search;
+
+		$user_info = get_user_by( 'id', $epi->data['manager'] );
+
+		$eo_search->register_search( 'theepi', array(
+			'label'        => 'Responsable',
+			'icon'         => 'fa-user-tie',
+			'type'         => 'user',
+			'name'         => 'manager',
+			'value'        => ! empty( $user_info->data->ID ) ? $user_info->data->display_name : '',
+			'hidden_value' => ! empty( $user_info->data->ID ) ? $user_info->data->ID : -1,
+		) );
+
+		\eoxia\View_Util::exec( 'theepi', 'service', 'autocomplete-manager', array(
+			'epi' => $epi,
+		) );
+	}
+
 }
 
 Service_Class::g();

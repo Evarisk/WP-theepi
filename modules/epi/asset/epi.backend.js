@@ -350,7 +350,7 @@ window.eoxiaJS.theEPI.EPI.saveEPIAjax = function ( event ) {
 
 	var maker               = service_element.find( '.form-field[name="maker"]' ).val();
 	var seller              = service_element.find( '.form-field[name="seller"]' ).val();
-	var manager             = service_element.find( '.form-field[name="manager"]' ).val();
+	var manager             = service_element.find( '.eo-search-value[name="manager"]' ).val();
 	var reference           = service_element.find( '.form-field[name="reference"]' ).val();
 	var url_notice          = service_element.find( '.form-field[name="url-notice"]' ).val();
 

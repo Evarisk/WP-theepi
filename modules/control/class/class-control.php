@@ -323,7 +323,7 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @return integer $unique_identifier l'identifiant unique du contrôle.
 	 */
 	public function unique_identifier( $epi ) {
-		$prefix_control = get_option( $this->option_name_acronym_control );
+		$prefix_control = ! empty ( get_option( $this->option_name_acronym_control ) ) ? get_option( $this->option_name_acronym_control ) : 'C';
 		$controls = $this->get_controls( $epi );
 		$nb_controls = count( $controls ) + 1;
 		$unique_identifier =  $epi->data['unique_identifier'] . ' - ' . $prefix_control . $nb_controls;
