@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<strong><?php echo esc_html( $epi->data['title'] ); ?></strong>
 	</div>
 
-	<div class="table-cell table-100 manager" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>">
+	<div class="table-cell table-100  manager" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>">
 		<?php if ( $epi->data['manager'] == 0 ): ?>
 			<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['author_id'] . '" size="50"]' ); ?>
 		<?php else: ?>
