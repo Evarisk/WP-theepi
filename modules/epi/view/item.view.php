@@ -18,6 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
+		<?php echo esc_attr( $epi->data['id'] ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -45,7 +46,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-75 manager" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>">
-		<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['author_id'] . '" size="50"]' ); ?>
+		<?php if ( $epi->data['manager'] == 0 ): ?>
+			<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['author_id'] . '" size="50"]' ); ?>
+		<?php else: ?>
+			<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['manager'] . '" size="50"]' ); ?>
+		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-75 add-control" data-title="<?php echo esc_attr_e( 'Add Control', 'theepi' ); ?>">

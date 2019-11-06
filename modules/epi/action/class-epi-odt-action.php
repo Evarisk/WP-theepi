@@ -108,16 +108,22 @@ class EPI_ODT_Action {
 			$disposal = $epi->data['disposal_date']['rendered']['date'];
 		}
 
+		if ( empty ( $epi->data['manager'] ) ) {
+			$manager = get_user_by( 'id', $epi->data['author_id'] );
+		}else {
+			$manager = get_user_by( 'id', $epi->data['manager'] );
+		}
+
 		$document_meta = array(
 			'photo'         => $picture,
 			'reference'     => $epi->data['reference'],
 			'status'        => $status_epi,
 			'control'       => $control,
 			'serial_number' => $epi->data['serial_number'],
-			'id'            => 'S' . $site_id . ' - ' . $epi->data['unique_identifier'],
+			'id'            => $epi->data['unique_identifier'],
 			'qrcode'        => $qrcode,
 			'url_epi'       => get_option( 'siteurl' ) . '/?p=' . $epi->data['id'],
-			'manager'       => $epi->data['manager'],
+			'manager'       => $manager->data->display_name,
 			'title'         => $epi->data['title'],
 
 			'maker'         => $epi->data['maker'],

@@ -73,12 +73,7 @@ class EPI_Action {
 			$close_view_epi = "";
 		}
 
-		$epi = EPI_Class::g()->draft();
-		$epi->data['periodicity'] = intval(get_option( EPI_Class::g()->option_name_default_data_periodicity ) );
-		$epi->data['lifetime_epi'] = intval( get_option( EPI_Class::g()->option_name_default_data_lifetime ) );
-		$epi->data['disposal_date']['raw'] = '1970-01-01';
-		$epi->data['unique_identifier'] = EPI_Class::g()->unique_identifier( $epi->data['id'] );
-		$epi = EPI_Class::g()->update( $epi->data );
+		$epi = EPI_Class::g()->create_epi();
 
 		$checked_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
@@ -387,20 +382,14 @@ class EPI_Action {
 			$epi = array();
 		} else {
 			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
-			if ( $epi->data['status'] == 'draft' ) {
-				EPI_Class::g()->delete( $id );
-				$callback = 'deletedEpiSuccess';
-				$view = "";
-			}else {
-				ob_start();
-				\eoxia\View_Util::exec(
-					'theepi', 'epi', 'item', array(
-						'epi' => $epi,
-					)
-				);
-				$view = ob_get_clean();
-				$callback = 'canceledEditEpiSuccess';
-			}
+			ob_start();
+			\eoxia\View_Util::exec(
+				'theepi', 'epi', 'item', array(
+					'epi' => $epi,
+				)
+			);
+			$view = ob_get_clean();
+			$callback = 'canceledEditEpiSuccess';
 		}
 
 		wp_send_json_success(
@@ -595,6 +584,13 @@ class EPI_Action {
 		}
 
 		$epis = EPI_Class::g()->create_mass_epi( $files_id );
+
+		usort( $epis, function( $a, $b ) {
+			if ( $a->data['unique_key'] == $b->data['unique_key'] ) {
+				return 0;
+			}
+			return ($a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
+		} );
 
 		EPI_Class::g()->display_epi_list( $epis, false, '');
 		wp_die();

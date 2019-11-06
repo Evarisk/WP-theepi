@@ -210,6 +210,11 @@ class EPI_Class extends \eoxia\Post_Class {
 
 		$data_epis = $this->get_epis( $pagination_data, $term, $page );
 		$epis = $data_epis['epis'];
+		// foreach ( $epis as $epi ) {
+		// 	if ( $epi->data['status'] == 'draft' ) {
+		// 		$epi = $this->delete( $epi->data['id'] );
+		// 	}
+		// }
 
 		\eoxia\View_Util::exec(
 			'theepi', 'epi', 'main', array(
@@ -279,7 +284,15 @@ class EPI_Class extends \eoxia\Post_Class {
 		}
 		$args = wp_parse_args( $temp_args, $args );
 
-		$epis = self::g()->get( $args );
+		$epis = self::g()->get( array( $args , 'post_status' => 'publish' ) );
+
+		usort( $epis, function( $a, $b ) {
+			if ( $a->data['unique_key'] == $b->data['unique_key'] ) {
+				return 0;
+			}
+			return ($a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
+		} );
+
 		$nbr_epis = count( self::g()->get( $temp_args ) );
 		$data_epis = array( 'epis' => $epis, 'nbr_epis' => $nbr_epis );
 
@@ -524,30 +537,39 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function create_mass_epi( array $files_id ) {
 		$epis = array();
 
-		if ( get_option( $this->option_name_default_data_periodicity ) != "" ){
-			$periodicity =  (int) get_option( $this->option_name_default_data_periodicity );
-		}else {
-			$periodicity = $this->default_data_periodicity;
-		}
+		// if ( get_option( $this->option_name_default_data_periodicity ) != "" ){
+		// 	$periodicity =  (int) get_option( $this->option_name_default_data_periodicity );
+		// }else {
+		// 	$periodicity = $this->default_data_periodicity;
+		// }
+		//
+		// if ( get_option( $this->option_name_default_data_lifetime ) != "" ){
+		// 	$lifetime =  (int) get_option( $this->option_name_default_data_lifetime );
+		// }else {
+		// 	$lifetime = $this->default_data_lifetime;
+		// }
 
-		if ( get_option( $this->option_name_default_data_lifetime ) != "" ){
-			$lifetime =  (int) get_option( $this->option_name_default_data_lifetime );
-		}else {
-			$lifetime = $this->default_data_lifetime;
-		}
 
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				$epi   = self::g()->create(
-					array(
-						'unique_identifier' => $this->unique_identifier( $epi->data['id'] ),
-						'periodicity'  => $periodicity,
-						'lifetime_epi' => $lifetime,
-						'status_epi'   => 'KO',
-						'disposal_date' => '1970-01-01'
-					)
-				);
+				//$epi = current ( $this->get( array( 'post_type' => 'theepi-epi') ) );
+				//$unique_identifier = $this->unique_identifier( $epi->data['id'] );
+
+				// $epi = $this->create(
+				// 	array(
+				// 		//'unique_identifier' => $unique_identifier,
+				// 		'periodicity'  => $periodicity,
+				// 		'lifetime_epi' => $lifetime,
+				// 		'status_epi'   => 'KO',
+				// 		'disposal_date' => '1970-01-01'
+				// 	)
+				// );
+
+				$epi = $this->create_epi();
+				$epi->data['status_epi'] = 'KO';
+				$epi->data['post_status'] = 'publish';
+				$epi = $this->update( $epi->data );
 
 				\eoxia\WPEO_Upload_Class::g()->set_thumbnail(
 					array(
@@ -791,7 +813,7 @@ class EPI_Class extends \eoxia\Post_Class {
 		$post = $this->get( array( 'schema' => true ), true );
 		$post->data['post_status'] = 'draft';
 		$post = $this->update( $post->data );
-		$post = $this->get( array( 'post_status' => 'draft' ), true );
+		//$post = $this->get( array( 'post_status' => 'draft' ), true );
 		return $post;
 	}
 
@@ -808,14 +830,39 @@ class EPI_Class extends \eoxia\Post_Class {
 	public function unique_identifier( $id ) {
 		$prefix_site = ! empty( get_option( $this->option_name_acronym_site ) ) ? get_option( $this->option_name_acronym_site ) : 'S';
 		$prefix_epi = ! empty ( get_option( $this->option_name_acronym_epi ) ) ? get_option( $this->option_name_acronym_epi ) : 'EPI';
-		$epi = $this->get( array( 'id' => $id ), true );
 
-		$epis = $this->get( array( 'post_type' => 'theepi-epi') );
-		$nb_epis = count( $epis ) + 1;
+		$epis = $this->get( array( 'post_type' => 'theepi-epi', 'post_status' =>  array( 'publish', 'draft', 'trash' )));
+		$nb_epis = count( $epis );
+		$epi = $this->get( array( 'id' => $id ), true );
 		$epi->data['unique_identifier'] = $prefix_site . get_current_blog_id() . ' - ' . $prefix_epi . $nb_epis;
 		$epi = $this->update( $epi->data );
+
 		return $epi->data['unique_identifier'];
 	}
+
+	/**
+	 * Crée un ID unique personnalisé pour les EPIS.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param integer $id L'ID d'un EPI.
+	 *
+	 * @return string $epi->data['unique_identifier'] L'ID unique personnalisé de l'EPI.
+	 */
+	public function create_epi() {
+
+		$epi = $this->draft();
+		$epi->data['periodicity'] = intval( get_option( $this->option_name_default_data_periodicity ) );
+		$epi->data['lifetime_epi'] = intval( get_option( $this->option_name_default_data_lifetime ) );
+		$epi->data['disposal_date']['raw'] = '1970-01-01';
+		$epi->data['unique_identifier'] = $this->unique_identifier( $epi->data['id'] );
+		$epi->data['author_id'] = get_current_user_id();
+		$epi = $this->update( $epi->data );
+
+		return $epi;
+	}
+
 }
 
 EPI_Class::g();
