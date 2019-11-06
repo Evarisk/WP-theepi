@@ -63,6 +63,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
+	<div class="table-cell table-100 responsable" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>"></div>
+
 	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php if ( $edit_mode ): ?>
 			<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
@@ -72,6 +74,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<?php endif; ?>
 		<?php endif; ?>
 	</div>
+
+	<div class="table-cell table-75 add-control" data-title="<?php echo esc_attr_e( 'Add control', 'theepi' ); ?>"></div>
 
 	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">
 		<?php if ( $edit_mode ): ?>

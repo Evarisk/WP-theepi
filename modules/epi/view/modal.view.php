@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 
 		<div class="modal-content">
-			<?php echo do_shortcode( '[qrcode text="' . $url . '" id="'. $epi->data['id'] .'" height=500 width=500 transparency=1]' ); ?>
+			<?php echo do_shortcode( '[qrcode text="' . $url . '" id="'. $epi->data['id'] .'" transparency=1]' ); ?>
 		</div>
 
 		<!-- Footer -->

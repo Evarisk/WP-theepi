@@ -63,13 +63,27 @@
         width: 45%;
         padding-top: 1.5em;
       }
-      &.last-control {
+      &.manager {
         order: 8;
-        width: 50%;
+        width: 33.333333%;
+        text-align: center;
+
+        .tm-avatar {
+          margin: auto;
+        }
+      }
+      &.last-control {
+        order: 9;
+        width: 33.333333%;
+        text-align: center;
+      }
+      &.add-control {
+        order: 10;
+        width: 33.333333%;
         text-align: center;
       }
       &.next-control {
-        order: 9;
+        order: 11;
         width: 50%;
         text-align: center;
 
@@ -78,8 +92,9 @@
         }
       }
       &.status {
-        order: 10;
+        order: 12;
         text-align: center;
+        width: 50%;
 
         .epi-status-icon {
           display: inline-block;
@@ -91,7 +106,7 @@
       }
 
       /** Affichage des before */
-      &.quantity, &.code-qr, &.serial-number, &.last-control, &.next-control, &.status {
+      &.quantity, &.code-qr, &.serial-number, &.last-control, &.next-control, &.status, &.manager, &.add-control {
         &::before {
           display: block;
           content: attr(data-title);

@@ -400,6 +400,10 @@
   .wrap-theepi .modal-qr-code .modal-container .modal-content {
     overflow-y: inherit;
     text-align: center; }
+    .wrap-theepi .modal-qr-code .modal-container .modal-content img {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 500px; }
   .wrap-theepi .modal-qr-code .modal-container .modal-footer {
     text-align: left; }
     .wrap-theepi .modal-qr-code .modal-container .modal-footer .wpeo-button.modal-close {
@@ -422,11 +426,20 @@
   line-height: 50px;
   padding: 0 !important;
   margin: 0;
-  background: #fff;
-  font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro"; }
+  background: #fff; }
   .wrap-theepi .wpeo-table .epi-status-icon::before {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.6);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    line-height: 1;
+    vertical-align: -.125em;
+    font-family: 'Font Awesome 5 Free', 'Font Awesome 5 Pro';
+    font-weight: 900;
     content: "\f0d7"; }
   .wrap-theepi .wpeo-table .epi-status-icon.OK {
     background: #47e58e; }
@@ -481,6 +494,8 @@
 
 .wrap-theepi .wpeo-table .wpeo-form .form-element .autocomplete-label {
   border: 0; }
+  .wrap-theepi .wpeo-table .wpeo-form .form-element .autocomplete-label .autocomplete-icon-before {
+    color: rgba(0, 0, 0, 0.4); }
 
 .wrap-theepi .wpeo-table .wpeo-form .form-element .form-field, .wrap-theepi .wpeo-table .wpeo-form .form-element [class*="form-field-icon"] {
   background: none;
@@ -677,25 +692,36 @@
       order: 3;
       width: 45%;
       padding-top: 1.5em; }
-    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.last-control {
+    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.manager {
       order: 8;
-      width: 50%;
+      width: 33.333333%;
+      text-align: center; }
+      .wrap-theepi .wpeo-table.table-flex.epi .table-cell.manager .tm-avatar {
+        margin: auto; }
+    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.last-control {
+      order: 9;
+      width: 33.333333%;
+      text-align: center; }
+    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.add-control {
+      order: 10;
+      width: 33.333333%;
       text-align: center; }
     .wrap-theepi .wpeo-table.table-flex.epi .table-cell.next-control {
-      order: 9;
+      order: 11;
       width: 50%;
       text-align: center; }
       .wrap-theepi .wpeo-table.table-flex.epi .table-cell.next-control .epi-item-control {
         display: inline-block; }
     .wrap-theepi .wpeo-table.table-flex.epi .table-cell.status {
-      order: 10;
-      text-align: center; }
+      order: 12;
+      text-align: center;
+      width: 50%; }
       .wrap-theepi .wpeo-table.table-flex.epi .table-cell.status .epi-status-icon {
         display: inline-block; }
     .wrap-theepi .wpeo-table.table-flex.epi .table-cell.action-end {
       order: 4;
       width: 25%; }
-    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.quantity::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.code-qr::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.serial-number::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.last-control::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.next-control::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.status::before {
+    .wrap-theepi .wpeo-table.table-flex.epi .table-cell.quantity::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.code-qr::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.serial-number::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.last-control::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.next-control::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.status::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.manager::before, .wrap-theepi .wpeo-table.table-flex.epi .table-cell.add-control::before {
       display: block;
       content: attr(data-title);
       margin: 1em 0;

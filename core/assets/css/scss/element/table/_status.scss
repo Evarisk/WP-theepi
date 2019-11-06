@@ -8,11 +8,11 @@
 		padding: 0 !important;
 		margin: 0;
 		background: #fff;
-		font-family: $font__icon;
 
 		&::before {
 			font-size: 20px;
 			color: rgba(0,0,0,0.6);
+      @include fa-icon;
 			content: fa-content( $fa-var-caret-down );
 		}
 
