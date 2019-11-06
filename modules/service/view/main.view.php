@@ -15,7 +15,7 @@ if (! defined('ABSPATH') ) {
     exit;
 } ?>
 
-<div class="row-advanced service main wpeo-form" data-id="<?php echo esc_attr( $epi->data[ 'id' ] ); ?>">
+<div class="row-advanced service main wpeo-form form-light" data-id="<?php echo esc_attr( $epi->data[ 'id' ] ); ?>">
 	<div class="advanced-service date">
 		<h2>
 			<?php esc_html_e( 'PPE Date', 'theepi' ); ?>

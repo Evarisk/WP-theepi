@@ -37,9 +37,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Code QrCode', 'theepi' ); ?>"><span><?php esc_html_e( 'Code QrCode', 'theepi' ); ?></span></div>
 			<div class="table-cell table-150" data-title="<?php esc_attr_e( 'Serial Number', 'theepi' ); ?>"><i class="fas fa-barcode"></i> <?php esc_html_e( 'Serial Number', 'theepi' ); ?></span></div>
 			<div class="table-cell" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></div>
-			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Manager', 'theepi' ); ?>"><span><?php esc_html_e( 'Manager', 'theepi' ); ?></span></div>
-			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Add Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Add Control', 'theepi' ); ?></span></div>
+			<div class="table-cell table-100" data-title="<?php esc_attr_e( 'Manager', 'theepi' ); ?>"><span><?php esc_html_e( 'Manager', 'theepi' ); ?></span></div>
 			<div class="table-cell table-150" data-title="<?php esc_attr_e( 'Last Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Last Control', 'theepi' ); ?></span></div>
+            <div class="table-cell table-75" data-title="<?php esc_attr_e( 'Add Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Add Control', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Next Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Next Control', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></div>
 			<div class="table-cell table-100 table-end" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>"><span><?php esc_html_e( 'Actions', 'theepi' ); ?></span></div>

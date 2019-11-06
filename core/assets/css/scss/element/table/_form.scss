@@ -6,10 +6,21 @@
 
 		&:hover {
 			border: 1px solid rgba(0,0,0,0.5);
+
+			.autocomplete-label {
+				border: 0;
+			}
 		}
 	}
 	.form-field {
 		height: 100%;
+	}
+	.autocomplete-label {
+		border: 0;
+
+		.autocomplete-icon-before {
+			color: rgba(0,0,0,0.4);
+		}
 	}
 	.form-field, [class*="form-field-icon"] {
 		background: none;

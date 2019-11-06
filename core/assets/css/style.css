@@ -422,7 +422,8 @@
   line-height: 50px;
   padding: 0 !important;
   margin: 0;
-  background: #fff; }
+  background: #fff;
+  font-family: "Font Awesome 5 Free", "Font Awesome 5 Pro"; }
   .wrap-theepi .wpeo-table .epi-status-icon::before {
     font-size: 20px;
     color: rgba(0, 0, 0, 0.6);
@@ -472,9 +473,14 @@
   transition: all 0.2s ease-out; }
   .wrap-theepi .wpeo-table .wpeo-form .form-element .form-field-container:hover {
     border: 1px solid rgba(0, 0, 0, 0.5); }
+    .wrap-theepi .wpeo-table .wpeo-form .form-element .form-field-container:hover .autocomplete-label {
+      border: 0; }
 
 .wrap-theepi .wpeo-table .wpeo-form .form-element .form-field {
   height: 100%; }
+
+.wrap-theepi .wpeo-table .wpeo-form .form-element .autocomplete-label {
+  border: 0; }
 
 .wrap-theepi .wpeo-table .wpeo-form .form-element .form-field, .wrap-theepi .wpeo-table .wpeo-form .form-element [class*="form-field-icon"] {
   background: none;
