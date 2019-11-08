@@ -3,19 +3,35 @@ body.single-theepi-epi .theepi-epi {
   flex-direction: row;
   margin-top: 2em;
 
+  @media ( max-width: $media__medium ) {
+    flex-direction: column;
+  }
+
   .post-thumbnail, .post-content {
     flex-grow: 1;
   }
   .post-thumbnail {
     width: 33.333333%;
+
+    @media ( max-width: $media__medium ) {
+      width: 100%;
+    }
   }
   .post-content {
     width: 66.666666%;
+
+    @media ( max-width: $media__medium ) {
+      width: 100%;
+    }
   }
 }
 
 body.single-theepi-epi .theepi-epi .post-content {
   padding-left: 2.5em;
+
+  @media ( max-width: $media__medium ) {
+    padding-left: 0;
+  }
 
   .entry-title {
     margin-top: 0;

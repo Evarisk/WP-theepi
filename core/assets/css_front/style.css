@@ -30,15 +30,27 @@ body.single-theepi-epi .theepi-epi {
   display: flex;
   flex-direction: row;
   margin-top: 2em; }
+  @media (max-width: 680px) {
+    body.single-theepi-epi .theepi-epi {
+      flex-direction: column; } }
   body.single-theepi-epi .theepi-epi .post-thumbnail, body.single-theepi-epi .theepi-epi .post-content {
     flex-grow: 1; }
   body.single-theepi-epi .theepi-epi .post-thumbnail {
     width: 33.333333%; }
+    @media (max-width: 680px) {
+      body.single-theepi-epi .theepi-epi .post-thumbnail {
+        width: 100%; } }
   body.single-theepi-epi .theepi-epi .post-content {
     width: 66.666666%; }
+    @media (max-width: 680px) {
+      body.single-theepi-epi .theepi-epi .post-content {
+        width: 100%; } }
 
 body.single-theepi-epi .theepi-epi .post-content {
   padding-left: 2.5em; }
+  @media (max-width: 680px) {
+    body.single-theepi-epi .theepi-epi .post-content {
+      padding-left: 0; } }
   body.single-theepi-epi .theepi-epi .post-content .entry-title {
     margin-top: 0;
     line-height: 1; }
