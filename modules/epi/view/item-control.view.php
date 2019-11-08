@@ -15,6 +15,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Documentation des variables utilisées dans la vue.
+ *
+ * @var integer $number_days Le nombre de jours avant le prochain contrôle.
+ */
+
+
 if ( ( $number_days < 0 ) ) :
 	$control_class = 'red';
 elseif ( ( $number_days >= 0 ) && ( $number_days <= 15 ) ) :

@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\ODT_Class;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -55,20 +57,20 @@ class EPI_ODT_Action {
 		$control    = EPI_Class::g()->get_days( $epi );
 		$args       = array( 'parent' => $epi );
 
-		//$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );
-		$controls= Control_Class::g()->get( array( 'post_parent' => $id ) );
+		// "$audits = \task_manager\Audit_Class::g()->get( array( 'post_parent' => $id ) );"
+		$controls = Control_Class::g()->get( array( 'post_parent' => $id ) );
 
 		$picture = array();
-		$qrcode = array();
+		$qrcode  = array();
 
 		$site_id = get_current_blog_id();
 
-		$title   = current_time( 'Ymd' ) . '_';
-		$title  .= 'EPI' . '_';
-		$title  .=  $site_id . '_';
-		$title  .=  sanitize_title( $epi->data['id'] ) . '_';
-		$title  .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
-		$title   = str_replace( '-', '_', $title );
+		$title  = current_time( 'Ymd' ) . '_';
+		$title .= 'EPI_';
+		$title .= $site_id . '_';
+		$title .= sanitize_title( $epi->data['id'] ) . '_';
+		$title .= ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
+		$title  = str_replace( '-', '_', $title );
 
 		$document_data = array(
 			'title'             => $title,
@@ -91,26 +93,27 @@ class EPI_ODT_Action {
 			);
 		}
 
-		if ( ! empty ( $epi->data['qrcode']['wp_attached_file'] )) {
+		if ( ! empty( $epi->data['qrcode']['wp_attached_file'] ) ) {
 			$qrcode_final_path = $upload_dir['basedir'] . $epi->data['qrcode']['wp_attached_file'];
+
 			$qrcode = array(
 				'type'   => 'picture',
 				'value'  => $qrcode_final_path,
 				'option' => array(
-				'size' => 4.5,
+					'size' => 4.5,
 				),
 			);
 		}
 
-		if ( $epi->data['disposal_date']['raw'] == '1970-01-01' ){
-			$disposal = "";
-		}else {
+		if ( '1970-01-01' === $epi->data['disposal_date']['raw'] ) {
+			$disposal = '';
+		} else {
 			$disposal = $epi->data['disposal_date']['rendered']['date'];
 		}
 
-		if ( empty ( $epi->data['manager'] ) ) {
+		if ( empty( $epi->data['manager'] ) ) {
 			$manager = get_user_by( 'id', $epi->data['author_id'] );
-		}else {
+		} else {
 			$manager = get_user_by( 'id', $epi->data['manager'] );
 		}
 
@@ -138,8 +141,11 @@ class EPI_ODT_Action {
 
 			'url_notice'    => $epi->data['url_notice'],
 
-			//'audits'        => array( 'type' => 'segment', 'value' => array() ),
-			'controls'      => array( 'type' => 'segment', 'value' => array() ),
+			// "'audits'        => array( 'type' => 'segment', 'value' => array() ),"
+			'controls'      => array(
+				'type'  => 'segment',
+				'value' => array(),
+			),
 		);
 
 		if ( empty( $picture ) ) {
@@ -188,8 +194,8 @@ class EPI_ODT_Action {
 
 			$user = get_user_by( 'id', $control->data['author_id'] );
 
-			$document_meta['controls']['value'][] = array (
-				'date_control' 	  => date( 'd/m/Y', strtotime( $control->data['date']['rendered']['mysql'] ) ),
+			$document_meta['controls']['value'][] = array(
+				'date_control'    => date( 'd/m/Y', strtotime( $control->data['date']['rendered']['mysql'] ) ),
 				'control_comment' => $control->data['comment'],
 				'user'            => $user->data->display_name,
 				'status_control'  => $control->data['status_control'],
@@ -199,10 +205,10 @@ class EPI_ODT_Action {
 		$response = EPI_ODT_Class::g()->save_document_data( $id, $document_meta, $args );
 
 		$response['document']->data['title']             = current_time( 'Ymd' ) . '_';
-		$response['document']->data['title']            .= 'EPI' . '_';
+		$response['document']->data['title']            .= 'EPI_';
 		$response['document']->data['title']            .= $site_id . '_';
 		$response['document']->data['title']            .= sanitize_title( $epi->data['id'] ) . '_';
-		$response['document']->data['title']            .= \eoxia\ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
+		$response['document']->data['title']            .= ODT_Class::g()->get_revision( $epi->data['type'], $epi->data['id'] );
 		$response['document']->data['title']             = str_replace( '-', '_', $response['document']->data['title'] );
 		$response['document']->data['guid']              = str_replace( '\\', '/', $upload_dir['baseurl'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';
 		$response['document']->data['path']              = str_replace( '\\', '/', $upload_dir['basedir'] ) . '/theepi/' . $epi->data['type'] . '/' . $epi->data['id'] . '/' . $response['document']->data['title'] . '.odt';
@@ -213,14 +219,15 @@ class EPI_ODT_Action {
 
 		EPI_ODT_Class::g()->update( $response['document']->data );
 
-		$response = EPI_ODT_Class::g()->create_document( $response['document']->data['id'] );
+		EPI_ODT_Class::g()->create_document( $response['document']->data['id'] );
 
-		wp_send_json_success( array(
-			'namespace'        => 'theEPI',
-			'module'           => 'EPI',
-			'callback_success' => 'exportedEPISuccess',
-			'filename'         => $filename,
-			'link'             => $link,
+		wp_send_json_success(
+			array(
+				'namespace'        => 'theEPI',
+				'module'           => 'EPI',
+				'callback_success' => 'exportedEPISuccess',
+				'filename'         => $filename,
+				'link'             => $link,
 			)
 		);
 	}

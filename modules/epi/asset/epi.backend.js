@@ -127,13 +127,13 @@ window.eoxiaJS.theEPI.EPI.savedEpiSuccess = function( triggeredElement, response
  * @return {void}
  */
 window.eoxiaJS.theEPI.EPI.savedEpiError = function( triggeredElement, response ) {
-	var id = triggeredElement.attr( 'data-id' );
+	let id = triggeredElement.attr( 'data-id' );
 	//var parent_element_edit = triggeredElement.closest( '.tab-container' ).find( '.table-row[ data-id="' + id + '"]' );
-	var parent_element = triggeredElement.closest( '.tab-container' ).find( '.service[ data-id="' + id + '"]' );
+	let parent_element = triggeredElement.closest( '.tab-container' ).find( '.service[ data-id="' + id + '"]' );
 
 	jQuery.each( response.data.error, function( key, value ) {
-		var input_element = parent_element.find( '.form-field[name="' + value.element + '"]');
-	  	input_element.closest( '.form-element' ).find( '.error' ).html( value.error);
+		let input_element = parent_element.find( '.form-field[name="' + value.element + '"]');
+	  	input_element.closest( '.form-element' ).find( '.form-error' ).html( value.error);
 	  	// var input_element_edit = parent_element_edit.find( '.form-field[name="' + value.element + '"]');
 	  	// input_element_edit.closest( '.table-cell' ).find( '.error' ).html( value.error );
 	});

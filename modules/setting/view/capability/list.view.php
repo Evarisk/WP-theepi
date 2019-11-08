@@ -11,9 +11,18 @@
 
 namespace theepi;
 
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var object $users Tout les profils utilisateur WordPress.
+*/
+?>
 
 <div class="wpeo-table table-flex setting">
 	<div class="table-row table-header" style="background-color : #0084ff">
@@ -27,8 +36,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php
 		if ( ! empty( $users ) ) :
 			foreach ( $users as $user ) :
-				\eoxia\View_Util::exec(
-					'theepi', 'setting', 'capability/list-item', array(
+				View_Util::exec(
+					'theepi',
+					'setting',
+					'capability/list-item',
+					array(
 						'user' => $user,
 					)
 				);

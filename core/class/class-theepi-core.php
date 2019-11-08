@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\Singleton_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Classe principale du plugin.
  */
-class Class_TheEPI_Core extends \eoxia\Singleton_Util {
+class Class_TheEPI_Core extends Singleton_Util {
 
 
 	/**
@@ -43,4 +45,4 @@ class Class_TheEPI_Core extends \eoxia\Singleton_Util {
 	}
 }
 
-new Class_TheEPI_Core();
+Class_TheEPI_Core::g();

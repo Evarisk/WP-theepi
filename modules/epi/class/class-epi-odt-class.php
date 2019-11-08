@@ -11,6 +11,9 @@
 
 namespace theepi;
 
+use eoxia\ODT_Class;
+use WP_Query;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Class lié à génération d'un fichier ODT d'un EPI.
  */
-class EPI_ODT_Class extends \eoxia\ODT_Class {
+class EPI_ODT_Class extends ODT_Class {
 
 
 	/**
@@ -122,7 +125,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 	 * @param array $model_type Le type du document.
 	 *
 	 * @return array ['status']  True si tout s'est bien passé.
-	 *               ['id']   	 L'id du modèle.
+	 *               ['id']      L'id du modèle.
 	 *               ['path']    Le chemin d'accès au modèle.
 	 *               ['url']     le lien d'accès au modèle.
 	 *               ['message'] Le message indiquant quelle modèle est utilisé.
@@ -160,7 +163,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 		}
 
 		// Lances la Query pour récupérer le document par défaut selon $model_type.
-		$query = new \WP_Query(
+		$query = new WP_Query(
 			array(
 				'fields'         => 'ids',
 				'post_status'    => 'inherit',
@@ -170,7 +173,7 @@ class EPI_ODT_Class extends \eoxia\ODT_Class {
 			)
 		);
 
-		// Récupères le document
+		// Récupères le document.
 		if ( $query->have_posts() ) {
 			$upload_dir = wp_upload_dir();
 

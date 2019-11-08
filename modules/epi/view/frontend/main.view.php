@@ -11,35 +11,73 @@
 
 namespace theepi;
 
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
 
-<div class="table-cell table-200" style="text-align : center;" data-title="<?php echo esc_attr_e( 'Status', 'theepi' ); ?>">
-	<?php if ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "OK" ) ) : ?>
-		<i class="fas fa-check-circle fa-4x" style="color: mediumspringgreen;"></i>
-	<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "repair" ) ) : ?>
-		<i class="fas fa-tools fa-4x" style="color: orange;"></i>
-	<?php elseif ( ( EPI_Class::g()->get_days( $epi ) >= 0 ) && ( EPI_Class::g()->get_status( $epi ) == "trash" ) ) : ?>
-		<i class="fas fa-trash fa-4x" style="color: black;"></i>
-	<?php else : ?>
-		<i class="fas fa-exclamation-circle fa-4x" style="color: red;"></i>
-	<?php endif; ?>
-</div>
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var EPI_Model $epi Les données d'un EPI.
+*/
+?>
 
-<div class="table-cell table-250" data-title="<?php echo esc_attr_e( 'Control', 'theepi' ); ?>">
-	<?php if( $epi->data['commissioning_date_valid'] ): ?>
-		<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?></span>
-	<?php else: ?>
-		<span class="form-label" name="control-date" value=""><i class="fas fa-calendar-alt"></i> </span>
-	<?php endif; ?>
-	<div class="wpeo-button wpeo-tooltip-event button-grey button-square-50 button-rounded action-attribute"
-		aria-label="<?php esc_html_e( 'Control', 'theepi' ); ?>"
-		data-id="<?php echo esc_attr( $epi->data['id'] ) ?>"
-		data-frontend="true"
-		data-action="display_control"
-		data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
-		>
-		<i class="fas fa-eye"></i>
+<div class="">
+	<div class="title" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
+		<span class=""><?php echo esc_html( $epi->data['title'] ); ?><span>
+	</div>
+
+	<div class="thumbnail">
+		<?php echo do_shortcode( '[wpeo_upload id="' . $epi->data['id'] . '" model_name="/theepi/EPI_Class" single="false" field_name="image" ]' ); ?>
+	</div>
+
+	<div class="serial-number" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>">
+		<span class=""><i class="fas fa-barcode"></i></span>
+		<span class=""><?php echo esc_html_e( 'Serial Number :', 'theepi' ); ?></span>
+		<span class=""><?php echo esc_html( $epi->data['serial_number'] ); ?><span>
+	</div>
+
+	<div class="last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
+		<?php if ( ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ) : ?>
+			<span class="epi-last-control-date">
+				<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y', strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
+			</span>
+			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
+				aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
+				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+				data-frontend="fasle"
+				data-action="display_control"
+				data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
+				data-type="see_control">
+				<i class="fas fa-eye"></i>
+			</div>
+		<?php else : ?>
+			<span class="epi-last-control-date">
+				<?php esc_html_e( 'No Control Yet', 'theepi' ); ?>
+			</span>
+		<?php endif; ?>
+	</div>
+
+	<div class="next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ); ?>">
+		<span class=""><?php echo esc_html_e( 'Next Control :', 'theepi' ); ?>
+			<?php
+			View_Util::exec(
+				'theepi',
+				'epi',
+				'item-control',
+				array(
+					'epi'         => $epi,
+					'number_days' => EPI_Class::g()->get_days( $epi ),
+				)
+			);
+			?>
+		<span>
+	</div>
+
+	<div class="status" data-title="<?php echo esc_attr_e( 'Status EPI', 'theepi' ); ?>">
+		<span class=""><?php echo esc_html_e( 'PPE Status :', 'theepi' ); ?></span>
+		<span class="epi-status-icon fas <?php echo esc_attr( EPI_Class::g()->get_status( $epi ) ); ?>"></span>
 	</div>
 </div>

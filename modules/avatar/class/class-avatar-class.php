@@ -11,6 +11,9 @@
 
 namespace theepi;
 
+use eoxia\Singleton_Util;
+use eoxia\User_Class;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Gestion des avatars.
  */
-class Avatar_Class extends \eoxia\Singleton_Util {
+class Avatar_Class extends Singleton_Util {
 
 	/**
 	 * Obligatoire pour Singleton_Util.
@@ -36,14 +39,14 @@ class Avatar_Class extends \eoxia\Singleton_Util {
 	 * @since    0.7.0
 	 * @version  0.7.0
 	 *
-	 * @param  array $param.
+	 * @param array $param tableau contenant les paramètres de l'avatar.
 	 *
 	 * @return array
 	 */
 	public function get_avatars( $param ) {
 		$users = array();
 		if ( ! empty( $param['ids'] ) ) {
-			$users = \eoxia\User_Class::g()->get(
+			$users = User_Class::g()->get(
 				array(
 					'include' => $param['ids'],
 				)

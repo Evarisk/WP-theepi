@@ -11,6 +11,12 @@
 
 namespace theepi;
 
+use eoxia\LOG_Util;
+use eoxia\Singleton_Util;
+use eoxia\User_Class;
+use eoxia\View_Util;
+use WP_User;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -20,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @return void
  */
-class Setting_Class extends \eoxia\Singleton_Util {
+class Setting_Class extends Singleton_Util {
 
 
 	/**
@@ -37,7 +43,11 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 */
 	public $option_name = 'user_per_page';
 
-
+	/**
+	 * Les capacités par défaut.
+	 *
+	 * @var array
+	 */
 	public $capabilities = array();
 
 
@@ -63,8 +73,11 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	public function display_role_has_cap() {
 		$role_subscriber = get_role( 'subscriber' );
 
-		\eoxia\View_Util::exec(
-			'theepi', 'setting', 'capability/has-cap', array(
+		View_Util::exec(
+			'theepi',
+			'setting',
+			'capability/has-cap',
+			array(
 				'role_subscriber' => $role_subscriber,
 			)
 		);
@@ -100,14 +113,14 @@ class Setting_Class extends \eoxia\Singleton_Util {
 			$args_user['include'] = $list_user_id;
 		}
 
-		$users = \eoxia\User_Class::g()->get( $args_user );
+		$users = User_Class::g()->get( $args_user );
 
 		unset( $args_user['offset'] );
 		unset( $args_user['number'] );
 		unset( $args_user['include'] );
 		$args_user['fields'] = array( 'ID' );
 
-		$count_user  = count( \eoxia\User_Class::g()->get( $args_user ) );
+		$count_user  = count( User_Class::g()->get( $args_user ) );
 		$number_page = ceil( $count_user / $per_page );
 
 		$role_subscriber      = get_role( 'subscriber' );
@@ -115,12 +128,15 @@ class Setting_Class extends \eoxia\Singleton_Util {
 
 		if ( ! empty( $users ) ) {
 			foreach ( $users as &$user ) {
-				$user->wordpress_user = new \WP_User( $user->data['id'] );
+				$user->wordpress_user = new WP_User( $user->data['id'] );
 			}
 		}
 
-		\eoxia\View_Util::exec(
-			'theepi', 'setting', 'capability/list', array(
+		View_Util::exec(
+			'theepi',
+			'setting',
+			'capability/list',
+			array(
 				'users'                => $users,
 				'has_capacity_in_role' => $has_capacity_in_role,
 			)
@@ -161,13 +177,13 @@ class Setting_Class extends \eoxia\Singleton_Util {
 
 		// Seulement pour garder une trace dans les LOG.
 		$old_data_periodicity = get_option( EPI_Class::g()->option_name_default_data_periodicity );
-		$old_data_lifetime = get_option( EPI_Class::g()->option_name_default_data_lifetime );
+		$old_data_lifetime    = get_option( EPI_Class::g()->option_name_default_data_lifetime );
 
 		update_option( EPI_Class::g()->option_name_default_data_periodicity, $default_periodicity );
 		update_option( EPI_Class::g()->option_name_default_data_lifetime, $default_lifetime );
 
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data periodicity %s', "theepi-default-data-periodicity", EPI_Class::g()->default_data_periodicity , $old_data_periodicity ), 'theepi' );
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data lifetime %s', "theepi-default-data-lifetime", EPI_Class::g()->default_data_lifetime , $old_data_lifetime ), 'theepi' );
+		LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data periodicity %s', 'theepi-default-data-periodicity', EPI_Class::g()->default_data_periodicity, $old_data_periodicity ), 'theepi' );
+		LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data lifetime %s', 'theepi-default-data-lifetime', EPI_Class::g()->default_data_lifetime, $old_data_lifetime ), 'theepi' );
 
 		return true;
 	}
@@ -185,14 +201,14 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 */
 	public function save_date_management( $default_purchase_date, $default_manufacture_date ) {
 		// Seulement pour garder une trace dans les LOG.
-		$old_data_purchase_date = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
+		$old_data_purchase_date    = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$old_data_manufacture_date = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
 
 		update_option( EPI_Class::g()->option_name_date_management_purchase_date, $default_purchase_date );
 		update_option( EPI_Class::g()->option_name_date_management_manufacture_date, $default_manufacture_date );
 
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data purchase_date %s', "theepi_date_management_purchase_date", EPI_Class::g()->default_data_purchase_date , $old_data_purchase_date ), 'theepi' );
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data manufacture_date %s', "theepi_date_management_manufacture_date", EPI_Class::g()->default_data_manufacture_date , $old_data_manufacture_date ), 'theepi' );
+		LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data purchase_date %s', 'theepi_date_management_purchase_date', EPI_Class::g()->default_data_purchase_date, $old_data_purchase_date ), 'theepi' );
+		LOG_Util::g()->log( sprintf( 'Update option "%s" with the data "%s", old data manufacture_date %s', 'theepi_date_management_manufacture_date', EPI_Class::g()->default_data_manufacture_date, $old_data_manufacture_date ), 'theepi' );
 
 		return true;
 	}
@@ -207,20 +223,19 @@ class Setting_Class extends \eoxia\Singleton_Util {
 	 */
 	public function save_capability() {
 
-        if ( ! empty( $_POST['users'] ) ) {
-            foreach ( $_POST['users'] as $user_id => $data ) {
-                $user = new \WP_User( $user_id );
-
-                if ( 'true' == $data['capability'] ) {
-                    $user->add_cap( 'manage_digirisk' );
-                } else {
-                    $user->remove_cap( 'manage_digirisk' );
-                }
-            }
-        }
+		if ( ! empty( $_POST['users'] ) ) {
+			foreach ( $_POST['users'] as $user_id => $data ) {
+				$user = new WP_User( $user_id );
+				if ( 'true' === $data['capability'] ) {
+					$user->add_cap( 'manage_digirisk' );
+				} else {
+					$user->remove_cap( 'manage_digirisk' );
+				}
+			}
+		}
 
 		return true;
-    }
+	}
 }
 
 Setting_Class::g();

@@ -11,14 +11,23 @@
 
 namespace theepi;
 
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var EPI_Model $epi       Les données d'un EPI.
+* @var boolean   $edit_mode True si il s'agit de la vue édition d'un EPI.
+*/
+?>
 
 <div class="row-resume wpeo-form">
 	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
-		<?php echo esc_attr( $epi->data['id'] ); ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -34,13 +43,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-75 code-qr" data-title="<?php echo esc_attr_e( 'Code QrCode', 'theepi' ); ?>">
-		<?php if ( $edit_mode ): ?>
+		<?php if ( $edit_mode ) : ?>
 			<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-size-small button-rounded qrcode action-attribute"
 				aria-label="<?php esc_html_e( 'Click to enlarge the QrCode', 'theepi' ); ?>"
 				data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 				data-action="open_qrcode"
 				data-nonce="<?php echo esc_attr( wp_create_nonce( 'open_qrcode' ) ); ?>"
-				data-url="<?php echo esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) ?>">
+				data-url="<?php echo esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ); ?>">
 				<i class="fas fa-qrcode"></i>
 			</div>
 		<?php endif; ?>
@@ -66,10 +75,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="table-cell table-100 responsable" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>"></div>
 
 	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
-		<?php if ( $edit_mode ): ?>
-			<?php if ( EPI_Class::g()->get_last_control_date( $epi ) != "" ): ?>
+		<?php if ( $edit_mode ) : ?>
+			<?php if ( ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ) : ?>
 				<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>">
-					<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y' , strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
+					<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y', strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
 				</span>
 			<?php endif; ?>
 		<?php endif; ?>
@@ -77,11 +86,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="table-cell table-75 add-control" data-title="<?php echo esc_attr_e( 'Add control', 'theepi' ); ?>"></div>
 
-	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ) ?>">
-		<?php if ( $edit_mode ): ?>
+	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ); ?>">
+		<?php if ( $edit_mode ) : ?>
 			<?php
-			\eoxia\View_Util::exec(
-				'theepi', 'epi', 'item-control', array(
+			View_Util::exec(
+				'theepi',
+				'epi',
+				'item-control',
+				array(
 					'epi'         => $epi,
 					'number_days' => EPI_Class::g()->get_days( $epi ),
 				)

@@ -38,22 +38,13 @@ window.eoxiaJS.theEPI.service.buttonToggle = function( event ) {
 	var toggleON = jQuery( this ).hasClass( 'fa-toggle-on' );
 	var nextStep = '';
 	if (toggleON) {
-
 		nextStep = 'NO';
 		jQuery( this ).removeClass( "fa-toggle-on" ).addClass( "fa-toggle-off" );
-		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : grey; font-weight : auto' });
-		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : black; font-weight : bold' });
 		jQuery( this ).closest( ".advanced-service.date" ).find( '.button-toggle-lifetime-display' ).addClass( 'hidden' );
-
 	} else {
-
-		nextStep = 'YES';
+	nextStep = 'YES';
 		jQuery( this ).removeClass( "fa-toggle-off" ).addClass( "fa-toggle-on" );
-		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-OK' ).attr({ 'style' : 'color : black; font-weight : bold' });
-		// jQuery( this ).closest( ".button-toggle" ).find( '.button-toggle-KO' ).attr({ 'style' : 'color : grey; font-weight : auto' });
 		jQuery( this ).closest( ".advanced-service.date" ).find( '.button-toggle-lifetime-display' ).removeClass( 'hidden' );
-
-
 	}
 	jQuery( this ).closest( '.advanced-service.date' ).find( '.button-toggle-lifetime' ).attr( 'data-value' , nextStep );
 };
@@ -69,14 +60,14 @@ window.eoxiaJS.theEPI.service.buttonToggle = function( event ) {
  * @return {void}
  */
 window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
-	var parent_element = jQuery( this ).closest( ".advanced-service.date" );
-	var manufacture_date_old = parent_element.find( '.mysql-date[name="manufacture-date"]' ).val();
-	var lifetime_old = parent_element.find( '.form-field[name="lifetime"]' ).val();
+	let parent_element       = jQuery( this ).closest( ".advanced-service.date" );
+	let manufacture_date_old = parent_element.find( '.mysql-date[name="manufacture-date"]' ).val();
+	let lifetime_old         = parent_element.find( '.form-field[name="lifetime"]' ).val();
 
-	var end_life_date_element_sql = parent_element.find( '.mysql-date[name="end-life-date"]');
-	var end_life_date_element = parent_element.find( '.form-field[name="end-life-date"]');
+	let end_life_date_element_sql = parent_element.find( '.mysql-date[name="end-life-date"]' );
+	let end_life_date_element     = parent_element.find( '.form-field[name="end-life-date"]' );
 
-	var end_life_date = new Date( manufacture_date_old );
+	let end_life_date = new Date( manufacture_date_old );
 	end_life_date.setDate( end_life_date.getDate() + parseInt(lifetime_old) );
 	month = end_life_date.getMonth() + 1;
 	month   = month < 10 ? '0' + month : month;
@@ -84,7 +75,7 @@ window.eoxiaJS.theEPI.service.updateEndLifeDateEPI = function( event ) {
 	end_life_date_sql = end_life_date.getFullYear() + '-' + month + '-' + day;
 	end_life_date_display = day + '/' + month + '/' + end_life_date.getFullYear();
 
-	if ( end_life_date_sql != 'NaN/NaN/NaN' && end_life_date_display != 'NaN/NaN/NaN') {
+	if ( end_life_date_sql !== 'NaN/NaN/NaN' && end_life_date_display !== 'NaN/NaN/NaN') {
 		end_life_date_element_sql.val( end_life_date_sql );
 		end_life_date_element.val(end_life_date_display);
 	}

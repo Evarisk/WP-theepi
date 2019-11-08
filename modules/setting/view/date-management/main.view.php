@@ -13,7 +13,16 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var string $page                       La page Dates.
+* @var boolean $default_purchase_date     La donnée par défaut date d'achat d'un EPI.
+* @var integer $default_manufacture_date  La donnée par défaut date de fabrication d'un EPI.
+*/
+?>
 
 <div class="setting-epi"  data-page="<?php echo esc_attr( $page ); ?>">
 	<form class="wpeo-form">
@@ -24,20 +33,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<div class="form-element">
 			<span class="form-label"><?php esc_html_e( 'Purchase Date Valued', 'theepi' ); ?></span>
-			<span class="form-sublabel"><?php echo esc_html_e( "Please indicate if you want your Purchase Date and your Commissioning Date to be equal" ,'theepi' ); ?> </span>
+			<span class="form-sublabel"><?php echo esc_html_e( 'Please indicate if you want your Purchase Date and your Commissioning Date to be equal', 'theepi' ); ?> </span>
 			<label class="form-field-container">
-				<?php if( $default_purchase_date ): ?>
+				<?php if ( $default_purchase_date ) : ?>
 					<input type="checkbox" class="form-field" name="checkbox-purchase-date" id="checkbox-purchase-date" checked>
-				<?php else: ?>
+				<?php else : ?>
 					<input type="checkbox" class="form-field" name="checkbox-purchase-date" id="checkbox-purchase-date">
 				<?php endif; ?>
-				<label for="checkbox-purchase-date"><?php echo esc_html_e("Purchase Date = Commissioning Date", 'theepi' ) ?></label>
+				<label for="checkbox-purchase-date"><?php echo esc_html_e( 'Purchase Date = Commissioning Date', 'theepi' ); ?></label>
 			</label>
 		</div>
 
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Manufacture Date Valued', 'theepi' ); ?></span>
-			<span class="form-sublabel"><?php echo esc_html_e( "Please indicate the number of days between Manufacture Date valued and Commissioning Date of your PPE" ,'theepi' ); ?> </span>
+			<span class="form-sublabel"><?php echo esc_html_e( 'Please indicate the number of days between Manufacture Date valued and Commissioning Date of your PPE', 'theepi' ); ?> </span>
 			<label class="form-field-container">
 				<input type="number" class="form-field" name="default-manufacture-date" value="<?php echo esc_attr( $default_manufacture_date ); ?>"/>
 				<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>

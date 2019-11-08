@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\ODT_Model;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Définition des champs d'un document EPI_ODT.
  */
-class EPI_ODT_Model extends \eoxia\ODT_Model {
+class EPI_ODT_Model extends ODT_Model {
 
 
 	/**

@@ -13,7 +13,18 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var string $page                       La page Acronyme.
+* @var string $default_acronym_site       La donnée par défaut pour l'acronyme du Site actif.
+* @var string $default_acronym_epi        La donnée par défaut pour l'acronyme d'un EPI.
+* @var string $default_acronym_control    La donnée par défaut pour l'acronyme d'un contrôle EPI.
+*/
+?>
+
 
 <div class="setting-epi"  data-page="<?php echo esc_attr( $page ); ?>">
 	<form class="wpeo-form">
@@ -25,21 +36,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Site', 'theepi' ); ?></span>
 			<label class="form-field-container">
-				<input type="text" class="form-field" name="default-acronym-site" value="<?php ! empty ( $default_acronym_site ) ? esc_attr_e( $default_acronym_site ) : esc_attr_e( 'S', 'theepi' ); ?>"/>
+				<input type="text" class="form-field" name="default-acronym-site" value="<?php ! empty( $default_acronym_site ) ? esc_attr_e( $default_acronym_site ) : esc_attr_e( 'S', 'theepi' ); ?>"/>
 			</label>
 		</div>
 
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Personal Protective Equipment', 'theepi' ); ?></span>
 			<label class="form-field-container">
-				<input type="text" class="form-field" name="default-acronym-epi" value="<?php ! empty ( $default_acronym_epi ) ? esc_attr_e( $default_acronym_epi ) : esc_attr_e( 'EPI', 'theepi' ); ?>"/>
+				<input type="text" class="form-field" name="default-acronym-epi" value="<?php ! empty( $default_acronym_epi ) ? esc_attr_e( $default_acronym_epi ) : esc_attr_e( 'EPI', 'theepi' ); ?>"/>
 			</label>
 		</div>
 
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Control', 'theepi' ); ?></span>
 			<label class="form-field-container">
-				<input type="text" class="form-field" name="default-acronym-control" value="<?php ! empty ( $default_acronym_control ) ? esc_attr_e( $default_acronym_control ) : esc_attr_e( 'C', 'theepi' ); ?>"/>
+				<input type="text" class="form-field" name='default-acronym-control" value="<?php ! empty( $default_acronym_control ) ? esc_attr_e( $default_acronym_control ) : esc_attr_e( 'C', 'theepi' ); ?>"/>
 			</label>
 		</div>
 

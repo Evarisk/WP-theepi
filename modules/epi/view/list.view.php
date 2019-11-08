@@ -11,18 +11,29 @@
 
 namespace theepi;
 
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
 
-<?php
+/**
+ * Documentation des variables utilisées dans la vue.
+ *
+ * @var EPI_Model $epi Les données d'un EPI.
+ * @var EPI_Model $new Un nouvel EPI.
+ */
+
+
 if ( ! empty( $epis ) ) :
 	foreach ( $epis as $epi ) :
-		\eoxia\View_Util::exec(
-			'theepi', 'epi', 'item', array(
-				'epi'    => $epi,
-				'new'    => $new,
-				//'task_manager' => $task_manager
+		View_Util::exec(
+			'theepi',
+			'epi',
+			'item',
+			array(
+				'epi' => $epi,
+				'new' => $new,
 			)
 		);
 	endforeach;

@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\Init_Util;
+
 /**
  * Plugin Name: TheEPI
  * Plugin URI:  http://www.evarisk.com/document-unique-logiciel
@@ -31,4 +33,4 @@ DEFINE( 'PLUGIN_THEEPI_DIR', basename( __DIR__ ) );
 
 require_once 'core/external/eo-framework/eo-framework.php';
 
-\eoxia\Init_Util::g()->exec( PLUGIN_THEEPI_PATH, basename( __FILE__, '.php' ) );
+Init_Util::g()->exec( PLUGIN_THEEPI_PATH, basename( __FILE__, '.php' ) );

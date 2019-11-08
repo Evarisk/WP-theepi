@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\Post_Model;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,8 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define EPI Model.
  */
-class EPI_Model extends \eoxia\Post_Model {
-
+class EPI_Model extends Post_Model {
 
 	/**
 	 * Construct
@@ -126,7 +127,6 @@ class EPI_Model extends \eoxia\Post_Model {
 			'version'     => '0.5.0',
 		);
 
-
 		$this->schema['control_date'] = array(
 			'type'        => 'wpeo_date',
 			'context'     => array( 'GET' ),
@@ -226,52 +226,52 @@ class EPI_Model extends \eoxia\Post_Model {
 		);
 
 		$this->schema['qrcode'] = array(
-		   'type'      => 'array',
-		   'meta_type' => 'multiple',
-		   'child'     => array(
-			   'filename' => array(
-				   'type' => 'string',
-			   ),
-			   'path'     => array(
-				   'type' => 'string',
-			   ),
-			   'guid'     => array(
-				   'type' => 'string',
-			   ),
-			   'wp_attached_file' => array(
-				   'type' => 'string',
-			   ),
-		   ),
-	   );
+			'type'      => 'array',
+			'meta_type' => 'multiple',
+			'child'     => array(
+				'filename'         => array(
+					'type' => 'string',
+				),
+				'path'             => array(
+					'type' => 'string',
+				),
+				'guid'             => array(
+					'type' => 'string',
+				),
+				'wp_attached_file' => array(
+					'type' => 'string',
+				),
+			),
+		);
 
-	   $this->schema['url_notice'] = array(
-		   'type'        => 'string',
-		   'meta_type'   => 'single',
-		   'field'       => '_theepi_url_notice',
-		   'description' => 'Is the url notice of the EPI.',
-		   'since'       => '0.7.0',
-		   'version'     => '0.7.0',
-	   );
+		$this->schema['url_notice'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_url_notice',
+			'description' => 'Is the url notice of the EPI.',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+		);
 
-	   $this->schema['toggle_lifetime'] = array(
-		   'type'        => 'string',
-		   'meta_type'   => 'single',
-		   'field'       => '_theepi_toggle_lifetime',
-		   'description' => 'Is the toggle button lifetime of the EPI. Value can be "YES" or "NO".',
-		   'since'       => '0.7.0',
-		   'version'     => '0.7.0',
-		   'default'     => 'YES'
-	   );
+		$this->schema['toggle_lifetime'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_toggle_lifetime',
+			'description' => 'Is the toggle button lifetime of the EPI. Value can be "YES" or "NO".',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+			'default'     => 'YES',
+		);
 
-	   $this->schema['quantity'] = array(
-		   'type'        => 'integer',
-		   'meta_type'   => 'single',
-		   'field'       => '_theepi_quantity',
-		   'description' => 'Is the quantity of the EPI.',
-		   'since'       => '0.7.0',
-		   'version'     => '0.7.0',
-		   'default'     => 1
-	   );
+		$this->schema['quantity'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_quantity',
+			'description' => 'Is the quantity of the EPI.',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+			'default'     => 1,
+		);
 
 		parent::__construct( $object, $req_method );
 	}

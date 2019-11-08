@@ -11,6 +11,10 @@
 
 namespace theepi;
 
+use eoxia\Post_Class;
+use eoxia\View_Util;
+use eoxia\WPEO_Upload_Class;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Handle EPI.
  */
-class EPI_Class extends \eoxia\Post_Class {
+class EPI_Class extends Post_Class {
 
 
 	/**
@@ -71,21 +75,21 @@ class EPI_Class extends \eoxia\Post_Class {
 	protected $limit_epi = 10;
 
 	/**
-	 * le nom de l'option pour enregistrer le nombre d'epi par page (défault).
+	 * Le nom de l'option pour enregistrer le nombre d'epi par page (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_per_page = 'epi_per_page';
 
 	/**
-	 * le nom de l'option pour enregistrer la périodicité d'un epi (défault).
+	 * Le nom de l'option pour enregistrer la périodicité d'un epi (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_default_data_periodicity = 'theepi_default_data_periodicity';
 
 	/**
-	 * le nom de l'option pour enregistrer la durée de vie d'un epi (défault).
+	 * Le nom de l'option pour enregistrer la durée de vie d'un epi (défault).
 	 *
 	 * @var string
 	 */
@@ -93,28 +97,28 @@ class EPI_Class extends \eoxia\Post_Class {
 
 
 	/**
-	 * le nom de l'option pour enregistrer la date d'achat d'un epi (défault).
+	 * Le nom de l'option pour enregistrer la date d'achat d'un epi (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_date_management_purchase_date = 'theepi_date_management_purchase_date';
 
 	/**
-	 * le nom de l'option pour enregistrer la date de fabrication d'un epi (défault).
+	 * Le nom de l'option pour enregistrer la date de fabrication d'un epi (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_date_management_manufacture_date = 'theepi_date_management_manufacture_date';
 
 	/**
-	 * le nom de l'option pour enregistrer l'acronym du site (défault).
+	 * Le nom de l'option pour enregistrer l'acronym du site (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_acronym_site = 'theepi_acronym_site';
 
 	/**
-	 * le nom de l'option pour enregistrer l'acronym d'un epi (défault).
+	 * Le nom de l'option pour enregistrer l'acronym d'un epi (défault).
 	 *
 	 * @var string
 	 */
@@ -176,11 +180,10 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	protected function construct() {
 		parent::construct();
-		$this->default_data_periodicity = 365;
-		$this->default_data_lifetime = 365;
-		$this->default_data_purchase_date = true;
+		$this->default_data_periodicity      = 365;
+		$this->default_data_lifetime         = 365;
+		$this->default_data_purchase_date    = true;
 		$this->default_data_manufacture_date = 1;
-
 	}
 
 	/**
@@ -197,34 +200,28 @@ class EPI_Class extends \eoxia\Post_Class {
 
 		$page = isset ( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : "all";
 		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "repair" && $page != "trash" ){
-			$page = "all";
+			$page = 'all';
 		}
 
-		$epi_schema = self::g()->get(
-			array(
-				'schema' => true,
-			), true
-		);
+		$epi_schema = self::g()->get( array( 'schema' => true ), true );
 
 		$pagination_data = $this->get_pagination_data( 0, $term );
 
 		$data_epis = $this->get_epis( $pagination_data, $term, $page );
-		$epis = $data_epis['epis'];
-		// foreach ( $epis as $epi ) {
-		// 	if ( $epi->data['status'] == 'draft' ) {
-		// 		$epi = $this->delete( $epi->data['id'] );
-		// 	}
-		// }
+		$epis      = $data_epis['epis'];
 
-		\eoxia\View_Util::exec(
-			'theepi', 'epi', 'main', array(
+		View_Util::exec(
+			'theepi',
+			'epi',
+			'main',
+			array(
 				'offset'     => $pagination_data['offset'],
 				'count_epi'  => $pagination_data['count_epi'],
 				'per_page'   => $pagination_data['per_page'],
 				'epis'       => $epis,
 				'epi_schema' => $epi_schema,
 				'term'       => $term,
-				'page'       => $page
+				'page'       => $page,
 			)
 		);
 	}
@@ -251,50 +248,55 @@ class EPI_Class extends \eoxia\Post_Class {
 			's'              => $term,
 		);
 
-		$status    = mb_strtoupper( $page );
+		$status = mb_strtoupper( $page );
 		switch ( $status ) {
 			case 'OK':
-			$temp_args = array(
-				'meta_key' => '_theepi_status_epi',
-				'meta_value' => 'OK'
-			);
-			break;
+				$temp_args = array(
+					'meta_key'   => '_theepi_status_epi',
+					'meta_value' => 'OK'
+				);
+				break;
 			case 'KO':
-			$temp_args = array(
-				'meta_key' => '_theepi_status_epi',
-				'meta_value' => 'KO'
-			);
-			break;
+				$temp_args = array(
+					'meta_key'   => '_theepi_status_epi',
+					'meta_value' => 'KO'
+				);
+				break;
 			case 'REPAIR':
-			$temp_args = array(
-				'meta_key' => '_theepi_status_epi',
-				'meta_value' => 'repair'
-			);
-			break;
+				$temp_args = array(
+					'meta_key'   => '_theepi_status_epi',
+					'meta_value' => 'repair'
+				);
+				break;
 			case 'TRASH':
-			$temp_args = array(
-				'meta_key' => '_theepi_status_epi',
-				'meta_value' => 'trash'
-			);
-			break;
+				$temp_args = array(
+					'meta_key'   => '_theepi_status_epi',
+					'meta_value' => 'trash'
+				);
+				break;
 			default:
 				$temp_args = array();
 				break;
-
 		}
 		$args = wp_parse_args( $temp_args, $args );
 
-		$epis = self::g()->get( array( $args , 'post_status' => 'publish' ) );
+		$epis = self::g()->get( array( $args, 'post_status' => 'publish' ) );
 
-		usort( $epis, function( $a, $b ) {
-			if ( $a->data['unique_key'] == $b->data['unique_key'] ) {
-				return 0;
+		usort(
+			$epis,
+			function( $a, $b ) {
+				if ( $a->data['unique_key'] === $b->data['unique_key'] ) {
+					return 0;
+				}
+				return ( $a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
 			}
-			return ($a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
-		} );
+		);
 
-		$nbr_epis = count( self::g()->get( $temp_args ) );
-		$data_epis = array( 'epis' => $epis, 'nbr_epis' => $nbr_epis );
+		$nbr_epis  = count( self::g()->get( $temp_args ) );
+		$data_epis = array(
+			'epis'     => $epis,
+			'nbr_epis' => $nbr_epis,
+		);
 
 		return $data_epis;
 	}
@@ -308,19 +310,19 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @return void
 	 */
 	public function display_search() {
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'search' );
+		View_Util::exec( 'theepi', 'epi', 'search' );
 	}
 
 	/**
-	 * Appel la vue pour afficher les filtres des EPI
+	 * Appel la vue pour afficher les filtres des EPI.
 	 *
-	 * @since   0.4.0
-	 * @version 0.4.0
+	 * @since   0.7.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function display_filters() {
-		\eoxia\View_Util::exec( 'theepi', 'epi', 'filters' );
+		View_Util::exec( 'theepi', 'epi', 'filters' );
 	}
 
 	/**
@@ -333,8 +335,8 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @param string  $term   Terme de la recherche. Défault ''.
 	 *
 	 * @return array ['offset']    (integer) Le nombre d'EPI à sauter.
-	 * 				 ['count_epi'] (integer) le nombre d'EPI en base de donnée.
-	 * 				 ['per_page']  (integer) Le nombre d'EPI par page.
+	 *               ['count_epi'] (integer) le nombre d'EPI en base de donnée.
+	 *               ['per_page']  (integer) Le nombre d'EPI par page.
 	 */
 	public function get_pagination_data( $offset = 0, $term = '' ) {
 
@@ -393,19 +395,22 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function display_epi_list( $epis, $new = false , $page ) {
 
-		//VERSION 2
-		// include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-		//  if ( is_plugin_active('task-manager/task-manager.php') ) {
-		// 	$task_manager = true;
-		// } else {
-		// 	$task_manager = false;
-		// }
+		/** VERSION 2
+		include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
+		if ( is_plugin_active('task-manager/task-manager.php') ) {
+			$task_manager = true;
+		} else {
+			$task_manager = false;
+		} */
 
-		\eoxia\View_Util::exec(
-			'theepi', 'epi', 'list', array(
+		View_Util::exec(
+			'theepi',
+			'epi',
+			'list',
+			array(
 				'epis' => $epis,
 				'new'  => $new,
-				//'task_manager' => $task_manager
+				// "'task_manager' => $task_manager,."
 			)
 		);
 	}
@@ -416,91 +421,50 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.6.0
 	 * @version 0.7.0
 	 *
-	 * @param integer  $offset     Le nombre d'EPI à sauter.
-	 * @param string   $page       La page de l'EPI.
-	 * @param integer  $pagination Le numéro de la page (défault page 1).
+	 * @param integer $offset     Le nombre d'EPI à sauter.
+	 * @param string  $page       La page de l'EPI.
+	 * @param integer $pagination Le numéro de la page (défault page 1).
 	 *
 	 * @return void
 	 */
 	public function display_epi_pagination( $offset, $page, $pagination = 1 ) {
 
 		$pagination_data = $this->get_pagination_data( $offset );
-		$data_epis = $this->get_epis( $pagination_data, '', $page );
-		$epis = $data_epis['epis'];
-		$nbr_epis = $data_epis['nbr_epis'];
+		$data_epis       = $this->get_epis( $pagination_data, '', $page );
+		$epis            = $data_epis['epis'];
+		$nbr_epis        = $data_epis['nbr_epis'];
 
-		if ( ( $page == 'ok') || ( $page == 'ko') || ( $page == 'trash' ) || ( $page == 'repair' ) ) {
+		if ( ( 'ok' === $page ) || ( 'ko' === $page ) || ( 'trash' === $page ) || ( 'repair' === $page ) ) {
 			$count_epi = $nbr_epis;
-		}else {
+		} else {
 			$count_epi = $pagination_data['count_epi'];
 		}
 
 		$per_page = $pagination_data['per_page'];
 
-		//Calcul le nombre de page
-		if( $count_epi > 0 ) {
+		// Calcul le nombre de page.
+		if ( $count_epi > 0 ) {
 			$number_pages = intval( $count_epi / $per_page );
-			if( intval( $count_epi % $per_page ) > 0 ) {
+			if ( intval( $count_epi % $per_page ) > 0 ) {
 				$number_pages++;
 			}
-		}else {
+		} else {
 			$number_pages = 0;
 		}
 
-		\eoxia\View_Util::exec(
-			'theepi', 'epi', 'pagination', array(
+		View_Util::exec(
+			'theepi',
+			'epi',
+			'pagination',
+			array(
 				'offset'       => $pagination_data['offset'],
 				'count_epi'    => $pagination_data['count_epi'],
 				'per_page'     => $pagination_data['per_page'],
 				'pagination'   => $pagination,
-  				'number_pages' => $number_pages,
-				'page'         => $page
-
+				'number_pages' => $number_pages,
+				'page'         => $page,
 			)
 		);
-	}
-
-	/**
-	 * Enregistres un EPI.
-	 *
-	 * @since   0.3.0
-	 * @version 0.3.0
-	 *
-	 * @param EPI_Model $epi      Les données de l'EPI.
-	 * @param integer   $image_id L'ID de l'image téléversé.
-	 *
-	 *  ['post_id'] integer L'ID de l'EPI. (Ce n'est pas un doublon avec $data['id']).
-	 *  ['id']      integer L'ID du commentaire.
-	 *  ['date']    string  La date du commentaire au format MySQL.
-	 *  ['content'] string  Le contenu du commentaire.
-	 *  ['state']   string  Le status de l'EPI. Peut être OK ou KO.
-	 *
-	 * @param array     $comments (See above).
-	 *
-	 * @return EPI_Model Retourne l'objet EPI créé ou mise à jour.
-	 */
-	public function save( $epi, $image_id, $comments ) {
-		$epi = self::g()->update( $epi->data );
-		\eoxia\LOG_Util::g()->log( sprintf( 'Update EPI "%d" with the data %s', $epi->data['id'], wp_json_encode( $epi->data ) ), 'theepi' );
-
-		if ( ! empty( $image_id ) ) {
-			$args_media = array(
-				'id'         => $epi->data['id'],
-				'file_id'    => $image_id,
-				'model_name' => '\theepi\EPI_Class',
-			);
-
-			\eoxia\WPEO_Upload_Class::g()->set_thumbnail( $args_media );
-			$args_media['field_name'] = 'image';
-			\eoxia\WPEO_Upload_Class::g()->associate_file( $args_media );
-
-			\eoxia\LOG_Util::g()->log( sprintf( 'Add media on EPI "%d", media ID "%d"', $epi->data['id'], $image_id ), 'theepi' );
-		}
-
-		// Obliger de get à nouveau pour récupérer control_date, et state.
-		$epi = self::get( array( 'id' => $epi->data['id'] ), true );
-
-		return $epi;
 	}
 
 	/**
@@ -530,48 +494,26 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.3.0
 	 * @version 0.7.0
 	 *
-	 * @param array  $files_id  Un tableau d'ID.
+	 * @param array $files_id  Un tableau d'ID.
 	 *
-	 * @return bool True si tout s'est bien passé.
+	 * @return array Les données des EPIS.
 	 */
 	public function create_mass_epi( array $files_id ) {
 		$epis = array();
 
-		// if ( get_option( $this->option_name_default_data_periodicity ) != "" ){
-		// 	$periodicity =  (int) get_option( $this->option_name_default_data_periodicity );
-		// }else {
-		// 	$periodicity = $this->default_data_periodicity;
-		// }
-		//
-		// if ( get_option( $this->option_name_default_data_lifetime ) != "" ){
-		// 	$lifetime =  (int) get_option( $this->option_name_default_data_lifetime );
-		// }else {
-		// 	$lifetime = $this->default_data_lifetime;
-		// }
-
-
 		if ( ! empty( $files_id ) ) {
 			foreach ( $files_id as $file_id ) {
 				$file_id = (int) $file_id;
-				//$epi = current ( $this->get( array( 'post_type' => 'theepi-epi') ) );
-				//$unique_identifier = $this->unique_identifier( $epi->data['id'] );
-
-				// $epi = $this->create(
-				// 	array(
-				// 		//'unique_identifier' => $unique_identifier,
-				// 		'periodicity'  => $periodicity,
-				// 		'lifetime_epi' => $lifetime,
-				// 		'status_epi'   => 'KO',
-				// 		'disposal_date' => '1970-01-01'
-				// 	)
-				// );
 
 				$epi = $this->create_epi();
-				$epi->data['status_epi'] = 'KO';
+
+				$epi->data['status_epi']  = 'KO';
 				$epi->data['post_status'] = 'publish';
+
 				$epi = $this->update( $epi->data );
 
-				\eoxia\WPEO_Upload_Class::g()->set_thumbnail(
+
+				WPEO_Upload_Class::g()->set_thumbnail(
 					array(
 						'id'         => $epi->data['id'],
 						'file_id'    => $file_id,
@@ -579,7 +521,7 @@ class EPI_Class extends \eoxia\Post_Class {
 					)
 				);
 
-				\eoxia\WPEO_Upload_Class::g()->associate_file(
+				WPEO_Upload_Class::g()->associate_file(
 					array(
 						'id'         => $epi->data['id'],
 						'file_id'    => $file_id,
@@ -603,24 +545,24 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.5.0
 	 * @version 0.7.0
 	 *
-	 * @param array    $epi        Les données de l'EPI.
+	 * @param EPI_Model $epi      Les données de l'EPI.
 	 *
-	 * @return integer $day_rest   retourne le nombre de jour.
+	 * @return integer $day_rest  retourne le nombre de jour.
 	 */
 	public function get_days( $epi ) {
 
-		$day_rest      = 0;
 		$now = date( 'Y-m-d' );
-		$periodicity = $epi->data['periodicity'];
-		$control_date_epi = $epi->data['control_date']['rendered']['mysql'];
+
+		$periodicity       = $epi->data['periodicity'];
+		$control_date_epi  = $epi->data['control_date']['rendered']['mysql'];
 		$last_control_date = $this->get_last_control_date( $epi );
 
-		if ( $last_control_date != "" ) {
+		if ( ! empty( $last_control_date ) ) {
 			$control_date_timestamp = strtotime( $last_control_date );
-			$last_control_date = date( 'Y-m-d',  strtotime( '+' . $periodicity . ' days' , $control_date_timestamp ));
-			$time = strtotime( $last_control_date ) - strtotime( $now ); // seconde
-		}else {
-			$time = strtotime( $control_date_epi ) - strtotime( $now ); // seconde
+			$last_control_date      = date( 'Y-m-d', strtotime( '+' . $periodicity . ' days', $control_date_timestamp ) );
+			$time                   = strtotime( $last_control_date ) - strtotime( $now ); // seconde.
+		} else {
+			$time = strtotime( $control_date_epi ) - strtotime( $now ); // seconde.
 		}
 
 		if ( $time > 0 ) {
@@ -634,7 +576,8 @@ class EPI_Class extends \eoxia\Post_Class {
 		return $day_rest;
 	}
 
-	//SI TASK MANAGER ACTIVEE.
+	/*
+	 * SI TASK MANAGER ACTIVEE.
 	// /**
 	//  * Affiche les données des audits lié à un EPI.
 	//  *
@@ -707,7 +650,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	// 		}
 	// 	}
 	// 	return $audits[ $key_last_control ];
-	// }
+	// }*/
 
 	/**
 	 * Recharge un EPI.
@@ -721,8 +664,11 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function reload_single_epi( $epi ) {
 		ob_start();
-		\eoxia\View_Util::exec(
-			'theepi', 'epi', 'item', array(
+		View_Util::exec(
+			'theepi',
+			'epi',
+			'item',
+			array(
 				'epi' => $epi,
 			)
 		);
@@ -740,9 +686,9 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @return bool  True si l'utilisateur possède la capacitée.
 	 */
 	public function check_capabilities( $capabilities ) {
-	    if ( user_can( get_current_user_id(), $capabilities ) ) {
-	        return true;
-	    }
+		if ( user_can( get_current_user_id(), $capabilities ) ) {
+			return true;
+		}
 		return false;
 	}
 
@@ -752,27 +698,28 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.5.0
 	 * @version 0.7.0
 	 *
-	 * @param object $epi Les donnée d'un EPI.
+	 * @param EPI_Model $epi Les donnée d'un EPI.
 	 *
 	 * @return array ['status_epi] le statut de l'EPI.
 	 */
 	public function get_status( $epi ) {
-		if ( $epi->data['id'] != 0 ) {
-			if ( $epi->data['disposal_date']['raw'] == '1970-01-01' ) {
-				$controls = Control_Class::g()->get_controls( $epi );
+		if ( 0 !== $epi->data['id'] ) {
+			if ( '1970-01-01' === $epi->data['disposal_date']['raw'] ) {
+				$controls     = Control_Class::g()->get_controls( $epi );
 				$last_control = Control_Class::g()->last_control_epi( $controls );
 				if ( ! empty( $last_control ) ) {
 					$epi->data['status_epi'] = $last_control->data['status_control'];
-					$epi = $this->update( $epi->data );
+
+					$this->update( $epi->data );
 					return $last_control->data['status_control'];
 				}
-				return $epi->data['status_epi'];
-			}else {
+			} else {
 				$epi->data['status_epi'] = 'trash';
+
 				$epi = $this->update( $epi->data );
-				return $epi->data['status_epi'];
 			}
 		}
+		return $epi->data['status_epi'];
 	}
 
 	/**
@@ -781,7 +728,7 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @param object $epi Les donnée d'un EPI.
+	 * @param EPI_Model $epi Les donnée d'un EPI.
 	 *
 	 * @return array ['control_date] La date de contrôle.
 	 */
@@ -789,10 +736,10 @@ class EPI_Class extends \eoxia\Post_Class {
 
 		$controls = Control_Class::g()->get_controls( $epi );
 		if ( ! empty( $controls ) ) {
-			$last_control = Control_Class::g()->last_control_epi( $controls );
-			$last_control_date = date( 'Y-m-d' , strtotime( $last_control->data['date']['rendered']['mysql'] ));
-		}else {
-			$last_control_date = "";
+			$last_control      = Control_Class::g()->last_control_epi( $controls );
+			$last_control_date = date( 'Y-m-d', strtotime( $last_control->data['date']['rendered']['mysql'] ) );
+		} else {
+			$last_control_date = '';
 		}
 		return $last_control_date;
 	}
@@ -803,17 +750,14 @@ class EPI_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @return POST $post les données du post.
+	 * @return Object $post les données du post.
 	 */
 	public function draft() {
-		$post = $this->get( array( 'post_status' => 'draft' ), true );
-		if ( ! empty ( $post ) ) {
-			$post = $this->delete( $post->data['id'] );
-		}
 		$post = $this->get( array( 'schema' => true ), true );
+
 		$post->data['post_status'] = 'draft';
+
 		$post = $this->update( $post->data );
-		//$post = $this->get( array( 'post_status' => 'draft' ), true );
 		return $post;
 	}
 
@@ -829,35 +773,46 @@ class EPI_Class extends \eoxia\Post_Class {
 	 */
 	public function unique_identifier( $id ) {
 		$prefix_site = ! empty( get_option( $this->option_name_acronym_site ) ) ? get_option( $this->option_name_acronym_site ) : 'S';
-		$prefix_epi = ! empty ( get_option( $this->option_name_acronym_epi ) ) ? get_option( $this->option_name_acronym_epi ) : 'EPI';
+		$prefix_epi  = ! empty( get_option( $this->option_name_acronym_epi ) ) ? get_option( $this->option_name_acronym_epi ) : 'EPI';
 
-		$epis = $this->get( array( 'post_type' => 'theepi-epi', 'post_status' =>  array( 'publish', 'draft', 'trash' )));
+		$epis    = $this->get(
+			array(
+				'post_type'   => 'theepi-epi',
+				'post_status' => array(
+					'publish',
+					'draft',
+					'trash',
+				),
+			)
+		);
 		$nb_epis = count( $epis );
-		$epi = $this->get( array( 'id' => $id ), true );
+		$epi     = $this->get( array( 'id' => $id ), true );
+
 		$epi->data['unique_identifier'] = $prefix_site . get_current_blog_id() . ' - ' . $prefix_epi . $nb_epis;
+
 		$epi = $this->update( $epi->data );
 
 		return $epi->data['unique_identifier'];
 	}
 
 	/**
-	 * Crée un ID unique personnalisé pour les EPIS.
+	 * Crée un EPI avec des données par défaut.
 	 *
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @param integer $id L'ID d'un EPI.
-	 *
-	 * @return string $epi->data['unique_identifier'] L'ID unique personnalisé de l'EPI.
+	 * @return Object $epi les donées d'un EPI.
 	 */
 	public function create_epi() {
 
 		$epi = $this->draft();
-		$epi->data['periodicity'] = intval( get_option( $this->option_name_default_data_periodicity ) );
-		$epi->data['lifetime_epi'] = intval( get_option( $this->option_name_default_data_lifetime ) );
+
+		$epi->data['periodicity']          = intval( get_option( $this->option_name_default_data_periodicity ) );
+		$epi->data['lifetime_epi']         = intval( get_option( $this->option_name_default_data_lifetime ) );
 		$epi->data['disposal_date']['raw'] = '1970-01-01';
-		$epi->data['unique_identifier'] = $this->unique_identifier( $epi->data['id'] );
-		$epi->data['author_id'] = get_current_user_id();
+		$epi->data['unique_identifier']    = $this->unique_identifier( $epi->data['id'] );
+		$epi->data['author_id']            = get_current_user_id();
+
 		$epi = $this->update( $epi->data );
 
 		return $epi;

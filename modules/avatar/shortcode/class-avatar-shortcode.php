@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -24,13 +26,13 @@ class Avatar_Shortcode {
 	 * Déclaration des shortcodes pour les avatars des utilisateurs.
 	 */
 	public function __construct() {
-		add_shortcode( 'theepi_avatar', array( $this, 'callback_theepi_avatar' ), 10, 1 );
+		add_shortcode( 'theepi_avatar', array( $this, 'callback_theepi_avatar' ) );
 	}
 
 	/**
 	 * Définition du callback pour l'affichage des avatars des utilisateurs.
 	 *
-	 * @param  array   $param Les paramètres passés au shortcode.
+	 * @param  array $param Les paramètres passés au shortcode.
 	 *
 	 * @return string  L'affichage de l'avater correspondant aux paramètres demandés.
 	 */
@@ -47,7 +49,7 @@ class Avatar_Shortcode {
 		$users = Avatar_Class::g()->get_avatars( $param );
 
 		ob_start();
-		\eoxia\View_Util::exec(
+		View_Util::exec(
 			'theepi',
 			'avatar',
 			'avatar',

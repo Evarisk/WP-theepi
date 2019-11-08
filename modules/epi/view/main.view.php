@@ -13,18 +13,20 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var array  $epis    Les données des EPIS.
+* @var string $page    La page active en focntion du filtre.
+* @var integer $offset  L'epi de départ pour la pagination.
+*/
+?>
 
 <div class="wpeo-tab epi">
 
 	<div class="epi-filter-bar">
-		<!-- <ul class="tab-list tab-redirect" style="float: left">
-			<li class="tab-element <?php echo $page == "all" ? 'tab-active' : ''; ?>" data-tab="all" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=all' ) ); ?> "> <i class="fas fa-list fa-2x" style="color : #0084ff"></i> </li>
-			<li class="tab-element <?php echo $page == "ok" ? 'tab-active' : ''; ?>" data-tab="ok" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=ok' ) ); ?>"> <i class="fas fa-check-circle fa-2x" style="color: mediumspringgreen;"></i></li>
-			<li class="tab-element <?php echo $page == "ko" ? 'tab-active' : ''; ?>" data-tab="ko" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=ko' ) ); ?>"> <i class="fas fa-exclamation-circle fa-2x" style="color: red;"></i></li>
-			<li class="tab-element <?php echo $page == "repair" ? 'tab-active' : ''; ?>" data-tab="repair" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=repair' ) ); ?>"> <i class="fas fa-tools fa-2x" style="color: orange;"></i></li>
-			<li class="tab-element <?php echo $page == "trash" ? 'tab-active' : ''; ?>" data-tab="trash" data-url="<?php echo esc_attr( admin_url( 'admin.php?page=theepi&tab=trash' ) ); ?>"> <i class="fas fa-trash fa-2x" style="color: black;"></i></li>
-		</ul> -->
 		<?php EPI_Class::g()->display_filters(); ?>
 		<?php EPI_Class::g()->display_search(); ?>
 	</div>
@@ -39,7 +41,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="table-cell" data-title="<?php esc_attr_e( 'Title', 'theepi' ); ?>"><span><?php esc_html_e( 'Title', 'theepi' ); ?></span></div>
 			<div class="table-cell table-100" data-title="<?php esc_attr_e( 'Manager', 'theepi' ); ?>"><span><?php esc_html_e( 'Manager', 'theepi' ); ?></span></div>
 			<div class="table-cell table-150" data-title="<?php esc_attr_e( 'Last Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Last Control', 'theepi' ); ?></span></div>
-            <div class="table-cell table-75" data-title="<?php esc_attr_e( 'Add Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Add Control', 'theepi' ); ?></span></div>
+			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Add Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Add Control', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Next Control', 'theepi' ); ?>"><span><?php esc_html_e( 'Next Control', 'theepi' ); ?></span></div>
 			<div class="table-cell table-75" data-title="<?php esc_attr_e( 'Status', 'theepi' ); ?>"><span><?php esc_html_e( 'Status', 'theepi' ); ?></span></div>
 			<div class="table-cell table-100 table-end" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>"><span><?php esc_html_e( 'Actions', 'theepi' ); ?></span></div>

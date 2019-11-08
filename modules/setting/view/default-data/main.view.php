@@ -13,7 +13,16 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+ * Documentation des variables utilisées dans la vue.
+ *
+ * @var string $page                  La page Donnée par Défaut.
+ * @var integer $default_periodicity  La donnée par défaut périodicité d'un EPI.
+ * @var integer $default_lifetime     La donnée par défaut durée de vie d'un EPI.
+ */
+?>
 
 <div class="setting-epi" data-page="<?php echo esc_attr( $page ); ?>">
 	<form class="wpeo-form">

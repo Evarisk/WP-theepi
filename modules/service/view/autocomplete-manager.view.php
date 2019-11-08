@@ -1,6 +1,6 @@
 <?php
 /**
- * La vue service d'un EPI.
+ * La vue pour le champ autocomplete responsable d'un EPI.
  *
  * @package   TheEPI
  * @author    Nicolas Domenech <nicolas@eoxia.com>
@@ -11,10 +11,10 @@
 
 namespace theepi;
 
-if ( ! defined('ABSPATH') ) {
-    exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
 }
 
-global $eo_search; ?>
+global $eo_search;
 
-<?php $eo_search->display( 'theepi' ); ?>
+$eo_search->display( 'theepi' );

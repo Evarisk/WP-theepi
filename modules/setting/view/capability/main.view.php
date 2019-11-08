@@ -13,7 +13,14 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var string $page La page Capacité.
+*/
+?>
 
 <div class="setting-epi"  data-page="<?php echo esc_attr( $page ); ?>">
 	<input type="hidden" name="action" value="save_capability_theepi" />

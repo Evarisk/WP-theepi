@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com>
  * @copyright 2015-2017 Evarisk
  * @since     0.2.0
- * @version   0.2.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -14,6 +14,12 @@ namespace theepi;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * Documentation des variables utilisées dans la vue.
+ *
+ * @var object $role_subscriber Tout les rôles d'un utilisateur abonné WordPress.
+ */
 
 if ( ! empty( $role_subscriber->capabilities['read_theepi'] ) ) :
 	?>
