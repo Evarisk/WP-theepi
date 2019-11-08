@@ -101,7 +101,7 @@ class TheEPI_Core_Action {
 	 * @return void
 	 */
 	public function callback_enqueue_scripts_js_frontend() {
-		wp_register_style( 'theepi-style', PLUGIN_THEEPI_URL . 'core/assets/css/style.min.css', array(), Config_Util::$init['theepi']->version );
+		wp_enqueue_style( 'theepi-style', PLUGIN_THEEPI_URL . 'core/assets/css_front/style.min.css', array(), Config_Util::$init['theepi']->version );
 		wp_enqueue_script( 'digi-epi-script-frontend', PLUGIN_THEEPI_URL . 'core/assets/js/frontend.min.js', array(), Config_Util::$init['theepi']->version, false );
 	}
 

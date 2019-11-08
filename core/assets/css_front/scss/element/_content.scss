@@ -1,0 +1,35 @@
+body.single-theepi-epi .theepi-epi {
+  display: flex;
+  flex-direction: row;
+  margin-top: 2em;
+
+  .post-thumbnail, .post-content {
+    flex-grow: 1;
+  }
+  .post-thumbnail {
+    width: 33.333333%;
+  }
+  .post-content {
+    width: 66.666666%;
+  }
+}
+
+body.single-theepi-epi .theepi-epi .post-content {
+  padding-left: 2.5em;
+
+  .entry-title {
+    margin-top: 0;
+    line-height: 1;
+  }
+  .epi-list-data {
+    list-style-type: none;
+    margin: 2em 0 0 0;
+
+    .epi-data-item {
+      margin: 0 0 0.6em 0;
+    }
+    .data-label {
+      font-weight: 700;
+    }
+  }
+}
