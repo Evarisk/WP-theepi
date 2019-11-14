@@ -27,7 +27,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="row-resume wpeo-form">
 	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
+		<?php if ( $edit_mode ) : ?>
+			<a href="<?php echo esc_html( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ); ?>" target="_blank"><?php echo esc_attr( $epi->data['unique_identifier'] ); ?></a>
+		<?php else : ?>
+			<?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
+		<?php endif; ?>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">
@@ -72,14 +76,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 	</div>
 
-	<div class="table-cell table-100 responsable" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>"></div>
+	<div class="table-cell table-100 responsable" data-title="<?php echo esc_attr_e( 'Manager', 'theepi' ); ?>">
+		<?php if ( 0 === $epi->data['manager'] ) : ?>
+			<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['author_id'] . '" size="50"]' ); ?>
+		<?php else : ?>
+			<?php echo do_shortcode( '[theepi_avatar ids="' . $epi->data['manager'] . '" size="50"]' ); ?>
+		<?php endif; ?>
+	</div>
 
 	<div class="table-cell table-150 last-control" data-title="<?php echo esc_attr_e( 'Last Control', 'theepi' ); ?>">
 		<?php if ( $edit_mode ) : ?>
 			<?php if ( ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ) : ?>
-				<span class="form-label" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>">
-					<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y', strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
-				</span>
+				<span class="epi-last-control-date" name="control-date" value="<?php echo esc_attr( EPI_Class::g()->get_last_control_date( $epi ) ); ?>">
+				<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y', strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?>
+			</span>
+				<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
+					aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
+					data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+					data-frontend="fasle"
+					data-action="display_control"
+					data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
+					data-type="see_control" >
+					<i class="fas fa-eye"></i>
+				</div>
+			<?php else : ?>
+				<span class="epi-last-control-date" name="control-date">
+				<?php esc_html_e( 'No Control Yet', 'theepi' ); ?>
+			</span>
 			<?php endif; ?>
 		<?php endif; ?>
 	</div>

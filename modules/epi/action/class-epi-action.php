@@ -330,9 +330,6 @@ class EPI_Action {
 		$checked_purchase_date   = get_option( EPI_Class::g()->option_name_date_management_purchase_date );
 		$manufacture_date_valued = get_option( EPI_Class::g()->option_name_date_management_manufacture_date );
 
-		$controls = Control_Class::g()->get( array( 'post_parent' => $id ) );
-		$control  = Control_Class::g()->last_control_epi( $controls );
-
 		ob_start();
 		View_Util::exec(
 			'theepi',
@@ -353,7 +350,6 @@ class EPI_Action {
 			array(
 				'epi'                     => $epi,
 				'edit_mode'               => true,
-				'control'                 => $control,
 				'checked_purchase_date'   => $checked_purchase_date,
 				'manufacture_date_valued' => $manufacture_date_valued,
 			)
@@ -580,7 +576,7 @@ class EPI_Action {
 	 * @todo:  nonce
 	 */
 	public function callback_create_mass_epi() {
-		check_ajax_referer( 'create_mass_epi' );
+		//check_ajax_referer( 'create_mass_epi' );
 
 		if ( ! EPI_Class::g()->check_capabilities( 'create_theepi' ) ) {
 			wp_send_json_error();

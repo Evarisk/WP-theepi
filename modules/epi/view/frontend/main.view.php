@@ -42,12 +42,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php if ( ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ) : ?>
 						<span class="epi-last-control-date"><i class="fas fa-calendar-alt"></i> <?php echo esc_attr( date( 'd/m/Y', strtotime( EPI_Class::g()->get_last_control_date( $epi ) ) ) ); ?></span>
 						<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
-						     aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
-						     data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-						     data-frontend="fasle"
-						     data-action="display_control"
-						     data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
-						     data-type="see_control">
+							aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
+							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
+							data-frontend="fasle"
+							data-action="display_control"
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
+							data-type="see_control">
 							<i class="fas fa-eye"></i>
 						</div>
 					<?php else : ?>

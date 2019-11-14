@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php if ( $number_pages > 1 ) : ?>
 	<ul class="wpeo-pagination epi" data-page="<?php echo esc_html( $page ); ?>">
-		<?php if ( 1 !== $pagination ) : ?>
+		<?php if ( $pagination != 1 ) : ?>
 			<!-- Bouton précédent -->
 			<li class="pagination-element pagination-prev">
 				<a href="#" class="action-attribute  epi-load-more"
@@ -45,7 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php for ( $i = 1; $i <= $number_pages; $i++ ) : ?>
 			<!-- Element simple -->
-			<li class="pagination-element <?php echo esc_html( $i === $pagination ? 'pagination-current' : '' ); ?>" style="cursor : pointer">
+			<li class="pagination-element <?php echo esc_html( $i == $pagination ? 'pagination-current' : '' ); ?>" style="cursor : pointer">
 				<a href="#" class="action-attribute  epi-load-more"
 					data-action="load_more_epi"
 					data-page="<?php echo esc_html( $page ); ?>"
@@ -60,7 +60,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</li>
 		<?php endfor; ?>
 
-		<?php if ( $number_pages !== $pagination ) : ?>
+		<?php if ( $number_pages != $pagination ) : ?>
 			<!-- Bouton suivant -->
 			<li class="pagination-element pagination-next">
 				<a href="#" class="action-attribute  epi-load-more"

@@ -26,7 +26,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
 	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
-		<?php echo esc_attr( $epi->data['unique_identifier'] ); ?>
+		<a href="<?php echo esc_html( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ); ?>" target="_blank"><?php echo esc_attr( $epi->data['unique_identifier'] ); ?></a>
 	</div>
 
 	<div class="table-cell table-75 thumbnail">

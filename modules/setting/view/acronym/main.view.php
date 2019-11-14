@@ -50,7 +50,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="form-element" style="width : 20%">
 			<span class="form-label"><?php esc_html_e( 'Control', 'theepi' ); ?></span>
 			<label class="form-field-container">
-				<input type="text" class="form-field" name='default-acronym-control" value="<?php ! empty( $default_acronym_control ) ? esc_attr_e( $default_acronym_control ) : esc_attr_e( 'C', 'theepi' ); ?>"/>
+				<input type="text" class="form-field" name="default-acronym-control" value="<?php ! empty( $default_acronym_control ) ? esc_attr_e( $default_acronym_control ) : esc_attr_e( 'C', 'theepi' ); ?>"/>
 			</label>
 		</div>
 

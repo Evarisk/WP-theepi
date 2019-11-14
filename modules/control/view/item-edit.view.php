@@ -25,8 +25,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php echo do_shortcode( '[theepi_avatar ids="' . $control->data['author_id'] . '" size="40"]' ); ?>
 	</div>
 
-	<div class="table-cell table-125" data-title="<?php echo esc_attr_e( 'Date', 'theepi' ); ?>">
-		<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['date']['rendered']['date'] ); ?>
+	<div class="table-cell table-150" data-title="<?php echo esc_attr_e( 'Date', 'theepi' ); ?>">
+		<div class="form-element group-date">
+			<label class="form-field-container">
+				<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
+				<input type="hidden" class="mysql-date" name="date" value="<?php echo esc_attr( $control->data['date']['raw'] ); ?>"/>
+				<input class="form-field date" type="text" name="date" value="<?php echo esc_attr( $control->data['date']['rendered']['date'] ); ?>"/>
+			</label>
+		</div>
 	</div>
 
 	<div class="table-cell" data-title="<?php echo esc_attr_e( 'Comment', 'theepi' ); ?>">

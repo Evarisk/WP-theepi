@@ -72,7 +72,7 @@ class EPI_Class extends Post_Class {
 	 *
 	 * @var integer
 	 */
-	protected $limit_epi = 10;
+	public $limit_epi = 10;
 
 	/**
 	 * Le nom de l'option pour enregistrer le nombre d'epi par page (défault).
@@ -232,67 +232,54 @@ class EPI_Class extends Post_Class {
 	 * @since   0.4.0
 	 * @version 0.7.0
 	 *
-	 * @param array  ['offset']    		(integer) Le nombre d'EPI à sauter.
-	 * 				 ['posts_per_page'] (integer) le nombre d'EPI par page.
+	 * @param array  $data  Les données de la pagination.
 	 *
 	 * @param string $term Terme de la recherche. Défault ''.
 	 * @param string $page La page de l'EPI.
 	 *
-	 * @return array ['epis']     (array)   Les EPIS en fonction de la page.
-	 * 				 ['nbr_epis'] (integer) le nombre d'EPI en fonction de la page.
+	 * @return array $data_epis Les EPIS en fonction de la page.
 	 */
 	public function get_epis( $data, $term = '', $page ) {
-		$args = array(
-			'offset'         => $data['offset'],
-			'posts_per_page' => $data['per_page'],
-			's'              => $term,
-		);
-
 		$status = mb_strtoupper( $page );
 		switch ( $status ) {
 			case 'OK':
-				$temp_args = array(
-					'meta_key'   => '_theepi_status_epi',
-					'meta_value' => 'OK'
-				);
+				$meta_value = 'OK';
 				break;
 			case 'KO':
-				$temp_args = array(
-					'meta_key'   => '_theepi_status_epi',
-					'meta_value' => 'KO'
-				);
+				$meta_value = 'KO';
 				break;
 			case 'REPAIR':
-				$temp_args = array(
-					'meta_key'   => '_theepi_status_epi',
-					'meta_value' => 'repair'
-				);
+				$meta_value = 'repair';
 				break;
 			case 'TRASH':
-				$temp_args = array(
-					'meta_key'   => '_theepi_status_epi',
-					'meta_value' => 'trash'
-				);
+				$meta_value = 'trash';
 				break;
 			default:
-				$temp_args = array();
+				$meta_value = '';
 				break;
 		}
-		$args = wp_parse_args( $temp_args, $args );
-
-		$epis = self::g()->get( array( $args, 'post_status' => 'publish' ) );
-
-		usort(
-			$epis,
-			function( $a, $b ) {
-				if ( $a->data['unique_key'] === $b->data['unique_key'] ) {
-					return 0;
-				}
-				return ( $a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
-			}
+		$epis = self::g()->get(
+			array(
+				'offset'         => $data['offset'],
+				'posts_per_page' => (int)$data['per_page'],
+				's'              => $term,
+				'meta_key'       => '_theepi_status_epi',
+				'meta_value'     => $meta_value,
+				'post_status'    => 'publish',
+			)
 		);
 
-		$nbr_epis  = count( self::g()->get( $temp_args ) );
+//		usort(
+//			$epis,
+//			function( $a, $b ) {
+//				if ( $a->data['unique_key'] === $b->data['unique_key'] ) {
+//					return 0;
+//				}
+//				return ( $a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
+//			}
+//		);
+
+		$nbr_epis  = $this->get_nb_epis( $meta_value );
 		$data_epis = array(
 			'epis'     => $epis,
 			'nbr_epis' => $nbr_epis,
@@ -343,8 +330,9 @@ class EPI_Class extends Post_Class {
 		$count_epi = count(
 			self::g()->get(
 				array(
-					'fields' => array( 'ID' ),
-					's'      => $term,
+					'fields'      => array( 'ID' ),
+					's'           => $term,
+					'post_status' => 'publish',
 				)
 			)
 		);
@@ -434,10 +422,10 @@ class EPI_Class extends Post_Class {
 		$epis            = $data_epis['epis'];
 		$nbr_epis        = $data_epis['nbr_epis'];
 
-		if ( ( 'ok' === $page ) || ( 'ko' === $page ) || ( 'trash' === $page ) || ( 'repair' === $page ) ) {
-			$count_epi = $nbr_epis;
-		} else {
+		if ( 'all' === $page ) {
 			$count_epi = $pagination_data['count_epi'];
+		} else {
+			$count_epi = $nbr_epis;
 		}
 
 		$per_page = $pagination_data['per_page'];
@@ -512,7 +500,6 @@ class EPI_Class extends Post_Class {
 
 				$epi = $this->update( $epi->data );
 
-
 				WPEO_Upload_Class::g()->set_thumbnail(
 					array(
 						'id'         => $epi->data['id'],
@@ -567,11 +554,8 @@ class EPI_Class extends Post_Class {
 
 		if ( $time > 0 ) {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
-			return $day_rest;
-
 		} else {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
-			return $day_rest;
 		}
 		return $day_rest;
 	}
@@ -700,26 +684,39 @@ class EPI_Class extends Post_Class {
 	 *
 	 * @param EPI_Model $epi Les donnée d'un EPI.
 	 *
-	 * @return array ['status_epi] le statut de l'EPI.
+	 * @return string $status_epi le statut de l'EPI.
 	 */
 	public function get_status( $epi ) {
-		if ( 0 !== $epi->data['id'] ) {
-			if ( '1970-01-01' === $epi->data['disposal_date']['raw'] ) {
-				$controls     = Control_Class::g()->get_controls( $epi );
-				$last_control = Control_Class::g()->last_control_epi( $controls );
-				if ( ! empty( $last_control ) ) {
-					$epi->data['status_epi'] = $last_control->data['status_control'];
-
-					$this->update( $epi->data );
-					return $last_control->data['status_control'];
+		$status_epi = '';
+		if ( $epi->data['id'] != 0 ) {
+			if ( $epi->data['disposal_date']['raw'] == '1970-01-01' ) {
+				$controls = Control_Class::g()->get_controls( $epi );
+				if ( empty( $controls ) ) {
+					$status_epi = $epi->data['status_epi'];
+				} else {
+					$last_control = Control_Class::g()->last_control_epi( $controls );
+					if ( ! empty( $last_control ) ) {
+						$epi->data['status_epi']   = $last_control->data['status_control'];
+						$epi->data['control_date'] = $last_control->data['date'];
+						$this->update( $epi->data );
+						$status_epi = $last_control->data['status_control'];
+					}
 				}
 			} else {
 				$epi->data['status_epi'] = 'trash';
 
-				$epi = $this->update( $epi->data );
+				$epi        = $this->update( $epi->data );
+				$status_epi = $epi->data['status_epi'];
+			}
+
+			if ( strtotime( $epi->data['control_date']['raw'] ) < ( strtotime( 'now' ) ) ) {
+				$epi->data['status_epi'] = 'KO';
+
+				$epi        = $this->update( $epi->data );
+				$status_epi = $epi->data['status_epi'];
 			}
 		}
-		return $epi->data['status_epi'];
+		return $status_epi;
 	}
 
 	/**
@@ -816,6 +813,29 @@ class EPI_Class extends Post_Class {
 		$epi = $this->update( $epi->data );
 
 		return $epi;
+	}
+
+	/**
+	 * Récupère le nombre EPIS en fonction du status.
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param string $meta_value Le statut de l'EPI.
+	 *
+	 * @return integer $nb_epis  Le nombre d'EPI.
+	 */
+	public function get_nb_epis( $meta_value ) {
+		$epis = self::g()->get(
+			array(
+				'meta_key'    => '_theepi_status_epi',
+				'meta_value'  => $meta_value,
+				'post_status' => 'publish',
+			)
+		);
+
+		$nb_epis = count( $epis );
+		return $nb_epis;
 	}
 
 }

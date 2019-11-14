@@ -31,7 +31,7 @@ class Control_Filter {
 
 		$current_type = Control_Class::g()->get_type();
 		add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
-		add_filter( "wpeo_upload_view_list_item", array( $this, 'custom_wpeo_upload_view_list_item'), 10, 2 );
+		add_filter( "wpeo_upload_view_list_item", array( $this, 'custom_wpeo_upload_view_list_item' ), 10, 2 );
 
 	}
 

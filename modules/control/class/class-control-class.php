@@ -11,6 +11,10 @@
 
 namespace theepi;
 
+use eoxia\LOG_Util;
+use eoxia\Post_Class;
+use eoxia\View_Util;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -18,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Handle Control.
  */
-class Control_Class extends \eoxia\Post_Class {
+class Control_Class extends Post_Class {
 
 
 	/**
@@ -71,14 +75,14 @@ class Control_Class extends \eoxia\Post_Class {
 	protected $limit_control = 10;
 
 	/**
-	 * le nom de l'option pour enregistrer le nombre d'epi par page (défault).
+	 * Le nom de l'option pour enregistrer le nombre d'epi par page (défault).
 	 *
 	 * @var string
 	 */
 	public $option_name_per_page = 'control_per_page';
 
 	/**
-	 * le nom de l'option pour enregistrer l'acronym d'un contrôle (défault).
+	 * Le nom de l'option pour enregistrer l'acronym d'un contrôle (défault).
 	 *
 	 * @var string
 	 */
@@ -92,37 +96,16 @@ class Control_Class extends \eoxia\Post_Class {
 	protected $post_type_name = 'Control EPI';
 
 	/**
-	 * Constructeur.
-	 *
-	 * @since   0.7.0
-	 * @version 0.7.0
-	 *
-	 * @return void
-	 */
-	protected function construct() {
-		parent::construct();
-	}
-
-	/**
 	 * Appel la vue principale pour afficher le tableau HTML contenant les contrôles.
 	 *
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @param string $term Terme de la recherche. Défault ''.
-	 *
-	 * @return void
+	 * @return object $controls_schema
 	 */
-	public function display( ) {
-
-		$controls_schema = self::g()->get(
-			array(
-				'schema' => true,
-			), true
-		);
-
+	public function display() {
+		$controls_schema = self::g()->get( array( 'schema' => true ), true );
 		return $controls_schema;
-
 	}
 
 	/**
@@ -136,7 +119,7 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @return array ['controls'] (array)   La liste des contrôles.
 	 */
 	public function get_controls( $epi ) {
-		$id = $epi->data['id'];
+		$id       = $epi->data['id'];
 		$controls = self::g()->get( array( 'post_parent' => $id ) );
 		return $controls;
 	}
@@ -148,18 +131,20 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @version 0.7.0
 	 *
 	 * @param EPI_Model $epi      Les données de l'EPI.
-	 * @param bool   $frontend    L'état du site - $frontend = true.
+	 * @param bool      $frontend L'état du site - $frontend = true.
 	 *
 	 * @return void
 	 */
 	public function display_control_list( $epi, $frontend ) {
 
 		$controls = $this->get_controls( $epi );
-		\eoxia\View_Util::exec(
-			'theepi', 'control', 'list', array(
+		View_Util::exec(
+			'theepi',
+			'control',
+			'list',
+			array(
 				'controls' => $controls,
-				'frontend' => $frontend
-
+				'frontend' => $frontend,
 			)
 		);
 	}
@@ -171,47 +156,49 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @version 0.7.0
 	 *
 	 * @param EPI_Model $epi      Les données de l'EPI.
-	 * @param bool   $frontend    L'état du site - $frontend = true.
+	 * @param bool      $frontend L'état du site - $frontend = true.
 	 *
 	 * @return void
 	 */
 	public function display_modal_content( $epi, $frontend ) {
 
-		\eoxia\View_Util::exec(
-			'theepi', 'control', 'modal-content', array(
-				'epi' => $epi,
-				'frontend' => $frontend
+		View_Util::exec(
+			'theepi',
+			'control',
+			'modal-content',
+			array(
+				'epi'      => $epi,
+				'frontend' => $frontend,
 			)
 		);
 	}
 
 	/**
 	 * Récupère le dernier control lié à un EPI.
-	*
-	* @since   0.7.0
-	* @version 0.7.0
-	*
-	* @param array  $controls      Les données des contrôles.
-	*
-	* @return array $controls[key]  retourne le control le plus récent.
-	*/
+	 *
+	 * @since   0.7.0
+	 * @version 0.7.0
+	 *
+	 * @param array $controls        Les données des contrôles.
+	 *
+	 * @return array $controls[key]  retourne le control le plus récent.
+	 */
 	public function last_control_epi( $controls ) {
 
-	 	if ( empty( $controls ) ) {
-	 		return array();
-	 	}
+		if ( empty( $controls ) ) {
+			wp_send_json_error();
+		}
 
-	 	$date_start        = 0;
-	 	$date_last_control = 0;
-	 	$key_last_control  = 0;
-	 	foreach ( $controls as $key => $control ) {
-	 		$date_start = strtotime( $control->data['date']['rendered']['mysql'] );
-	 		if ( $date_last_control < $date_start ) {
-	 			$date_last_control = $date_start;
-	 			$key_last_control  = $key;
-	 		}
-	 	}
-	 	return $controls[ $key_last_control ];
+		$date_last_control = 0;
+		$key_last_control  = 0;
+		foreach ( $controls as $key => $control ) {
+			$date_start = strtotime( $control->data['date']['rendered']['mysql'] );
+			if ( $date_last_control < $date_start ) {
+				$date_last_control = $date_start;
+				$key_last_control  = $key;
+			}
+		}
+		return $controls[ $key_last_control ];
 	}
 
 	/**
@@ -220,24 +207,24 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @param integer    $id L'ID d'un contrôle.
+	 * @param integer $id L'ID d'un contrôle.
 	 *
 	 * @return EPI_Model $epi  Les données de l'EPI avec son status trash.
 	 */
 	public function delete( $id ) {
 		$control = $this->get( array( 'id' => $id ), true );
-		$epi = EPI_Class::g()->get( array( 'id' => $control->data[ 'parent_id' ] ),true );
+		$epi     = EPI_Class::g()->get( array( 'id' => $control->data['parent_id'] ), true );
 
 		$control->data['status'] = 'trash';
 
 		$control = $this->update( $control->data );
-		\eoxia\LOG_Util::g()->log( sprintf( ' Control "%d" is now trashed, Control data %s', $control->data['id'], wp_json_encode( $control ) ), 'theepi' );
+		LOG_Util::g()->log( sprintf( ' Control "%d" is now trashed, Control data %s', $control->data['id'], wp_json_encode( $control ) ), 'theepi' );
 
 		return $epi;
 	}
 
 	/**
-	 * récupère le média rattaché au contrôle.
+	 * Récupère le média rattaché au contrôle.
 	 *
 	 * @since   0.7.0
 	 * @version 0.7.0
@@ -248,30 +235,31 @@ class Control_Class extends \eoxia\Post_Class {
 	 */
 	public function get_media( $id ) {
 
-		$control = Control_Class::g()->get( array( 'id' => $id ), true );
+		$control  = $this->get( array( 'id' => $id ), true );
 		$media_id = end( $control->data['associated_document_id']['media'] );
-		$media = get_post( $media_id );
+		$media    = get_post( $media_id );
 
-		if ( ! empty ( $media ) ) {
+		$view = '';
+		if ( ! empty( $media ) ) {
 			$filelink      = get_attached_file( $media_id );
 			$filename_only = basename( $filelink );
-			$fileurl_only = $media->guid;
+			$fileurl_only  = $media->guid;
 
 			ob_start();
-			\eoxia\View_Util::exec(
-				'theepi', 'control', 'attached-file', array(
-					'file_id' => $media_id,
-					'field_name' => "",
+			View_Util::exec(
+				'theepi',
+				'control',
+				'attached-file',
+				array(
+					'file_id'       => $media_id,
+					'field_name'    => '',
 					'filename_only' => $filename_only,
-					'fileurl_only' => $fileurl_only
+					'fileurl_only'  => $fileurl_only,
 				)
 			);
 			$view = ob_get_clean();
-			return $view;
-		}else {
-			// return esc_html_e( 'No file attached', 'wpeo-upload' );
 		}
-
+		return $view;
 	}
 
 	/**
@@ -280,14 +268,14 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @param bool   $frontend   L'état du site - $frontend = true.
+	 * @param bool $frontend   L'état du site - $frontend = true.
 	 *
 	 * @return string $namespace Le namespace à utilisé.
 	 */
 	public function frontend( $frontend ) {
-		if ( $frontend == 'true' ) {
+		if ( 'true' === $frontend ) {
 			return 'theEPIFrontEnd';
-		}else {
+		} else {
 			return 'theEPI';
 		}
 	}
@@ -298,17 +286,18 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @since   0.7.0
 	 * @version 0.7.0
 	 *
-	 * @return POST $post les données du post.
+	 * @return object $post les données du post.
 	 */
 	public function draft() {
 		$post = $this->get( array( 'post_status' => 'draft' ), true );
-		if ( ! empty ( $post ) ) {
-			$post = $this->delete( $post->data['id'] );
+		if ( ! empty( $post ) ) {
+			$this->delete( $post->data['id'] );
 		}
 		$post = $this->get( array( 'schema' => true ), true );
+
 		$post->data['post_status'] = 'draft';
+
 		$post = $this->update( $post->data );
-		$post = $this->get( array( 'post_status' => 'draft' ), true );
 		return $post;
 	}
 
@@ -323,10 +312,10 @@ class Control_Class extends \eoxia\Post_Class {
 	 * @return integer $unique_identifier l'identifiant unique du contrôle.
 	 */
 	public function unique_identifier( $epi ) {
-		$prefix_control = ! empty ( get_option( $this->option_name_acronym_control ) ) ? get_option( $this->option_name_acronym_control ) : 'C';
-		$controls = $this->get_controls( $epi );
-		$nb_controls = count( $controls ) + 1;
-		$unique_identifier =  $epi->data['unique_identifier'] . ' - ' . $prefix_control . $nb_controls;
+		$prefix_control    = ! empty( get_option( $this->option_name_acronym_control ) ) ? get_option( $this->option_name_acronym_control ) : 'C';
+		$controls          = $this->get_controls( $epi );
+		$nb_controls       = count( $controls ) + 1;
+		$unique_identifier = $epi->data['unique_identifier'] . ' - ' . $prefix_control . $nb_controls;
 		return $unique_identifier;
 	}
 
