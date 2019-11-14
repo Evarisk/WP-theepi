@@ -67,7 +67,6 @@ class Service_Class extends Singleton_Util {
 	 * @return string $control_date        La date de controle d'un EPI.
 	 */
 	public function calcul_control_date( $commissioning_date, $periodicity ) {
-
 		$control_date = 0;
 
 		if ( $commissioning_date > 0 && $periodicity > 0 ) {
@@ -129,22 +128,22 @@ class Service_Class extends Singleton_Util {
 
 		switch ( $data_epi['purchase_date'] ) {
 			case $data_epi['manufacture_date'] > $data_epi['purchase_date']:
-				$temp_error['purchase-date']['error']   = esc_html_e( 'This field Manufacture Date is greater than field Purchase Date', 'theepi' );
+				$temp_error['purchase-date']['error']   = esc_html__( 'This field Manufacture Date is greater than field Purchase Date', 'theepi' );
 				$temp_error['purchase-date']['element'] = 'purchase-date';
 				break;
 			case $data_epi['purchase_date'] > strtotime( $data_epi['end_life_date'] ):
-				$temp_error['purchase-date']['error']   = esc_html_e( 'This field Purchase Date is greater than field End Life Date', 'theepi' );
+				$temp_error['purchase-date']['error']   = esc_html__( 'This field Purchase Date is greater than field End Life Date', 'theepi' );
 				$temp_error['purchase-date']['element'] = 'purchase-date';
 				break;
 		}
 
 		switch ( $data_epi['commissioning_date'] ) {
 			case $data_epi['purchase_date'] > $data_epi['commissioning_date']:
-				$temp_error['commissioning-date']['error']   = esc_html_e( 'This field Purchase Date is greater than field Commissioning Date', 'theepi' );
+				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Purchase Date is greater than field Commissioning Date', 'theepi' );
 				$temp_error['commissioning-date']['element'] = 'commissioning-date';
 				break;
 			case $data_epi['commissioning_date'] > strtotime( $data_epi['end_life_date'] ):
-				$temp_error['commissioning-date']['error']   = esc_html_e( 'This field Commissioning Date is greater than field End Life Date', 'theepi' );
+				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Commissioning Date is greater than field End Life Date', 'theepi' );
 				$temp_error['commissioning-date']['element'] = 'commissioning-date';
 				break;
 		}
@@ -174,9 +173,9 @@ class Service_Class extends Singleton_Util {
 	 */
 	public function check_error( $data, $type, $temp_error ) {
 		if( $data == "" ){
-			$error = esc_html_e( 'This field ' . $type . ' is empty', 'theepi' );
+			$error = esc_html__( 'This field ' . $type . ' is empty', 'theepi' );
 		} elseif( $data == 0 ){
-			$error = esc_html_e( 'This field ' . $type . ' is invalid because 0 is forbidden', 'theepi' );
+			$error = esc_html__( 'This field ' . $type . ' is invalid because 0 is forbidden', 'theepi' );
 		} else {
 			$error = '';
 		}

@@ -197,9 +197,8 @@ class EPI_Class extends Post_Class {
 	 * @return void
 	 */
 	public function display( $term = '' ) {
-
 		$page = isset ( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : "all";
-		if( $page != "all" && $page != "ok" && $page != "ko" && $page != "repair" && $page != "trash" ){
+		if ( $page != "all" && $page != "ok" && $page != "ko" && $page != "repair" && $page != "trash" ) {
 			$page = 'all';
 		}
 
@@ -269,15 +268,15 @@ class EPI_Class extends Post_Class {
 			)
 		);
 
-//		usort(
-//			$epis,
-//			function( $a, $b ) {
-//				if ( $a->data['unique_key'] === $b->data['unique_key'] ) {
-//					return 0;
-//				}
-//				return ( $a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
-//			}
-//		);
+		usort(
+			$epis,
+			function( $a, $b ) {
+				if ( $a->data['unique_key'] === $b->data['unique_key'] ) {
+					return 0;
+				}
+					return ( $a->data['unique_key'] < $b->data['unique_key'] ) ? 1 : -1;
+			}
+		);
 
 		$nbr_epis  = $this->get_nb_epis( $meta_value );
 		$data_epis = array(
@@ -696,8 +695,8 @@ class EPI_Class extends Post_Class {
 				} else {
 					$last_control = Control_Class::g()->last_control_epi( $controls );
 					if ( ! empty( $last_control ) ) {
-						$epi->data['status_epi']   = $last_control->data['status_control'];
-						$epi->data['control_date'] = $last_control->data['date'];
+						$epi->data['status_epi']          = $last_control->data['status_control'];
+						$epi->data['control_date']['raw'] = date( 'Y-m-d', Service_Class::g()->calcul_control_date( strtotime( $last_control->data['date']['raw'] ), $epi->data['periodicity'] ) );
 						$this->update( $epi->data );
 						$status_epi = $last_control->data['status_control'];
 					}

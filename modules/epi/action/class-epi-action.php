@@ -388,16 +388,18 @@ class EPI_Action {
 			wp_send_json_error();
 		} else {
 			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
-			ob_start();
-			View_Util::exec(
-				'theepi',
-				'epi',
-				'item',
-				array(
-					'epi' => $epi,
-				)
-			);
-			$view = ob_get_clean();
+			if ( 'publish' === $epi->data['status'] ) {
+				ob_start();
+				View_Util::exec(
+					'theepi',
+					'epi',
+					'item',
+					array(
+						'epi' => $epi,
+					)
+				);
+				$view = ob_get_clean();
+			}
 		}
 
 		wp_send_json_success(
@@ -576,7 +578,6 @@ class EPI_Action {
 	 * @todo:  nonce
 	 */
 	public function callback_create_mass_epi() {
-		//check_ajax_referer( 'create_mass_epi' );
 
 		if ( ! EPI_Class::g()->check_capabilities( 'create_theepi' ) ) {
 			wp_send_json_error();

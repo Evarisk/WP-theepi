@@ -152,7 +152,7 @@ if ( ! defined('ABSPATH' ) ) {
 			</div>
 
 			<div class="form-element form-element-unboxed group-date">
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php esc_html_e( 'First Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'First Control Date', 'theepi' ); ?> </span>
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ? esc_html_e( 'Control Date = Last Control + Periodicity', 'theepi' )  : esc_html_e( 'Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'Control Date', 'theepi' ); ?> </span>
 				<div class="form-error"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-check"></i></span>

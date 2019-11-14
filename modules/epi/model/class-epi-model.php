@@ -130,7 +130,8 @@ class EPI_Model extends Post_Model {
 		$this->schema['control_date'] = array(
 			'type'        => 'wpeo_date',
 			'context'     => array( 'GET' ),
-			'meta_type'   => 'multiple',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_control_date',
 			'description' => 'Is the control date of the EPI.',
 			'since'       => '0.6.0',
 			'version'     => '0.6.0',
