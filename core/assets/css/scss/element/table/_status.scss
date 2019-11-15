@@ -1,0 +1,52 @@
+.wpeo-table {
+	.epi-status-icon {
+		width: 50px;
+		height: 50px;
+		display: block;
+		text-align: center;
+		line-height: 50px;
+		padding: 0 !important;
+		margin: 0;
+		background: #fff;
+
+		&::before {
+			font-size: 20px;
+			color: rgba(0,0,0,0.6);
+      @include fa-icon;
+			content: fa-content( $fa-var-caret-down );
+		}
+
+		&.OK {
+			background: $color__green;
+			&::before {
+				color: #fff;
+				content: fa-content( $fa-var-check );
+			}
+		}
+		&.KO {
+			background: $color__red;
+			&::before {
+				color: #fff;
+				content: fa-content( $fa-var-exclamation );
+			}
+		}
+		&.repair {
+			background: $color__orange;
+			&::before {
+				color: #fff;
+				content: fa-content( $fa-var-tools );
+			}
+		}
+		&.trash {
+			background: $color__black;
+			&::before {
+				color: #fff;
+				content: fa-content( $fa-var-trash-alt );
+			}
+		}
+	}
+}
+
+.wpeo-dropdown.dropdown-status .dropdown-content {
+	width: 202px;
+}

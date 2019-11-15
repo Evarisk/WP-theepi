@@ -6,10 +6,13 @@
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.6.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
+
+use eoxia\Singleton_Util;
+use eoxia\View_Util;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,247 +21,249 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Handle Service.
  */
-class Service_Class extends \eoxia\Post_Class {
-
-
-	/**
-	 * Le nom du modèle.
-	 *
-	 * @var string
-	 */
-	protected $model_name = '\theepi\EPI_Model';
+class Service_Class extends Singleton_Util {
 
 	/**
-	 * Le post type.
+	 * Le constructeur.
 	 *
-	 * @var string
-	 */
-	protected $type = 'theepi-service-epi';
-
-	/**
-	 * La clé principale du modèle.
+	 * @return void
 	 *
-	 * @var string
+	 * @since   0.2.0
+	 * @version 0.2.0
 	 */
-	protected $meta_key = '_theepi_epi';
-
-	/**
-	 * La route pour accéder à l'objet dans la rest API.
-	 *
-	 * @var string
-	 */
-	protected $base = 'theepi/service/epi';
-
-	/**
-	 * La version de l'objet.
-	 *
-	 * @var string
-	 */
-	protected $version = '0.1';
-
-	/**
-	 * Le préfixe de l'objet dans TheEPI.
-	 *
-	 * @var string
-	 */
-	public $element_prefix = 'EPI';
-
-	/**
-	 * La limite des EPI a affiché par page.
-	 *
-	 * @var integer
-	 */
-	protected $limit_epi = 10;
-
-	/**
-	 * L'option pour enregistrer le commentaire par défault.
-	 *
-	 * @var string
-	 */
-	public $option_name_per_page = 'epi_per_page';
-
-	/**
-	 * Le nom pour le register post type.
-	 *
-	 * @var string
-	 */
-	protected $post_type_name = 'Personal protective equipment';
-
-	/**
-	 * La taxonomie à attacher.
-	 *
-	 * @var string
-	 */
-	protected $attached_taxonomy_type = '_theepi_state';
+	protected function construct() {
+	}
 
 	/**
 	 * Calcul la date de fin de vie d'un EPI.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
-	 * @param string  $manufacture_date  La date de fabrication d'un EPI.
-	 * @param string  $lifetime          La durée de vie d'un EPI.
+	 * @param string $manufacture_date  La date de fabrication d'un EPI.
+	 * @param string $lifetime          La durée de vie d'un EPI.
 	 *
-	 * @return string $date_fin_vie      La date de fin de vie d'un EPI.
-	 *
+	 * @return string $end_life_date      La date de fin de vie d'un EPI.
 	 */
-	public function calcul_date_fin_vie( $manufacture_date, $lifetime ) {
+	public function calcul_end_life_date( $manufacture_date, $lifetime ) {
+		$end_life_date = 0;
 
-		$date_fin_vie = '';
-		$duree_de_vie = $lifetime;
-		$manufacture_date = $this->convert_date_to_sql( $manufacture_date );
-
-		if( strtotime( $manufacture_date ) > 0 ){ // Date de fabrication définie
-			$date_fabrication = strtotime( $manufacture_date ); // seconde
-			$date_fin_vie = strtotime( '+' . $duree_de_vie . ' years', $date_fabrication );
-			$date_fin_vie = date( 'd/m/Y',  $date_fin_vie );
+		if ( $manufacture_date > 0 && $lifetime > 0 ) {
+			$end_life_date = strtotime( '+' . $lifetime . ' days', $manufacture_date );
 		}
 
-		return $date_fin_vie;
+		return $end_life_date;
 	}
 
 	/**
 	 * Calcul la date de controle d'un EPI.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
-	 * @param string  $purchase_date       La date d'achat d'un EPI.
-	 * @param string  $end_life_date       La date de fin de vie d'un EPI.
 	 * @param string  $commissioning_date  La date de mise en service d'un EPI.
 	 * @param integer $periodicity         La férquence de controle d'un EPI.
 	 *
-	 * @return string $date_control        La date de controle d'un EPI.
-	 *
+	 * @return string $control_date        La date de controle d'un EPI.
 	 */
-	public function calcul_date_control( $purchase_date, $end_life_date, $commissioning_date, $periodicity ) {
-		$date_control = "";
-		$purchase_date = $this->convert_date_to_sql( $purchase_date );
-		$end_life_date = $this->convert_date_to_sql( $end_life_date );
-		$commissioning_date = $this->convert_date_to_sql( $commissioning_date );
+	public function calcul_control_date( $commissioning_date, $periodicity ) {
+		$control_date = 0;
 
-		if ( strtotime( $purchase_date ) <=  strtotime( $end_life_date ) &&  strtotime( $commissioning_date ) <=  strtotime( $end_life_date ) ) {
-			$date_control = strtotime( '+' . $periodicity . ' days', strtotime( $commissioning_date ) );
-			$date_control = date( 'd/m/Y', $date_control);
-			} else {
-			$status_epi = $epi->data['status_epi'] = "rebut";
+		if ( $commissioning_date > 0 && $periodicity > 0 ) {
+			$control_date = strtotime( '+' . $periodicity . ' days', $commissioning_date );
 		}
-		return $date_control;
+
+		return $control_date;
 	}
 
 	/**
 	 * Calcul la date de mise au rebut d'un EPI.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
-	 * @param string  $end_life_date    La date de fin de vie d'un EPI.
+	 * @param string $end_life_date    La date de fin de vie d'un EPI.
 	 *
-	 * @return string $date_mise_rebut  La date de mise au rebut d'un EPI.
-	 *
+	 * @return string $disposal_date  La date de mise au rebut d'un EPI.
 	 */
-	public function calcul_date_mise_rebut( $end_life_date ) {
-		$date_mise_rebut = $end_life_date;
-		return $date_mise_rebut;
-	}
+	public function calcul_disposal_date( $end_life_date ) {
 
-	/**
-	 * Convertie la date au format français dd/mm/yy en format SQL.
-	 *
-	 * @since   0.6.0
-	 * @version 0.6.0
-	 *
-	 * @param  string $date La date au format dd/mm/aaaa.
-	 * @return string       la date au format SQL.
-	 *
-	 */
-	 public function convert_date_to_sql( $date ) {
-		if ( !empty( $date ) && $date != "" ) {
-			return date( 'Y-m-d', strtotime( str_replace( '/', '-', $date ) ) );
+		$disposal_date = 0;
+
+		if ( $end_life_date > 0 ) {
+			$disposal_date = $end_life_date;
 		}
-		return "";
+
+		return $disposal_date;
 	}
 
 	/**
-	 * Vérifie si les champs dates, lifetime et peridicity sont remplies et valides.
+	 * Vérifie si les champs dates, lifetime et peridicity sont corrects.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param object $data_epi les données d'un EPI.
 	 *
 	 * @return array ['success'] (bool)  True si le champ est valide.
 	 *               ['error']   (array) le message d'erreur.
 	 *               ['element'] (array) le champ invalide.
-	 *
 	 */
-	public function check_date_epi ( $data_epi ) {
+	public function check_date_epi( $data_epi ) {
 		$data = array(
 			'success' => true,
 			'error'   => array(),
-			'element' => array()
 		);
 
-		$date_fabrication = strtotime( $data_epi['manufacture_date'] );
-		$date_fin_vie = strtotime( $data_epi['end_life_date'] );
-		$date_achat = strtotime( $data_epi['purchase_date'] );
-		$date_mise_service = strtotime( $data_epi['commissioning_date'] );
+		$temp_error = array();
 
-		if ( ( $data_epi['lifetime_epi'] == 0 ) || ( $data_epi['lifetime_epi'] == '') ) {
-			$data['success'] = false;
-			array_push( $data['error'], esc_html__( 'This field Lifetime is empty or invalid', 'theepi' ) );
-			array_push( $data['element'], 'lifetime' );
+		$periodicity = $data_epi['periodicity'];
+		$lifetime    = $data_epi['lifetime_epi'];
+
+		$temp_error = $this->check_error( strtotime( $data_epi['manufacture_date'] ), 'manufacture-date', $temp_error );
+		$temp_error = $this->check_error( strtotime( $data_epi['purchase_date'] ), 'purchase-date', $temp_error );
+		$temp_error = $this->check_error( strtotime( $data_epi['commissioning_date'] ), 'commissioning-date', $temp_error );
+		$temp_error = $this->check_error( $lifetime, 'lifetime', $temp_error );
+		$temp_error = $this->check_error( $periodicity, 'periodicity', $temp_error );
+
+		switch ( $data_epi['purchase_date'] ) {
+			case $data_epi['manufacture_date'] > $data_epi['purchase_date']:
+				$temp_error['purchase-date']['error']   = esc_html__( 'This field Manufacture Date is greater than field Purchase Date', 'theepi' );
+				$temp_error['purchase-date']['element'] = 'purchase-date';
+				break;
+			case $data_epi['purchase_date'] > strtotime( $data_epi['end_life_date'] ):
+				$temp_error['purchase-date']['error']   = esc_html__( 'This field Purchase Date is greater than field End Life Date', 'theepi' );
+				$temp_error['purchase-date']['element'] = 'purchase-date';
+				break;
 		}
 
-		if ( ( $data_epi['periodicity'] == 0 ) || ( $data_epi['periodicity'] == '') ) {
-			$data['success'] = false;
-			array_push( $data['error'], esc_html__( 'This field Periodicity is empty or invalid', 'theepi' ) );
-			array_push( $data['element'], 'periodicity' );
+		switch ( $data_epi['commissioning_date'] ) {
+			case $data_epi['purchase_date'] > $data_epi['commissioning_date']:
+				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Purchase Date is greater than field Commissioning Date', 'theepi' );
+				$temp_error['commissioning-date']['element'] = 'commissioning-date';
+				break;
+			case $data_epi['commissioning_date'] > strtotime( $data_epi['end_life_date'] ):
+				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Commissioning Date is greater than field End Life Date', 'theepi' );
+				$temp_error['commissioning-date']['element'] = 'commissioning-date';
+				break;
 		}
 
-		if ( ( $data_epi['manufacture_date'] == 0 ) || ( $data_epi['manufacture_date'] == '') ) {
-			$data['success'] = false;
-			array_push( $data['error'], esc_html__( 'This field Manufacture Date is empty or invalid', 'theepi' ) );
-			array_push( $data['element'], 'manufacture-date' );
-		}
-
-		if ( ( $date_fabrication > $date_achat ) || ( $date_achat > $date_fin_vie ) || ( $data_epi['purchase_date'] == 0 ) || ( $data_epi['purchase_date'] == '') ) {
-			$data['success'] = false;
-			array_push( $data['error'], esc_html__( 'This field Purchase Date is empty or invalid', 'theepi' ) );
-			array_push( $data['element'], 'purchase-date' );
-		}
-
-		if ( ( $date_achat > $date_mise_service ) ||  ( $date_mise_service > $date_fin_vie ) || ( $data_epi['commissioning_date'] == 0 ) || ( $data_epi['commissioning_date'] == '') ) {
-			$data['success'] = false;
-			array_push( $data['error'], esc_html__( 'This field Commissioning Date is empty or invalid', 'theepi' ) );
-			array_push( $data['element'], 'commissioning-date' );
+		$data['error'] = $temp_error;
+		foreach ( $data['error'] as $key['error'] => $value ) {
+			if ( ! empty( $value['error'] ) ) {
+				$data['success'] = false;
+			}
 		}
 
 		return $data;
+	}
 
+	/**
+	 * Vérifie si les champs dates, lifetime et peridicity sont remplies et valides.
+	 *
+	 * @since   0.6.0
+	 * @version 0.7.0
+	 *
+	 * @param object $data       la valeur du champ.
+	 * @param object $type       le champ en erreur.
+	 * @param array  $temp_error le taableu contenant l'erreur + le champ.
+	 *
+	 * @return array ['error']   (array) le message d'erreur.
+	 *               ['element'] (array) le champ invalide.
+	 */
+	public function check_error( $data, $type, $temp_error ) {
+		if( $data == "" ){
+			$error = esc_html__( 'This field ' . $type . ' is empty', 'theepi' );
+		} elseif( $data == 0 ){
+			$error = esc_html__( 'This field ' . $type . ' is invalid because 0 is forbidden', 'theepi' );
+		} else {
+			$error = '';
+		}
+
+		$temp_error[$type]['error']   = $error;
+		$temp_error[$type]['element'] = $type;
+
+		return $temp_error;
+	}
+
+	/**
+	 * Vérifie si une date est vide.
+	 *
+	 * @since   0.6.0
+	 * @version 0.7.0
+	 *
+	 * @param object $date la date à vérifié.
+	 *
+	 * @return array ['date'] la date vérifié.
+	 */
+	public function check_date_if_empty( $date ) {
+
+		if ( empty( $date ) ) {
+			$date = 0;
+		} else {
+			$date = strtotime( $date );
+		}
+
+		return $date;
 	}
 
 	/**
 	 * Calcul la date de fabrication d'un EPI.
 	 *
 	 * @since   0.6.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param string  $commissioning_date      La date de mise en service d'un EPI.
 	 * @param integer $manufacture_date_valued Le nombre d'année à retirer.
 	 *
-	 * @return string $date_fabrication        La date de fabrication d'un EPI.
-	 *
+	 * @return string $manufacture_date        La date de fabrication d'un EPI.
 	 */
-	public function calcul_date_fabrication( $commissioning_date , $manufacture_date_valued ) {
+	public function calcul_manufacture_date( $commissioning_date, $manufacture_date_valued ) {
 
-		$date_fabrication = "";
-		$commissioning_date = str_replace( '/', '-', 	$commissioning_date );
-		$date_mise_service = strtotime( $commissioning_date );
-		$date_fabrication = strtotime( '-' . $manufacture_date_valued . ' years', $date_mise_service );
-		$date_fabrication = date( 'd/m/Y',  $date_fabrication );
-		return $date_fabrication;
+		$manufacture_date = 0;
+
+		if ( $commissioning_date > 0 ) {
+			$manufacture_date = strtotime( '-' . $manufacture_date_valued . ' days', $commissioning_date );
+		}
+
+		return $manufacture_date;
+	}
+
+	/**
+	 * Calcul la date de fabrication d'un EPI.
+	 *
+	 * @since   0.6.0
+	 * @version 0.7.0
+	 *
+	 * @param object $epi  les données d'un EPI.
+	 *
+	 * @return void
+	 */
+	public function display_autocomplete_manager( $epi ) {
+		global $eo_search;
+
+		$user_info = get_user_by( 'id', $epi->data['manager'] );
+
+		$eo_search->register_search(
+			'theepi',
+			array(
+				'label'        => 'Responsable',
+				'icon'         => 'fa-user-tie',
+				'type'         => 'user',
+				'name'         => 'manager',
+				'value'        => ! empty( $user_info->data->ID ) ? $user_info->data->display_name : '',
+				'hidden_value' => ! empty( $user_info->data->ID ) ? $user_info->data->ID : 0,
+			)
+		);
+
+		View_Util::exec(
+			'theepi',
+			'service',
+			'autocomplete-manager',
+			array(
+				'epi' => $epi,
+			)
+		);
 	}
 
 }

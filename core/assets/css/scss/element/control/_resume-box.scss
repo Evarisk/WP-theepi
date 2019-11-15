@@ -1,0 +1,32 @@
+.epi-item-control {
+	width: 40px;
+	height: 40px;
+	border-radius: 6px;
+	text-align: center;
+	color: #fff;
+	line-height: 0.9;
+	padding: 7px 2px;
+
+	&.red {
+		background: $color__red;
+	}
+	&.orange {
+		background: $color__orange;
+	}
+	&.yellow {
+		background: $color__yellow;
+		color: #000;
+	}
+	&.green {
+		background: $color__green;
+	}
+
+	.control-days {
+		font-weight: 900;
+		display: block;
+		font-size: 14px;
+	}
+	.control-label {
+		font-size: 12px;
+	}
+}

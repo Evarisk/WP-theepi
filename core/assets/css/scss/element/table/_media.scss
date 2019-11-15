@@ -1,0 +1,15 @@
+.wpeo-table {
+	.media, .wpeo-media {
+		width: 50px;
+		min-width: 50px;
+		height: 50px;
+
+		.default-icon-container {
+			line-height: 50px;
+
+			.default-image {
+				font-size: 16px;
+			}
+		}
+	}
+}

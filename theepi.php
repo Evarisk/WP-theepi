@@ -6,17 +6,19 @@
  * @author    Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
+
+use eoxia\Init_Util;
 
 /**
  * Plugin Name: TheEPI
  * Plugin URI:  http://www.evarisk.com/document-unique-logiciel
  * Description: TheEPI is the open source software for the daily management of your PPE.
  * Ensure the traceability of the PPE, the monitoring of the maintenance operations and the state of the PPE.
- * Version:     0.6.0
+ * Version:     0.7.0
  * Author:      Evarisk
  * Author URI:  http://www.evarisk.com
  * License:     GPL2
@@ -31,4 +33,4 @@ DEFINE( 'PLUGIN_THEEPI_DIR', basename( __DIR__ ) );
 
 require_once 'core/external/eo-framework/eo-framework.php';
 
-\eoxia\Init_Util::g()->exec( PLUGIN_THEEPI_PATH, basename( __FILE__, '.php' ) );
+Init_Util::g()->exec( PLUGIN_THEEPI_PATH, basename( __FILE__, '.php' ) );

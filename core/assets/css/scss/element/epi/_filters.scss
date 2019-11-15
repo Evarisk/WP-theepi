@@ -1,0 +1,22 @@
+.epi-filter-bar {
+	margin: 1.4em 0;
+	display: flex;
+	flex-wrap: wrap;
+
+	.wpeo-form {
+		display: flex;
+	}
+	.wpeo-button {
+		height: 100%;
+		line-height: 1.7;
+		margin-left: 0.4em;
+	}
+
+	.epi-search {
+		margin-left: auto;
+	}
+
+	.epi-filters, .epi-search {
+		margin-bottom: 1em;
+	}
+}

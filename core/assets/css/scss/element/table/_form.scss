@@ -1,0 +1,49 @@
+.wpeo-table .wpeo-form .form-element {
+	.form-field-container {
+		border: 1px solid rgba(0,0,0,0.2);
+		background: #fff;
+		@include transition;
+
+		&:hover {
+			border: 1px solid rgba(0,0,0,0.5);
+
+			.autocomplete-label {
+				border: 0;
+			}
+		}
+	}
+	.form-field {
+		height: 100%;
+	}
+	.autocomplete-label {
+		border: 0;
+
+		.autocomplete-icon-before {
+			color: rgba(0,0,0,0.4);
+		}
+	}
+	.form-field, [class*="form-field-icon"] {
+		background: none;
+		padding: 0.6em;
+	}
+	.form-field-icon-prev {
+		padding-right: 0;
+	}
+	[class*="form-field-label-next"], [class*="form-field-label-prev"] {
+		padding: 0.6em;
+	}
+	.form-label {
+		text-transform: none;
+		font-size: 14px;
+		font-weight: 700;
+	}
+	&.form-element-unboxed .form-field-container {
+		border: none;
+		background: none;
+		pointer-events: none;
+
+		.form-field-icon-prev, .form-field-icon-next {
+			padding: 0.6em 0;
+		}
+	}
+}

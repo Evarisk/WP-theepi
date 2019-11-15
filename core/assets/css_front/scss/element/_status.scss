@@ -1,0 +1,46 @@
+.epi-status-icon {
+  width: 30px;
+  height: 30px;
+  display: block;
+  text-align: center;
+  padding: 0 !important;
+  margin: 0;
+  background: #fff;
+
+  &::before {
+    font-size: 14px;
+    margin-top: 8px;
+    color: rgba(0,0,0,0.6);
+    @include fa-icon;
+    content: fa-content( $fa-var-caret-down );
+  }
+
+  &.OK {
+    background: $color__green;
+    &::before {
+      color: #fff;
+      content: fa-content( $fa-var-check );
+    }
+  }
+  &.KO {
+    background: $color__red;
+    &::before {
+      color: #fff;
+      content: fa-content( $fa-var-exclamation );
+    }
+  }
+  &.repair {
+    background: $color__orange;
+    &::before {
+      color: #fff;
+      content: fa-content( $fa-var-tools );
+    }
+  }
+  &.trash {
+    background: $color__black;
+    &::before {
+      color: #fff;
+      content: fa-content( $fa-var-trash-alt );
+    }
+  }
+}

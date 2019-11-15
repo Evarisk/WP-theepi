@@ -1,0 +1,21 @@
+.modal-qr-code .modal-container {
+	max-height: 700px;
+
+	.modal-content {
+		overflow-y: inherit;
+		text-align: center;
+
+    img {
+      width: 100% !important;
+      height: auto !important;
+      max-width: 500px;
+    }
+	}
+	.modal-footer {
+		text-align: left;
+
+		.wpeo-button.modal-close {
+			float: right;
+		}
+	}
+}

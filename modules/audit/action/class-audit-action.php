@@ -6,7 +6,7 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.5.0
- * @version   0.5.0
+ * @version   0.7.0
  */
 
 namespace theepi;
@@ -42,12 +42,16 @@ class Audit_Action {
 	 * Effectuer un contrôle d'un EPI.
 	 *
 	 * @since   0.5.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function callback_control_epi() {
 		check_ajax_referer( 'control_epi' );
+
+		if ( ! EPI_Class::g()->check_capabilities( 'create_theepi' ) ) {
+			wp_send_json_error();
+		}
 
 		$id = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
 
@@ -96,20 +100,20 @@ class Audit_Action {
 		ob_start();
 		\eoxia\View_Util::exec(
 			'theepi', 'audit', 'audit-epi', array(
-				'epi'   => $epi,
-				'audit' => $audit,
-				'user'  => $user,
+				'epi'        => $epi,
+				'audit'      => $audit,
+				'user'       => $user,
+				'edit_audit' => true,
 			)
 		);
 		$view_item = ob_get_clean();
 
-		wp_send_json_success(
-			array(
-				'namespace'        => 'theEPI',
-				'module'           => 'Audit',
-				'callback_success' => 'ControlEPISuccess',
-				'modal_template'   => $modal_template,
-				'view_item'        => $view_item,
+		wp_send_json_success( array(
+			'namespace'        => 'theEPI',
+			'module'           => 'Audit',
+			'callback_success' => 'ControlEPISuccess',
+			'modal_template'   => $modal_template,
+			'view_item'        => $view_item,
 			)
 		);
 	}
@@ -118,12 +122,16 @@ class Audit_Action {
 	 * Affiche le dernier contrôle EPI effectué.
 	 *
 	 * @since   0.5.0
-	 * @version 0.5.0
+	 * @version 0.7.0
 	 *
 	 * @return void
 	 */
 	public function callback_display_control_epi() {
 		check_ajax_referer( 'display_control_epi' );
+
+		if ( ! EPI_Class::g()->check_capabilities( 'update_theepi' ) ) {
+			wp_send_json_error();
+		}
 
 		$epi_id   = ! empty( $_POST['epi_id'] ) ? (int) $_POST['epi_id'] : 0;
 		$audit_id = ! empty( $_POST['audit_id'] ) ? (int) $_POST['audit_id'] : 0;
@@ -188,9 +196,10 @@ class Audit_Action {
 					'audit',
 					'audit-epi',
 					array(
-						'epi'   => $epi,
-						'audit' => $audit,
-						'user'  => $user,
+						'epi'        => $epi,
+						'audit'      => $audit,
+						'user'       => $user,
+						'edit_audit' => false,
 					)
 				);
 			}
@@ -207,7 +216,7 @@ class Audit_Action {
 				'epi'   => $epi,
 				'audit' => $single_audit,
 				'user'  => $user,
-				'edit_audit' => true
+				'edit_audit' => true,
 			)
 		);
 		$single_view_audit = ob_get_clean();
@@ -345,6 +354,13 @@ class Audit_Action {
 		);
 		$view = ob_get_clean();
 
+		ob_start();
+		\eoxia\View_Util::exec(
+			'theepi', 'audit', 'notice', array(
+			)
+		);
+		$view_notice = ob_get_clean();
+
 		wp_send_json_success(
 			array(
 				'namespace'        => 'theEPI',
@@ -352,6 +368,7 @@ class Audit_Action {
 				'callback_success' => 'ValidAuditSuccess',
 				'id'               => $id,
 				'view'             => $view,
+				'notice'           => $view_notice
 			)
 		);
 	}

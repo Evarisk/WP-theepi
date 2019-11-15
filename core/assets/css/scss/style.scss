@@ -1,68 +1,18 @@
 /**
- * Import des fichiers less
+ * CSS générer par GULP grâce à la cmd "npm-start".
+ *
+ * Toute modification sur un fichier *.scss lance la compilation de tous les *.scss vers ce fichier.
+ *
+ * @since 2.0.0
  */
-@import "variable";
-@import "tools";
-@import "animation";
-@import "loader";
-@import "popup";
-@import "button";
-@import "list";
-@import "toggle";
-@import "pagination";
-@import "table";
-@import "flex-table";
-@import "tooltip";
-@import "form";
-@import "table-form";
-@import "grid";
-@import "media";
 
-/**
- * Import des templates de page
- */
-@import "template-tools";
+@import "mixins/mixins-master";
+@import "variables/variables";
+@import "font/font";
 
-/**
- * Propriétés générales
- */
-.digirisk-wrap {
+@import "external/external";
 
-	* {
-		box-sizing: border-box;
-	}
-
-	h1 {
-		font-size: 18px;
-		text-transform: uppercase;
-		margin: 6px 0;
-	}
-	h2 {
-		font-size: 16px;
-		font-weight: 600;
-		margin: 6px 0 14px 0;
-	}
-	.note {
-		font-style: italic;
-		color: rgba(0,0,0,0.4);
-	}
-
-	canvas {
-		-moz-user-select: none; /* Firefox */
-		-webkit-user-select: none; /* Chrome, Safari, Opéra depuis la version 15 */
-		-ms-user-select: none; /* Internet explorer depuis la version 10 et Edge */
-		user-select: none; /* Propriété standard */
-	}
-
-}
-
-.fa-toggle-off {
-	color: red;
-	font-size: 20px;
-}
-
-.fa-toggle-on {
-	color : mediumspringgreen;
-	font-size: 20px;
-
+.wrap-theepi {
+	@import "element/element";
+	@import "responsive/responsive";
 }

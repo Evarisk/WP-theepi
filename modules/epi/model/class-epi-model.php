@@ -6,10 +6,12 @@
  * @author    Jimmy Latour <jimmy@evarisk.com> && Nicolas Domenech <nicolas@eoxia.com>
  * @copyright 2019 Evarisk
  * @since     0.1.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
+
+use eoxia\Post_Model;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -18,14 +20,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Define EPI Model.
  */
-class EPI_Model extends \eoxia\Post_Model {
-
+class EPI_Model extends Post_Model {
 
 	/**
 	 * Construct
 	 *
 	 * @since   0.1.0
-	 * @version 0.6.0
+	 * @version 0.7.0
 	 *
 	 * @param EPI_Class $object     Les données  de l'epi.
 	 * @param string    $req_method La méthode de la requête.
@@ -62,14 +63,6 @@ class EPI_Model extends \eoxia\Post_Model {
 			'since'       => '0.1.0',
 			'version'     => '0.1.0',
 		);
-
-		$this->schema['status'] = array(
-			'type'    => 'string',
-			'default' => 'publish',
-			'since'   => '0.1.0',
-			'version' => '0.1.0',
-		);
-
 
 		$this->schema['reference'] = array(
 			'type'        => 'string',
@@ -117,7 +110,7 @@ class EPI_Model extends \eoxia\Post_Model {
 		);
 
 		$this->schema['manager'] = array(
-			'type'        => 'string',
+			'type'        => 'integer',
 			'meta_type'   => 'single',
 			'field'       => '_theepi_manager',
 			'description' => 'Is the manager of the EPI.',
@@ -129,16 +122,16 @@ class EPI_Model extends \eoxia\Post_Model {
 			'type'        => 'string',
 			'meta_type'   => 'single',
 			'field'       => '_theepi_status_epi',
-			'description' => 'Is the status of the EPI. Broken or not. Value can be "OK" or "KO".',
+			'description' => 'Is the status of the EPI. Value can be "OK" or "KO" or "REPAIR" or "TRASH".',
 			'since'       => '0.5.0',
 			'version'     => '0.5.0',
 		);
 
-
 		$this->schema['control_date'] = array(
 			'type'        => 'wpeo_date',
 			'context'     => array( 'GET' ),
-			'meta_type'   => 'multiple',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_control_date',
 			'description' => 'Is the control date of the EPI.',
 			'since'       => '0.6.0',
 			'version'     => '0.6.0',
@@ -231,6 +224,54 @@ class EPI_Model extends \eoxia\Post_Model {
 			'description' => 'Is the lifetime of the EPI.',
 			'since'       => '0.6.0',
 			'version'     => '0.6.0',
+		);
+
+		$this->schema['qrcode'] = array(
+			'type'      => 'array',
+			'meta_type' => 'multiple',
+			'child'     => array(
+				'filename'         => array(
+					'type' => 'string',
+				),
+				'path'             => array(
+					'type' => 'string',
+				),
+				'guid'             => array(
+					'type' => 'string',
+				),
+				'wp_attached_file' => array(
+					'type' => 'string',
+				),
+			),
+		);
+
+		$this->schema['url_notice'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_url_notice',
+			'description' => 'Is the url notice of the EPI.',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+		);
+
+		$this->schema['toggle_lifetime'] = array(
+			'type'        => 'string',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_toggle_lifetime',
+			'description' => 'Is the toggle button lifetime of the EPI. Value can be "YES" or "NO".',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+			'default'     => 'YES',
+		);
+
+		$this->schema['quantity'] = array(
+			'type'        => 'integer',
+			'meta_type'   => 'single',
+			'field'       => '_theepi_quantity',
+			'description' => 'Is the quantity of the EPI.',
+			'since'       => '0.7.0',
+			'version'     => '0.7.0',
+			'default'     => 1,
 		);
 
 		parent::__construct( $object, $req_method );

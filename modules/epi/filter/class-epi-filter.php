@@ -6,10 +6,12 @@
  * @author    Evarisk <dev@evarisk.com>
  * @copyright 2019 Evarisk
  * @since     0.2.0
- * @version   0.6.0
+ * @version   0.7.0
  */
 
 namespace theepi;
+
+use eoxia\View_Util;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -20,19 +22,19 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class EPI_Filter {
 
-
 	/**
 	 * Le constructeur.
 	 *
 	 * @since   0.1.0
-	 * @version 0.4.0
+	 * @version 0.7.0
 	 */
 	public function __construct() {
 		add_filter( 'set-screen-option', array( $this, 'callback_set_screen_option' ), 10, 3 );
 
 		$current_type = EPI_Class::g()->get_type();
 		add_filter( "eo_model_{$current_type}_before_post", '\theepi\construct_identifier', 10, 2 );
-		add_filter( "eo_model_{$current_type}_after_get", array( $this, 'update_remaining_time' ), 10, 2 );
+		add_filter( 'the_content', array( $this, 'callback_display_epi' ), 10, 2 );
+		add_filter( "eo_model_{$current_type}_register_post_type_args", array( $this, 'custom_init_post_type' ), 20, 2 );
 	}
 
 	/**
@@ -56,48 +58,54 @@ class EPI_Filter {
 	}
 
 	/**
-	 * Met à jour le temps restant avant la date de hors d'état.
+	 * Sauvegardes les options de l'écran.
 	 *
-	 * @param Comment_Model $object Les données du commentaires.
-	 * @param array         $args   Les arguments lors du GET.
+	 * @since   0.7.0
+	 * @version 0.7.0
 	 *
-	 * @since   0.1.0
-	 * @version 0.4.0
+	 * @param view $content Le contenu da la page en frontend.
 	 *
-	 * @return Comment_Model
+	 * @return view $content Le nouveau contenu da la page en frontend.
 	 */
-	public function update_remaining_time( $object, $args ) {
-		if ( ! empty( $object->data['id'] ) && ! empty( $object->data['frequency_control'] ) && ! empty( $object->data['control_date'] ) ) {
-			$control_date = \DateTime::createFromFormat( 'd/m/Y', $object->data['control_date']['rendered']['date'] );
-			$control_date->modify( '+' . $object->data['frequency_control'] . ' day' );
-
-			$date_now = \DateTime::createFromFormat( 'd/m/Y', current_time( 'd/m/Y' ) );
-			$interval = $date_now->diff( $control_date );
-
-			$result = '';
-
-			if ( $interval->format( '%R' ) === '+' ) {
-				$result  = '<span class=\'time-ok\'><i class=\'far fa-calendar-plus\' aria-hidden=\'true\'></i> ';
-				$result .= $interval->format( '%a days' );
-				$result .= '</span>';
-			} else {
-				if ( 'KO' === $object->data['state'] ) {
-					$result  = '<span class=\'time-past\'><i class=\'far fa-calendar-times\' aria-hidden=\'true\'></i> ';
-					$result .= $interval->format( '%a days' );
-					$result .= '</span>';
-				} else {
-					$result  = '<span class=\'time-past\'><i class=\'far fa-calendar-times\' aria-hidden=\'true\'></i> ';
-					$result .= $interval->format( '%a days' );
-					$result .= '</span>';
-
-					$object->data['state'] = 'NA';
-				}
-			}
-
-			$object->data['compiled_remaining_time'] = $result;
+	public function callback_display_epi( $content ) {
+		global $post;
+		if ( 'theepi-epi' === $post->post_type ) {
+			$id = $post->ID;
+			ob_start();
+			$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
+			View_Util::exec(
+				'theepi',
+				'epi',
+				'frontend/main',
+				array(
+					'epi' => $epi,
+				)
+			);
+			$content = ob_get_clean();
 		}
+		return $content;
+	}
 
-		return $object;
+	/**
+	 * Filtre pour accéder au post de l'EPI grâce au qrcode.
+	 *
+	 * @since   0.6.0
+	 * @version 0.6.0
+	 *
+	 * @param array $args les données d'un Post.
+	 *
+	 * @return array $return Les données du Post EPI modifié.
+	 */
+	public function custom_init_post_type( $args ) {
+		$current_type = EPI_Class::g()->get_type();
+		$new_args     = array(
+			'public'       => true,
+			'show_in_menu' => false,
+		);
+		$args         = wp_parse_args( $new_args, $args );
+		$return       = register_post_type( $current_type, $args );
+
+		return $return;
 	}
 
 }

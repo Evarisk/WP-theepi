@@ -1,0 +1,13 @@
+{
+	"name": "Controls",
+	"slug": "control",
+	"version": "0.7.0",
+	"description": "Handle Control",
+	"path": "modules/control/",
+	"dependencies": {
+		"model": {},
+		"action": {},
+		"class": {},
+		"filter": {}
+	}
+}

@@ -1,0 +1,10 @@
+.wpeo-modal {
+  z-index: 0;
+	.modal-container .modal-header {
+		.modal-close {
+			&:hover {
+				color: $color__primary;
+			}
+		}
+	}
+}

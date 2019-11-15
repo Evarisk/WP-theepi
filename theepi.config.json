@@ -1,7 +1,7 @@
 {
 	"name": "TheEPI",
 	"slug": "theepi",
-	"version": "0.6.0",
+	"version": "0.7.0",
 	"description": "L'application TheEPI",
 	"insert_scripts_pages_js": [
 		"theepi",
@@ -14,8 +14,10 @@
 	"externals": [],
 	"modules": [
 		"core/core.config.json",
+		"modules/avatar/avatar.config.json",
+		"modules/control/control.config.json",
 		"modules/epi/epi.config.json",
-		"modules/audit/audit.config.json",
+		"modules/qrcode/qrcode.config.json",
 		"modules/service/service.config.json",
 		"modules/setting/setting.config.json"
 	],
