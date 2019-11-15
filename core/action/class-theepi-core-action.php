@@ -49,6 +49,8 @@ class TheEPI_Core_Action {
 		add_action( 'admin_menu', array( $this, 'callback_admin_menu' ), 20 );
 		add_action( 'wp_print_scripts', array( $this, 'callback_wp_print_scripts' ) );
 
+		add_action( 'wp_ajax_theepi_have_patch_note', array( $this, 'have_patch_note' ) );
+
 	}
 
 	/**
@@ -193,6 +195,21 @@ class TheEPI_Core_Action {
 		?>
 			<script>var ajaxurl = "<?php echo admin_url( 'admin-ajax.php' ); ?>";</script>
 		<?php
+	}
+
+	public function have_patch_note() {
+		$result = Class_TheEPI_Core::g()->get_patch_note();
+
+		ob_start();
+		require PLUGIN_THEEPI_PATH . '/core/view/patch-note.view.php';
+
+		wp_send_json_success(
+			array(
+				'status' => $result['status'],
+				'result' => $result,
+				'view'   => ob_get_clean(),
+			)
+		);
 	}
 }
 

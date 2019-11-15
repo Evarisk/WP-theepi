@@ -27,7 +27,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wpeo-tab epi">
 
 	<div class="epi-filter-bar">
-		<?php EPI_Class::g()->display_filters(); ?>
+		<?php EPI_Class::g()->display_filters( $page ); ?>
 		<?php EPI_Class::g()->display_search(); ?>
 	</div>
 

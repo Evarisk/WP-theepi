@@ -18,3 +18,4 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $eo_search;
 
 $eo_search->display( 'theepi' );
+
