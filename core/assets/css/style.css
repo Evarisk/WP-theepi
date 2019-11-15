@@ -153,8 +153,10 @@
 .wpeo-loader .loader-spin {
   border-top: 3px solid #0084FF; }
 
-.wpeo-modal .modal-container .modal-header .modal-close:hover {
-  color: #0084FF; }
+.wpeo-modal {
+  z-index: 0; }
+  .wpeo-modal .modal-container .modal-header .modal-close:hover {
+    color: #0084FF; }
 
 .wpeo-notification .notification-title a {
   color: #0084FF; }

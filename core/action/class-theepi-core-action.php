@@ -10,6 +10,7 @@
  */
 
 namespace theepi;
+
 use eoxia\Config_Util;
 use eoxia\Custom_Menu_Handler as CMH;
 
@@ -115,6 +116,10 @@ class TheEPI_Core_Action {
 	 */
 	public function callback_plugins_loaded() {
 		load_plugin_textdomain( 'theepi', false, PLUGIN_THEEPI_DIR . '/core/assets/languages/' );
+		if ( ! get_option( 'plugin_permalinks_flushed' ) ) {
+			flush_rewrite_rules( false );
+			update_option( 'plugin_permalinks_flushed', 1 );
+		}
 	}
 
 	/**

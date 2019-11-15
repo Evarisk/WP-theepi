@@ -12,6 +12,7 @@
 namespace theepi;
 
 use eoxia\Custom_Menu_Handler as CMH;
+use eoxia\View_Util;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -79,7 +80,7 @@ class Setting_Action {
 		$default_acronym_control = get_option( Control_Class::g()->option_name_acronym_control );
 
 
-		\eoxia\View_Util::exec(
+		View_Util::exec(
 			'theepi',
 			'setting',
 			'main',
@@ -106,6 +107,9 @@ class Setting_Action {
 	 */
 	public function callback_save_capability_theepi() {
 		check_ajax_referer( 'save_capability_theepi' );
+
+		//$users =  ! empty( $_POST['users'] ?
+
 
 		if ( ! empty( $_POST['users'] ) ) {
 			foreach ( $_POST['users'] as $user_id => $data ) {
@@ -168,8 +172,8 @@ class Setting_Action {
 	public function callback_save_date_management() {
 		check_ajax_referer( 'save_date_management' );
 
-		$default_purchase_date    = ! empty( $_POST['checkbox-purchase-date'] && $_POST['checkbox-purchase-date'] === "true" ) ? true : false;
-		$default_manufacture_date = ! empty( $_POST['default-manufacture-date'] ) ? sanitize_text_field( wp_unslash( $_POST['default-manufacture-date'] ) ): '';
+		$default_purchase_date    = ! empty( $_POST['checkbox-purchase-date'] && 'true' === $_POST['checkbox-purchase-date'] ) ? true : false;
+		$default_manufacture_date = ! empty( $_POST['default-manufacture-date'] ) ? sanitize_text_field( wp_unslash( $_POST['default-manufacture-date'] ) ) : '';
 
 		Setting_Class::g()->save_date_management( $default_purchase_date, $default_manufacture_date );
 
@@ -214,14 +218,14 @@ class Setting_Action {
 	/**
 	 * Méthode appelé par le champs de recherche dans la page "theepi".
 	 *
-	 * @param  integer $id           L'ID de la société.
-	 * @param  array   $list_user_id Le tableau des ID des évaluateurs trouvés par la recherche.
-	 * @return void
-	 *
 	 * @since   0.2.0
 	 * @version 0.2.0
+	 *
+	 * @param  array $list_user_id Le tableau des ID des évaluateurs trouvés par la recherche.
+	 *
+	 * @return void
 	 */
-	public function callback_display_setting_user_theepi( $id, $list_user_id ) {
+	public function callback_display_setting_user_theepi( $list_user_id ) {
 		ob_start();
 
 		Setting_Class::g()->display_user_list_capacity( $list_user_id );

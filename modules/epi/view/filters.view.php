@@ -13,7 +13,17 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+$fiter_options = array(
+	'all'    => __( 'All', 'theepi' ),
+	'ok'     => __( 'OK', 'theepi' ),
+	'ko'     => __( 'KO', 'theepi' ),
+	'repair' => __( 'To fix', 'theepi' ),
+	'trash'  => __( 'Trashed', 'theepi' ),
+);
+
+?>
 
 <div class="epi-filters wpeo-form form-light">
 	<div class="form-element">

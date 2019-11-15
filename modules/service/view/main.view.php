@@ -33,9 +33,13 @@ if ( ! defined('ABSPATH' ) ) {
 
 		<div class="epi-lifetime">
 			<span> <?php esc_html_e( 'Does the PPE have a lifetime', 'theepi' ); ?> </span>
-			<span class="button-toggle-lifetime" data-value="YES">
+			<span class="button-toggle-lifetime" data-value="<?php echo esc_attr( $epi->data['toggle_lifetime'] ); ?>">
 			<span class="button-toggle-no"><?php esc_html_e( 'NO', 'theepi' ); ?></span>
-			<i class="button-toggle fas fa-toggle-on"></i>
+			<?php if ( $epi->data['toggle_lifetime'] == 'NO' ) : ?>
+				<i class="button-toggle fas fa-toggle-off"></i>
+			<?php else : ?>
+				<i class="button-toggle fas fa-toggle-on"></i>
+			<?php endif; ?>
 			<span class="button-toggle-yes"><?php esc_html_e( 'YES', 'theepi' ); ?></span>
 			</span>
 		</div>
@@ -46,7 +50,7 @@ if ( ! defined('ABSPATH' ) ) {
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( $manufacture_date_valued ) ? esc_html_e( 'Setting Date activated (Manufacture Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Manufacture Date)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Manufacture Date', 'theepi' ); ?>
 				</span>
-				<div class="form-error"></div>
+				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
 						<input type="hidden" class="mysql-date"  name="manufacture-date" value="<?php echo ( $edit_mode ) ? esc_attr( $epi->data['manufacture_date']['raw'] ) : ''; ?>"/>
@@ -61,7 +65,7 @@ if ( ! defined('ABSPATH' ) ) {
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) ? esc_html_e( 'Setting Data activated (Lifetime)', 'theepi' ) : esc_html_e( 'Setting Data disable (Lifetime)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Lifetime', 'theepi' ); ?>
 				</span>
-				<div class="form-error"></div>
+				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-heart"></i></span>
 					<input class="form-field" type="number" name="lifetime" value="<?php $epi->data['lifetime_epi'] != 0 ? esc_attr_e( $epi->data['lifetime_epi'] ) : ''; ?>"/>
@@ -107,7 +111,7 @@ if ( ! defined('ABSPATH' ) ) {
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( $checked_purchase_date == 1 ) ? esc_html_e( 'Setting Date activated (Purchase Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Purchase Date)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Purchase Date', 'theepi' ); ?>
 				</span>
-				<div class="form-error"></div>
+				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
 						<input type="hidden" class="mysql-date" name="purchase-date" value="<?php echo ( $edit_mode ) ? esc_attr( $epi->data['purchase_date']['raw'] ) : ''; ?>"/>
@@ -131,7 +135,7 @@ if ( ! defined('ABSPATH' ) ) {
 
 			<div class="form-element form-element-required group-date update-control-date-epi <?php echo esc_html( $update_control_class ); ?>">
 				<span class="form-label"><?php esc_html_e( 'Commissioning Date', 'theepi' ); ?></span>
-				<div class="form-error"></div>
+				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
 					<input type="hidden" class="mysql-date" name="commissioning-date" value="<?php echo ( $edit_mode ) ? esc_attr( $epi->data['commissioning_date']['raw'] ) : ''; ?>"/>
@@ -143,7 +147,7 @@ if ( ! defined('ABSPATH' ) ) {
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( get_option( EPI_Class::g()->option_name_default_data_periodicity ) != "" ) ? esc_html_e( 'Setting Data activated (Periodicity)', 'theepi' ) : esc_html_e( 'Setting Date disable (Periodicity)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Periodicity', 'theepi' ); ?>
 				</span>
-				<div class="form-error"></div>
+				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-history"></i></span>
 					<input class="form-field" type="number" name="periodicity" value="<?php 0 !== $epi->data['periodicity'] ? esc_attr_e( $epi->data['periodicity'] ) : ''; ?>"/>

@@ -252,7 +252,7 @@ class Service_Class extends Singleton_Util {
 				'type'         => 'user',
 				'name'         => 'manager',
 				'value'        => ! empty( $user_info->data->ID ) ? $user_info->data->display_name : '',
-				'hidden_value' => ! empty( $user_info->data->ID ) ? $user_info->data->ID : -1,
+				'hidden_value' => ! empty( $user_info->data->ID ) ? $user_info->data->ID : 0,
 			)
 		);
 

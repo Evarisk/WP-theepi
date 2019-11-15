@@ -733,7 +733,7 @@ class EPI_Class extends Post_Class {
 		$controls = Control_Class::g()->get_controls( $epi );
 		if ( ! empty( $controls ) ) {
 			$last_control      = Control_Class::g()->last_control_epi( $controls );
-			$last_control_date = date( 'Y-m-d', strtotime( $last_control->data['date']['rendered']['mysql'] ) );
+			$last_control_date = date( 'Y-m-d', strtotime( $last_control->data['control_date']['rendered']['mysql'] ) );
 		} else {
 			$last_control_date = '';
 		}

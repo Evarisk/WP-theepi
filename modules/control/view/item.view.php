@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-125" data-title="<?php echo esc_attr_e( 'Date', 'theepi' ); ?>">
-		<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['date']['rendered']['date'] ); ?>
+		<i class="fas fa-calendar-alt"></i> <?php echo esc_attr( $control->data['control_date']['rendered']['date'] ); ?>
 	</div>
 
 	<div class="table-cell" data-title="<?php echo esc_attr_e( 'Comment', 'theepi' ); ?>">

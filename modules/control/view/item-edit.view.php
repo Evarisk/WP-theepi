@@ -29,8 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="form-element group-date">
 			<label class="form-field-container">
 				<span class="form-field-icon-prev"><i class="fas fa-calendar-alt"></i></span>
-				<input type="hidden" class="mysql-date" name="date" value="<?php echo esc_attr( $control->data['date']['raw'] ); ?>"/>
-				<input class="form-field date" type="text" name="date" value="<?php echo esc_attr( $control->data['date']['rendered']['date'] ); ?>"/>
+				<input type="hidden" class="mysql-date" name="control-date" value="<?php echo esc_attr( $control->data['control_date']['raw'] ); ?>"/>
+				<input class="form-field date" type="text" name="control-date" value="<?php echo esc_attr( $control->data['control_date']['rendered']['date'] ); ?>"/>
 			</label>
 		</div>
 	</div>
