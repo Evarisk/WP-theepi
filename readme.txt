@@ -55,9 +55,11 @@ The installation of the plugin can be done in two ways:
 * 35462 - Ajout bouton toggle durée de vie + fonctionnement.
 * 35509	- Gestion du champ date de mise au rebut.
 * 35511	- Calcul du prochain contrôle.
-* 35546	- Echap pour annuler la création ou la modification d'un EPI.
 * 35547	- Résolu Bug Actualisation sur l'EPI après la saisie d'un contrôle.
 * 35570	- Ajout de fonctionnalité dans les réglages de theEPI.
+* 37170 - Nouveau Menu pour TheEPI.
+* 37172 - QRCode pour accéder à la page de chaque EPI.
+* 37174 - lien vers la page en cliquant sur l'ID de l'EPI.
 
 
 * 34418 - Correction de bug diverse sur la création/modification.

@@ -712,7 +712,7 @@ class EPI_Class extends Post_Class {
 					$last_control = Control_Class::g()->last_control_epi( $controls );
 					if ( ! empty( $last_control ) ) {
 						$epi->data['status_epi']          = $last_control->data['status_control'];
-						$epi->data['control_date']['raw'] = date( 'Y-m-d', Service_Class::g()->calcul_control_date( strtotime( $last_control->data['date']['raw'] ), $epi->data['periodicity'] ) );
+						$epi->data['control_date']['raw'] = date( 'Y-m-d', Service_Class::g()->calcul_control_date( strtotime( $last_control->data['control_date']['raw'] ), $epi->data['periodicity'] ) );
 						$this->update( $epi->data );
 						$status_epi = $last_control->data['status_control'];
 					}
@@ -852,7 +852,6 @@ class EPI_Class extends Post_Class {
 		$nb_epis = count( $epis );
 		return $nb_epis;
 	}
-
 }
 
 EPI_Class::g();
