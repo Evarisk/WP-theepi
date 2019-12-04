@@ -50,9 +50,8 @@ class Control_Action {
 		check_ajax_referer( 'display_control' );
 
 		$id       = ! empty( $_POST['id'] ) ? (int) $_POST['id'] : 0;
-		$frontend = ( isset( $_POST['frontend'] ) && ( 'true' === $_POST['frontend'] ) ) ? true === $_POST['frontend'] : false;
+		$frontend = ( isset( $_POST['frontend'] ) && ( 'true' === $_POST['frontend'] ) ) ? true == $_POST['frontend'] : false;
 		$type     = ! empty( $_POST['type'] ) ? sanitize_text_field( wp_unslash( $_POST['type'] ) ) : 'see_control';
-
 		$epi = EPI_Class::g()->get( array( 'id' => $id ), true );
 
 		ob_start();
@@ -69,7 +68,6 @@ class Control_Action {
 		$view = ob_get_clean();
 
 		$namespace = Control_Class::g()->frontend( $frontend );
-
 		wp_send_json_success(
 			array(
 				'namespace'        => $namespace,
@@ -186,7 +184,7 @@ class Control_Action {
 		$epi           = EPI_Class::g()->get( array( 'id' => $control->data['parent_id'] ), true );
 
 		ob_start();
-		Control_Class::g()->display_modal_content( $epi, $frontend = false );
+		Control_Class::g()->display_modal_content( $epi, $frontend = false, $type = 'add_control' );
 		$view = ob_get_clean();
 
 		$view_epi = EPI_Class::g()->reload_single_epi( $epi );

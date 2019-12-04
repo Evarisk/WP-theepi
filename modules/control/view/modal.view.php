@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						data-parent_id="<?php echo esc_attr( $epi->data['id'] ); ?>"
 						data-action="edit_control_epi"
 						data-nonce="<?php echo esc_attr( wp_create_nonce( 'edit_control_epi' ) ); ?>">
-						<span><?php esc_html_e('New', 'theepi'); ?></span>
+						<span><?php esc_html_e( 'New', 'theepi' ); ?></span>
 					</div>
 				<?php endif; ?>
 				<div class="modal-close"><i class="fas fa-times"></i></div>
@@ -40,7 +40,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 			<!-- Corps -->
 			<div class="modal-content">
-				<?php Control_Class::g()->display_modal_content( $epi, $frontend ); ?>
+				<?php Control_Class::g()->display_modal_content( $epi, $frontend, $type ); ?>
 			</div>
 
 			<!-- Footer -->

@@ -135,7 +135,7 @@ class Control_Class extends Post_Class {
 	 *
 	 * @return void
 	 */
-	public function display_control_list( $epi, $frontend ) {
+	public function display_control_list( $epi, $frontend, $type ) {
 
 		$controls = $this->get_controls( $epi );
 		View_Util::exec(
@@ -145,6 +145,7 @@ class Control_Class extends Post_Class {
 			array(
 				'controls' => $controls,
 				'frontend' => $frontend,
+				'type'     => $type,
 			)
 		);
 	}
@@ -160,7 +161,7 @@ class Control_Class extends Post_Class {
 	 *
 	 * @return void
 	 */
-	public function display_modal_content( $epi, $frontend ) {
+	public function display_modal_content( $epi, $frontend, $type ) {
 
 		View_Util::exec(
 			'theepi',
@@ -169,6 +170,7 @@ class Control_Class extends Post_Class {
 			array(
 				'epi'      => $epi,
 				'frontend' => $frontend,
+				'type'     => $type,
 			)
 		);
 	}
@@ -273,7 +275,7 @@ class Control_Class extends Post_Class {
 	 * @return string $namespace Le namespace à utilisé.
 	 */
 	public function frontend( $frontend ) {
-		if ( 'true' === $frontend ) {
+		if ( true == $frontend ) {
 			return 'theEPIFrontEnd';
 		} else {
 			return 'theEPI';

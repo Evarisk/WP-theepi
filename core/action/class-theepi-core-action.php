@@ -165,9 +165,15 @@ class TheEPI_Core_Action {
 	 * @return void
 	 */
 	public function callback_admin_menu() {
-		CMH::add_logo( PLUGIN_THEEPI_URL . 'core/assets/images/icon-256x256_blanc.png', admin_url( 'admin.php?page=theepi' ) );
+		CMH::add_logo( 'theepi', PLUGIN_THEEPI_URL . 'core/assets/images/icon-256x256_blanc.png', admin_url( 'admin.php?page=theepi' ) );
 		CMH::register_container( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi' );
-		CMH::register_menu( 'theepi', __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'fa fa-hard-hat' );
+		$menu = CMH::register_menu( 'theepi', __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'fa fa-hard-hat' );
+		$screen = \WP_Screen::get( $menu->wp );
+		$screen->add_option( 'per_page', array(
+			'label'   => _x( 'EPI par page', 'EPI par page' ),
+			'default' => EPI_Class::g()->limit_epi,
+			'option'  => EPI_Class::g()->option_name_per_page,
+		) );
 /*		//'data:image/svg+xml;base64,' . base64_encode( "
 //		<svg data-prefix='fas' data-icon='hard-hat'
 //			class='svg-inline--fa fa-hard-hat fa-w-16'
@@ -179,7 +185,7 @@ class TheEPI_Core_Action {
 //			</path>
 //		</svg> ")
 	// );*/
-		// "add_action( 'load-' . $hook, array( EPI_Class::g(), 'callback_add_screen_option' ) );"
+		//add_action( 'load-' . $screen , array( EPI_Class::g(), 'callback_add_screen_option' ) );
 
 	}
 

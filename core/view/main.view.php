@@ -11,6 +11,8 @@
 
 namespace theepi;
 
+use eoxia\Custom_Menu_Handler as CMH;
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 } ?>

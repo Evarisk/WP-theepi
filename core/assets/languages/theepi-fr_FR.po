@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: TheEPI v0.x\n"
 "POT-Creation-Date: 2019-11-14 15:20+0100\n"
-"PO-Revision-Date: 2019-11-14 15:23+0100\n"
+"PO-Revision-Date: 2019-12-02 17:08+0100\n"
 "Last-Translator: Equipe de développement de digirisk <dev@digirisk.com>\n"
 "Language-Team: Evarisk\n"
 "Language: fr\n"
@@ -259,7 +259,7 @@ msgstr "Dernier Contrôle"
 #: modules/epi/view/frontend/main.view.php:45
 #: modules/epi/view/item-edit.view.php:94 modules/epi/view/item.view.php:70
 msgid "See All Control"
-msgstr "Voir tout les Contrôles"
+msgstr "Voir touts les Contrôles"
 
 #: modules/epi/view/frontend/main.view.php:59
 #: modules/epi/view/item-edit.view.php:112 modules/epi/view/item.view.php:97

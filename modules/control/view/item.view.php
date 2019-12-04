@@ -13,7 +13,16 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var Control_Model  $control La donnée d'un contrôle.
+* @var boolean      $frontend True si la donné est disponible dans le front.
+*/
+?>
+
 <div class="table-row epi-control-row view" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<div class="table-cell table-75" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
 		<?php echo esc_attr( $control->data['unique_identifier'] ); ?>
@@ -54,7 +63,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				aria-label="<?php esc_html_e( 'Display Url File', 'theepi' ); ?>">
 				<i class="fas fa-copy"></i>
 			</a>
-		<?php else: ?>
+		<?php else : ?>
 			<?php echo esc_attr( $control->data['url'] ); ?>
 		<?php endif; ?> -->
 	</div>
@@ -67,8 +76,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<span class="epi-status-icon fas <?php echo esc_attr( $control->data['status_control'] ); ?>"></span>
 	</div>
 
+		<?php if ( $frontend == false && $type == 'add_control' ) : ?>
 	<div class="table-cell table-125 table-end action-end" data-title="<?php esc_attr_e( 'Actions', 'theepi' ); ?>">
-		<?php if ( $frontend == false ): ?>
 			<?php if ( user_can( get_current_user_id(), 'update_theepi' ) ): ?>
 				<div class="wpeo-button wpeo-tooltip-event button-transparent button-square-50 action-input"
 					aria-label="<?php esc_html_e( 'Edit Control', 'theepi' ); ?>"

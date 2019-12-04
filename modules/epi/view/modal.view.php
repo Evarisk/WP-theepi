@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <!-- Structure -->
-<div class="wpeo-modal modal-qr-code modal-active">
+<div class="wpeo-modal modal-qr-code modal-active" style="z-index: 10">
 
 	<div class="modal-container">
 		<!-- Entête -->

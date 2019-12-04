@@ -110,7 +110,6 @@ class Setting_Action {
 
 		//$users =  ! empty( $_POST['users'] ?
 
-
 		if ( ! empty( $_POST['users'] ) ) {
 			foreach ( $_POST['users'] as $user_id => $data ) {
 				$user = new \WP_User( $user_id );

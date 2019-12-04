@@ -22,6 +22,7 @@ if ( ! empty( $controls ) ) :
 			'theepi', 'control', 'item', array(
 				'control'    => $control,
 				'frontend'   => $frontend,
+				'type'       => $type,
 			)
 		);
 	endforeach;

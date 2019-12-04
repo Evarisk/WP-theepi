@@ -44,10 +44,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<div class="wpeo-button wpeo-tooltip-event button-grey button-square-30 button-rounded action-attribute"
 							aria-label="<?php esc_html_e( 'See All Control', 'theepi' ); ?>"
 							data-id="<?php echo esc_attr( $epi->data['id'] ); ?>"
-							data-frontend="fasle"
+							data-frontend="true"
 							data-action="display_control"
-							data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>"
-							data-type="see_control">
+							data-nonce="<?php echo esc_attr( wp_create_nonce( 'display_control' ) ); ?>">
 							<i class="fas fa-eye"></i>
 						</div>
 					<?php else : ?>

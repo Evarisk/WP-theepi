@@ -62,7 +62,6 @@ class Class_TheEPI_Core extends Singleton_Util {
 			'verify_ssl' => false,
 		) );
 
-
 		$result = __( 'No update notes for this version.', 'theepi' );
 
 		if ( ! is_wp_error( $json ) && ! empty( $json ) && ! empty( $json['body'] ) ) {

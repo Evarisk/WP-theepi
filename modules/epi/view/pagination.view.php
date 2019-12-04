@@ -45,6 +45,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		<?php for ( $i = 1; $i <= $number_pages; $i++ ) : ?>
 			<!-- Element simple -->
+		<?php if ( $i == 1 || $i < 4 + $offset || $i == $number_pages ) : ?>
 			<li class="pagination-element <?php echo esc_html( $i == $pagination ? 'pagination-current' : '' ); ?>" style="cursor : pointer">
 				<a href="#" class="action-attribute  epi-load-more"
 					data-action="load_more_epi"
@@ -58,6 +59,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php endif; ?>><?php echo esc_html( $i ); ?>
 				</a>
 			</li>
+		<?php endif; ?>
 		<?php endfor; ?>
 
 		<?php if ( $number_pages != $pagination ) : ?>

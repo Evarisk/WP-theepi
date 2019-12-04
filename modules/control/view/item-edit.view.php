@@ -13,7 +13,15 @@ namespace theepi;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
-} ?>
+}
+
+/**
+* Documentation des variables utilisées dans la vue.
+*
+* @var Control_Model  $control La donnée d'un contrôle.
+* @var EPI_Model      $epi La donnée d'un EPI.
+*/
+?>
 
 <div class="table-row epi-control-row edit wpeo-form" data-id="<?php echo esc_attr( $control->data['id'] ); ?>">
 	<input type="hidden" name="parent-id" value="<?php echo esc_attr( $epi->data['id'] ); ?>">
@@ -84,6 +92,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			data-action="cancel_edit_control_epi"
 			data-nonce="<?php echo esc_attr( wp_create_nonce( 'cancel_edit_control_epi' ) ); ?>">
 			<i class="fas fa-times"></i>
-	  </div>
+		</div>
 	</div>
 </div>
