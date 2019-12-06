@@ -25,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 
 <div class="table-row epi-row view <?php echo esc_attr( ( ! empty( $new ) && true === $new ) ? 'new' : '' ); ?>" data-id="<?php echo esc_attr( $epi->data['id'] ); ?>">
-	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>">
+	<div class="table-cell table-100 id" data-title="<?php echo esc_attr_e( 'ID', 'theepi' ); ?>" <?php EPI_Class::g()->visible( 'id_screen_option_name' ) != true ? 'hidden' : ''; ?>>
 		<a href="<?php echo esc_html( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ); ?>" target="_blank"><?php echo esc_attr( $epi->data['unique_identifier'] ); ?></a>
 	</div>
 
@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php do_shortcode( '[qrcode text="' . esc_attr( get_option( 'siteurl' ) . '/?p=' . $epi->data['id'] ) . '" id="' . $epi->data['id'] . '" height=500 width=500 transparency=1]' ); ?>
 	</div>
 
-	<div class="table-cell table-150 serial-number" data-title="<?php echo esc_attr_e( 'Serial Number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></div>
+	<div class="table-cell table-150 serial-number" data-title="<?php    echo esc_attr_e( 'Serial Number', 'theepi' ); ?>"><?php echo esc_html( $epi->data['serial_number'] ); ?></div>
 
 	<div class="table-cell title" data-title="<?php echo esc_attr_e( 'Title', 'theepi' ); ?>">
 		<strong><?php echo esc_html( $epi->data['title'] ); ?></strong>
@@ -95,16 +95,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 
 	<div class="table-cell table-75 next-control" data-title="<?php echo esc_attr_e( 'Next Control', 'theepi' ); ?>">
-		<?php
-		View_Util::exec(
-			'theepi',
-			'epi',
-			'item-control',
-			array(
-				'epi'         => $epi,
-				'number_days' => EPI_Class::g()->get_days( $epi ),
-			)
-		);
+		<?php if ( EPI_class::g()->get_status( $epi) != 'trash' ) {
+			View_Util::exec(
+				'theepi',
+				'epi',
+				'item-control',
+				array(
+					'epi'         => $epi,
+					'number_days' => EPI_Class::g()->get_days( $epi ),
+				)
+			);
+		}
 		?>
 	</div>
 

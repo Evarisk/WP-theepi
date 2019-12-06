@@ -227,7 +227,9 @@ class EPI_Action {
 			unset( $update_epi['end_life_date'] );
 			$date_valid['success'] = true;
 		} else {
-			$date_valid = Service_Class::g()->check_date_epi( $update_epi );
+			//$date_valid = Service_Class::g()->check_date_epi( $update_epi );
+			// Commenté a la demande de laurent qui ne veut plus rien de bloquant pendant la création d'un EPI
+			$date_valid['success'] = true;
 		}
 		$view = '';
 

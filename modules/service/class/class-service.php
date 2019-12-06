@@ -120,30 +120,30 @@ class Service_Class extends Singleton_Util {
 		$periodicity = $data_epi['periodicity'];
 		$lifetime    = $data_epi['lifetime_epi'];
 
-		$temp_error = $this->check_error( strtotime( $data_epi['manufacture_date'] ), 'manufacture-date', $temp_error );
-		$temp_error = $this->check_error( strtotime( $data_epi['purchase_date'] ), 'purchase-date', $temp_error );
-		$temp_error = $this->check_error( strtotime( $data_epi['commissioning_date'] ), 'commissioning-date', $temp_error );
+		$temp_error = $this->check_error( strtotime( $data_epi['manufacture_date'] ),'manufacture-date', $temp_error );
+		$temp_error = $this->check_error( strtotime( $data_epi['purchase_date'] ),'purchase-date', $temp_error );
+		$temp_error = $this->check_error( strtotime( $data_epi['commissioning_date'] ),'commissioning-date', $temp_error );
 		$temp_error = $this->check_error( $lifetime, 'lifetime', $temp_error );
 		$temp_error = $this->check_error( $periodicity, 'periodicity', $temp_error );
 
 		switch ( $data_epi['purchase_date'] ) {
 			case $data_epi['manufacture_date'] > $data_epi['purchase_date']:
-				$temp_error['purchase-date']['error']   = esc_html__( 'This field Manufacture Date is greater than field Purchase Date', 'theepi' );
+				$temp_error['purchase-date']['error']   = esc_html__( 'Le champ Date de Fabrication est plus grand que le champ Date d\'Achat', 'theepi' );
 				$temp_error['purchase-date']['element'] = 'purchase-date';
 				break;
 			case $data_epi['purchase_date'] > strtotime( $data_epi['end_life_date'] ):
-				$temp_error['purchase-date']['error']   = esc_html__( 'This field Purchase Date is greater than field End Life Date', 'theepi' );
+				$temp_error['purchase-date']['error']   = esc_html__( 'Le champ Date d\'Achat est plus grand que le champ Date de Fin de Vie', 'theepi' );
 				$temp_error['purchase-date']['element'] = 'purchase-date';
 				break;
 		}
 
 		switch ( $data_epi['commissioning_date'] ) {
 			case $data_epi['purchase_date'] > $data_epi['commissioning_date']:
-				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Purchase Date is greater than field Commissioning Date', 'theepi' );
+				$temp_error['commissioning-date']['error']   = esc_html__( 'Le champ Date d\'Achat est plus grand que le champ Date de Mise en Service', 'theepi' );
 				$temp_error['commissioning-date']['element'] = 'commissioning-date';
 				break;
 			case $data_epi['commissioning_date'] > strtotime( $data_epi['end_life_date'] ):
-				$temp_error['commissioning-date']['error']   = esc_html__( 'This field Commissioning Date is greater than field End Life Date', 'theepi' );
+				$temp_error['commissioning-date']['error']   = esc_html__( 'Le champ Date de Mise en Service est plus grand que le champ Date de Fin de Vie', 'theepi' );
 				$temp_error['commissioning-date']['element'] = 'commissioning-date';
 				break;
 		}
@@ -165,7 +165,7 @@ class Service_Class extends Singleton_Util {
 	 * @version 0.7.0
 	 *
 	 * @param object $data       la valeur du champ.
-	 * @param object $type       le champ en erreur.
+	 * @param string $type       le champ en erreur.
 	 * @param array  $temp_error le taableu contenant l'erreur + le champ.
 	 *
 	 * @return array ['error']   (array) le message d'erreur.
@@ -173,9 +173,9 @@ class Service_Class extends Singleton_Util {
 	 */
 	public function check_error( $data, $type, $temp_error ) {
 		if( $data == "" ){
-			$error = esc_html__( 'This field ' . $type . ' is empty', 'theepi' );
+			$error = esc_html__( 'Le champ ' . $type . ' est vide ', 'theepi' );
 		} elseif( $data == 0 ){
-			$error = esc_html__( 'This field ' . $type . ' is invalid because 0 is forbidden', 'theepi' );
+			$error = esc_html__( 'Le champ ' . $type . ' est invalide parce que 0 est interdit', 'theepi' );
 		} else {
 			$error = '';
 		}

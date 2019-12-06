@@ -169,22 +169,152 @@ class TheEPI_Core_Action {
 		CMH::register_container( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi' );
 		$menu = CMH::register_menu( 'theepi', __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'fa fa-hard-hat' );
 		$screen = \WP_Screen::get( $menu->wp );
-		$screen->add_option( 'per_page', array(
-			'label'   => _x( 'EPI par page', 'EPI par page' ),
-			'default' => EPI_Class::g()->limit_epi,
-			'option'  => EPI_Class::g()->option_name_per_page,
-		) );
-/*		//'data:image/svg+xml;base64,' . base64_encode( "
-//		<svg data-prefix='fas' data-icon='hard-hat'
-//			class='svg-inline--fa fa-hard-hat fa-w-16'
-//			role='img'
-//			xmlns='http://www.w3.org/2000/svg'
-//			viewBox='0 0 512 512'>
-//			<path fill='rgba(240,245,250,.6)'
-//				d='M480 288c0-80.25-49.28-148.92-119.19-177.62L320 192V80a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v112l-40.81-81.62C81.28 139.08 32 207.75 32 288v64h448zm16 96H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h480a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z'>
-//			</path>
-//		</svg> ")
-	// );*/
+		$screen->add_option(
+			'per_page',
+			array(
+				'label'   => _x( 'EPI par page', 'EPI par page' ),
+				'type'    => 'text',
+				'default' => EPI_Class::g()->limit_epi,
+				'option'  => EPI_Class::g()->option_name_per_page,
+			)
+		);
+		$screen->add_option(
+			'ID',
+			array(
+				'label'   => _x( 'ID', 'ID' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['id_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['id_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Image',
+			array(
+				'label'   => _x( 'Image', 'Image' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['image_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['image_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Quantity',
+			array(
+				'label'   => _x( 'Quantity', 'Quantity' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['quantity_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['quantity_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Qrcode',
+			array(
+				'label'   => _x( 'Code QR', 'Code QR' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['qrcode_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['qrcode_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Serial_Number',
+			array(
+				'label'   => _x( 'Serial Number', 'Serial Number' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['serial_number_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['serial_number_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Title',
+			array(
+				'label'   => _x( 'Title', 'Title' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['title_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['title_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Manager',
+			array(
+				'label'   => _x( 'Manager', 'Manager' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['manager_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['manager_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Last_Control',
+			array(
+				'label'   => _x( 'Last Control', 'Last Control' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['last_control_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['last_control_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Add_Control',
+			array(
+				'label'   => _x( 'Add Control', 'Add Control' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['add_control_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['add_control_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Next_Control',
+			array(
+				'label'   => _x( 'Next Control', 'Next Control' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['next_control_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['next_control_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Add_Control',
+			array(
+				'label'   => _x( 'Add Control', 'Add Control' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['add_control_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['add_control_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Status',
+			array(
+				'label'   => _x( 'Status', 'Status' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['status_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['status_screen_option_name'],
+			)
+		);
+		$screen->add_option(
+			'Actions',
+			array(
+				'label'   => _x( 'Actions', 'Actions' ),
+				'type'    => 'checkbox',
+				'default' => EPI_Class::g()->screen_options_array['actions_screen_option'],
+				'option'  => EPI_Class::g()->screen_options_array['actions_screen_option_name'],
+			)
+		);
+
+		/*foreach ( $screen->get_options() as $key => $option) {
+			if ( get_user_meta( get_current_user_id(), EPI_Class::g()->screen_options_array['id_screen_option_name'] ) ) {
+					'ets ';
+			} else {
+				add_user_meta( get_current_user_id(), EPI_Class::g()->screen_options_array['id_screen_option_name'], EPI_Class::g()->screen_options_array['id_screen_option'] );
+			}
+		}*/
+
+		/*		//'data:image/svg+xml;base64,' . base64_encode( "
+		//		<svg data-prefix='fas' data-icon='hard-hat'
+		//			class='svg-inline--fa fa-hard-hat fa-w-16'
+		//			role='img'
+		//			xmlns='http://www.w3.org/2000/svg'
+		//			viewBox='0 0 512 512'>
+		//			<path fill='rgba(240,245,250,.6)'
+		//				d='M480 288c0-80.25-49.28-148.92-119.19-177.62L320 192V80a16 16 0 0 0-16-16h-96a16 16 0 0 0-16 16v112l-40.81-81.62C81.28 139.08 32 207.75 32 288v64h448zm16 96H16a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h480a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z'>
+		//			</path>
+		//		</svg> ")
+			// );*/
 		//add_action( 'load-' . $screen , array( EPI_Class::g(), 'callback_add_screen_option' ) );
 
 	}

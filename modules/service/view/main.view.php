@@ -45,7 +45,7 @@ if ( ! defined('ABSPATH' ) ) {
 		</div>
 
 		<div class="wpeo-gridlayout grid-4 grid-padding-1">
-			<div class="form-element form-element-required group-date update-end-life-date-epi">
+			<div class="form-element group-date update-end-life-date-epi">
 				<input type="hidden" class="manufacture-date-valued" name="manufacture-date-valued" value="<?php echo esc_attr( $manufacture_date_valued ); ?>"/>
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( $manufacture_date_valued ) ? esc_html_e( 'Setting Date activated (Manufacture Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Manufacture Date)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Manufacture Date', 'theepi' ); ?>
@@ -61,7 +61,7 @@ if ( ! defined('ABSPATH' ) ) {
 				<?php endif; ?>
 			</div>
 
-			<div class="form-element form-element-required button-toggle-lifetime-display lifetime update-end-life-date-epi <?php echo ( $epi->data['toggle_lifetime'] == 'NO' ) ? 'hidden' : ''; ?>">
+			<div class="form-element button-toggle-lifetime-display lifetime update-end-life-date-epi <?php echo ( $epi->data['toggle_lifetime'] == 'NO' ) ? 'hidden' : ''; ?>">
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ! empty( get_option( EPI_Class::g()->option_name_default_data_lifetime ) ) ? esc_html_e( 'Setting Data activated (Lifetime)', 'theepi' ) : esc_html_e( 'Setting Data disable (Lifetime)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Lifetime', 'theepi' ); ?>
 				</span>
@@ -107,7 +107,7 @@ if ( ! defined('ABSPATH' ) ) {
 		</h2>
 
 		<div class="wpeo-gridlayout grid-4 grid-padding-1">
-			<div class="form-element form-element-required group-date">
+			<div class="form-element group-date">
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( $checked_purchase_date == 1 ) ? esc_html_e( 'Setting Date activated (Purchase Date)', 'theepi' ) : esc_html_e( 'Setting Date disable (Purchase Date)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Purchase Date', 'theepi' ); ?>
 				</span>
@@ -133,7 +133,7 @@ if ( ! defined('ABSPATH' ) ) {
 			endif;
 			?>
 
-			<div class="form-element form-element-required group-date update-control-date-epi <?php echo esc_html( $update_control_class ); ?>">
+			<div class="form-element group-date update-control-date-epi <?php echo esc_html( $update_control_class ); ?>">
 				<span class="form-label"><?php esc_html_e( 'Commissioning Date', 'theepi' ); ?></span>
 				<div class="form-error" style="color : red"></div>
 				<label class="form-field-container">
@@ -143,7 +143,7 @@ if ( ! defined('ABSPATH' ) ) {
 				</label>
 			</div>
 
-			<div class="form-element form-element-required update-control-date-epi">
+			<div class="form-element update-control-date-epi">
 				<span class="form-label wpeo-tooltip-event" aria-label="<?php echo ( get_option( EPI_Class::g()->option_name_default_data_periodicity ) != "" ) ? esc_html_e( 'Setting Data activated (Periodicity)', 'theepi' ) : esc_html_e( 'Setting Date disable (Periodicity)', 'theepi' ); ?>">
 					<?php esc_html_e( 'Periodicity', 'theepi' ); ?>
 				</span>
@@ -154,9 +154,9 @@ if ( ! defined('ABSPATH' ) ) {
 					<span class="form-field-label-next"><?php echo esc_html_e( 'days', 'theepi' ); ?></span>
 				</label>
 			</div>
-
+			<?php if ( EPI_class::g()->get_status( $epi) != 'trash' ) : ?>
 			<div class="form-element form-element-unboxed group-date">
-				<span class="form-label wpeo-tooltip-event" aria-label="<?php ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ? esc_html_e( 'Control Date = Last Control + Periodicity', 'theepi' )  : esc_html_e( 'Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'Control Date', 'theepi' ); ?> </span>
+				<span class="form-label wpeo-tooltip-event" aria-label="<?php ! empty( EPI_Class::g()->get_last_control_date( $epi ) ) ? esc_html_e( 'Next Control Date = Last Control + Periodicity', 'theepi' )  : esc_html_e( 'Next Control Date = Commissioning Date + Periodicity', 'theepi' ); ?>"> <?php esc_html_e( 'Next Control Date', 'theepi' ); ?> </span>
 				<div class="form-error"></div>
 				<label class="form-field-container">
 					<span class="form-field-icon-prev"><i class="fas fa-calendar-check"></i></span>
@@ -164,6 +164,7 @@ if ( ! defined('ABSPATH' ) ) {
 					<input class="form-field date" type="text" name="control-date" value="<?php echo ( $epi->data['commissioning_date_valid'] ) ? esc_attr( $epi->data['control_date']['rendered']['date'] ) : ''; ?>"/>
 				</label>
 			</div>
+			<?php endif; ?>
 		</div>
 	</div>
 

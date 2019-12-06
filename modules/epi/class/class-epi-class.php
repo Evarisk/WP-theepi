@@ -170,6 +170,34 @@ class EPI_Class extends Post_Class {
 	 */
 	protected $attached_taxonomy_type = '_theepi_state';
 
+	public $screen_options_array = array(
+		'id_screen_option_name'            => 'id_screen_option',
+		'id_screen_option'                 => true,
+		'image_screen_option_name'         => 'image_screen_option',
+		'image_screen_option'              => true,
+		'quantity_screen_option_name'      => 'quantity_screen_option',
+		'quantity_screen_option'           => true,
+		'qrcode_screen_option_name'        => 'qrcode_screen_option',
+		'qrcode_screen_option'             => true,
+		'serial_number_screen_option_name' => 'serial_number_screen_option',
+		'serial_number_screen_option'      => true,
+		'title_screen_option_name'         => 'title_screen_option',
+		'title_screen_option'              => true,
+		'manager_screen_option_name'       => 'manager_screen_option',
+		'manager_screen_option'            => true,
+		'last_control_screen_option_name'  => 'last_control_screen_option',
+		'last_control_screen_option'       => true,
+		'add_control_screen_option_name'   => 'add_control_screen_option',
+		'add_control_screen_option'        => true,
+		'next_control_screen_option_name'  => 'next_control_screen_option',
+		'next_control_screen_option'       => true,
+		'status_screen_option_name'        => 'status_screen_option',
+		'status_screen_option'             => true,
+		'actions_screen_option_name'       => 'actions_screen_option',
+		'actions_screen_option'            => true,
+);
+
+
 	/**
 	 * Constructeur.
 	 *
@@ -553,7 +581,7 @@ class EPI_Class extends Post_Class {
 	 */
 	public function get_days( $epi ) {
 
-		$now = date( 'Y-m-d' );
+		$now      = date( 'Y-m-d' );
 
 		$periodicity       = $epi->data['periodicity'];
 		$control_date_epi  = $epi->data['control_date']['rendered']['mysql'];
@@ -564,13 +592,19 @@ class EPI_Class extends Post_Class {
 			$last_control_date      = date( 'Y-m-d', strtotime( '+' . $periodicity . ' days', $control_date_timestamp ) );
 			$time                   = strtotime( $last_control_date ) - strtotime( $now ); // seconde.
 		} else {
-			$time = strtotime( $control_date_epi ) - strtotime( $now ); // seconde.
+			if ( $control_date_epi != '1970-01-01' ) {
+				$time = strtotime( $control_date_epi ) - strtotime( $now ); // seconde.
+			} else {
+				$time = 0;
+			}
 		}
 
 		if ( $time > 0 ) {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
-		} else {
+		} elseif ( $time < 0 ) {
 			$day_rest = floor( ( ( $time / 24 ) / 3600 ) );
+		} elseif ( $time == 0 ) {
+			$day_rest = 0;
 		}
 		return $day_rest;
 	}
@@ -851,6 +885,16 @@ class EPI_Class extends Post_Class {
 
 		$nb_epis = count( $epis );
 		return $nb_epis;
+	}
+
+	public function visible( $option ) {
+		$user   = get_current_user_id();
+		$visible = get_user_option( $option, $user );
+		if ( $visible ) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 
