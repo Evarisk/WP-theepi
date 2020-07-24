@@ -166,7 +166,7 @@ class TheEPI_Core_Action {
 	 */
 	public function callback_admin_menu() {
 		CMH::add_logo( 'theepi', PLUGIN_THEEPI_URL . 'core/assets/images/icon-256x256_blanc.png', admin_url( 'admin.php?page=theepi' ) );
-		CMH::register_container( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi' );
+		CMH::register_container( __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi', '', PLUGIN_THEEPI_URL . '', 21 );
 		$menu = CMH::register_menu( 'theepi', __( 'TheEPI', 'theepi' ), __( 'TheEPI', 'theepi' ), 'read_theepi', 'theepi', array( Class_TheEPI_Core::g(), 'display' ), 'fa fa-hard-hat' );
 		$screen = \WP_Screen::get( $menu->wp );
 		$screen->add_option(
